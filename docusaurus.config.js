@@ -36,6 +36,10 @@ const config = {
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
+        sitemap: {
+          changefreq: 'weekly',
+          priority: 0.5,
+        },
       }),
     ],
     // OpenAPI Documentation
@@ -45,12 +49,15 @@ const config = {
         // Plugin Options for loading OpenAPI files
         specs: [
           {
-            spec: 'https://redocly.github.io/redoc/openapi.yaml',
+            spec: 'static/swagger.json',
             route: '/api/',
           },
         ],
       },
     ],
+  ],
+
+  plugins:[
     // PWA specs
     [
       '@docusaurus/plugin-pwa',
