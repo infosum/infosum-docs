@@ -4,11 +4,14 @@
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
+/** Consts **/
+const INFOSUM_PORTAL_NAME = 'InfoSum Developer Portal';
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'InfoSum Developer Portal',
-  tagline: 'Dinosaurs are cool',
-  url: 'https://your-docusaurus-test-site.com',
+  title: INFOSUM_PORTAL_NAME,
+  // tagline: 'Dinosaurs are cool',
+  url: 'https://infosum.com',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -24,14 +27,11 @@ const config = {
       ({
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          // Please change this to your repo.
-          editUrl: 'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+          editUrl: 'https://github.com/infosum/infosum-docs/tree/main',
         },
         blog: {
           showReadingTime: true,
-          // Please change this to your repo.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+          editUrl: 'https://github.com/infosum/infosum-docs/tree/main/blog/',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
@@ -57,7 +57,7 @@ const config = {
     ],
   ],
 
-  plugins:[
+  plugins: [
     // PWA specs
     [
       '@docusaurus/plugin-pwa',
@@ -93,21 +93,22 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: 'My Site',
+        title: INFOSUM_PORTAL_NAME,
         logo: {
-          alt: 'My Site Logo',
-          src: 'img/logo.svg',
+          alt: 'InfoSum',
+          src: 'https://assets-global.website-files.com/607ef7a9757a0319beb2dae2/609bb4724f5dee5ea5de2f0d_InfoSum_Logo-LIGHT.svg',
         },
         items: [
           {
             type: 'doc',
             docId: 'intro',
             position: 'left',
-            label: 'Tutorial',
+            label: 'Docs',
           },
-          {to: '/blog', label: 'Blog', position: 'left'},
+          { to: '/api', label: 'API', position: 'left' },
+          { to: '/blog', label: 'Blog', position: 'left' },
           {
-            href: 'https://github.com/facebook/docusaurus',
+            href: 'https://github.com/infosum',
             label: 'GitHub',
             position: 'right',
           },
@@ -121,7 +122,11 @@ const config = {
             items: [
               {
                 label: 'Tutorial',
-                to: '/docs/intro',
+                to: '/docs',
+              },
+              {
+                label: 'Knowledge Base',
+                to: 'https://support.infosum.com/',
               },
             ],
           },
@@ -138,7 +143,7 @@ const config = {
               },
               {
                 label: 'Twitter',
-                href: 'https://twitter.com/docusaurus',
+                href: 'https://twitter.com/infosum',
               },
             ],
           },
@@ -146,12 +151,12 @@ const config = {
             title: 'More',
             items: [
               {
-                label: 'Blog',
+                label: 'Developer Blog',
                 to: '/blog',
               },
               {
                 label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus',
+                href: 'https://github.com/infosum',
               },
             ],
           },
