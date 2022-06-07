@@ -122,7 +122,7 @@ const config = {
             items: [
               {
                 label: 'Tutorial',
-                to: '/docs',
+                to: '/docs/intro',
               },
               {
                 label: 'Knowledge Base',
