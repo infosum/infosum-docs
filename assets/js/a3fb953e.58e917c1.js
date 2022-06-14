@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkinfosum_docs=self.webpackChunkinfosum_docs||[]).push([[705],{5201:function(o){o.exports=JSON.parse('{"permalink":"/infosum-docs/blog","page":1,"postsPerPage":10,"totalPages":1,"totalCount":1,"blogDescription":"Blog","blogTitle":"Blog"}')}}]);
