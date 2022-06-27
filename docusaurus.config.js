@@ -6,13 +6,13 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** Consts **/
 const INFOSUM_PORTAL_NAME = 'InfoSum Developer Portal';
-
+console.log(process.env.NODE_ENV)
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: INFOSUM_PORTAL_NAME,
   // tagline: 'Dinosaurs are cool',
   url: 'https://infosum.com',
-  baseUrl: '/',
+  baseUrl: (process.env.NODE_ENV !== 'development') ? '/' : '/infosum-docs/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
