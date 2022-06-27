@@ -12,7 +12,7 @@ const config = {
   title: INFOSUM_PORTAL_NAME,
   // tagline: 'Dinosaurs are cool',
   url: 'https://infosum.com',
-  baseUrl: '/infosum-docs/',
+  baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
