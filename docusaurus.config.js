@@ -5,12 +5,12 @@ const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** Consts **/
-const INFOSUM_PORTAL_NAME = 'InfoSum Developer Portal';
+const INFOSUM_PORTAL_NAME = 'InfoSum Developer Documentation';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: INFOSUM_PORTAL_NAME,
-  // tagline: 'Dinosaurs are cool',
+  tagline: 'Data Collaboration Platform',
   url: 'https://infosum.com',
   baseUrl: process.env.BASE_URL || '/',
   onBrokenLinks: 'throw',
@@ -72,7 +72,7 @@ const config = {
           {
             tagName: 'link',
             rel: 'icon',
-            href: '/img/docusaurus.png',
+            href: '/img/infosum.png',
           },
           {
             tagName: 'link',
@@ -92,11 +92,15 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
+      colorMode: {
+        defaultMode: 'dark',
+        respectPrefersColorScheme: true,
+      },
       navbar: {
         title: INFOSUM_PORTAL_NAME,
         logo: {
           alt: 'InfoSum',
-          src: 'https://assets-global.website-files.com/607ef7a9757a0319beb2dae2/609bb4724f5dee5ea5de2f0d_InfoSum_Logo-LIGHT.svg',
+          src: '/img/infosum.png',
         },
         items: [
           {
