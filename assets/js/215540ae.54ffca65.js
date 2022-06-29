@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkinfosum_docs=self.webpackChunkinfosum_docs||[]).push([[808],{83672:function(e){e.exports=JSON.parse('{"label":"developer","permalink":"/blog/tags/developer","allTagsPath":"/blog/tags","count":1}')}}]);
