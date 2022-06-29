@@ -1,0 +1,19 @@
+image: node:latest
+
+# allow caching for faster deployment
+cache:
+  paths:
+    - node_modules/
+    - public/
+    - .cache/
+
+pages:
+  stage: deploy
+  script:
+    - npm install
+    - npm run build:gitlab
+  artifacts:
+      paths:
+        - public
+  only:
+    - master

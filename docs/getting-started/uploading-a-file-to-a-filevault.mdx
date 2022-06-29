@@ -1,0 +1,121 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+import Authentication from '../_partials/_authentication.mdx';
+
+# Uploading a file to a File Vault
+
+For specific information on [File Vaults](/docs/filevaults/) we have a dedication page [here](/docs/filevaults/).
+
+<Authentication/>
+
+## Create a File Vault
+
+To upload a file to the InfoSum Platform, you will need a File Vault to hold the file. You can create a File Vault using the following command which you will need to provide
+
+- A non-conflicting name for the File Vault as `name`
+- A description of the File Vault as `description`
+- The region you want the File Vault to reside in as `region`
+
+<Tabs>
+  <TabItem value="curl" label="cURL" default>
+
+```bash
+curl --location --request POST 'https://api.integration.k8s.is/api/v2/filevaults' \
+--header "Authorization: $INFOSUM_API_KEY" \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  "name": "a-new-file-vault",
+  "description": "A new file vault to store files",
+  "region": "AWS_EU_WEST_2"
+}'
+```
+  </TabItem>
+</Tabs>
+
+## Importing a file
+
+Once you have a File Vault you will need run an import process from your storage location to the File Vault.
+
+### Create an Import Connector
+
+First step is to setup an `Import Connector Config` (or `ICC` for short), to manage the connection between your AWS S3 or Google GCS and the InfoSum Platform.
+
+As an example we will move a file from AWS S3 to File Vault, so the `config` object would need
+
+- A name for the import connector as `name`
+- A description of what the connector is doing as `description` (this is optional)
+- An S3 connection object in `s3_connector`
+    - The name of the AWS S3 bucket as `bucket`
+    - Any prefixes for files under `prefix`
+    - An array of filenames or patterns that identify files under `filenames`
+    - An authentication object under `cross_account` with
+        - A valid AWS ARN to assume as `user_arn`
+        - The name of the session as `session_name`
+
+<Tabs>
+  <TabItem value="curl" label="cURL" default>
+
+```bash
+curl --location --request POST 'https://api.integration.k8s.is/api/v2/bunker/import/import-connector-configs' \
+--header "Authorization: $INFOSUM_API_KEY" \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  "config": {
+    "name": "AWS S3 migration",
+    "description": "Moving from remote to File Vault",
+    "s3_connector": {
+      "bucket": "name-of-the-s3-bucket",
+      "prefix": "",
+      "cross_account": {
+        "user_arn": "arn:aws:iam::XXXXXXXXXXXX:role/RoleName",
+        "session_name": "nameofthesession"
+      },
+      "filenames": [
+        "*.csv"
+      ]
+    }
+  }
+}'
+```
+  </TabItem>
+</Tabs>
+
+### Create an Import task
+
+After you have the connector, you will need an `Import` task to execute the import. Your `import` config will connect your `import-connector-config` to your File Vault.
+
+The necessary information for the `import` is:
+
+- A name for the task as `name`
+- An optional `description`
+- The Import Connector Config ID from the previous request under `icc_id`
+- The File Vault ID created at the beginning as the `destination_id`
+- 
+
+<Tabs>
+  <TabItem value="curl" label="cURL" default>
+
+```bash
+curl --location --request POST 'https://api.integration.k8s.is/api/v2/bunker/import/imports' \
+--header "Authorization: $INFOSUM_API_KEY" \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  "import": {
+    "name": "AWS S3 to FileVault task",
+    "description": "Moving just CSVs",
+    "icc_id": "The ICC ID from the previous request",
+    "destination_id": "The FileVault ID from before",
+    "data_filter": {
+      "filter": [
+        "our-csv-file.csv"
+      ]
+    }
+  }
+}'
+```
+  </TabItem>
+</Tabs>
+
+## Run the Import task
+
