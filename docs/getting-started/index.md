@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# Gettings Started
+# Getting Started
 
 You will find a selection of practical guides to using and building against the InfoSum Platform
 
