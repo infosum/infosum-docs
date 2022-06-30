@@ -4,7 +4,7 @@ The InfoSum APIs require an `API Key` that is used as part of the `Authorization
 
 ## Where to get an API Key
 
-Once you have an InfoSum account, if you have the relevant permissions, you can head to https://accounts.infosum.com/access/api-keys.
+Once you have created an InfoSum account and have the [relevant permissions](https://support.infosum.com/hc/en-us/articles/360019049798-Permissions-overview). You can head to https://accounts.infosum.com/access/api-keys.
 
 ## How to generate a key
 
