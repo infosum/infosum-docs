@@ -91,7 +91,7 @@ The necessary information for the `import` is:
 - An optional `description`
 - The Import Connector Config ID from the previous request under `icc_id`
 - The File Vault ID created at the beginning as the `destination_id`
-- 
+- The `data_filter` contains the `filter`, which is an array of filters from the `ICC`
 
 <Tabs>
   <TabItem value="curl" label="cURL" default>
@@ -116,6 +116,3 @@ curl --location --request POST 'https://api.integration.k8s.is/api/v2/bunker/imp
 ```
   </TabItem>
 </Tabs>
-
-## Run the Import task
-
