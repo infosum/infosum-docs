@@ -35,23 +35,23 @@ curl --location --request POST 'https://api.integration.k8s.is/api/v2/filevaults
 
 ## Importing a file
 
-Once you have a File Vault you will need run an import process from your storage location to the File Vault.
+Once you have a File Vault you will need to run an import process from your storage location to the File Vault.
 
 ### Create an Import Connector
 
-First step is to setup an `Import Connector Config` (or `ICC` for short), to manage the connection between your AWS S3 or Google GCS and the InfoSum Platform.
+The first step is to set up an `Import Connector Config` (or `ICC` for short), to manage the connection between your AWS S3 or Google GCS and the InfoSum Platform.
 
-As an example we will move a file from AWS S3 to File Vault, so the `config` object would need
+As an example, we will move a file from AWS S3 to File Vault, so the `config` object would need
 
 - A name for the import connector as `name`
 - A description of what the connector is doing as `description` (this is optional)
 - An S3 connection object in `s3_connector`
-    - The name of the AWS S3 bucket as `bucket`
+    - The name of the AWS S3 bucket is `bucket`
     - Any prefixes for files under `prefix`
     - An array of filenames or patterns that identify files under `filenames`
     - An authentication object under `cross_account` with
         - A valid AWS ARN to assume as `user_arn`
-        - The name of the session as `session_name`
+        - The name of the session is `session_name`
 
 <Tabs>
   <TabItem value="curl" label="cURL" default>
