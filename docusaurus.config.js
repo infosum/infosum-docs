@@ -129,7 +129,7 @@ const config = {
                 to: '/docs/intro',
               },
               {
-                label: 'Knowledge Base',
+                label: 'Help Center',
                 to: 'https://support.infosum.com/',
               },
             ],
