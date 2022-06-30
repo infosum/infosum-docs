@@ -8,7 +8,7 @@ Once you have an InfoSum account, if you have the relevant permissions, you can 
 
 ## How to generate a key
 
-If you have previously generated keys you will see them listed here, if not you will see the following screen:
+If you have previously generated keys you will see them listed here. If not you will see the following screen:
 
 ![No API Keys Generated](/img/authentication/no-api-keys.png)
 
