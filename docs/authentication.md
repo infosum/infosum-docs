@@ -20,4 +20,4 @@ When that is successful you will be given your `API Key` in the form of a `publi
 
 ![Granted public and private API Keys](/img/authentication/granted-public-private-api-keys.png)
 
-Please store the `private` key safely for later use as the platform will not expose the key to you again after this point.
+Please store the `private` key safely for later use. After you close this pop-up, you will not be able to view the private key again.
