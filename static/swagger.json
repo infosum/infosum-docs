@@ -15,12 +15,7 @@
   ],
   "servers": [
     {
-      "url": "https://api.infosum.com",
-      "description": "Production"
-    },
-    {
-      "url": "https://api.integration.k8s.is",
-      "description": "Integration"
+      "url": "https://api.infosum.com"
     }
   ],
   "consumes": ["application/json"],
