@@ -4,6 +4,8 @@
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
+const remarkInfoSumLinks = require('./src/remark/code-links');
+
 /** Consts **/
 const INFOSUM_PORTAL_NAME = 'InfoSum Developer Documentation';
 
@@ -28,6 +30,7 @@ const config = {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl: 'https://github.com/infosum/infosum-docs/tree/main',
+          beforeDefaultRemarkPlugins:[remarkInfoSumLinks]
         },
         // blog: {
         //   showReadingTime: true,
