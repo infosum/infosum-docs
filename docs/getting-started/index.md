@@ -7,4 +7,5 @@ sidebar_position: 2
 You will find a selection of practical guides to using and building against the InfoSum Platform here:
 
 - [Uploading a file to FileVault](./uploading-a-file-to-a-filevault)
+- [Transforming a file](./transforming-a-file)
 
