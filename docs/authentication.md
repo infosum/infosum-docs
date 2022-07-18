@@ -1,3 +1,6 @@
+---
+sidebar_position: 2
+---
 # Authentication
 
 The InfoSum APIs require an `API Key` that is used as part of the `Authorization` header.
