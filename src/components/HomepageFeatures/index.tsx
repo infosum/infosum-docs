@@ -15,7 +15,7 @@ const FeatureList: FeatureItem[] = [
     Svg: require('@site/static/img/placeholder.svg').default,
     description: (
       <>
-        You can get started with out <Link href='/api'>API Reference</Link>
+        You can get started with out <Link href='/api/v2'>API Reference</Link>
       </>
     ),
   },
