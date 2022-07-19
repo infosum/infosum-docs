@@ -117,7 +117,7 @@ const config = {
             label: 'Docs',
           },
           { to: '/api/v1', label: 'API V1', position: 'left' },
-          { to: '/api/v2', label: 'API V2', position: 'left' },
+          { to: '/api/v2', label: 'Σ API', position: 'left' },
           // { to: '/blog', label: 'Blog', position: 'left' },
           {
             href: 'https://github.com/infosum',
