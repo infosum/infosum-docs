@@ -8,7 +8,7 @@ For a detailed description and information on Transformations, you can review th
 
 ## Listing files
 
-If no files have been uploaded to the [File Vault](../filevaults), please refer to the getting started guides for [uploading a file from AWS S3](./uploading-a-file-from-aws-s3-to-a-filevault).
+If no files have been uploaded to the [Cloud Vault](../cloudvaults), please refer to the getting started guides for [uploading a file from AWS S3](./uploading-a-file-from-aws-s3-to-a-cloudvault).
 
 If files are available to transform you will need the file IDs. To obtain the file IDs, run:
 
@@ -17,7 +17,7 @@ curl --location --request GET 'https://api.integration.k8s.is/api/v2/files/' \
 --header 'Authorization: $INFOSUM_API_KEY'
 ```
 
-This will give you a list of available files within the File Vault and the associated meta data.
+This will give you a list of available files within the Cloud Vault and the associated meta data.
 
 ## Transformation scripts
 
@@ -34,7 +34,7 @@ Let's assume that the data that needs transforming is in the form of a CSV file,
 |U9999|1|0|0|1|
 
 How can you transform these boolean columns into a simpler format of a `userID` with just the associated `cat_*`?
-The following bloblang script does this. By declaring the `input` file and how to read it, the `bloblang` itself as a transformation pipeline, and the `output` for the format to return to the File Vault.
+The following bloblang script does this. By declaring the `input` file and how to read it, the `bloblang` itself as a transformation pipeline, and the `output` for the format to return to the Cloud Vault.
 
 ```yaml
 input:
