@@ -8057,6 +8057,37 @@ paths:
                       description: >-
                         UpdatedDateTime is the date and time the execution was
                         updated.
+                    tracker:
+                      title: >-
+                        Tracker has the information of the progress of the
+                        import as whole
+                      type: object
+                      properties:
+                        speed:
+                          type: string
+                          format: int64
+                          description: >-
+                            Speed is the transferred average number of bytes per
+                            second.
+                        progress:
+                          type: number
+                          format: float
+                          description: Progress is the transferred bytes percentage.
+                        transferred_bytes:
+                          type: string
+                          format: int64
+                          description: >-
+                            TransferredBytes is the current transferred number
+                            of bytes.
+                        total_bytes:
+                          type: string
+                          format: int64
+                          description: >-
+                            Total is the total number of bytes to be
+                            transferred.
+                      description: >-
+                        Tracker holds the information of the progress of the
+                        import execution as a whole.
                   description: Execution holds information about an import execution.
               pagination:
                 type: object
@@ -9190,6 +9221,35 @@ paths:
                     description: >-
                       UpdatedDateTime is the date and time the execution was
                       updated.
+                  tracker:
+                    title: >-
+                      Tracker has the information of the progress of the import
+                      as whole
+                    type: object
+                    properties:
+                      speed:
+                        type: string
+                        format: int64
+                        description: >-
+                          Speed is the transferred average number of bytes per
+                          second.
+                      progress:
+                        type: number
+                        format: float
+                        description: Progress is the transferred bytes percentage.
+                      transferred_bytes:
+                        type: string
+                        format: int64
+                        description: >-
+                          TransferredBytes is the current transferred number of
+                          bytes.
+                      total_bytes:
+                        type: string
+                        format: int64
+                        description: Total is the total number of bytes to be transferred.
+                    description: >-
+                      Tracker holds the information of the progress of the
+                      import execution as a whole.
                 description: Execution holds information about an import execution.
             description: GetExecutionResponse is the output from the GetExecution method.
         '401':
@@ -51621,7 +51681,7 @@ paths:
         - Destinations
       security:
         - API Keys: []
-  /api/v2/files/{file_vault_id}:
+  /api/v2/files/{cloud_vault_id}:
     get:
       summary: List files
       description: List available files with any metadata
@@ -53013,8 +53073,8 @@ paths:
                       type: string
                   additionalProperties: {}
       parameters:
-        - name: file_vault_id
-          description: FileVaultId is the id of the File Vault to list files from.
+        - name: cloud_vault_id
+          description: CloudVaultId is the id of the Cloud Vault to list files from.
           in: path
           required: true
           type: string
@@ -53061,7 +53121,7 @@ paths:
         - FilesService
       security:
         - API Keys: []
-  /api/v2/files/{file_vault_id}/{name}:
+  /api/v2/files/{cloud_vault_id}/{name}:
     get:
       summary: Get information about a specific file
       description: Gets information about a file along with any metadata
@@ -54751,9 +54811,9 @@ paths:
                       type: string
                   additionalProperties: {}
       parameters:
-        - name: file_vault_id
+        - name: cloud_vault_id
           description: >-
-            FileVaultId is the id of the File Vault where the file to get data
+            CloudVaultId is the id of the Cloud Vault where the file to get data
             about is
 
             stored.
@@ -55776,9 +55836,9 @@ paths:
                       type: string
                   additionalProperties: {}
       parameters:
-        - name: file_vault_id
+        - name: cloud_vault_id
           description: >-
-            The globally unique identifier for the File Vault where the file to
+            The globally unique identifier for the Cloud Vault where the file to
             delete is.
           in: path
           required: true
@@ -55794,7 +55854,7 @@ paths:
         - API Keys: []
     patch:
       summary: Updates metadata for a file.
-      description: Updates the metadata for a file on a specific File Vault.
+      description: Updates the metadata for a file on a specific Cloud Vault.
       operationId: FilesServiceupdateFileMetadata
       responses:
         '200':
@@ -56813,7 +56873,7 @@ paths:
             description: An error with an explanation.
             title: Error
         '404':
-          description: Returned when the File Vault could not be found.
+          description: Returned when the Cloud Vault could not be found.
           schema:
             type: object
             properties:
@@ -57481,9 +57541,9 @@ paths:
                       type: string
                   additionalProperties: {}
       parameters:
-        - name: file_vault_id
+        - name: cloud_vault_id
           description: >-
-            The globally unique identifier for the File Vault where the file to
+            The globally unique identifier for the Cloud Vault where the file to
             delete is.
           in: path
           required: true
@@ -57509,10 +57569,10 @@ paths:
         - FilesService
       security:
         - API Keys: []
-  /api/v2/files/{update_bulk.file_vault_id}:
+  /api/v2/files/{update_bulk.cloud_vault_id}:
     patch:
-      summary: Update or add metadata to multiple files in a filevault.
-      description: Update or add metadata to multiple files in a filevault.
+      summary: Update or add metadata to multiple files in a Cloud Vault.
+      description: Update or add metadata to multiple files in a Cloud Vault.
       operationId: FilesServiceupdateBulkFileMetadata
       responses:
         '200':
@@ -58516,10 +58576,10 @@ paths:
                       type: string
                   additionalProperties: {}
       parameters:
-        - name: update_bulk.file_vault_id
+        - name: update_bulk.cloud_vault_id
           description: >-
-            The globally unique identifier for the File Vault where the files to
-            bulk apply metadata to are.
+            The globally unique identifier for the Cloud Vault where the files
+            to bulk apply metadata to are.
           in: path
           required: true
           type: string
@@ -58535,7 +58595,7 @@ paths:
                 items:
                   type: string
                 description: >-
-                  A list of the files in the File Vault to bulk apply metadata
+                  A list of the files in the Cloud Vault to bulk apply metadata
                   to.
               user_settings:
                 type: object
@@ -58573,4 +58633,4 @@ tags:
       Define how and where to send data when it is exported from the InfoSum
       platform.
   - name: FilesService
-    description: List, Delete and Manage metadata about files within a File Vault.
+    description: List, Delete and Manage metadata about files within a Cloud Vault.
