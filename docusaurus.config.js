@@ -13,7 +13,7 @@ const INFOSUM_PORTAL_NAME = 'InfoSum Developer Documentation';
 const config = {
   title: INFOSUM_PORTAL_NAME,
   tagline: 'Data Collaboration Platform',
-  url: 'https://infosum.com',
+  url: 'https://infosum.github.io',
   baseUrl: process.env.BASE_URL || '/infosum-docs/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
