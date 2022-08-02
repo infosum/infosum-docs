@@ -1,3 +1,6 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 import Authentication from '../_partials/_authentication.mdx';
 
 # Transforming a file
@@ -12,10 +15,15 @@ If no files have been uploaded to the [Cloud Vault](../cloudvaults), please refe
 
 If files are available to transform you will need the file IDs. To obtain the file IDs, run:
 
+<Tabs>
+  <TabItem value="curl" label="cURL" default>
+
 ```bash
 curl --location --request GET 'https://api.integration.k8s.is/api/v2/files/' \
 --header 'Authorization: $INFOSUM_API_KEY'
 ```
+  </TabItem>
+</Tabs>
 
 This will give you a list of available files within the Cloud Vault and the associated meta data.
 
@@ -86,6 +94,9 @@ Once you have a `bloblang` script, you can validate it before executing it on la
 
 To do this, you will need to encode your `bloblang` script into the `script` element as shown in the following API request:
 
+<Tabs>
+  <TabItem value="curl" label="cURL" default>
+
 ```bash
 curl --location --request POST 'https://api.integration.k8s.is/api/v2/transform/scripts/validate' \
 --header 'Authorization: $INFOSUM_API_KEY' \
@@ -94,6 +105,8 @@ curl --location --request POST 'https://api.integration.k8s.is/api/v2/transform/
  "script":"input:\n  concatenate_files:\n    sort_columns: [ \"userID\" ]\n    shard_total: 0\n    shard_index: 0\n    files:\n      - pattern: \"*.csv\"\n        format:\n          type: csv\n          csv:\n            delimiter: \",\"\n            headers: true\n\npipeline:\n  processors:\n    - bloblang: |\n        # Get the root (row)\n        root = this\n\n        # Set a map of key-values as sorted by the key (column name)\n        root.kvs = this.key_values().sort_by(pair -> pair.key)\n\n        # Set the '\''category'\'' parameter of the root to a map where:\n        # For each element in the sorted key-values:\n          # If the value is set to \"1\" AND the key (column header) contains \"cat\"\n            # Then set the value to be the key (column header)\n          # Else\n            # Throw away the element\n        root.category = root.kvs.map_each(kv -> if kv.value == \"1\" && kv.key.contains(\"cat\") {kv.key} else {deleted()}) \n        # Example:\n          # In:  {\"kvs\":{\"cat_1\":\"1\",\"cat_2\":\"0\",\"cat_3\":\"1\",\"something_else\":\"1\"}}\n          # Out: {\"category\":[\"cat_1\", \"cat_3\"}}\n\noutput: \n  store_file:\n    name: reverse_encoded.sdf\n    schema:\n      - { name: userID,      type: STRING }\n      - { name: category,       type: STRING_ARRAY}\n"
  }'
 ```
+  </TabItem>
+</Tabs>
 
 ### Running a transformation
 
@@ -105,6 +118,9 @@ The information required by `static` transformation endpoint is:
 - A `file_vault_id` which references where the `input` files in the `script` are housed
 - The `compute_instance_id` of where the `script` will be run
 
+<Tabs>
+  <TabItem value="curl" label="cURL" default>
+
 ```bash
 curl --location --request POST 'https://api.integration.k8s.is/api/v2/transform/static-tasks' \
 --header 'Authorization: $INFOSUM_API_KEY' \
@@ -115,3 +131,5 @@ curl --location --request POST 'https://api.integration.k8s.is/api/v2/transform/
   "compute_instance_id": ""
 }'
 ```
+  </TabItem>
+</Tabs>
