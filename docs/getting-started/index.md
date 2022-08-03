@@ -9,3 +9,5 @@ You will find a selection of practical guides to using and building against the 
 - [Uploading a file from AWS S3 to a Cloud Vault](./uploading-a-file-from-aws-s3-to-a-cloudvault)
 - [Transforming a file](./transforming-a-file)
 
+You can use the API to interface with InfoSum Platform services and integrate with your application.
+
