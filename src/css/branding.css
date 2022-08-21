@@ -1,0 +1,72 @@
+/*-- Nav bar --*/
+.navbar--fixed-top{
+    background:#13294b;
+        color: #ffffff ;
+    }
+    .navbar--fixed-top a{
+        color: #ffffff ;
+    }
+    .navbar--fixed-top a:hover{
+        color: #F28B2C ;
+    }
+    /*-- Features section --*/
+    .features_t9lD{
+    background:#ffffff;
+    background:#ffffff;
+        color: #13294b ;
+    }
+    .features_t9lD h1, .features_t9lD h2, .features_t9lD h3, .features_t9lD p{
+        color: #13294b;
+    }
+    
+    /*-- Footer --*/
+    .footer.footer--dark{
+    background:#0f203c;
+        color: #ffffff;
+        border-top:4px #F28B2C solid ;
+    }
+    
+    /*-- Hero banner --*/
+    .heroBanner_qdFl{
+    background:#F28B2C;
+    color: white;
+    background-image: url(https://s3.eu-west-2.amazonaws.com/infosum.com-assets/images/hero-section.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 12rem 0 ;
+    }
+    
+    /*-- BUTTON --*/
+    .button.button--secondary{
+    background:#F28B2C;
+    color:#ffffff;
+    border: transparent;
+    border-radius: 1em ;
+    }
+    
+    .button.button--secondary:hover{
+    background:#6cace4 ;
+    color:#ffffff;
+    border: transparent;
+    }
+    
+    /*---MENU--*/
+    .menu-content, .iqUcGn, .sidebar_njMd{
+        background:#0f203c;
+    }
+    
+    /*---MENU--*/
+    .iqUcGn:hover{
+        background:#F28B2C;
+    }
+    
+    .xHRqD{
+        background:#0d1c34;}
+    .xHRqD:hover {
+      background:#091425;} 
+    
+    
+    .KffPM{
+     background: #0b182d;
+    }
+    
