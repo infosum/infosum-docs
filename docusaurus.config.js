@@ -37,7 +37,10 @@ const config = {
         //   editUrl: 'https://github.com/infosum/infosum-docs/tree/main/blog/',
         // },
         theme: {
-          customCss: require.resolve('./src/css/custom.css'),
+          customCss: [
+            require.resolve('./src/css/custom.css'),
+            require.resolve('./src/css/branding.css'),
+          ],
         },
         sitemap: {
           changefreq: 'weekly',

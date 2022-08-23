@@ -12,7 +12,7 @@ type FeatureItem = {
 const FeatureList: FeatureItem[] = [
   {
     title: 'API Reference',
-    Svg: require('@site/static/img/placeholder.svg').default,
+    Svg: require('@site/static/img/icon_api.svg').default,
     description: (
       <>
         You can get started with our <Link href='/api/v2'>API Reference</Link>
@@ -21,7 +21,7 @@ const FeatureList: FeatureItem[] = [
   },
   {
     title: 'Quick Start',
-    Svg: require('@site/static/img/placeholder.svg').default,
+    Svg: require('@site/static/img/icon_quick-start.svg').default,
     description: (
       <>
         If you are new to the <Link href='https://www.infosum.com'>InfoSum Platform</Link> you can use our <Link href='/docs/getting-started' >getting started guides.</Link>
