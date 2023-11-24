@@ -3924,7 +3924,7 @@ definitions:
           A list of all Connections between the users Datasets and
           those the user has been granted access to.
         title: Connections
-      datasets:
+      Datasets:
         type: array
         items:
           $ref: '#/definitions/tyraelDataset'
@@ -3941,7 +3941,7 @@ definitions:
           Specifies whether to return all Datasets, or only those that are
           owned or not owned by the requesting user.
         title: OwnershipFilter
-      datasets:
+      Datasets:
         $ref: '#/definitions/tyraelDatasetFilter'
         description: >-
           Contains parameters for filtering Datasets based on user visible
@@ -3952,7 +3952,7 @@ definitions:
   tyraelListDatasetsResponse:
     type: object
     properties:
-      datasets:
+      Datasets:
         type: array
         items:
           $ref: '#/definitions/tyraelDataset'
@@ -4368,7 +4368,7 @@ definitions:
           Threshold is the redaction threshold that will be applied to all bins
           in the results.
         title: Threshold
-      datasets:
+      Datasets:
         type: array
         items:
           $ref: '#/definitions/tyraelDatasetThreshold'
@@ -4553,7 +4553,7 @@ definitions:
           Threshold is the rounding threshold that will be applied to all bins
           in the results.
         title: Threshold
-      datasets:
+      Datasets:
         type: array
         items:
           $ref: '#/definitions/tyraelDatasetThreshold'
