@@ -515,6 +515,154 @@
 			},
 			"type": "object"
 		},
+		"CloudVaults.AssociateResponse": {
+			"type": "object"
+		},
+		"CloudVaults.CloudVault": {
+			"description": "CloudVault is the details about a specific Cloud Vault.",
+			"properties": {
+				"created_by": {
+					"description": "Output only. CreatedBy is the id of the user that created this Cloud Vault.",
+					"readOnly": true,
+					"type": "string"
+				},
+				"created_date_time": {
+					"description": "Output only. CreatedDateTime is the date and time that this Cloud Vault was\ncreated.",
+					"format": "date-time",
+					"readOnly": true,
+					"type": "string"
+				},
+				"description": {
+					"description": "Description is an optional description given to this Cloud Vault.",
+					"type": "string"
+				},
+				"id": {
+					"description": "Output only. ID is the unique identifier of the Cloud Vault.",
+					"readOnly": true,
+					"type": "string"
+				},
+				"name": {
+					"description": "Name is the display name given to this Cloud Vault.",
+					"type": "string"
+				},
+				"owner_id": {
+					"description": "Output only. OwnerId is the id of the owner of this Cloud Vault.",
+					"readOnly": true,
+					"type": "string"
+				},
+				"region": {
+					"$ref": "#/definitions/CloudVaults.Region",
+					"description": "Output only. Region identifies the region that this Cloud Vault is located\nin.",
+					"readOnly": true
+				},
+				"updated_date_time": {
+					"format": "date-time",
+					"readOnly": true,
+					"title": "Output only. UpdatedDateTime is the date and time that thie Cloud Vault was\nupdated",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"CloudVaults.CreateRequest": {
+			"properties": {
+				"description": {
+					"description": "Description is an optional description given to this Cloud Vault.",
+					"type": "string"
+				},
+				"name": {
+					"description": "Name is the display name given to this Cloud Vault.",
+					"type": "string"
+				},
+				"region": {
+					"$ref": "#/definitions/CloudVaults.Region",
+					"description": "Region identifies the region that this Cloud Vault is located in.\nExpected format: cloudprovider + region e.g. aws-eu-west-2\nNote: ibm-eu-central-1 is a deprecated value."
+				}
+			},
+			"required": [
+				"name",
+				"region"
+			],
+			"type": "object"
+		},
+		"CloudVaults.CreateResponse": {
+			"properties": {
+				"cloud_vault": {
+					"$ref": "#/definitions/CloudVaults.CloudVault"
+				}
+			},
+			"type": "object"
+		},
+		"CloudVaults.DeleteResponse": {
+			"type": "object"
+		},
+		"CloudVaults.DissociateResponse": {
+			"type": "object"
+		},
+		"CloudVaults.GetResponse": {
+			"properties": {
+				"cloud_vault": {
+					"$ref": "#/definitions/CloudVaults.CloudVault"
+				}
+			},
+			"type": "object"
+		},
+		"CloudVaults.ListResponse": {
+			"properties": {
+				"cloud_vaults": {
+					"items": {
+						"$ref": "#/definitions/CloudVaults.CloudVault",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"pagination": {
+					"$ref": "#/definitions/PaginationResponse",
+					"description": "Pagination is the information on how the results were paginated."
+				}
+			},
+			"type": "object"
+		},
+		"CloudVaults.Region": {
+			"default": "UNKNOWN",
+			"description": "Region enumerates the supported cloud providers and locations.\n\n - UNKNOWN: UNKNOWN means the region has not been defined.\n - AWS_EU_WEST_2: AWS_EU_WEST_2 means AWS Europe (London).\n - AWS_US_EAST_1: AWS_US_EAST_1 means AWS US East (N. Virginia).\n - IBM_EU_CENTRAL_1: IBM_EU_CENTRAL_1 means IBM MZR EU Central (Frankfurt).\n - AWS_EU_CENTRAL_1: AWS_EU_CENTRAL_1 means AWS Europe (Frankfurt).\n - AWS_AP_SOUTHEAST_2: AWS_AP_SOUTHEAST_2 means AWS Asia Pacific (Sydney)",
+			"enum": [
+				"UNKNOWN",
+				"AWS_EU_WEST_2",
+				"AWS_US_EAST_1",
+				"IBM_EU_CENTRAL_1",
+				"AWS_EU_CENTRAL_1",
+				"AWS_AP_SOUTHEAST_2"
+			],
+			"type": "string"
+		},
+		"CloudVaults.UpdateCloudVault": {
+			"description": "UpdateCloudVault is used to update a Cloud Vault. Users can only update the\nname, description and auth fields.",
+			"properties": {
+				"description": {
+					"description": "Description is an optional description given to this Cloud Vault.",
+					"type": "string"
+				},
+				"id": {
+					"description": "Output only. ID is the unique identifier of the Cloud Vault.",
+					"readOnly": true,
+					"type": "string"
+				},
+				"name": {
+					"description": "Name is the display name given to this Cloud Vault.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"CloudVaults.UpdateResponse": {
+			"properties": {
+				"cloud_vault": {
+					"$ref": "#/definitions/CloudVaults.CloudVault"
+				}
+			},
+			"type": "object"
+		},
 		"CloudVaultsList": {
 			"description": "CloudVaultsList contains a list of Cloud Vault IDs.",
 			"properties": {
@@ -7258,6 +7406,487 @@
 				"summary": "CancelExecution an automation execution",
 				"tags": [
 					"Automations"
+				]
+			}
+		},
+		"/api/v2/cloud_vaults": {
+			"get": {
+				"description": "List available Cloud Vaults.",
+				"operationId": "List",
+				"parameters": [
+					{
+						"description": "Page is the page to view.",
+						"format": "int32",
+						"in": "query",
+						"name": "pagination.page",
+						"required": false,
+						"type": "integer"
+					},
+					{
+						"description": "PerPage is the number of items per page.",
+						"format": "int32",
+						"in": "query",
+						"name": "pagination.per_page",
+						"required": false,
+						"type": "integer"
+					},
+					{
+						"description": "OrderBy is a comma seperated value to define sorting.\ne.g 'name,created_time DESC'\nThe values are seperated by space, '{column} {ASC/DESC}'",
+						"in": "query",
+						"name": "order_by",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"description": "Filter is a string containing logic that can specify a restricted set of\nCloud Vaults to be returned. e.g. `name co 'Test' or name co 'Acme'`",
+						"in": "query",
+						"name": "filter",
+						"required": false,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/CloudVaults.ListResponse"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the required permission.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "List Cloud Vaults.",
+				"tags": [
+					"CloudVaults"
+				]
+			},
+			"post": {
+				"description": "Create a Cloud Vault to hold data and connect to a bunker.",
+				"operationId": "Create",
+				"parameters": [
+					{
+						"in": "body",
+						"name": "body",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/CloudVaults.CreateRequest"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/CloudVaults.CreateResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the Cloud Vault was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the required permission.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"409": {
+						"description": "Returned when a Cloud Vault with the same name already exists.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Create a new Cloud Vault.",
+				"tags": [
+					"CloudVaults"
+				]
+			}
+		},
+		"/api/v2/cloud_vaults/{cloud_vault.id}": {
+			"patch": {
+				"description": "Updates the provided fields in a specific Cloud Vault.",
+				"operationId": "Update",
+				"parameters": [
+					{
+						"description": "Output only. ID is the unique identifier of the Cloud Vault.",
+						"in": "path",
+						"name": "cloud_vault.id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"in": "body",
+						"name": "cloud_vault",
+						"required": true,
+						"schema": {
+							"description": "UpdateCloudVault is used to update a Cloud Vault. Users can only update the\nname, description and auth fields.",
+							"properties": {
+								"description": {
+									"description": "Description is an optional description given to this Cloud Vault.",
+									"type": "string"
+								},
+								"name": {
+									"description": "Name is the display name given to this Cloud Vault.",
+									"type": "string"
+								}
+							},
+							"type": "object"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/CloudVaults.UpdateResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the required permission.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"404": {
+						"description": "Returned when the Cloud Vault could not be found.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Update a Cloud Vault",
+				"tags": [
+					"CloudVaults"
+				]
+			}
+		},
+		"/api/v2/cloud_vaults/{cloud_vault_id}/associate": {
+			"post": {
+				"description": "Associate a Cloud Vault with a bunker, a Cloud Vault can be associated with with multiple bunkers",
+				"operationId": "Associate",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "cloud_vault_id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"in": "body",
+						"name": "body",
+						"required": true,
+						"schema": {
+							"description": "AssociateRequest used to associate a Cloud Vault with the supplied bunker.",
+							"properties": {
+								"bunker_id": {
+									"type": "string"
+								}
+							},
+							"type": "object"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/CloudVaults.AssociateResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the required permission.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Associate a Cloud Vault with a bunker",
+				"tags": [
+					"CloudVaults"
+				]
+			}
+		},
+		"/api/v2/cloud_vaults/{cloud_vault_id}/dissociate": {
+			"post": {
+				"description": "Dissociate a Cloud Vault from a bunker",
+				"operationId": "Dissociate",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "cloud_vault_id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"in": "body",
+						"name": "body",
+						"required": true,
+						"schema": {
+							"description": "DissociateRequest used to dissociate a Cloud Vault from the supplied bunker.",
+							"properties": {
+								"bunker_id": {
+									"type": "string"
+								}
+							},
+							"type": "object"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/CloudVaults.DissociateResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the required permission.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Dissociate a Cloud Vault from a bunker",
+				"tags": [
+					"CloudVaults"
+				]
+			}
+		},
+		"/api/v2/cloud_vaults/{id}": {
+			"delete": {
+				"description": "Deletes a specific Cloud Vault.",
+				"operationId": "Delete",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"description": "Force will, if set, delete a Cloud Vault that is associated with a bunker or\nis currently in use. If it is not set, an error will be returned in these cases\ninstead.",
+						"in": "query",
+						"name": "force",
+						"required": false,
+						"type": "boolean"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/CloudVaults.DeleteResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the required permission.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Delete a Cloud Vault.",
+				"tags": [
+					"CloudVaults"
+				]
+			},
+			"get": {
+				"description": "Get the details of a specific Cloud Vault.",
+				"operationId": "Get",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/CloudVaults.GetResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the required permission.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"404": {
+						"description": "Returned when the Cloud Vault could not be found.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Get a Cloud Vault.",
+				"tags": [
+					"CloudVaults"
 				]
 			}
 		},
