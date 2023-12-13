@@ -19,15 +19,15 @@ const FeatureList: FeatureItem[] = [
       </>
     ),
   },
-  {
-    title: 'Quick Start',
-    Svg: require('@site/static/img/icon_quick-start.svg').default,
-    description: (
-      <>
-        If you are new to the <Link href='https://www.infosum.com'>InfoSum Platform</Link> you can use our <Link href='/docs/getting-started' >getting started guides.</Link>
-      </>
-    ),
-  },
+  // {
+  //   title: 'Quick Start',
+  //   Svg: require('@site/static/img/icon_quick-start.svg').default,
+  //   description: (
+  //     <>
+  //       If you are new to the <Link href='https://www.infosum.com'>InfoSum Platform</Link> you can use our <Link href='/docs/getting-started' >getting started guides.</Link>
+  //     </>
+  //   ),
+  // },
 ];
 
 function Feature({title, Svg, description}: FeatureItem) {
