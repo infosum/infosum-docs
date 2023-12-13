@@ -10,8 +10,6 @@ info:
   contact:
     name: InfoSum Support
     email: support@infosum.com
-tags:
-  - name: Tyrael
 schemes:
   - https
 consumes:
