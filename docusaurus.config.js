@@ -113,12 +113,12 @@ const config = {
           src: '/img/infosum.png',
         },
         items: [
-          {
-            type: 'doc',
-            docId: 'intro',
-            position: 'left',
-            label: 'Docs',
-          },
+          // {
+          //   type: 'doc',
+          //   docId: 'intro',
+          //   position: 'left',
+          //   label: 'Docs',
+          // },
           { to: '/api/v1', label: 'API V1', position: 'left' },
           { to: '/api/v2', label: 'Σ API', position: 'left' },
           // { to: '/blog', label: 'Blog', position: 'left' },
@@ -135,10 +135,10 @@ const config = {
           {
             title: 'Docs',
             items: [
-              {
-                label: 'Tutorial',
-                to: '/docs/intro',
-              },
+              // {
+              //   label: 'Tutorial',
+              //   to: '/docs/intro',
+              // },
               {
                 label: 'Help Center',
                 to: 'https://support.infosum.com/',
