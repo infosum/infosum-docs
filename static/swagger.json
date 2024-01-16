@@ -6061,10 +6061,6 @@
 		},
 		"Reports.DatasetOrAudienceID": {
 			"properties": {
-				"audience_id": {
-					"description": "The audience to use as the data source.",
-					"type": "string"
-				},
 				"dataset_id": {
 					"description": "The dataset to use as the data source.",
 					"type": "string"
