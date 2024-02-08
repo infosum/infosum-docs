@@ -1303,49 +1303,6 @@ definitions:
           wrong and how to fix it.
         type: string
     type: object
-  Exports.AirbyteConnector:
-    description: >-
-      AirbyteConnector is the information required to define a destination
-      pushing using airbyte.
-    properties:
-      airbyte_destination_id:
-        description: >-
-          AirbyteDestinationID is used to uniquely identify which airbyte
-          destination to use.
-        type: string
-      config:
-        description: Config contains the serialised Airbyte JSON config for this connector.
-        type: string
-    type: object
-  Exports.AirbyteConnectorOverview:
-    description: >-
-      AirbyteConnectorOverview contains overview information about an airbyte
-      connector.
-    properties:
-      airbyte_destination_id:
-        description: >-
-          AirbyteDestinationID is used to uniquely identify which airbyte
-          destination to use.
-        type: string
-      config:
-        description: >-
-          Config contains serialised Airbyte JSON config for this connector with
-          any sensitive information removed.
-        type: string
-    type: object
-  Exports.AirbyteDestinationOverview:
-    description: >-
-      AirbyteDestinationOverview is an overview of the destination, without the
-      large schema attached.
-    properties:
-      airbyte_destination_id:
-        type: string
-      name:
-        type: string
-    type: object
-  Exports.AirbytePush:
-    description: AirbytePush contains any push time overrides required.
-    type: object
   Exports.AwsRegion:
     default: UNKNOWN_REGION
     description: |-
@@ -1401,7 +1358,6 @@ definitions:
        - S3_CROSS_ACCOUNT_PAIR: S3_CROSS_ACCOUNT_PAIR indicates the destination is targeting S3 assuming an iam role for authentication and using PAIR encryption.
        - SFTP_PAIR: SFTP_PAIR indicates the destination is targeting a SFTP server for authentication and using PAIR encryption.
        - DV360_CUSTOMER_MATCH: DV360_CUSTOMER_MATCH indicates the destination is targeting DV360 Customer Match.
-       - AIRBYTE: AIRBYTE indicates the destionation is targeting the airbyte exporter.
        - TRADEDESK: TRADEDESK indicates the destination is targeting trade desk
     enum:
       - CONNECTOR_TYPE_INVALID
@@ -1416,7 +1372,6 @@ definitions:
       - S3_CROSS_ACCOUNT_PAIR
       - SFTP_PAIR
       - DV360_CUSTOMER_MATCH
-      - AIRBYTE
       - TRADEDESK
     type: string
   Exports.ContactInfoMapping:
@@ -1576,8 +1531,6 @@ definitions:
   Exports.Destination:
     description: Destination is the information required to define destinations.
     properties:
-      airbyte_connector:
-        $ref: '#/definitions/Exports.AirbyteConnector'
       connector_type:
         $ref: '#/definitions/Exports.ConnectorType'
         description: >-
@@ -1676,8 +1629,6 @@ definitions:
       DestinationWithConnectorOverview contains information about a destinations
       and its connector.
     properties:
-      airbyte_connector:
-        $ref: '#/definitions/Exports.AirbyteConnectorOverview'
       connector_type:
         $ref: '#/definitions/Exports.ConnectorType'
         description: ConnectorType states the type of connector used by the destination.
@@ -1758,9 +1709,6 @@ definitions:
       activation_query_id:
         description: ActivationQueryId is the id of the activation query.
         type: string
-      airbyte:
-        $ref: '#/definitions/Exports.AirbytePush'
-        title: Airbyte connector type
       cohort_version:
         description: CohortVersion is the version of the cohort to push.
         type: string
@@ -2055,14 +2003,6 @@ definitions:
           of the file). Optional.
         type: string
     type: object
-  Exports.GetAirbyteDestinationSchemaResponse:
-    description: >-
-      GetAirbyteDestinationSchemaResponse contains the json schema for the
-      airbyte detination configuration.
-    properties:
-      schema:
-        type: string
-    type: object
   Exports.GetDestinationResponse:
     description: GetDestinationResponse is the output of the GetDestination method.
     properties:
@@ -2076,19 +2016,6 @@ definitions:
     properties:
       details:
         $ref: '#/definitions/Exports.S3CrossAccountDetails'
-    type: object
-  Exports.ListAirbyteDestinationsResponse:
-    description: >-
-      ListAirbyteDestinationsResponse is the output of the
-      ListAirbyteDestinations method.
-    properties:
-      destinations:
-        items:
-          $ref: '#/definitions/Exports.AirbyteDestinationOverview'
-          type: object
-        type: array
-      pagination:
-        $ref: '#/definitions/PaginationResponse'
     type: object
   Exports.ListDestinationsResponse:
     description: ListDestinationsResponse is the output of the ListDestination method.
@@ -4850,12 +4777,6 @@ definitions:
         format: date-time
         type: string
     type: object
-  Recordsets.AdoptResponse:
-    properties:
-      id:
-        type: string
-    title: AdoptResponse
-    type: object
   Recordsets.AttributeColumn:
     description: AttributeColumn contains metadata about an Insight Column.
     properties:
@@ -5687,9 +5608,6 @@ definitions:
     type: object
   Reports.DatasetOrAudienceID:
     properties:
-      audience_id:
-        description: The audience to use as the data source.
-        type: string
       dataset_id:
         description: The dataset to use as the data source.
         type: string
@@ -5738,16 +5656,16 @@ definitions:
       category_value_2:
         description: The value of category 2 for the result.
         type: string
+      index:
+        description: The index score calculated for the result.
+        format: int32
+        type: integer
       intersection_foreground:
         description: >-
           The count of all rows within the seed-baseline intersection that
           contain the specific category value.
         format: int64
         type: string
-      score:
-        description: The score calculated for the result.
-        format: double
-        type: number
     type: object
   Reports.GetCrossCategoryResultResponse:
     properties:
@@ -5766,6 +5684,11 @@ definitions:
       baseline_filter:
         description: An IQL filter defining how the baseline was filtered.
         type: string
+      categories:
+        description: The categories included in the report.
+        items:
+          type: string
+        type: array
       created_by:
         description: The user ID of the user who created the insight report.
         type: string
@@ -5773,6 +5696,11 @@ definitions:
         description: The datetime the insight report was created.
         format: date-time
         type: string
+      error:
+        $ref: '#/definitions/Error'
+        description: >-
+          The error that caused a report to fail. Empty if report has not
+          failed.
       owner_id:
         description: The ID for the company that owns the insight report.
         type: string
@@ -5788,10 +5716,18 @@ definitions:
       seed_filter:
         description: An IQL filter defining how to the seed was filtered.
         type: string
+      status:
+        $ref: '#/definitions/Reports.v1.Status'
+        description: The status of report generation.
     type: object
   Reports.GetStatusResponse:
     description: GetStatusResponse is the GetStatus rpc response.
     properties:
+      error:
+        $ref: '#/definitions/Error'
+        description: >-
+          The error that caused a report to fail. Empty if report has not
+          failed.
       progress:
         $ref: '#/definitions/Reports.Progress'
         description: The progress of the queries required to generate the report.
@@ -5896,16 +5832,16 @@ definitions:
       category_value:
         description: The value within the category.
         type: string
+      index:
+        description: The index score calculated for the result.
+        format: int32
+        type: integer
       intersection_foreground:
         description: >-
           The count of all rows within the seed-baseline intersection that
           contain the specific category value.
         format: int64
         type: string
-      score:
-        description: The score calculated for the result.
-        format: double
-        type: number
     type: object
   Reports.v1.Status:
     default: NO_STATUS
@@ -8334,101 +8270,6 @@ paths:
       summary: Updates the top level information about a Sigma dataset.
       tags:
         - Datasets
-  /api/v2/exports/airbytedestinations:
-    get:
-      description: Lists available Airbyte Destinations.
-      operationId: ListAirbyteDestinations
-      parameters:
-        - description: Page is the page to view.
-          format: int32
-          in: query
-          name: pagination.page
-          required: false
-          type: integer
-        - description: PerPage is the number of items per page.
-          format: int32
-          in: query
-          name: pagination.per_page
-          required: false
-          type: integer
-        - description: |-
-            OrderBy is a comma seperated value to define sorting.
-            e.g 'created_time,name DESC'
-            The values are seperated by space, '{column} {ASC/DESC}'
-            Valid columns: name, created_time
-          in: query
-          name: order_by
-          required: false
-          type: string
-        - in: query
-          name: filter
-          required: false
-          type: string
-      responses:
-        '200':
-          description: A successful response.
-          schema:
-            $ref: '#/definitions/Exports.ListAirbyteDestinationsResponse'
-        '400':
-          description: Returned when the request was not valid.
-          schema:
-            $ref: '#/definitions/Error'
-        '401':
-          description: Returned when the user could not be authorized.
-          schema:
-            $ref: '#/definitions/Error'
-        '403':
-          description: Returned when the user does not have the right to view Destinations.
-          schema:
-            $ref: '#/definitions/Error'
-        '500':
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/Error'
-        default:
-          description: An unexpected error response.
-          schema:
-            $ref: '#/definitions/Error'
-      summary: List Airbyte Destinations
-      tags:
-        - Exports
-  /api/v2/exports/airbytedestinations/{airbyte_destination_id}/schema:
-    get:
-      description: Gets available Airbyte Destination Schema.
-      operationId: GetAirbyteDestinationSchema
-      parameters:
-        - in: path
-          name: airbyte_destination_id
-          required: true
-          type: string
-      responses:
-        '200':
-          description: A successful response.
-          schema:
-            $ref: '#/definitions/Exports.GetAirbyteDestinationSchemaResponse'
-        '400':
-          description: Returned when the request was not valid.
-          schema:
-            $ref: '#/definitions/Error'
-        '401':
-          description: Returned when the user could not be authorized.
-          schema:
-            $ref: '#/definitions/Error'
-        '403':
-          description: Returned when the user does not have the right to view Destinations.
-          schema:
-            $ref: '#/definitions/Error'
-        '500':
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/Error'
-        default:
-          description: An unexpected error response.
-          schema:
-            $ref: '#/definitions/Error'
-      summary: Get Airbyte Destination Schema
-      tags:
-        - Exports
   /api/v2/exports/destinations:
     get:
       description: Lists available Destinations.
@@ -8577,8 +8418,6 @@ paths:
           schema:
             description: Destination is the information required to define destinations.
             properties:
-              airbyte_connector:
-                $ref: '#/definitions/Exports.AirbyteConnector'
               connector_type:
                 $ref: '#/definitions/Exports.ConnectorType'
                 description: >-
@@ -11314,108 +11153,6 @@ paths:
           schema:
             $ref: '#/definitions/Error'
       summary: Get a Recordset Config.
-      tags:
-        - Recordsets
-  /api/v2/recordset-creation/adopt/{cloud_vault_id}:
-    post:
-      description: >-
-        Create a new recordset from the specified files, optionally with a
-        normalization config
-      operationId: Adopt
-      parameters:
-        - description: >-
-            CloudVaultID is the id of the cloud vault to find the files and
-            create the recordset on
-          in: path
-          name: cloud_vault_id
-          required: true
-          type: string
-        - in: body
-          name: body
-          required: true
-          schema:
-            properties:
-              attribute_column_count:
-                description: >-
-                  AttributeColumnCount is the count of all the Attribute
-                  Columns.
-                format: int64
-                type: string
-              average_fill_rate:
-                description: AverageFillRate is the average fill rate of all columns.
-                format: float
-                type: number
-              columns_headers:
-                description: ColumnHeaders is a list of the column header values.
-                items:
-                  type: string
-                type: array
-              files:
-                items:
-                  type: string
-                title: Files is the list of files to be included inthe new recordset
-                type: array
-              is_publishable:
-                description: >-
-                  IsPublishable is a flag used to mark the recordset as
-                  publishable.
-                type: boolean
-              key_column_count:
-                description: KeyColumnCount is the count of all the Key Columns.
-                format: int64
-                type: string
-              name:
-                title: Name is the name for the new Recordset
-                type: string
-              normalization_details:
-                $ref: '#/definitions/Recordsets.Normalization'
-                description: >-
-                  Normalization details contains metadata about the normalized
-                  recordset.
-              raw_column_count:
-                description: RawColumnCount is the count of all the Raw Columns.
-                format: int64
-                type: string
-              record_count:
-                format: int64
-                title: record_count is the total number of rows in the recordset
-                type: string
-            title: AdoptRequest
-            type: object
-      responses:
-        '200':
-          description: A successful response.
-          schema:
-            $ref: '#/definitions/Recordsets.AdoptResponse'
-        '400':
-          description: Returned when the request was not valid.
-          schema:
-            $ref: '#/definitions/Error'
-        '401':
-          description: Returned when the user could not be authorized.
-          schema:
-            $ref: '#/definitions/Error'
-        '403':
-          description: Returned when the user does not have the required permission.
-          schema:
-            $ref: '#/definitions/Error'
-        '404':
-          description: Returned when a resource is not found.
-          schema:
-            $ref: '#/definitions/Error'
-        '409':
-          description: Returned when a recordset with the same name already exists.
-          schema:
-            $ref: '#/definitions/Error'
-        '500':
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/Error'
-        default:
-          description: An unexpected error response.
-          schema:
-            $ref: '#/definitions/Error'
-      summary: Adopt files as a new Recordset
       tags:
         - Recordsets
   /api/v2/recordset-creation/execute:
