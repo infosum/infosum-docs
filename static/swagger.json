@@ -64,10 +64,6 @@
 			},
 			"type": "object"
 		},
-		"Automations.CancelExecutionResponse": {
-			"description": "CancelExecutionResponse is the output of the CancelExecution method.",
-			"type": "object"
-		},
 		"Automations.Config": {
 			"description": "The information required to define an automation.",
 			"properties": {
@@ -7267,69 +7263,6 @@
 					}
 				},
 				"summary": "GetExecution an automation execution",
-				"tags": [
-					"Automations"
-				]
-			}
-		},
-		"/api/v2/automations/executions/{execution_id}/cancel": {
-			"post": {
-				"description": "CancelExecution an automation execution",
-				"operationId": "CancelExecution",
-				"parameters": [
-					{
-						"description": "The ID of the execution to CancelExecution.",
-						"in": "path",
-						"name": "execution_id",
-						"required": true,
-						"type": "string"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "A successful response.",
-						"schema": {
-							"$ref": "#/definitions/Automations.CancelExecutionResponse"
-						}
-					},
-					"400": {
-						"description": "Returned when the request was not valid.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"401": {
-						"description": "Returned when the user could not be authorized.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"403": {
-						"description": "Returned when the user does not have the required permission.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"404": {
-						"description": "Returned when the automation execution could not be found.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"500": {
-						"description": "Internal Server Error",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"default": {
-						"description": "An unexpected error response.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					}
-				},
-				"summary": "CancelExecution an automation execution",
 				"tags": [
 					"Automations"
 				]
