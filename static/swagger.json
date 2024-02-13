@@ -42,204 +42,326 @@
 			},
 			"type": "object"
 		},
-		"Automations.AutomationStep": {
-			"description": "The information required to define an automation step.",
+		"Automation_Configs.AutomationStep": {
+			"description": "The information required to define an Automation Step. Provide only one config per Automation Step.",
 			"properties": {
 				"import": {
-					"$ref": "#/definitions/Automations.ImportConfig",
-					"description": "The import config for this automation step."
+					"$ref": "#/definitions/Automation_Configs.ImportConfig",
+					"description": "The Import Config to execute for this Automation Step."
 				},
 				"normalization": {
-					"$ref": "#/definitions/Automations.NormalizationConfig",
-					"description": "The normalization config for this automation step."
+					"$ref": "#/definitions/Automation_Configs.NormalizationConfig",
+					"description": "The Normalization Config to execute for this Automation Step."
 				},
 				"publish": {
-					"$ref": "#/definitions/Automations.PublishConfig",
-					"description": "The publish config for this automation step."
+					"$ref": "#/definitions/Automation_Configs.PublishConfig",
+					"description": "The Publish Config to execute for this Automation Step."
 				},
 				"recordset_creation": {
-					"$ref": "#/definitions/Automations.RecordsetCreationConfig",
-					"description": "The recordset creation config for this automation step."
+					"$ref": "#/definitions/Automation_Configs.RecordsetCreationConfig",
+					"description": "The Recordset Creation Config to execute for this Automation Step."
 				}
 			},
 			"type": "object"
 		},
-		"Automations.Config": {
-			"description": "The information required to define an automation.",
+		"Automation_Configs.Config": {
+			"description": "The information required to define an Automation Config.",
 			"properties": {
 				"automation_steps": {
-					"description": "The steps required of the automation.",
+					"description": "The sequence of tasks which constitute an Execution of this Automation Config.",
 					"items": {
-						"$ref": "#/definitions/Automations.AutomationStep",
+						"$ref": "#/definitions/Automation_Configs.AutomationStep",
 						"type": "object"
 					},
 					"type": "array"
 				},
 				"cloud_vault_id": {
-					"description": "The ID of the Cloud Vault to be used during automation.",
+					"description": "The ID of the Cloud Vault to be used for reading and writing data during Automation Execution.",
 					"type": "string"
 				},
 				"created_by": {
-					"description": "The ID of the user creating the config.",
+					"description": "The ID of the user who created the Automation Config. All tasks executed under this Automation Config will be executed with this user ID.",
 					"type": "string"
 				},
 				"created_date_time": {
-					"description": "The date and time the automation was created.",
+					"description": "The UTC date-time the Automation Config was created. Output Only.",
 					"format": "date-time",
 					"type": "string"
 				},
 				"cron_timer": {
-					"description": "The start, end and frequency of the automation represented as a cron time.",
+					"description": "The execution schedule of the Automation in UNIX CRON format as described in https://man7.org/linux/man-pages/man5/crontab.5.html",
 					"type": "string"
 				},
 				"description": {
-					"description": "The description of the automation.",
+					"description": "The user-friendly description of the Automation Config.",
 					"type": "string"
 				},
 				"enabled": {
-					"description": "Is the automation enabled?",
+					"description": "The 'enabled' flag allows Automation Execution triggers to be paused and resumed without adjusting the rest of the config or schedule.",
 					"type": "boolean"
 				},
 				"end_date_time": {
-					"description": "Optional date the automation task will stop being executed automatically.",
+					"description": "Optional UTC date-time to cease triggering Automation Executions. Format is ISO 8601 e.g. 2019-11-23T18:30:00Z",
 					"format": "date-time",
 					"type": "string"
 				},
 				"id": {
-					"description": "The globally unique ID of the automation.",
+					"description": "The immutable, globally unique ID of the Automation Config. Output Only.",
 					"type": "string"
 				},
 				"name": {
-					"description": "The name of the automation.",
+					"description": "The user-friendly name of the Automation Config.",
 					"type": "string"
 				},
 				"start_date_time": {
-					"description": "Is the date to start automatically running the automation task.",
+					"description": "The UTC date-time to begin triggering Automation Executions based on the CRON schedule. Format is ISO 8601 e.g. 2019-11-23T18:30:00Z",
 					"format": "date-time",
 					"type": "string"
 				},
 				"timezone_identifier": {
-					"description": "The Timezone Identifier you want the automation to be scheduled in e.g. 'Europe/London', 'America/New_York' and more https://en.wikipedia.org/wiki/List_of_tz_database_time_zones",
+					"description": "The Timezone Identifier to schedule Automation Executions relative to. The format is form the IANA TZ database e.g. 'Europe/London' or 'America/New_York' from: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones",
 					"type": "string"
 				},
 				"updated_date_time": {
-					"description": "The date and time the automation was last updated.",
+					"description": "The UTC date-time the Automation Config was last updated. Output Only.",
 					"format": "date-time",
 					"type": "string"
 				}
 			},
 			"type": "object"
 		},
-		"Automations.CreateConfigRequest": {
-			"description": "CreateConfigRequest is the information provided when creating an automation config.",
+		"Automation_Configs.CreateConfigRequest": {
+			"description": "CreateConfigRequest is the information provided when creating an Automation Config.",
 			"properties": {
 				"cloud_vault_id": {
-					"description": "The ID of the Cloud Vault to be used during automation.",
+					"description": "The ID of the Cloud Vault to be used for reading and writing data during Automation Execution.",
 					"type": "string"
 				},
 				"cron_timer": {
-					"description": "Frequency of the automation represented as a cron time.",
+					"description": "The execution schedule of the Automation in UNIX CRON format as described in https://man7.org/linux/man-pages/man5/crontab.5.html",
 					"type": "string"
 				},
 				"description": {
-					"description": "The description of the automation.",
+					"description": "The user-friendly description of the Automation Config.",
 					"type": "string"
 				},
 				"enabled": {
-					"description": "Is the automation enabled?",
+					"description": "The 'enabled' flag allows Automation Execution triggers to be paused and resumed without adjusting the rest of the config or schedule.",
 					"type": "boolean"
 				},
 				"end_date_time": {
-					"description": "Optional date the automation task will stop being executed automatically.",
+					"description": "Optional UTC date-time to cease triggering Automation Executions. Format is ISO 8601 e.g. 2019-11-23T18:30:00Z",
 					"format": "date-time",
 					"type": "string"
 				},
 				"name": {
-					"description": "The name of the automation.",
+					"description": "The user-friendly name of the Automation Config.",
 					"type": "string"
 				},
 				"start_date_time": {
-					"description": "Is the date to start automatically running the automation task.",
+					"description": "The UTC date-time to begin triggering Automation Executions based on the CRON schedule. Format is ISO 8601 e.g. 2019-11-23T18:30:00Z",
 					"format": "date-time",
 					"type": "string"
 				},
 				"steps": {
-					"description": "Ordered automation steps of the automation.",
+					"description": "The sequence of tasks which constitute an Execution of this Automation Config.",
 					"items": {
-						"$ref": "#/definitions/Automations.AutomationStep",
+						"$ref": "#/definitions/Automation_Configs.AutomationStep",
 						"type": "object"
 					},
 					"type": "array"
 				},
 				"timezone_identifier": {
-					"description": "The Timezone Identifier you want the automation to be scheduled in e.g. 'Europe/London', 'America/New_York' and more https://en.wikipedia.org/wiki/List_of_tz_database_time_zones",
+					"description": "The Timezone Identifier to schedule Automation Executions relative to. The format is form the IANA TZ database e.g. 'Europe/London' or 'America/New_York' from: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones",
 					"type": "string"
 				}
 			},
 			"type": "object"
 		},
-		"Automations.CreateConfigResponse": {
-			"description": "CreateConfigResponse is the response from creating an automation.",
+		"Automation_Configs.CreateConfigResponse": {
+			"description": "CreateConfigResponse is the response from creating an Automation Config.",
 			"properties": {
 				"config": {
-					"$ref": "#/definitions/Automations.Config",
-					"description": "The new automation config."
+					"$ref": "#/definitions/Automation_Configs.Config",
+					"description": "The new Automation Config."
 				}
 			},
 			"type": "object"
 		},
-		"Automations.DeleteConfigResponse": {
+		"Automation_Configs.DeleteConfigResponse": {
 			"description": "DeleteConfigResponse is an empty response for the DeleteConfig resource request.",
 			"type": "object"
 		},
-		"Automations.ExecuteResponse": {
-			"description": "ExecuteResponse returns the requested automation execution ID.",
+		"Automation_Configs.GetConfigResponse": {
+			"description": "GetConfigResponse returns the requested Automation Config.",
 			"properties": {
-				"execution_id": {
-					"description": "The execution ID created by the execution request.",
+				"config": {
+					"$ref": "#/definitions/Automation_Configs.Config",
+					"description": "Details of the requested Automation Config."
+				},
+				"last_execution_id": {
+					"description": "The ID of the last Execution triggered by the Automation Config, if one exists.",
 					"type": "string"
 				}
 			},
 			"type": "object"
 		},
-		"Automations.Execution": {
+		"Automation_Configs.ImportConfig": {
+			"description": "A config used to define an Import as an Automation Step.",
+			"properties": {
+				"config_id": {
+					"description": "The Importer ID to execute for the Automation Step.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Automation_Configs.ListConfigsResponse": {
+			"description": "ListConfigsResponse returns the Automation Configs which matched the request parameters.",
+			"properties": {
+				"configs": {
+					"description": "The Automation Configs which matched the criteria of the request.",
+					"items": {
+						"$ref": "#/definitions/Automation_Configs.Config",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"pagination": {
+					"$ref": "#/definitions/PaginationResponse",
+					"description": "Details of the pagination of this response."
+				}
+			},
+			"type": "object"
+		},
+		"Automation_Configs.NormalizationConfig": {
+			"description": "A config to define Normalization as an Automation Step.",
+			"properties": {
+				"config_id": {
+					"description": "The Normalization Config ID to execute for the Automation Step.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Automation_Configs.PublishConfig": {
+			"description": "A config to define Preparation and Publishing as an Automation Step.",
+			"properties": {
+				"config_id": {
+					"description": "The Dataset Prepare Config ID to execute for the Automation Step.",
+					"type": "string"
+				},
+				"dataset_id": {
+					"description": "The ID of the dataset to publish the prepared data to.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Automation_Configs.RecordsetCreationConfig": {
+			"description": "A config to define Recordset Creation as an Automation Step.",
+			"properties": {
+				"config_id": {
+					"description": "The Recordset Creation Config ID to execute for the Automation Step.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Automation_Configs.UpdateConfig": {
+			"description": "The mutable fields of an Automation.",
+			"properties": {
+				"cron_timer": {
+					"description": "The execution schedule of the Automation in UNIX CRON format as described in https://man7.org/linux/man-pages/man5/crontab.5.html",
+					"type": "string"
+				},
+				"description": {
+					"description": "The user-friendly description of the Automation Config.",
+					"type": "string"
+				},
+				"enabled": {
+					"description": "The 'enabled' flag allows Automation Execution triggers to be paused and resumed without adjusting the rest of the config or schedule.",
+					"type": "boolean"
+				},
+				"end_date_time": {
+					"description": "The UTC date-time to cease triggering Automation Executions. Format is RFC 3339 e.g. 2019-11-23T18:30:00Z",
+					"format": "date-time",
+					"type": "string"
+				},
+				"name": {
+					"description": "The user-friendly name of the Automation Config.",
+					"type": "string"
+				},
+				"start_date_time": {
+					"description": "The UTC date-time to begin triggering Automation Executions based on the CRON schedule. Format is RFC 3339 e.g. 2019-11-23T18:30:00Z",
+					"format": "date-time",
+					"type": "string"
+				},
+				"timezone_identifier": {
+					"description": "The Timezone Identifier to schedule Automation Executions relative to. The format is form the IANA TZ database e.g. 'Europe/London' or 'America/New_York' from: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Automation_Configs.UpdateConfigResponse": {
+			"description": "UpdateConfigResponse is the response from updating an Automation.",
+			"properties": {
+				"config": {
+					"$ref": "#/definitions/Automation_Configs.Config",
+					"description": "The updated Automation Config."
+				}
+			},
+			"type": "object"
+		},
+		"Automation_Execution.ExecuteResponse": {
+			"description": "ExecuteResponse returns the requested Automation Execution ID.",
+			"properties": {
+				"execution_id": {
+					"description": "The ID of the Execution created by the Execute request.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Automation_Execution.Execution": {
 			"description": "The information required to manage an automation execution.",
 			"properties": {
 				"cloud_vault_id": {
-					"description": "The ID of the Cloud Vault that the automation has been executed on.",
+					"description": "The ID of the Cloud Vault used by the Execution.",
 					"type": "string"
 				},
 				"config_id": {
-					"description": "The config ID the execution was created from.",
+					"description": "The Automation Config ID that the Execution ran.",
 					"type": "string"
 				},
 				"current_automation_step": {
-					"$ref": "#/definitions/Automations.TaskType",
-					"description": "The current step of the automation execution."
+					"$ref": "#/definitions/Automation_Execution.TaskType",
+					"description": "The current Step of the Execution."
 				},
 				"current_step_status": {
-					"$ref": "#/definitions/Automations.v1.Status",
-					"description": "The status of the current execution."
+					"$ref": "#/definitions/Automation_Execution.v1.Status",
+					"description": "The status of the current Execution Step."
 				},
 				"error": {
 					"$ref": "#/definitions/Error",
-					"description": "The error of the execution if it failed"
+					"description": "The error encountered by the Execution if it failed."
 				},
 				"executed_by": {
-					"description": "The ID of the user that triggered the execution if it was manually triggered.",
+					"description": "The ID of the user that triggered the Execution if it was manually triggered.",
 					"type": "string"
 				},
 				"id": {
-					"description": "The globally unique ID of the execution.",
+					"description": "The immutable, globally unique ID of the Automation Execution.",
 					"type": "string"
 				},
 				"last_updated_date_time": {
-					"description": "The date and time the execution was last updated.",
+					"description": "The UTC date-time the Execution was last updated.",
 					"format": "date-time",
 					"type": "string"
 				},
 				"started_date_time": {
-					"description": "The date and time the execution was started.",
+					"description": "The UTC date-time the Execution was started.",
 					"format": "date-time",
 					"type": "string"
 				}
@@ -247,71 +369,57 @@
 			"readOnly": true,
 			"type": "object"
 		},
-		"Automations.ExecutionStep": {
+		"Automation_Execution.ExecutionStep": {
 			"description": "ExecutionStep used to track the automation execution.",
 			"properties": {
 				"automation_execution_id": {
-					"description": "The ID of the execution this history record belongs to.",
+					"description": "The ID of the Automation Execution that this Step belongs to.",
 					"type": "string"
 				},
 				"current_task_status": {
-					"$ref": "#/definitions/Automations.v1.Status",
-					"description": "The status of the execution step."
+					"$ref": "#/definitions/Automation_Execution.v1.Status",
+					"description": "The status of this Step."
 				},
 				"error": {
 					"$ref": "#/definitions/Error",
-					"description": "The error of the execution if it failed"
+					"description": "The error encountered by this Step if it failed"
 				},
 				"started_date_time": {
-					"description": "The date and time the history event occurred.",
+					"description": "The UTC date-time that the Step began executing.",
 					"format": "date-time",
 					"type": "string"
 				},
 				"task_config_id": {
-					"description": "The ID of the task config that has been executed.",
+					"description": "The ID of the task config executed in this Step. The type of this config corresponds to the 'task_type' parameter.",
 					"type": "string"
 				},
 				"task_id": {
-					"description": "The ID of the task for this execution step.",
+					"description": "The ID of the task executed for this Step. The type of task that this ID corresponds to is described by the 'task_type' parameter.",
 					"type": "string"
 				},
 				"task_type": {
-					"$ref": "#/definitions/Automations.TaskType",
-					"description": "The current step of the automation execution."
+					"$ref": "#/definitions/Automation_Execution.TaskType",
+					"description": "The type of task that was executed for this Step."
 				},
 				"updated_date_time": {
-					"description": "The date and time the history event was updated.",
+					"description": "The UTC date-time that the Step was last updated.",
 					"format": "date-time",
 					"type": "string"
 				}
 			},
 			"type": "object"
 		},
-		"Automations.GetConfigResponse": {
-			"description": "GetConfigResponse returns the requested automation.",
-			"properties": {
-				"config": {
-					"$ref": "#/definitions/Automations.Config",
-					"description": "The details of the automation config."
-				},
-				"last_execution_id": {
-					"description": "The last execution ID if one exists.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Automations.GetExecutionResponse": {
-			"description": "GetExecutionResponse returns the requested automation execution.",
+		"Automation_Execution.GetExecutionResponse": {
+			"description": "GetExecutionResponse returns the requested Automation Execution.",
 			"properties": {
 				"execution": {
-					"$ref": "#/definitions/Automations.Execution",
-					"description": "The details of the automation execution."
+					"$ref": "#/definitions/Automation_Execution.Execution",
+					"description": "Details of the requested Automation Execution."
 				},
 				"execution_steps": {
-					"description": "The steps of the automation execution.",
+					"description": "The Automation Steps already executed at the time of the request.",
 					"items": {
-						"$ref": "#/definitions/Automations.ExecutionStep",
+						"$ref": "#/definitions/Automation_Execution.ExecutionStep",
 						"type": "object"
 					},
 					"type": "array"
@@ -319,41 +427,13 @@
 			},
 			"type": "object"
 		},
-		"Automations.ImportConfig": {
-			"description": "The import config required by the automation step.",
-			"properties": {
-				"config_id": {
-					"description": "The config ID used for the import.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Automations.ListConfigsResponse": {
-			"description": "ListConfigsResponse returns the matching resources.",
-			"properties": {
-				"configs": {
-					"description": "The automation config that match the critera of the request.",
-					"items": {
-						"$ref": "#/definitions/Automations.Config",
-						"type": "object"
-					},
-					"type": "array"
-				},
-				"pagination": {
-					"$ref": "#/definitions/PaginationResponse",
-					"description": "Details of the pagination of this response."
-				}
-			},
-			"type": "object"
-		},
-		"Automations.ListExecutionResponse": {
+		"Automation_Execution.ListExecutionResponse": {
 			"description": "ListExecutionResponse returns the matching resources.",
 			"properties": {
 				"executions": {
-					"description": "The ListExecution of automation executions that match the critera of the request.",
+					"description": "The Automation Executions which matched the criteria of the request.",
 					"items": {
-						"$ref": "#/definitions/Automations.Execution",
+						"$ref": "#/definitions/Automation_Execution.Execution",
 						"type": "object"
 					},
 					"type": "array"
@@ -365,41 +445,7 @@
 			},
 			"type": "object"
 		},
-		"Automations.NormalizationConfig": {
-			"description": "The normalization config required by the automation step.",
-			"properties": {
-				"config_id": {
-					"description": "The config ID used for the normalization.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Automations.PublishConfig": {
-			"description": "The publish config required by the automation step.",
-			"properties": {
-				"config_id": {
-					"description": "The config ID used for the publish.",
-					"type": "string"
-				},
-				"dataset_id": {
-					"description": "The ID of the dataset to publish to.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Automations.RecordsetCreationConfig": {
-			"description": "The recordset creation config required by the automation step.",
-			"properties": {
-				"config_id": {
-					"description": "The config ID used for the recordset creation.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Automations.TaskType": {
+		"Automation_Execution.TaskType": {
 			"default": "TASK_TYPE_INVALID",
 			"description": "TaskType is an enum of all the potential task types.",
 			"enum": [
@@ -412,53 +458,7 @@
 			],
 			"type": "string"
 		},
-		"Automations.UpdateConfig": {
-			"description": "The updateble fields of an automation.",
-			"properties": {
-				"cron_timer": {
-					"description": "Frequency of the automation represented as a cron time.",
-					"type": "string"
-				},
-				"description": {
-					"description": "The description of the automation.",
-					"type": "string"
-				},
-				"enabled": {
-					"description": "Is the automation enabled?",
-					"type": "boolean"
-				},
-				"end_date_time": {
-					"description": "The date and time the automation task will stop being executed automatically.",
-					"format": "date-time",
-					"type": "string"
-				},
-				"name": {
-					"description": "The name of the automation.",
-					"type": "string"
-				},
-				"start_date_time": {
-					"description": "The date and time the automation task will start being executed automatically.",
-					"format": "date-time",
-					"type": "string"
-				},
-				"timezone_identifier": {
-					"description": "The Timezone Identifier you want the automation to be scheduled in e.g. 'Europe/London', 'America/New_York' and more https://en.wikipedia.org/wiki/List_of_tz_database_time_zones",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Automations.UpdateConfigResponse": {
-			"description": "UpdateConfigResponse is the response from updating an automation.",
-			"properties": {
-				"config": {
-					"$ref": "#/definitions/Automations.Config",
-					"description": "The new configuration of the automation."
-				}
-			},
-			"type": "object"
-		},
-		"Automations.v1.Status": {
+		"Automation_Execution.v1.Status": {
 			"default": "NO_STATUS",
 			"description": "Status is an enum of the different states that an async task can be in.",
 			"enum": [
@@ -4591,7 +4591,7 @@
 			"description": "Pagination holds information on which records to return.",
 			"properties": {
 				"page": {
-					"description": "Page is the page to view.",
+					"description": "Page is the page to view. Pages use one-based indexing so the first page is always page 1.",
 					"format": "int32",
 					"type": "integer"
 				},
@@ -6669,7 +6669,7 @@
 				"operationId": "ListDisplayNames",
 				"parameters": [
 					{
-						"description": "Page is the page to view.",
+						"description": "Page is the page to view. Pages use one-based indexing so the first page is always page 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -6738,11 +6738,11 @@
 		},
 		"/api/v2/automations/configs": {
 			"get": {
-				"description": "ListConfigs lists available automation configs",
+				"description": "List Automation Configs retrieves Automation Configs belonging to the user's company subject to the provided filters.",
 				"operationId": "ListConfigs",
 				"parameters": [
 					{
-						"description": "Page is the page to view.",
+						"description": "Page is the page to view. Pages use one-based indexing so the first page is always page 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -6776,7 +6776,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Automations.ListConfigsResponse"
+							"$ref": "#/definitions/Automation_Configs.ListConfigsResponse"
 						}
 					},
 					"400": {
@@ -6810,22 +6810,22 @@
 						}
 					}
 				},
-				"summary": "ListConfigs lists automation configs belonging to a users company",
+				"summary": "List Automation Configs",
 				"tags": [
-					"Automations"
+					"Automation Configs"
 				]
 			},
 			"post": {
-				"description": "CreateConfigs creates an automation config from the specified input",
+				"description": "Create Automation Config validates and creates an Automation Config based on the provided ordered tasks.",
 				"operationId": "CreateConfig",
 				"parameters": [
 					{
-						"description": "CreateConfigRequest is the information provided when creating an automation config.",
+						"description": "CreateConfigRequest is the information provided when creating an Automation Config.",
 						"in": "body",
 						"name": "body",
 						"required": true,
 						"schema": {
-							"$ref": "#/definitions/Automations.CreateConfigRequest"
+							"$ref": "#/definitions/Automation_Configs.CreateConfigRequest"
 						}
 					}
 				],
@@ -6833,7 +6833,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Automations.CreateConfigResponse"
+							"$ref": "#/definitions/Automation_Configs.CreateConfigResponse"
 						}
 					},
 					"400": {
@@ -6873,19 +6873,19 @@
 						}
 					}
 				},
-				"summary": "CreateConfig creates an automation config from the specified input",
+				"summary": "Create Automation Config",
 				"tags": [
-					"Automations"
+					"Automation Configs"
 				]
 			}
 		},
 		"/api/v2/automations/configs/{config_id}": {
 			"delete": {
-				"description": "DeleteConfig the specified automation config along with any execution information and history",
+				"description": "Delete Automation Config removes the specified Automation Config along with any execution information and history. No new executions will be triggered for deleted Automation Configs.",
 				"operationId": "DeleteConfig",
 				"parameters": [
 					{
-						"description": "The ID of the automation to be deleted.",
+						"description": "The ID of the Automation Config to be deleted.",
 						"in": "path",
 						"name": "config_id",
 						"required": true,
@@ -6896,7 +6896,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Automations.DeleteConfigResponse"
+							"$ref": "#/definitions/Automation_Configs.DeleteConfigResponse"
 						}
 					},
 					"401": {
@@ -6924,17 +6924,17 @@
 						}
 					}
 				},
-				"summary": "DeleteConfig the specified automation config",
+				"summary": "Delete Automation Config",
 				"tags": [
-					"Automations"
+					"Automation Configs"
 				]
 			},
 			"get": {
-				"description": "GetConfig gets the automation config",
+				"description": "Get Automation Config returns an Automation Config by ID.",
 				"operationId": "GetConfig",
 				"parameters": [
 					{
-						"description": "The ID of the automation to get.",
+						"description": "The ID of the Automation Config to retrieve.",
 						"in": "path",
 						"name": "config_id",
 						"required": true,
@@ -6945,7 +6945,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Automations.GetConfigResponse"
+							"$ref": "#/definitions/Automation_Configs.GetConfigResponse"
 						}
 					},
 					"400": {
@@ -6967,7 +6967,7 @@
 						}
 					},
 					"404": {
-						"description": "Returned when the automation config could not be found.",
+						"description": "Returned when the Automation Config could not be found.",
 						"schema": {
 							"$ref": "#/definitions/Error"
 						}
@@ -6985,17 +6985,17 @@
 						}
 					}
 				},
-				"summary": "GetConfig gets the automation config",
+				"summary": "Get Automation Config",
 				"tags": [
-					"Automations"
+					"Automation Configs"
 				]
 			},
 			"patch": {
-				"description": "UpdateConfig update the specified automation config",
+				"description": "Update Automation Config updates the specified Automation Config, overriding any old fields with new ones provided on the request.",
 				"operationId": "UpdateConfig",
 				"parameters": [
 					{
-						"description": "The id of the configuration being updated.",
+						"description": "The ID of the Automation Config to be updated.",
 						"in": "path",
 						"name": "config_id",
 						"required": true,
@@ -7007,8 +7007,8 @@
 						"name": "config",
 						"required": true,
 						"schema": {
-							"$ref": "#/definitions/Automations.UpdateConfig",
-							"description": "The updated automation config."
+							"$ref": "#/definitions/Automation_Configs.UpdateConfig",
+							"description": "The Automation Config."
 						}
 					}
 				],
@@ -7016,7 +7016,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Automations.UpdateConfigResponse"
+							"$ref": "#/definitions/Automation_Configs.UpdateConfigResponse"
 						}
 					},
 					"400": {
@@ -7038,7 +7038,7 @@
 						}
 					},
 					"404": {
-						"description": "Returned when the automation config could not be found.",
+						"description": "Returned when the Automation Config could not be found.",
 						"schema": {
 							"$ref": "#/definitions/Error"
 						}
@@ -7056,19 +7056,19 @@
 						}
 					}
 				},
-				"summary": "UpdateConfig update the specified automation config",
+				"summary": "Update Automation Config",
 				"tags": [
-					"Automations"
+					"Automation Configs"
 				]
 			}
 		},
 		"/api/v2/automations/configs/{config_id}/execute": {
 			"post": {
-				"description": "Execute an automation config",
+				"description": "Execute Automation Config manually initiates the Execution of an Automation Config ignoring its schedule.",
 				"operationId": "Execute",
 				"parameters": [
 					{
-						"description": "The ID of the automation to execute.",
+						"description": "The ID of the Automation Config to manually trigger an Execution of.",
 						"in": "path",
 						"name": "config_id",
 						"required": true,
@@ -7079,7 +7079,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Automations.ExecuteResponse"
+							"$ref": "#/definitions/Automation_Execution.ExecuteResponse"
 						}
 					},
 					"400": {
@@ -7119,19 +7119,19 @@
 						}
 					}
 				},
-				"summary": "Execute an automation config",
+				"summary": "Execute Automation Config",
 				"tags": [
-					"Automations"
+					"Automation Execution"
 				]
 			}
 		},
 		"/api/v2/automations/executions": {
 			"get": {
-				"description": "ListExecution lists automation executions",
+				"description": "List Executions retrieves Automation Config Executions subject to the provided filters.",
 				"operationId": "ListExecution",
 				"parameters": [
 					{
-						"description": "Page is the page to view.",
+						"description": "Page is the page to view. Pages use one-based indexing so the first page is always page 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -7165,7 +7165,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Automations.ListExecutionResponse"
+							"$ref": "#/definitions/Automation_Execution.ListExecutionResponse"
 						}
 					},
 					"400": {
@@ -7199,19 +7199,19 @@
 						}
 					}
 				},
-				"summary": "ListExecution lists automation executions",
+				"summary": "List Executions",
 				"tags": [
-					"Automations"
+					"Automation Execution"
 				]
 			}
 		},
 		"/api/v2/automations/executions/{execution_id}": {
 			"get": {
-				"description": "GetExecution an automation execution",
+				"description": "Get Execution fetches details of an Automation Execution by its ID.",
 				"operationId": "GetExecution",
 				"parameters": [
 					{
-						"description": "The ID of the execution to GetExecution.",
+						"description": "The ID of the Automation Execution to retrieve.",
 						"in": "path",
 						"name": "execution_id",
 						"required": true,
@@ -7222,7 +7222,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Automations.GetExecutionResponse"
+							"$ref": "#/definitions/Automation_Execution.GetExecutionResponse"
 						}
 					},
 					"400": {
@@ -7244,7 +7244,7 @@
 						}
 					},
 					"404": {
-						"description": "Returned when the automation execution could not be found.",
+						"description": "Returned when the Automation Execution could not be found.",
 						"schema": {
 							"$ref": "#/definitions/Error"
 						}
@@ -7262,9 +7262,9 @@
 						}
 					}
 				},
-				"summary": "GetExecution an automation execution",
+				"summary": "Get Execution",
 				"tags": [
-					"Automations"
+					"Automation Execution"
 				]
 			}
 		},
@@ -7274,7 +7274,7 @@
 				"operationId": "List",
 				"parameters": [
 					{
-						"description": "Page is the page to view.",
+						"description": "Page is the page to view. Pages use one-based indexing so the first page is always page 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -7814,7 +7814,7 @@
 				"operationId": "ListConfigs",
 				"parameters": [
 					{
-						"description": "Page is the page to view.",
+						"description": "Page is the page to view. Pages use one-based indexing so the first page is always page 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -8221,7 +8221,7 @@
 						"type": "string"
 					},
 					{
-						"description": "Page is the page to view.",
+						"description": "Page is the page to view. Pages use one-based indexing so the first page is always page 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -8456,7 +8456,7 @@
 						"type": "string"
 					},
 					{
-						"description": "Page is the page to view.",
+						"description": "Page is the page to view. Pages use one-based indexing so the first page is always page 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -8690,7 +8690,7 @@
 						"type": "string"
 					},
 					{
-						"description": "Page is the page to view.",
+						"description": "Page is the page to view. Pages use one-based indexing so the first page is always page 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -8856,7 +8856,7 @@
 				"operationId": "ListDatasets",
 				"parameters": [
 					{
-						"description": "Page is the page to view.",
+						"description": "Page is the page to view. Pages use one-based indexing so the first page is always page 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -9423,7 +9423,7 @@
 				"operationId": "ListDestinations",
 				"parameters": [
 					{
-						"description": "Page is the page to view.",
+						"description": "Page is the page to view. Pages use one-based indexing so the first page is always page 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -10144,7 +10144,7 @@
 						"type": "string"
 					},
 					{
-						"description": "Page is the page to view.",
+						"description": "Page is the page to view. Pages use one-based indexing so the first page is always page 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -10224,7 +10224,7 @@
 				"operationId": "ListImportConnectors",
 				"parameters": [
 					{
-						"description": "Page is the page to view.",
+						"description": "Page is the page to view. Pages use one-based indexing so the first page is always page 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -10575,7 +10575,7 @@
 				"operationId": "ListImportExecutions",
 				"parameters": [
 					{
-						"description": "Page is the page to view.",
+						"description": "Page is the page to view. Pages use one-based indexing so the first page is always page 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -10781,7 +10781,7 @@
 				"operationId": "ListImports",
 				"parameters": [
 					{
-						"description": "Page is the page to view.",
+						"description": "Page is the page to view. Pages use one-based indexing so the first page is always page 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -11223,7 +11223,7 @@
 				"operationId": "List",
 				"parameters": [
 					{
-						"description": "Page is the page to view.",
+						"description": "Page is the page to view. Pages use one-based indexing so the first page is always page 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -11555,7 +11555,7 @@
 				"operationId": "ListConfigs",
 				"parameters": [
 					{
-						"description": "Page is the page to view.",
+						"description": "Page is the page to view. Pages use one-based indexing so the first page is always page 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -11874,7 +11874,7 @@
 				"operationId": "ListNormalizations",
 				"parameters": [
 					{
-						"description": "Page is the page to view.",
+						"description": "Page is the page to view. Pages use one-based indexing so the first page is always page 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -12080,7 +12080,7 @@
 				"operationId": "Categories",
 				"parameters": [
 					{
-						"description": "Page is the page to view.",
+						"description": "Page is the page to view. Pages use one-based indexing so the first page is always page 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -12160,7 +12160,7 @@
 				"operationId": "Keys",
 				"parameters": [
 					{
-						"description": "Page is the page to view.",
+						"description": "Page is the page to view. Pages use one-based indexing so the first page is always page 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -12281,7 +12281,7 @@
 				"operationId": "KeyCategories",
 				"parameters": [
 					{
-						"description": "Page is the page to view.",
+						"description": "Page is the page to view. Pages use one-based indexing so the first page is always page 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -12426,7 +12426,7 @@
 				"operationId": "ListPrepares",
 				"parameters": [
 					{
-						"description": "Page is the page to view.",
+						"description": "Page is the page to view. Pages use one-based indexing so the first page is always page 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -12927,7 +12927,7 @@
 				"operationId": "ListConfigs",
 				"parameters": [
 					{
-						"description": "Page is the page to view.",
+						"description": "Page is the page to view. Pages use one-based indexing so the first page is always page 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -13400,7 +13400,7 @@
 				"operationId": "ListExecutions",
 				"parameters": [
 					{
-						"description": "Page is the page to view.",
+						"description": "Page is the page to view. Pages use one-based indexing so the first page is always page 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -13619,7 +13619,7 @@
 						"type": "string"
 					},
 					{
-						"description": "Page is the page to view.",
+						"description": "Page is the page to view. Pages use one-based indexing so the first page is always page 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -13927,7 +13927,7 @@
 						"type": "string"
 					},
 					{
-						"description": "Page is the page to view.",
+						"description": "Page is the page to view. Pages use one-based indexing so the first page is always page 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -14083,7 +14083,7 @@
 				"operationId": "List",
 				"parameters": [
 					{
-						"description": "Page is the page to view.",
+						"description": "Page is the page to view. Pages use one-based indexing so the first page is always page 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -14424,7 +14424,7 @@
 						"type": "string"
 					},
 					{
-						"description": "Page is the page to view.",
+						"description": "Page is the page to view. Pages use one-based indexing so the first page is always page 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -14573,7 +14573,7 @@
 				"operationId": "ListSchemaCategories",
 				"parameters": [
 					{
-						"description": "Page is the page to view.",
+						"description": "Page is the page to view. Pages use one-based indexing so the first page is always page 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -14653,7 +14653,7 @@
 				"operationId": "ListRepresentations",
 				"parameters": [
 					{
-						"description": "Page is the page to view.",
+						"description": "Page is the page to view. Pages use one-based indexing so the first page is always page 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -14747,5 +14747,14 @@
 			"type": "apiKey"
 		}
 	},
-	"swagger": "2.0"
+	"swagger": "2.0",
+	"x-tagGroups": [
+		{
+			"name": "Automations",
+			"tags": [
+				"Automation Execution",
+				"Automation Configs"
+			]
+		}
+	]
 }
