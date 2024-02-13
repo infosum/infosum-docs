@@ -101,7 +101,7 @@
 					"type": "boolean"
 				},
 				"end_date_time": {
-					"description": "Optional UTC date-time to cease triggering Automation Executions. Format is ISO 8601 e.g. 2019-11-23T18:30:00Z",
+					"description": "Optional UTC date-time to cease triggering Automation Executions. Format is RFC 3339 e.g. 2019-11-23T18:30:00Z",
 					"format": "date-time",
 					"type": "string"
 				},
@@ -114,7 +114,7 @@
 					"type": "string"
 				},
 				"start_date_time": {
-					"description": "The UTC date-time to begin triggering Automation Executions based on the CRON schedule. Format is ISO 8601 e.g. 2019-11-23T18:30:00Z",
+					"description": "The UTC date-time to begin triggering Automation Executions based on the CRON schedule. Format is RFC 3339 e.g. 2019-11-23T18:30:00Z",
 					"format": "date-time",
 					"type": "string"
 				},
@@ -511,10 +511,22 @@
 			},
 			"type": "object"
 		},
-		"CloudVaults.AssociateResponse": {
+		"CloudVaultsList": {
+			"description": "CloudVaultsList contains a list of Cloud Vault IDs.",
+			"properties": {
+				"cloud_vault_ids": {
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				}
+			},
 			"type": "object"
 		},
-		"CloudVaults.CloudVault": {
+		"Cloud_Vaults.AssociateResponse": {
+			"type": "object"
+		},
+		"Cloud_Vaults.CloudVault": {
 			"description": "CloudVault is the details about a specific Cloud Vault.",
 			"properties": {
 				"created_by": {
@@ -547,7 +559,7 @@
 					"type": "string"
 				},
 				"region": {
-					"$ref": "#/definitions/CloudVaults.Region",
+					"$ref": "#/definitions/Cloud_Vaults.Region",
 					"description": "Output only. Region identifies the region that this Cloud Vault is located\nin.",
 					"readOnly": true
 				},
@@ -560,7 +572,7 @@
 			},
 			"type": "object"
 		},
-		"CloudVaults.CreateRequest": {
+		"Cloud_Vaults.CreateRequest": {
 			"properties": {
 				"description": {
 					"description": "Description is an optional description given to this Cloud Vault.",
@@ -571,7 +583,7 @@
 					"type": "string"
 				},
 				"region": {
-					"$ref": "#/definitions/CloudVaults.Region",
+					"$ref": "#/definitions/Cloud_Vaults.Region",
 					"description": "Region identifies the region that this Cloud Vault is located in.\nExpected format: cloudprovider + region e.g. aws-eu-west-2\nNote: ibm-eu-central-1 is a deprecated value."
 				}
 			},
@@ -581,33 +593,33 @@
 			],
 			"type": "object"
 		},
-		"CloudVaults.CreateResponse": {
+		"Cloud_Vaults.CreateResponse": {
 			"properties": {
 				"cloud_vault": {
-					"$ref": "#/definitions/CloudVaults.CloudVault"
+					"$ref": "#/definitions/Cloud_Vaults.CloudVault"
 				}
 			},
 			"type": "object"
 		},
-		"CloudVaults.DeleteResponse": {
+		"Cloud_Vaults.DeleteResponse": {
 			"type": "object"
 		},
-		"CloudVaults.DissociateResponse": {
+		"Cloud_Vaults.DissociateResponse": {
 			"type": "object"
 		},
-		"CloudVaults.GetResponse": {
+		"Cloud_Vaults.GetResponse": {
 			"properties": {
 				"cloud_vault": {
-					"$ref": "#/definitions/CloudVaults.CloudVault"
+					"$ref": "#/definitions/Cloud_Vaults.CloudVault"
 				}
 			},
 			"type": "object"
 		},
-		"CloudVaults.ListResponse": {
+		"Cloud_Vaults.ListResponse": {
 			"properties": {
 				"cloud_vaults": {
 					"items": {
-						"$ref": "#/definitions/CloudVaults.CloudVault",
+						"$ref": "#/definitions/Cloud_Vaults.CloudVault",
 						"type": "object"
 					},
 					"type": "array"
@@ -619,7 +631,7 @@
 			},
 			"type": "object"
 		},
-		"CloudVaults.Region": {
+		"Cloud_Vaults.Region": {
 			"default": "UNKNOWN",
 			"description": "Region enumerates the supported cloud providers and locations.\n\n - UNKNOWN: UNKNOWN means the region has not been defined.\n - AWS_EU_WEST_2: AWS_EU_WEST_2 means AWS Europe (London).\n - AWS_US_EAST_1: AWS_US_EAST_1 means AWS US East (N. Virginia).\n - IBM_EU_CENTRAL_1: IBM_EU_CENTRAL_1 means IBM MZR EU Central (Frankfurt).\n - AWS_EU_CENTRAL_1: AWS_EU_CENTRAL_1 means AWS Europe (Frankfurt).\n - AWS_AP_SOUTHEAST_2: AWS_AP_SOUTHEAST_2 means AWS Asia Pacific (Sydney)",
 			"enum": [
@@ -632,7 +644,7 @@
 			],
 			"type": "string"
 		},
-		"CloudVaults.UpdateCloudVault": {
+		"Cloud_Vaults.UpdateCloudVault": {
 			"description": "UpdateCloudVault is used to update a Cloud Vault. Users can only update the\nname, description and auth fields.",
 			"properties": {
 				"description": {
@@ -651,22 +663,10 @@
 			},
 			"type": "object"
 		},
-		"CloudVaults.UpdateResponse": {
+		"Cloud_Vaults.UpdateResponse": {
 			"properties": {
 				"cloud_vault": {
-					"$ref": "#/definitions/CloudVaults.CloudVault"
-				}
-			},
-			"type": "object"
-		},
-		"CloudVaultsList": {
-			"description": "CloudVaultsList contains a list of Cloud Vault IDs.",
-			"properties": {
-				"cloud_vault_ids": {
-					"items": {
-						"type": "string"
-					},
-					"type": "array"
+					"$ref": "#/definitions/Cloud_Vaults.CloudVault"
 				}
 			},
 			"type": "object"
@@ -1388,6 +1388,702 @@
 			"description": "UpdateDatasetResponse is the response for UpdateDataset rpc.",
 			"type": "object"
 		},
+		"Destinations.AwsRegion": {
+			"default": "UNKNOWN_REGION",
+			"description": "AwsRegion are the supported AWS regions.\n\n - UNKNOWN_REGION: UNKNOWN_REGION is used when the region is not known.\n - US_EAST_1: US_EAST_1 is N. Virginia (us-east-1).\n - US_EAST_2: US_EAST_2 is Ohio (us-east-2).\n - US_WEST_1: US_WEST_1 is N. California (us-west-1).\n - US_WEST_2: US_WEST_2 is Oregon (us-west-2).\n - CA_CENTRAL_1: CA_CENTRAL_1 is Montreal (ca-central-1).\n - EU_WEST_1: EU_WEST_1 is Ireland (eu-west-1).\n - EU_WEST_2: EU_WEST_2 is London (eu-west-2).\n - EU_CENTRAL_1: EU_CENTRAL_1 is Frankfurt (eu-central-1).\n - AP_SOUTHEAST_1: AP_SOUTHEAST_1 is Singapore (ap-southeast-1).\n - AP_SOUTHEAST_2: AP_SOUTHEAST_2 is Sydney (ap-southeast-2).\n - AP_SOUTH_1: AP_SOUTH_1 is Mumbai (ap-south-1).\n - AP_NORTHEAST_1: AP_NORTHEAST_1 is Tokyo (ap-northeast-1).\n - AP_NORTHEAST_2: AP_NORTHEAST_2 is Seoul (ap-northeast-2).\n - SA_EAST_1: SA_EAST_1 is Saõ Paulo (sa-east-1).\n - CN_NORTH_1: CN_NORTH_1 is Beijing (cn-north-1).",
+			"enum": [
+				"UNKNOWN_REGION",
+				"US_EAST_1",
+				"US_EAST_2",
+				"US_WEST_1",
+				"US_WEST_2",
+				"CA_CENTRAL_1",
+				"EU_WEST_1",
+				"EU_WEST_2",
+				"EU_CENTRAL_1",
+				"AP_SOUTHEAST_1",
+				"AP_SOUTHEAST_2",
+				"AP_SOUTH_1",
+				"AP_NORTHEAST_1",
+				"AP_NORTHEAST_2",
+				"SA_EAST_1",
+				"CN_NORTH_1"
+			],
+			"type": "string"
+		},
+		"Destinations.ConnectorType": {
+			"default": "CONNECTOR_TYPE_INVALID",
+			"description": "ConnectorType is the types of authentication used by a destination.\n\n - S3_ACCESS_KEYS: S3_ACCESS_KEYS indicates the destination is targeting S3 and using access/secret keys for authentication.\n - PUBMATIC: PUBMATIC  indicates the destination is targeting PubMatic.\n - S3_CROSS_ACCOUNT: S3_CROSS_ACCOUNT indicates the destination is targeting S3 and assuming an iam role for authentication.\n - SFTP: SFTP indicates the destination is targeting a sftp server.\n - GCS: GCS indicates indicates the destination is targeting Google Cloud Platform for authentication.\n - FACEBOOK: FACEBOOK indicates the destination is targeting Facebook.\n - DV360_PAIR: DV360_PAIR indicates the destination is targeting DV360 using PAIR encryption.\n - S3_ACCESS_KEYS_PAIR: S3_ACCESS_KEYS_PAIR indicates the destination is targeting S3 using access/secret keys for authentication and using PAIR encryption.\n - S3_CROSS_ACCOUNT_PAIR: S3_CROSS_ACCOUNT_PAIR indicates the destination is targeting S3 assuming an iam role for authentication and using PAIR encryption.\n - SFTP_PAIR: SFTP_PAIR indicates the destination is targeting a SFTP server for authentication and using PAIR encryption.\n - DV360_CUSTOMER_MATCH: DV360_CUSTOMER_MATCH indicates the destination is targeting DV360 Customer Match.\n - TRADEDESK: TRADEDESK indicates the destination is targeting trade desk",
+			"enum": [
+				"CONNECTOR_TYPE_INVALID",
+				"S3_ACCESS_KEYS",
+				"PUBMATIC",
+				"S3_CROSS_ACCOUNT",
+				"SFTP",
+				"GCS",
+				"FACEBOOK",
+				"DV360_PAIR",
+				"S3_ACCESS_KEYS_PAIR",
+				"S3_CROSS_ACCOUNT_PAIR",
+				"SFTP_PAIR",
+				"DV360_CUSTOMER_MATCH",
+				"TRADEDESK"
+			],
+			"type": "string"
+		},
+		"Destinations.CreateDestinationRequest": {
+			"description": "CreateDestinationRequest is the input to the CreateDestination method.",
+			"properties": {
+				"destination": {
+					"$ref": "#/definitions/Destinations.Destination"
+				}
+			},
+			"type": "object"
+		},
+		"Destinations.CreateDestinationResponse": {
+			"description": "CreateDestinationResponse is the output of the CreateDestination method.",
+			"properties": {
+				"destination_id": {
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Destinations.DV360Connector": {
+			"description": "Dv360Connector is the information required to define a destination pushing to DV360.",
+			"properties": {
+				"customer_id": {
+					"description": "CustomerID is the ID for the customer's account (no hyphens).",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Destinations.DV360ConnectorOverview": {
+			"description": "DV360ConnectorOverview contains information about a DV360 connector.",
+			"type": "object"
+		},
+		"Destinations.DeleteDestinationResponse": {
+			"description": "DeleteDestinationResponse is an empty response for the Delete destination request.",
+			"type": "object"
+		},
+		"Destinations.Destination": {
+			"description": "Destination is the information required to define destinations.",
+			"properties": {
+				"connector_type": {
+					"$ref": "#/definitions/Destinations.ConnectorType",
+					"description": "ConnectorType states the type of connector used by the destination. Output only.",
+					"readOnly": true
+				},
+				"created_time": {
+					"description": "CreatedTime is the date and time the destination was created. Output only.",
+					"format": "date-time",
+					"readOnly": true,
+					"type": "string"
+				},
+				"creator_id": {
+					"description": "CreatorId is the ID of the user who created the destination. Output only.",
+					"readOnly": true,
+					"type": "string"
+				},
+				"description": {
+					"description": "Description is an optional description given to this destination.",
+					"type": "string"
+				},
+				"dv360_customer_match": {
+					"$ref": "#/definitions/Destinations.DV360Connector"
+				},
+				"dv360_pair": {
+					"$ref": "#/definitions/Destinations.DV360Connector"
+				},
+				"facebook": {
+					"$ref": "#/definitions/Destinations.FacebookConnector"
+				},
+				"gcs": {
+					"$ref": "#/definitions/Destinations.GCSConnector"
+				},
+				"id": {
+					"description": "ID is the globally unique ID of the destination. Output only.",
+					"readOnly": true,
+					"type": "string"
+				},
+				"name": {
+					"description": "Name is the display name given to this destination.",
+					"type": "string"
+				},
+				"owner_id": {
+					"description": "OwnerId is the user or company ID of the owner of the destination. Output only.",
+					"readOnly": true,
+					"type": "string"
+				},
+				"pubmatic": {
+					"$ref": "#/definitions/Destinations.PubmaticConnector"
+				},
+				"s3": {
+					"$ref": "#/definitions/Destinations.S3Connector"
+				},
+				"s3_pair": {
+					"$ref": "#/definitions/Destinations.S3Connector"
+				},
+				"sftp": {
+					"$ref": "#/definitions/Destinations.SftpConnector"
+				},
+				"sftp_pair": {
+					"$ref": "#/definitions/Destinations.SftpConnector"
+				},
+				"trade_desk_connector": {
+					"$ref": "#/definitions/Destinations.TradeDeskConnector"
+				},
+				"updated_time": {
+					"description": "UpdatedTime is the date and time the destination was last updated. Output only.",
+					"format": "date-time",
+					"readOnly": true,
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Destinations.DestinationOverview": {
+			"description": "DestinationOverview contains information about a destinations.",
+			"properties": {
+				"connector_type": {
+					"$ref": "#/definitions/Destinations.ConnectorType",
+					"description": "ConnectorType states the type of connector used by the destination."
+				},
+				"created_time": {
+					"description": "CreatedTime is the date and time the destination was created.",
+					"format": "date-time",
+					"type": "string"
+				},
+				"creator_id": {
+					"description": "CreatorId is the ID of the user who created the destination.",
+					"type": "string"
+				},
+				"description": {
+					"description": "Description is an optional description given to this destination.",
+					"type": "string"
+				},
+				"id": {
+					"description": "ID is the globally unique ID of the destination.",
+					"type": "string"
+				},
+				"name": {
+					"description": "Name is the display name given to this destination.",
+					"type": "string"
+				},
+				"owner_id": {
+					"description": "OwnerId is the user or company ID of the owner of the destination.",
+					"type": "string"
+				},
+				"updated_time": {
+					"description": "UpdatedTime is the date and time the destination was last updated.",
+					"format": "date-time",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Destinations.DestinationWithConnectorOverview": {
+			"description": "DestinationWithConnectorOverview contains information about a destinations and its connector.",
+			"properties": {
+				"connector_type": {
+					"$ref": "#/definitions/Destinations.ConnectorType",
+					"description": "ConnectorType states the type of connector used by the destination."
+				},
+				"created_time": {
+					"description": "CreatedTime is the date and time the destination was created.",
+					"format": "date-time",
+					"type": "string"
+				},
+				"creator_id": {
+					"description": "CreatorId is the ID of the user who created the destination.",
+					"type": "string"
+				},
+				"description": {
+					"description": "Description is an optional description given to this destination.",
+					"type": "string"
+				},
+				"dv360_customer_match": {
+					"$ref": "#/definitions/Destinations.DV360ConnectorOverview"
+				},
+				"dv360_pair": {
+					"$ref": "#/definitions/Destinations.DV360ConnectorOverview"
+				},
+				"facebook": {
+					"$ref": "#/definitions/Destinations.FacebookConnectorOverview"
+				},
+				"gcs": {
+					"$ref": "#/definitions/Destinations.GCSConnectorOverview"
+				},
+				"id": {
+					"description": "ID is the globally unique ID of the destination.",
+					"type": "string"
+				},
+				"name": {
+					"description": "Name is the display name given to this destination.",
+					"type": "string"
+				},
+				"owner_id": {
+					"description": "OwnerId is the user or company ID of the owner of the destination.",
+					"type": "string"
+				},
+				"pubmatic": {
+					"$ref": "#/definitions/Destinations.PubmaticConnectorOverview"
+				},
+				"s3": {
+					"$ref": "#/definitions/Destinations.S3ConnectorOverview"
+				},
+				"s3_pair": {
+					"$ref": "#/definitions/Destinations.S3ConnectorOverview"
+				},
+				"sftp": {
+					"$ref": "#/definitions/Destinations.SftpConnectorOverview"
+				},
+				"sftp_pair": {
+					"$ref": "#/definitions/Destinations.SftpConnectorOverview"
+				},
+				"trade_desk_connector": {
+					"$ref": "#/definitions/Destinations.TradeDeskConnectorOverview"
+				},
+				"updated_time": {
+					"description": "UpdatedTime is the date and time the destination was last updated.",
+					"format": "date-time",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Destinations.FacebookAccessKey": {
+			"description": "FacebookAccessKey contains the access key used for authentication.",
+			"properties": {
+				"access_key": {
+					"description": "AccessKey is a secret and should be transit encrypted. WriteOnly.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Destinations.FacebookConnector": {
+			"description": "FacebookConnector is the information required to define a destination pushing to Facebook.",
+			"properties": {
+				"ad_account_id": {
+					"description": "AdAccountId is the ID for the user's ad account that we're going to be adding audiences in.",
+					"type": "string"
+				},
+				"facebook_access_key": {
+					"$ref": "#/definitions/Destinations.FacebookAccessKey"
+				}
+			},
+			"type": "object"
+		},
+		"Destinations.FacebookConnectorOverview": {
+			"description": "FacebookConnectorOverview contains information about a Facebook connector.",
+			"properties": {
+				"ad_account_id": {
+					"description": "AdAccountId is the ID for the user's ad account that we're going to be adding audiences in.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Destinations.GCSConnector": {
+			"description": "GCSConnector is the information required to define a destination pushing to a sftp server.",
+			"properties": {
+				"bucket_name": {
+					"description": "Bucket Name is the name of the GCS bucket.",
+					"type": "string"
+				},
+				"default_push_overrides": {
+					"$ref": "#/definitions/Destinations.GCSOverrides",
+					"description": "DefaultPushOverrides contain the default push time values. Optional."
+				},
+				"service_account_config_json": {
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Destinations.GCSConnectorOverview": {
+			"description": "GCSConnectorOverview contains information about a GCS connector.",
+			"properties": {
+				"bucket_name": {
+					"description": "Bucket Name is the name of the GCS bucket.",
+					"type": "string"
+				},
+				"default_push_overrides": {
+					"$ref": "#/definitions/Destinations.GCSOverrides",
+					"description": "DefaultPushOverrides contain the default push time values. Optional."
+				}
+			},
+			"type": "object"
+		},
+		"Destinations.GCSOverrides": {
+			"description": "GCSOverrides are the values that can be overridden when pushing to a sftp server.",
+			"properties": {
+				"path": {
+					"description": "Path is the path in the sftp server to export data to.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Destinations.GetDestinationResponse": {
+			"description": "GetDestinationResponse is the output of the GetDestination method.",
+			"properties": {
+				"destination": {
+					"$ref": "#/definitions/Destinations.DestinationWithConnectorOverview"
+				}
+			},
+			"type": "object"
+		},
+		"Destinations.GetS3CrossAccountDetailsResponse": {
+			"description": "GetS3CrossAccountDetailsResponse is the output of the GetS3CrossAccountDetails method.",
+			"properties": {
+				"details": {
+					"$ref": "#/definitions/Destinations.S3CrossAccountDetails"
+				}
+			},
+			"type": "object"
+		},
+		"Destinations.ListDestinationsResponse": {
+			"description": "ListDestinationsResponse is the output of the ListDestination method.",
+			"properties": {
+				"destination_overviews": {
+					"items": {
+						"$ref": "#/definitions/Destinations.DestinationWithConnectorOverview",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"destinations": {
+					"items": {
+						"$ref": "#/definitions/Destinations.DestinationOverview",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"pagination": {
+					"$ref": "#/definitions/PaginationResponse"
+				}
+			},
+			"type": "object"
+		},
+		"Destinations.PubmaticConnector": {
+			"description": "PubmaticConnector is the information required to define a destination pushing to PubMatic.",
+			"properties": {
+				"dpid": {
+					"description": "DPID is your PubMatic data partner ID. WriteOnly.",
+					"format": "int32",
+					"type": "integer"
+				}
+			},
+			"type": "object"
+		},
+		"Destinations.PubmaticConnectorOverview": {
+			"description": "PubmaticConnectorOverview contains information about a Pubmatic connector.",
+			"type": "object"
+		},
+		"Destinations.S3AccessKeyAuth": {
+			"description": "S3AccessKeyAuth holds the details needed for access key / secret authentication.",
+			"properties": {
+				"access_key_id": {
+					"description": "AccessKeyId is the id of the access key to authenticate with AWS. WriteOnly.",
+					"type": "string"
+				},
+				"secret": {
+					"description": "Secret is the access key secret for authentication. WriteOnly.",
+					"type": "string"
+				},
+				"session_token": {
+					"description": "SessionToken is an optional STS session token. WriteOnly.\nLeave blank if using an IAM User access key.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Destinations.S3AccessKeyDetails": {
+			"description": "S3AccessKeyDetails is the corresponding field to S3CrossAccountDetails for\naccess keys. It is empty as no extra information is required for the setup.",
+			"type": "object"
+		},
+		"Destinations.S3Connector": {
+			"description": "S3Connector is the information required to define a destination using an S3 bucket.",
+			"properties": {
+				"access_key": {
+					"$ref": "#/definitions/Destinations.S3AccessKeyAuth"
+				},
+				"bucket_name": {
+					"description": "BucketName is the name of the S3 Bucket.",
+					"type": "string"
+				},
+				"cross_account": {
+					"$ref": "#/definitions/Destinations.S3CrossAccount"
+				},
+				"default_push_overrides": {
+					"$ref": "#/definitions/Destinations.S3Overrides",
+					"title": "DefaultPushOverrides"
+				},
+				"region": {
+					"$ref": "#/definitions/Destinations.AwsRegion",
+					"description": "Region is the region of the S3 Bucket."
+				}
+			},
+			"type": "object"
+		},
+		"Destinations.S3ConnectorOverview": {
+			"description": "S3ConnectorOverview contains information about a S3 connector.",
+			"properties": {
+				"access_key_details": {
+					"$ref": "#/definitions/Destinations.S3AccessKeyDetails",
+					"description": "AccessKeyDetails is for access key destinations."
+				},
+				"bucket_name": {
+					"description": "BucketName is the name of the S3 Bucket.",
+					"type": "string"
+				},
+				"cross_account_details": {
+					"$ref": "#/definitions/Destinations.S3CrossAccountDetails",
+					"description": "CrossAccountDetails contains the details to set up S3 Cross Account access."
+				},
+				"default_push_overrides": {
+					"$ref": "#/definitions/Destinations.S3Overrides",
+					"title": "DefaultPushOverrides"
+				},
+				"region": {
+					"$ref": "#/definitions/Destinations.AwsRegion",
+					"description": "Region is the region of the S3 Bucket."
+				}
+			},
+			"type": "object"
+		},
+		"Destinations.S3CrossAccount": {
+			"description": "S3CrossAccount holds the details needed for cross account authentication.",
+			"properties": {
+				"external_id": {
+					"description": "Output only.\nExternalId is the aws ExternalId that must be set in your role's trust policy to enable cross account access. Output only.",
+					"readOnly": true,
+					"type": "string"
+				},
+				"infosum_principal": {
+					"description": "Output only.\nInfosumPrincipal is the Infosum principal used when writing data to an S3 bucket.",
+					"readOnly": true,
+					"type": "string"
+				},
+				"push_role_arn": {
+					"description": "PushRoleArn is the AWS IAM role ARN to assume when writing data to an S3 bucket.",
+					"type": "string"
+				},
+				"session_name": {
+					"description": "SessionName is the name of the IAM role session.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Destinations.S3CrossAccountDetails": {
+			"description": "S3CrossAccountDetails contains the information required to set up S3 Cross Account access.",
+			"properties": {
+				"external_id": {
+					"description": "ExternalId is a required field when setting up the S3 Cross Account trust relationship.",
+					"type": "string"
+				},
+				"principal": {
+					"description": "Principal is a required field when setting up the S3 Cross Account trust relationship.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Destinations.S3Overrides": {
+			"description": "S3Overrides are the values that can be overridden when pushing to s3.",
+			"properties": {
+				"path": {
+					"description": "Path is the path in the s3 bucket to export data to.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Destinations.SftpConnector": {
+			"description": "SftpConnector is the information required to define a destination pushing to a sftp server.",
+			"properties": {
+				"default_push_overrides": {
+					"$ref": "#/definitions/Destinations.SftpOverrides",
+					"description": "DefaultPushOverrides contain the default push time values. Optional."
+				},
+				"gpg_public_key": {
+					"description": "GpgPublicKey is the GPG public key to use in encrypting the data. Optional.",
+					"type": "string"
+				},
+				"host": {
+					"description": "Host is the host address of the sftp server.",
+					"type": "string"
+				},
+				"host_keys": {
+					"description": "HostKeys contains options for providing a public key to verify the host.\nHostKeys can be public keys in OpenSSH authorized_keys/known_hosts format.",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				},
+				"password_config": {
+					"$ref": "#/definitions/Destinations.SftpPasswordAuthentication"
+				},
+				"port": {
+					"description": "port is the port number that gets used when connecting to the sftp server.",
+					"format": "int32",
+					"type": "integer"
+				},
+				"public_key_pem": {
+					"description": "PublicKeyPem is the servers public PEM key that can be used to verify the host.",
+					"type": "string"
+				},
+				"ssh_config": {
+					"$ref": "#/definitions/Destinations.SftpSshAuthentication"
+				}
+			},
+			"type": "object"
+		},
+		"Destinations.SftpConnectorOverview": {
+			"description": "SftpConnectorOverview contains information about a SFTP connector.",
+			"properties": {
+				"default_push_overrides": {
+					"$ref": "#/definitions/Destinations.SftpOverrides",
+					"description": "DefaultPushOverrides contain the default push time values. Optional."
+				},
+				"gpg_public_key": {
+					"description": "GpgPublicKey is the GPG public key to use in encrypting the data. Optional.",
+					"type": "string"
+				},
+				"host": {
+					"description": "Host is the host address of the sftp server.",
+					"type": "string"
+				},
+				"host_keys": {
+					"description": "HostKeys contains options for providing a public key to verify the host.\nHostKeys can be public keys in OpenSSH authorized_keys/known_hosts format.",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				},
+				"port": {
+					"description": "port is the port number that gets used when connecting to the sftp server.",
+					"format": "int32",
+					"type": "integer"
+				},
+				"public_key_pem": {
+					"description": "PublicKeyPem is the servers public PEM key that can be used to verify the host.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Destinations.SftpOverrides": {
+			"description": "SftpOverrides are the values that can be overridden when pushing to a sftp server.",
+			"properties": {
+				"path": {
+					"description": "Path is the path in the sftp server to export data to.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Destinations.SftpPasswordAuthentication": {
+			"description": "SftpPasswordAuthentication contains details to authenticate to a sftp server using a username and password.",
+			"properties": {
+				"password": {
+					"description": "Password is the password of the user. WriteOnly.",
+					"type": "string"
+				},
+				"username": {
+					"description": "Username is the username of then user trying to connect to the sftp server. WriteOnly.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Destinations.SftpSshAuthentication": {
+			"description": "SftpSshAuthentication contains details to authenticate to a sftp server using a username and ssh key.",
+			"properties": {
+				"ssh_key": {
+					"description": "SshKey is the ssh key of the user. WriteOnly.",
+					"type": "string"
+				},
+				"username": {
+					"description": "Username is the username of then user trying to connect to the sftp server. WriteOnly.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Destinations.TDLocation": {
+			"default": "TD_INVALID",
+			"enum": [
+				"TD_INVALID",
+				"TD_EU",
+				"TD_US_EC",
+				"TD_US_WC",
+				"TD_AP",
+				"TD_JP",
+				"TD_CN"
+			],
+			"title": "- TD_EU: TD_EU is the location code for the EU base URL\n - TD_US_EC: TD_EU is the location code for the US East Coast base URL\n - TD_US_WC: TD_EU is the location code for the US West Coast base URL\n - TD_AP: TD_EU is the location code for the Asia Pacific base URL\n - TD_JP: TD_EU is the location code for the Japan base URL\n - TD_CN: TD_EU is the location code for the China base URL",
+			"type": "string"
+		},
+		"Destinations.TradeDeskConnector": {
+			"description": "TradeDeskConnector is the information required to define a destination pushing to TradeDesk.",
+			"properties": {
+				"advertiser_id": {
+					"description": "AdvertiserID asks for the ID of the advertiser. This field is mandatory.",
+					"type": "string"
+				},
+				"default_values": {
+					"$ref": "#/definitions/Destinations.TradeDeskOverrides",
+					"title": "DefaultValues is a list of default values that may be overriden at push time"
+				},
+				"location": {
+					"$ref": "#/definitions/Destinations.TDLocation",
+					"description": "Location asks for the base url for the trade desk. This field is mandatory."
+				},
+				"secret_key": {
+					"description": "SecretKey asks for the user secret key to create the signature header. This field is mandatory.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Destinations.TradeDeskConnectorOverview": {
+			"description": "TradeDeskConnectorOverview contains information about a TradeDesk connector.",
+			"properties": {
+				"advertiser_id": {
+					"description": "AdvertiserIDValue asks for the ID of the advertiser.",
+					"type": "string"
+				},
+				"location": {
+					"$ref": "#/definitions/Destinations.TDLocation",
+					"description": "Location asks for the base url for the trade desk."
+				}
+			},
+			"type": "object"
+		},
+		"Destinations.TradeDeskOverrides": {
+			"description": "TradeDeskOverrides are the values that can be overridden when pushing to a sftp server.",
+			"properties": {
+				"segment_name": {
+					"description": "SegmentName asks for the segment name to add IDs too. This field is mandatory.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Destinations.UpdateDestinationResponse": {
+			"description": "UpdateDestinationResponse is the output of the UpdateDestination method.",
+			"properties": {
+				"destination": {
+					"$ref": "#/definitions/Destinations.DestinationWithConnectorOverview"
+				}
+			},
+			"type": "object"
+		},
 		"Error": {
 			"description": "Error is used to define an error from an InfoSum API.",
 			"properties": {
@@ -1429,49 +2125,6 @@
 			},
 			"type": "object"
 		},
-		"Exports.AwsRegion": {
-			"default": "UNKNOWN_REGION",
-			"description": "AwsRegion are the supported AWS regions.\n\n - UNKNOWN_REGION: UNKNOWN_REGION is used when the region is not known.\n - US_EAST_1: US_EAST_1 is N. Virginia (us-east-1).\n - US_EAST_2: US_EAST_2 is Ohio (us-east-2).\n - US_WEST_1: US_WEST_1 is N. California (us-west-1).\n - US_WEST_2: US_WEST_2 is Oregon (us-west-2).\n - CA_CENTRAL_1: CA_CENTRAL_1 is Montreal (ca-central-1).\n - EU_WEST_1: EU_WEST_1 is Ireland (eu-west-1).\n - EU_WEST_2: EU_WEST_2 is London (eu-west-2).\n - EU_CENTRAL_1: EU_CENTRAL_1 is Frankfurt (eu-central-1).\n - AP_SOUTHEAST_1: AP_SOUTHEAST_1 is Singapore (ap-southeast-1).\n - AP_SOUTHEAST_2: AP_SOUTHEAST_2 is Sydney (ap-southeast-2).\n - AP_SOUTH_1: AP_SOUTH_1 is Mumbai (ap-south-1).\n - AP_NORTHEAST_1: AP_NORTHEAST_1 is Tokyo (ap-northeast-1).\n - AP_NORTHEAST_2: AP_NORTHEAST_2 is Seoul (ap-northeast-2).\n - SA_EAST_1: SA_EAST_1 is Saõ Paulo (sa-east-1).\n - CN_NORTH_1: CN_NORTH_1 is Beijing (cn-north-1).",
-			"enum": [
-				"UNKNOWN_REGION",
-				"US_EAST_1",
-				"US_EAST_2",
-				"US_WEST_1",
-				"US_WEST_2",
-				"CA_CENTRAL_1",
-				"EU_WEST_1",
-				"EU_WEST_2",
-				"EU_CENTRAL_1",
-				"AP_SOUTHEAST_1",
-				"AP_SOUTHEAST_2",
-				"AP_SOUTH_1",
-				"AP_NORTHEAST_1",
-				"AP_NORTHEAST_2",
-				"SA_EAST_1",
-				"CN_NORTH_1"
-			],
-			"type": "string"
-		},
-		"Exports.ConnectorType": {
-			"default": "CONNECTOR_TYPE_INVALID",
-			"description": "ConnectorType is the types of authentication used by a destination.\n\n - S3_ACCESS_KEYS: S3_ACCESS_KEYS indicates the destination is targeting S3 and using access/secret keys for authentication.\n - PUBMATIC: PUBMATIC  indicates the destination is targeting PubMatic.\n - S3_CROSS_ACCOUNT: S3_CROSS_ACCOUNT indicates the destination is targeting S3 and assuming an iam role for authentication.\n - SFTP: SFTP indicates the destination is targeting a sftp server.\n - GCS: GCS indicates indicates the destination is targeting Google Cloud Platform for authentication.\n - FACEBOOK: FACEBOOK indicates the destination is targeting Facebook.\n - DV360_PAIR: DV360_PAIR indicates the destination is targeting DV360 using PAIR encryption.\n - S3_ACCESS_KEYS_PAIR: S3_ACCESS_KEYS_PAIR indicates the destination is targeting S3 using access/secret keys for authentication and using PAIR encryption.\n - S3_CROSS_ACCOUNT_PAIR: S3_CROSS_ACCOUNT_PAIR indicates the destination is targeting S3 assuming an iam role for authentication and using PAIR encryption.\n - SFTP_PAIR: SFTP_PAIR indicates the destination is targeting a SFTP server for authentication and using PAIR encryption.\n - DV360_CUSTOMER_MATCH: DV360_CUSTOMER_MATCH indicates the destination is targeting DV360 Customer Match.\n - TRADEDESK: TRADEDESK indicates the destination is targeting trade desk",
-			"enum": [
-				"CONNECTOR_TYPE_INVALID",
-				"S3_ACCESS_KEYS",
-				"PUBMATIC",
-				"S3_CROSS_ACCOUNT",
-				"SFTP",
-				"GCS",
-				"FACEBOOK",
-				"DV360_PAIR",
-				"S3_ACCESS_KEYS_PAIR",
-				"S3_CROSS_ACCOUNT_PAIR",
-				"SFTP_PAIR",
-				"DV360_CUSTOMER_MATCH",
-				"TRADEDESK"
-			],
-			"type": "string"
-		},
 		"Exports.ContactInfoMapping": {
 			"description": "ContactInfoMapping contains information's mapping column names to DV360 accepted column names.",
 			"properties": {
@@ -1482,24 +2135,6 @@
 						"type": "object"
 					},
 					"type": "array"
-				}
-			},
-			"type": "object"
-		},
-		"Exports.CreateDestinationRequest": {
-			"description": "CreateDestinationRequest is the input to the CreateDestination method.",
-			"properties": {
-				"destination": {
-					"$ref": "#/definitions/Exports.Destination"
-				}
-			},
-			"type": "object"
-		},
-		"Exports.CreateDestinationResponse": {
-			"description": "CreateDestinationResponse is the output of the CreateDestination method.",
-			"properties": {
-				"destination_id": {
-					"type": "string"
 				}
 			},
 			"type": "object"
@@ -1526,20 +2161,6 @@
 					"type": "string"
 				}
 			},
-			"type": "object"
-		},
-		"Exports.DV360Connector": {
-			"description": "Dv360Connector is the information required to define a destination pushing to DV360.",
-			"properties": {
-				"customer_id": {
-					"description": "CustomerID is the ID for the customer's account (no hyphens).",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Exports.DV360ConnectorOverview": {
-			"description": "DV360ConnectorOverview contains information about a DV360 connector.",
 			"type": "object"
 		},
 		"Exports.DV360Create": {
@@ -1624,196 +2245,6 @@
 			},
 			"type": "object"
 		},
-		"Exports.DeleteDestinationResponse": {
-			"description": "DeleteDestinationResponse is an empty response for the Delete destination request.",
-			"type": "object"
-		},
-		"Exports.Destination": {
-			"description": "Destination is the information required to define destinations.",
-			"properties": {
-				"connector_type": {
-					"$ref": "#/definitions/Exports.ConnectorType",
-					"description": "ConnectorType states the type of connector used by the destination. Output only.",
-					"readOnly": true
-				},
-				"created_time": {
-					"description": "CreatedTime is the date and time the destination was created. Output only.",
-					"format": "date-time",
-					"readOnly": true,
-					"type": "string"
-				},
-				"creator_id": {
-					"description": "CreatorId is the ID of the user who created the destination. Output only.",
-					"readOnly": true,
-					"type": "string"
-				},
-				"description": {
-					"description": "Description is an optional description given to this destination.",
-					"type": "string"
-				},
-				"dv360_customer_match": {
-					"$ref": "#/definitions/Exports.DV360Connector"
-				},
-				"dv360_pair": {
-					"$ref": "#/definitions/Exports.DV360Connector"
-				},
-				"facebook": {
-					"$ref": "#/definitions/Exports.FacebookConnector"
-				},
-				"gcs": {
-					"$ref": "#/definitions/Exports.GCSConnector"
-				},
-				"id": {
-					"description": "ID is the globally unique ID of the destination. Output only.",
-					"readOnly": true,
-					"type": "string"
-				},
-				"name": {
-					"description": "Name is the display name given to this destination.",
-					"type": "string"
-				},
-				"owner_id": {
-					"description": "OwnerId is the user or company ID of the owner of the destination. Output only.",
-					"readOnly": true,
-					"type": "string"
-				},
-				"pubmatic": {
-					"$ref": "#/definitions/Exports.PubmaticConnector"
-				},
-				"s3": {
-					"$ref": "#/definitions/Exports.S3Connector"
-				},
-				"s3_pair": {
-					"$ref": "#/definitions/Exports.S3Connector"
-				},
-				"sftp": {
-					"$ref": "#/definitions/Exports.SftpConnector"
-				},
-				"sftp_pair": {
-					"$ref": "#/definitions/Exports.SftpConnector"
-				},
-				"trade_desk_connector": {
-					"$ref": "#/definitions/Exports.TradeDeskConnector"
-				},
-				"updated_time": {
-					"description": "UpdatedTime is the date and time the destination was last updated. Output only.",
-					"format": "date-time",
-					"readOnly": true,
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Exports.DestinationOverview": {
-			"description": "DestinationOverview contains information about a destinations.",
-			"properties": {
-				"connector_type": {
-					"$ref": "#/definitions/Exports.ConnectorType",
-					"description": "ConnectorType states the type of connector used by the destination."
-				},
-				"created_time": {
-					"description": "CreatedTime is the date and time the destination was created.",
-					"format": "date-time",
-					"type": "string"
-				},
-				"creator_id": {
-					"description": "CreatorId is the ID of the user who created the destination.",
-					"type": "string"
-				},
-				"description": {
-					"description": "Description is an optional description given to this destination.",
-					"type": "string"
-				},
-				"id": {
-					"description": "ID is the globally unique ID of the destination.",
-					"type": "string"
-				},
-				"name": {
-					"description": "Name is the display name given to this destination.",
-					"type": "string"
-				},
-				"owner_id": {
-					"description": "OwnerId is the user or company ID of the owner of the destination.",
-					"type": "string"
-				},
-				"updated_time": {
-					"description": "UpdatedTime is the date and time the destination was last updated.",
-					"format": "date-time",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Exports.DestinationWithConnectorOverview": {
-			"description": "DestinationWithConnectorOverview contains information about a destinations and its connector.",
-			"properties": {
-				"connector_type": {
-					"$ref": "#/definitions/Exports.ConnectorType",
-					"description": "ConnectorType states the type of connector used by the destination."
-				},
-				"created_time": {
-					"description": "CreatedTime is the date and time the destination was created.",
-					"format": "date-time",
-					"type": "string"
-				},
-				"creator_id": {
-					"description": "CreatorId is the ID of the user who created the destination.",
-					"type": "string"
-				},
-				"description": {
-					"description": "Description is an optional description given to this destination.",
-					"type": "string"
-				},
-				"dv360_customer_match": {
-					"$ref": "#/definitions/Exports.DV360ConnectorOverview"
-				},
-				"dv360_pair": {
-					"$ref": "#/definitions/Exports.DV360ConnectorOverview"
-				},
-				"facebook": {
-					"$ref": "#/definitions/Exports.FacebookConnectorOverview"
-				},
-				"gcs": {
-					"$ref": "#/definitions/Exports.GCSConnectorOverview"
-				},
-				"id": {
-					"description": "ID is the globally unique ID of the destination.",
-					"type": "string"
-				},
-				"name": {
-					"description": "Name is the display name given to this destination.",
-					"type": "string"
-				},
-				"owner_id": {
-					"description": "OwnerId is the user or company ID of the owner of the destination.",
-					"type": "string"
-				},
-				"pubmatic": {
-					"$ref": "#/definitions/Exports.PubmaticConnectorOverview"
-				},
-				"s3": {
-					"$ref": "#/definitions/Exports.S3ConnectorOverview"
-				},
-				"s3_pair": {
-					"$ref": "#/definitions/Exports.S3ConnectorOverview"
-				},
-				"sftp": {
-					"$ref": "#/definitions/Exports.SftpConnectorOverview"
-				},
-				"sftp_pair": {
-					"$ref": "#/definitions/Exports.SftpConnectorOverview"
-				},
-				"trade_desk_connector": {
-					"$ref": "#/definitions/Exports.TradeDeskConnectorOverview"
-				},
-				"updated_time": {
-					"description": "UpdatedTime is the date and time the destination was last updated.",
-					"format": "date-time",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
 		"Exports.Dv360Schema": {
 			"default": "DV360_SCHEMA_INVALID",
 			"description": "Dv360Schema is the enum of accepted column names.\n\n - DV360_SCHEMA_EMAIL: DV360SchemaEmail is an email address. Will be hashed when sent.\n - DV360_SCHEMA_PHONE: DV360SchemaPhone is a telephone number. Will be hashed when sent.\nE164 standard.\n - DV360_SCHEMA_LAST_NAME: DV360SchemaLastName is a last name. Will be hashed when sent.  Lower case\nonly and no punctuation, remove any extra spaces before, after, and in\nbetween.\n - DV360_SCHEMA_FIRST_NAME: DV360SchemaFirstName is a first name. Will be hashed when sent.  Lower\ncase only and no punctuation, remove any extra spaces before, after, and\nin between.\n - DV360_SCHEMA_POSTAL_CODE: DV360SchemaPostalCode is a zip code or a postcode.\nPostal code of the user's address.\n - DV360_SCHEMA_COUNTRY_CODE: DV360SchemaCountryCode is a country code.\n2-letter country code in ISO-3166-1 alpha-2 of the user's address.",
@@ -1892,16 +2323,6 @@
 			},
 			"type": "object"
 		},
-		"Exports.FacebookAccessKey": {
-			"description": "FacebookAccessKey contains the access key used for authentication.",
-			"properties": {
-				"access_key": {
-					"description": "AccessKey is a secret and should be transit encrypted. WriteOnly.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
 		"Exports.FacebookAdd": {
 			"description": "FacebookAdd appends records to an existing audience ID.",
 			"properties": {
@@ -1921,29 +2342,6 @@
 				},
 				"platform_column_name": {
 					"description": "PlatformColumnName is the name of the column that is outputted from the platform.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Exports.FacebookConnector": {
-			"description": "FacebookConnector is the information required to define a destination pushing to Facebook.",
-			"properties": {
-				"ad_account_id": {
-					"description": "AdAccountId is the ID for the user's ad account that we're going to be adding audiences in.",
-					"type": "string"
-				},
-				"facebook_access_key": {
-					"$ref": "#/definitions/Exports.FacebookAccessKey"
-				}
-			},
-			"type": "object"
-		},
-		"Exports.FacebookConnectorOverview": {
-			"description": "FacebookConnectorOverview contains information about a Facebook connector.",
-			"properties": {
-				"ad_account_id": {
-					"description": "AdAccountId is the ID for the user's ad account that we're going to be adding audiences in.",
 					"type": "string"
 				}
 			},
@@ -2052,37 +2450,6 @@
 			],
 			"type": "string"
 		},
-		"Exports.GCSConnector": {
-			"description": "GCSConnector is the information required to define a destination pushing to a sftp server.",
-			"properties": {
-				"bucket_name": {
-					"description": "Bucket Name is the name of the GCS bucket.",
-					"type": "string"
-				},
-				"default_push_overrides": {
-					"$ref": "#/definitions/Exports.GCSOverrides",
-					"description": "DefaultPushOverrides contain the default push time values. Optional."
-				},
-				"service_account_config_json": {
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Exports.GCSConnectorOverview": {
-			"description": "GCSConnectorOverview contains information about a GCS connector.",
-			"properties": {
-				"bucket_name": {
-					"description": "Bucket Name is the name of the GCS bucket.",
-					"type": "string"
-				},
-				"default_push_overrides": {
-					"$ref": "#/definitions/Exports.GCSOverrides",
-					"description": "DefaultPushOverrides contain the default push time values. Optional."
-				}
-			},
-			"type": "object"
-		},
 		"Exports.GCSOverrides": {
 			"description": "GCSOverrides are the values that can be overridden when pushing to a sftp server.",
 			"properties": {
@@ -2124,62 +2491,6 @@
 					"type": "string"
 				}
 			},
-			"type": "object"
-		},
-		"Exports.GetDestinationResponse": {
-			"description": "GetDestinationResponse is the output of the GetDestination method.",
-			"properties": {
-				"destination": {
-					"$ref": "#/definitions/Exports.DestinationWithConnectorOverview"
-				}
-			},
-			"type": "object"
-		},
-		"Exports.GetS3CrossAccountDetailsResponse": {
-			"description": "GetS3CrossAccountDetailsResponse is the output of the GetS3CrossAccountDetails method.",
-			"properties": {
-				"details": {
-					"$ref": "#/definitions/Exports.S3CrossAccountDetails"
-				}
-			},
-			"type": "object"
-		},
-		"Exports.ListDestinationsResponse": {
-			"description": "ListDestinationsResponse is the output of the ListDestination method.",
-			"properties": {
-				"destination_overviews": {
-					"items": {
-						"$ref": "#/definitions/Exports.DestinationWithConnectorOverview",
-						"type": "object"
-					},
-					"type": "array"
-				},
-				"destinations": {
-					"items": {
-						"$ref": "#/definitions/Exports.DestinationOverview",
-						"type": "object"
-					},
-					"type": "array"
-				},
-				"pagination": {
-					"$ref": "#/definitions/PaginationResponse"
-				}
-			},
-			"type": "object"
-		},
-		"Exports.PubmaticConnector": {
-			"description": "PubmaticConnector is the information required to define a destination pushing to PubMatic.",
-			"properties": {
-				"dpid": {
-					"description": "DPID is your PubMatic data partner ID. WriteOnly.",
-					"format": "int32",
-					"type": "integer"
-				}
-			},
-			"type": "object"
-		},
-		"Exports.PubmaticConnectorOverview": {
-			"description": "PubmaticConnectorOverview contains information about a Pubmatic connector.",
 			"type": "object"
 		},
 		"Exports.PubmaticCountryCode": {
@@ -2247,116 +2558,6 @@
 			},
 			"type": "object"
 		},
-		"Exports.S3AccessKeyAuth": {
-			"description": "S3AccessKeyAuth holds the details needed for access key / secret authentication.",
-			"properties": {
-				"access_key_id": {
-					"description": "AccessKeyId is the id of the access key to authenticate with AWS. WriteOnly.",
-					"type": "string"
-				},
-				"secret": {
-					"description": "Secret is the access key secret for authentication. WriteOnly.",
-					"type": "string"
-				},
-				"session_token": {
-					"description": "SessionToken is an optional STS session token. WriteOnly.\nLeave blank if using an IAM User access key.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Exports.S3AccessKeyDetails": {
-			"description": "S3AccessKeyDetails is the corresponding field to S3CrossAccountDetails for\naccess keys. It is empty as no extra information is required for the setup.",
-			"type": "object"
-		},
-		"Exports.S3Connector": {
-			"description": "S3Connector is the information required to define a destination using an S3 bucket.",
-			"properties": {
-				"access_key": {
-					"$ref": "#/definitions/Exports.S3AccessKeyAuth"
-				},
-				"bucket_name": {
-					"description": "BucketName is the name of the S3 Bucket.",
-					"type": "string"
-				},
-				"cross_account": {
-					"$ref": "#/definitions/Exports.S3CrossAccount"
-				},
-				"default_push_overrides": {
-					"$ref": "#/definitions/Exports.S3Overrides",
-					"title": "DefaultPushOverrides"
-				},
-				"region": {
-					"$ref": "#/definitions/Exports.AwsRegion",
-					"description": "Region is the region of the S3 Bucket."
-				}
-			},
-			"type": "object"
-		},
-		"Exports.S3ConnectorOverview": {
-			"description": "S3ConnectorOverview contains information about a S3 connector.",
-			"properties": {
-				"access_key_details": {
-					"$ref": "#/definitions/Exports.S3AccessKeyDetails",
-					"description": "AccessKeyDetails is for access key destinations."
-				},
-				"bucket_name": {
-					"description": "BucketName is the name of the S3 Bucket.",
-					"type": "string"
-				},
-				"cross_account_details": {
-					"$ref": "#/definitions/Exports.S3CrossAccountDetails",
-					"description": "CrossAccountDetails contains the details to set up S3 Cross Account access."
-				},
-				"default_push_overrides": {
-					"$ref": "#/definitions/Exports.S3Overrides",
-					"title": "DefaultPushOverrides"
-				},
-				"region": {
-					"$ref": "#/definitions/Exports.AwsRegion",
-					"description": "Region is the region of the S3 Bucket."
-				}
-			},
-			"type": "object"
-		},
-		"Exports.S3CrossAccount": {
-			"description": "S3CrossAccount holds the details needed for cross account authentication.",
-			"properties": {
-				"external_id": {
-					"description": "Output only.\nExternalId is the aws ExternalId that must be set in your role's trust policy to enable cross account access. Output only.",
-					"readOnly": true,
-					"type": "string"
-				},
-				"infosum_principal": {
-					"description": "Output only.\nInfosumPrincipal is the Infosum principal used when writing data to an S3 bucket.",
-					"readOnly": true,
-					"type": "string"
-				},
-				"push_role_arn": {
-					"description": "PushRoleArn is the AWS IAM role ARN to assume when writing data to an S3 bucket.",
-					"type": "string"
-				},
-				"session_name": {
-					"description": "SessionName is the name of the IAM role session.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Exports.S3CrossAccountDetails": {
-			"description": "S3CrossAccountDetails contains the information required to set up S3 Cross Account access.",
-			"properties": {
-				"external_id": {
-					"description": "ExternalId is a required field when setting up the S3 Cross Account trust relationship.",
-					"type": "string"
-				},
-				"principal": {
-					"description": "Principal is a required field when setting up the S3 Cross Account trust relationship.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
 		"Exports.S3Overrides": {
 			"description": "S3Overrides are the values that can be overridden when pushing to s3.",
 			"properties": {
@@ -2395,80 +2596,6 @@
 			},
 			"type": "object"
 		},
-		"Exports.SftpConnector": {
-			"description": "SftpConnector is the information required to define a destination pushing to a sftp server.",
-			"properties": {
-				"default_push_overrides": {
-					"$ref": "#/definitions/Exports.SftpOverrides",
-					"description": "DefaultPushOverrides contain the default push time values. Optional."
-				},
-				"gpg_public_key": {
-					"description": "GpgPublicKey is the GPG public key to use in encrypting the data. Optional.",
-					"type": "string"
-				},
-				"host": {
-					"description": "Host is the host address of the sftp server.",
-					"type": "string"
-				},
-				"host_keys": {
-					"description": "HostKeys contains options for providing a public key to verify the host.\nHostKeys can be public keys in OpenSSH authorized_keys/known_hosts format.",
-					"items": {
-						"type": "string"
-					},
-					"type": "array"
-				},
-				"password_config": {
-					"$ref": "#/definitions/Exports.SftpPasswordAuthentication"
-				},
-				"port": {
-					"description": "port is the port number that gets used when connecting to the sftp server.",
-					"format": "int32",
-					"type": "integer"
-				},
-				"public_key_pem": {
-					"description": "PublicKeyPem is the servers public PEM key that can be used to verify the host.",
-					"type": "string"
-				},
-				"ssh_config": {
-					"$ref": "#/definitions/Exports.SftpSshAuthentication"
-				}
-			},
-			"type": "object"
-		},
-		"Exports.SftpConnectorOverview": {
-			"description": "SftpConnectorOverview contains information about a SFTP connector.",
-			"properties": {
-				"default_push_overrides": {
-					"$ref": "#/definitions/Exports.SftpOverrides",
-					"description": "DefaultPushOverrides contain the default push time values. Optional."
-				},
-				"gpg_public_key": {
-					"description": "GpgPublicKey is the GPG public key to use in encrypting the data. Optional.",
-					"type": "string"
-				},
-				"host": {
-					"description": "Host is the host address of the sftp server.",
-					"type": "string"
-				},
-				"host_keys": {
-					"description": "HostKeys contains options for providing a public key to verify the host.\nHostKeys can be public keys in OpenSSH authorized_keys/known_hosts format.",
-					"items": {
-						"type": "string"
-					},
-					"type": "array"
-				},
-				"port": {
-					"description": "port is the port number that gets used when connecting to the sftp server.",
-					"format": "int32",
-					"type": "integer"
-				},
-				"public_key_pem": {
-					"description": "PublicKeyPem is the servers public PEM key that can be used to verify the host.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
 		"Exports.SftpOverrides": {
 			"description": "SftpOverrides are the values that can be overridden when pushing to a sftp server.",
 			"properties": {
@@ -2493,20 +2620,6 @@
 			},
 			"type": "object"
 		},
-		"Exports.SftpPasswordAuthentication": {
-			"description": "SftpPasswordAuthentication contains details to authenticate to a sftp server using a username and password.",
-			"properties": {
-				"password": {
-					"description": "Password is the password of the user. WriteOnly.",
-					"type": "string"
-				},
-				"username": {
-					"description": "Username is the username of then user trying to connect to the sftp server. WriteOnly.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
 		"Exports.SftpPush": {
 			"description": "SftpPush contain all the fields that need to be defined at push time when pushing to a sftp server.",
 			"properties": {
@@ -2517,80 +2630,6 @@
 				"overrides": {
 					"$ref": "#/definitions/Exports.SftpOverrides",
 					"description": "Overrides contains the fields that can be overridden when pushing to a sftp server."
-				}
-			},
-			"type": "object"
-		},
-		"Exports.SftpSshAuthentication": {
-			"description": "SftpSshAuthentication contains details to authenticate to a sftp server using a username and ssh key.",
-			"properties": {
-				"ssh_key": {
-					"description": "SshKey is the ssh key of the user. WriteOnly.",
-					"type": "string"
-				},
-				"username": {
-					"description": "Username is the username of then user trying to connect to the sftp server. WriteOnly.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Exports.TDLocation": {
-			"default": "TD_INVALID",
-			"enum": [
-				"TD_INVALID",
-				"TD_EU",
-				"TD_US_EC",
-				"TD_US_WC",
-				"TD_AP",
-				"TD_JP",
-				"TD_CN"
-			],
-			"title": "- TD_EU: TD_EU is the location code for the EU base URL\n - TD_US_EC: TD_EU is the location code for the US East Coast base URL\n - TD_US_WC: TD_EU is the location code for the US West Coast base URL\n - TD_AP: TD_EU is the location code for the Asia Pacific base URL\n - TD_JP: TD_EU is the location code for the Japan base URL\n - TD_CN: TD_EU is the location code for the China base URL",
-			"type": "string"
-		},
-		"Exports.TradeDeskConnector": {
-			"description": "TradeDeskConnector is the information required to define a destination pushing to TradeDesk.",
-			"properties": {
-				"advertiser_id": {
-					"description": "AdvertiserID asks for the ID of the advertiser. This field is mandatory.",
-					"type": "string"
-				},
-				"default_values": {
-					"$ref": "#/definitions/Exports.TradeDeskOverrides",
-					"title": "DefaultValues is a list of default values that may be overriden at push time"
-				},
-				"location": {
-					"$ref": "#/definitions/Exports.TDLocation",
-					"description": "Location asks for the base url for the trade desk. This field is mandatory."
-				},
-				"secret_key": {
-					"description": "SecretKey asks for the user secret key to create the signature header. This field is mandatory.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Exports.TradeDeskConnectorOverview": {
-			"description": "TradeDeskConnectorOverview contains information about a TradeDesk connector.",
-			"properties": {
-				"advertiser_id": {
-					"description": "AdvertiserIDValue asks for the ID of the advertiser.",
-					"type": "string"
-				},
-				"location": {
-					"$ref": "#/definitions/Exports.TDLocation",
-					"description": "Location asks for the base url for the trade desk."
-				}
-			},
-			"type": "object"
-		},
-		"Exports.TradeDeskOverrides": {
-			"description": "TradeDeskOverrides are the values that can be overridden when pushing to a sftp server.",
-			"properties": {
-				"segment_name": {
-					"description": "SegmentName asks for the segment name to add IDs too. This field is mandatory.",
-					"type": "string"
 				}
 			},
 			"type": "object"
@@ -2625,15 +2664,6 @@
 				"IMUID"
 			],
 			"type": "string"
-		},
-		"Exports.UpdateDestinationResponse": {
-			"description": "UpdateDestinationResponse is the output of the UpdateDestination method.",
-			"properties": {
-				"destination": {
-					"$ref": "#/definitions/Exports.DestinationWithConnectorOverview"
-				}
-			},
-			"type": "object"
 		},
 		"Files.DeleteResponse": {
 			"description": "DeleteResponse is an empty response for the Delete file request.",
@@ -2796,6 +2826,204 @@
 				}
 			},
 			"type": "object"
+		},
+		"Global_Schema.CategoriesResponse": {
+			"description": "CategoriesResponse is the response from the Categories method.",
+			"properties": {
+				"categories": {
+					"description": "Categories holds data on the categories in the global schema.",
+					"items": {
+						"$ref": "#/definitions/Global_Schema.Category",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"pagination": {
+					"$ref": "#/definitions/PaginationResponse",
+					"description": "Pagination is the pagination details of the returned categories."
+				}
+			},
+			"type": "object"
+		},
+		"Global_Schema.Category": {
+			"description": "Category describes a Category.",
+			"properties": {
+				"description": {
+					"description": "Description is the Description of this Category.",
+					"type": "string"
+				},
+				"id": {
+					"description": "Id is the unique ID of this Category.",
+					"format": "int64",
+					"type": "string"
+				},
+				"key_contributor": {
+					"description": "KeyContributor is a flag that shows whether the category has at least one representation\nthat contributes to a key.",
+					"type": "boolean"
+				},
+				"name": {
+					"description": "Name is the human-readable name of this Category.",
+					"type": "string"
+				},
+				"properties": {
+					"description": "Properties contain the different properties of this Category.",
+					"items": {
+						"$ref": "#/definitions/Global_Schema.Property",
+						"type": "object"
+					},
+					"type": "array"
+				}
+			},
+			"type": "object"
+		},
+		"Global_Schema.Key": {
+			"description": "Key describes a Key.",
+			"properties": {
+				"categories": {
+					"description": "Categories is a list of Category names and flags to indicate whether the Category is present.",
+					"items": {
+						"$ref": "#/definitions/Global_Schema.KeyCategory",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"id": {
+					"description": "ID is the unique ID of a key.",
+					"format": "int64",
+					"type": "string"
+				},
+				"name": {
+					"description": "Name is the human readable name of the Key.",
+					"type": "string"
+				},
+				"representation_version_ids": {
+					"description": "RepresentationVersionIDs is a list of the representation version IDs in a specific key.",
+					"items": {
+						"format": "int64",
+						"type": "string"
+					},
+					"type": "array"
+				}
+			},
+			"type": "object"
+		},
+		"Global_Schema.KeyCategoriesResponse": {
+			"description": "KeyCategoriesResponse is the response from the KeyCategories method.",
+			"properties": {
+				"categories": {
+					"description": "Categories holds data on the key categories in the global schema.",
+					"items": {
+						"$ref": "#/definitions/Global_Schema.Category",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"pagination": {
+					"$ref": "#/definitions/PaginationResponse",
+					"description": "Pagination is the pagination details of the returned categories."
+				}
+			},
+			"type": "object"
+		},
+		"Global_Schema.KeyCategory": {
+			"description": "KeyCategory is a message to support a category name being returned as a part of the overall info\nof a Key. It will also return whether or not the category named is currently in-use or if\nit's an \"extra\" one to fulfil in the event the user wishes to use the returned key.",
+			"properties": {
+				"category_name": {
+					"description": "CategoryName is the name a category that owns a representation involved within the Key.",
+					"type": "string"
+				},
+				"is_present": {
+					"description": "IsPresent is to determine whether or not the Category is present in the request. If not,\nthis will be used to indicate what the user is missing in order to use the Key.",
+					"type": "boolean"
+				}
+			},
+			"type": "object"
+		},
+		"Global_Schema.KeysResponse": {
+			"description": "KeysResponse is the response from the Keys method.",
+			"properties": {
+				"keys": {
+					"description": "Keys contains all the keys supported by the Normalizer.",
+					"items": {
+						"$ref": "#/definitions/Global_Schema.Key",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"pagination": {
+					"$ref": "#/definitions/PaginationResponse",
+					"description": "Pagination is the pagination details of the returned keys."
+				}
+			},
+			"type": "object"
+		},
+		"Global_Schema.PossibleValues": {
+			"description": "PossibleValues is the list of values the Property can have. It only applies if the Property\nis not a column, i.e. IsColumn is false.",
+			"properties": {
+				"default_value": {
+					"description": "This is the default value that should be assigned if a selection is not made.",
+					"type": "string"
+				},
+				"possible_values": {
+					"description": "PossibleValues is the list of values the Property can have.",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				}
+			},
+			"type": "object"
+		},
+		"Global_Schema.Property": {
+			"description": "Property describes a configurable attribute of a category.",
+			"properties": {
+				"desc": {
+					"description": "Desc is the description of this Property.",
+					"type": "string"
+				},
+				"is_column": {
+					"description": "IsColumn indicates whether this Property\nmaps to a single column.",
+					"type": "boolean"
+				},
+				"name": {
+					"description": "Name is the name of this Property.",
+					"type": "string"
+				},
+				"optional": {
+					"description": "Optional describes whether this Property is optional.",
+					"type": "boolean"
+				},
+				"possible_values": {
+					"$ref": "#/definitions/Global_Schema.PossibleValues",
+					"description": "PossibleValues is the list of values the Property can have. It only applies if the Property\nis not a column, i.e. IsColumn is false."
+				},
+				"type": {
+					"$ref": "#/definitions/Global_Schema.v2.Type",
+					"description": "Type is the type of this Property."
+				},
+				"user_input": {
+					"description": "UserInput is to determine whether to show the property to the user to set themselves.",
+					"type": "boolean"
+				}
+			},
+			"type": "object"
+		},
+		"Global_Schema.v2.Type": {
+			"default": "TYPE_INVALID",
+			"description": "Type is an enum of all the data types supported\nby the InfoSum products.\n\n - INT64: INT64 is the signed 64-bit integer type.\n - UINT64: UINT64 is the unsigned 64-bit integer type.\n - DOUBLE: DOUBLE is the floating point type.\n - TEXT: TEXT is the string type.\n - BOOLEAN: BOOLEAN is the boolean type.\n - BYTES: BYTES is the bytes type.\n - INT64RANGE: INT64RANGE is the range of signed 64-bit integers type.\n - TEXTARRAY: TEXTARRAY is the text array type.\n - INT64ARRAY: INT64ARRAY is the int64 array type.",
+			"enum": [
+				"TYPE_INVALID",
+				"INT64",
+				"UINT64",
+				"DOUBLE",
+				"TEXT",
+				"BOOLEAN",
+				"BYTES",
+				"INT64RANGE",
+				"TEXTARRAY",
+				"INT64ARRAY"
+			],
+			"type": "string"
 		},
 		"Imports.CancelImportExecutionResponse": {
 			"description": "CancelImportExecutionResponse is the output from the CancelExecution method.",
@@ -3628,7 +3856,7 @@
 			},
 			"type": "object"
 		},
-		"Normalizations.Bounds": {
+		"Normalization_Config.Bounds": {
 			"description": "Bounds is a pair of int64 values to specify an individual range.",
 			"properties": {
 				"lower": {
@@ -3644,60 +3872,7 @@
 			},
 			"type": "object"
 		},
-		"Normalizations.CancelNormalizationResponse": {
-			"description": "CancelNormalizationResponse is the empty response for the CancelNormalization rpc.",
-			"type": "object"
-		},
-		"Normalizations.CategoriesResponse": {
-			"description": "CategoriesResponse is the response from the Categories method.",
-			"properties": {
-				"categories": {
-					"description": "Categories holds data on the categories in the global schema.",
-					"items": {
-						"$ref": "#/definitions/Normalizations.Category",
-						"type": "object"
-					},
-					"type": "array"
-				},
-				"pagination": {
-					"$ref": "#/definitions/PaginationResponse",
-					"description": "Pagination is the pagination details of the returned categories."
-				}
-			},
-			"type": "object"
-		},
-		"Normalizations.Category": {
-			"description": "Category describes a Category.",
-			"properties": {
-				"description": {
-					"description": "Description is the Description of this Category.",
-					"type": "string"
-				},
-				"id": {
-					"description": "Id is the unique ID of this Category.",
-					"format": "int64",
-					"type": "string"
-				},
-				"key_contributor": {
-					"description": "KeyContributor is a flag that shows whether the category has at least one representation\nthat contributes to a key.",
-					"type": "boolean"
-				},
-				"name": {
-					"description": "Name is the human-readable name of this Category.",
-					"type": "string"
-				},
-				"properties": {
-					"description": "Properties contain the different properties of this Category.",
-					"items": {
-						"$ref": "#/definitions/Normalizations.Property",
-						"type": "object"
-					},
-					"type": "array"
-				}
-			},
-			"type": "object"
-		},
-		"Normalizations.CategoryInstruction": {
+		"Normalization_Config.CategoryInstruction": {
 			"description": "CategoryInstruction defines the input and configuration of a single category\ntype, including all of the steps required to transform the source data into\nthe category.",
 			"properties": {
 				"category_id": {
@@ -3707,7 +3882,7 @@
 				},
 				"column_type": {
 					"additionalProperties": {
-						"$ref": "#/definitions/Normalizations.v2.Type"
+						"$ref": "#/definitions/Normalization_Config.v2.Type"
 					},
 					"description": "ColumnType is a mapping of column name to column type.",
 					"type": "object"
@@ -3728,7 +3903,7 @@
 					"type": "boolean"
 				},
 				"custom_category_def": {
-					"$ref": "#/definitions/Normalizations.CustomCategory",
+					"$ref": "#/definitions/Normalization_Config.CustomCategory",
 					"description": "CustomCategoryDef is a custom category creation request to make a custom\ncategory."
 				},
 				"ignore_warnings": {
@@ -3738,14 +3913,14 @@
 				"mappings": {
 					"description": "Mappings is a list of value mappings which can be referenced during\nnormalization.",
 					"items": {
-						"$ref": "#/definitions/Normalizations.Mapping",
+						"$ref": "#/definitions/Normalization_Config.Mapping",
 						"type": "object"
 					},
 					"type": "array"
 				},
 				"properties": {
 					"additionalProperties": {
-						"$ref": "#/definitions/Normalizations.v2.Value"
+						"$ref": "#/definitions/Normalization_Config.v2.Value"
 					},
 					"description": "Properties is a map of the parameters to the categorizer plugin.",
 					"type": "object"
@@ -3757,19 +3932,19 @@
 			},
 			"type": "object"
 		},
-		"Normalizations.CategoryType": {
+		"Normalization_Config.CategoryType": {
 			"description": "CategoryType describes the types supported by custom categories and their\nrepresentation.",
 			"properties": {
 				"int_set": {
-					"$ref": "#/definitions/Normalizations.IntSet",
+					"$ref": "#/definitions/Normalization_Config.IntSet",
 					"description": "IntSet contains a list of integer values that make up a representation."
 				},
 				"integer_lists": {
-					"$ref": "#/definitions/Normalizations.IntegerList",
+					"$ref": "#/definitions/Normalization_Config.IntegerList",
 					"description": "IntegerLists contains a list of integer values that make up a\nrepresentation."
 				},
 				"integer_ranges": {
-					"$ref": "#/definitions/Normalizations.IntegerRange",
+					"$ref": "#/definitions/Normalization_Config.IntegerRange",
 					"description": "IntegerRanges contains a list of ranges that make up the overall range\nof a representation."
 				},
 				"integer_values": {
@@ -3778,27 +3953,27 @@
 					"type": "object"
 				},
 				"string_lists": {
-					"$ref": "#/definitions/Normalizations.StringList",
+					"$ref": "#/definitions/Normalization_Config.StringList",
 					"description": "StringLists contains a list of string values that make up a\nrepresentation."
 				},
 				"string_set": {
-					"$ref": "#/definitions/Normalizations.StringSet",
+					"$ref": "#/definitions/Normalization_Config.StringSet",
 					"description": "StringSet contains a set of string values that make up a\nrepresentation."
 				},
 				"string_values": {
-					"$ref": "#/definitions/Normalizations.StringValue",
+					"$ref": "#/definitions/Normalization_Config.StringValue",
 					"description": "StringValues allows representations to indicate that they support any\nunique string value."
 				}
 			},
 			"type": "object"
 		},
-		"Normalizations.Config": {
+		"Normalization_Config.Config": {
 			"description": "Config configures a normalization task.",
 			"properties": {
 				"categories": {
 					"description": "Categories describes how the input data will be normalized into\ncategories. This will contain all categories when in an INSIGHT bunker.\nWhen it is an IDENTITY bunker, only categories that have one or more\nrepresentations that contribute to a key can be included in this list.\n\n(armory.RunConfig.categories)",
 					"items": {
-						"$ref": "#/definitions/Normalizations.CategoryInstruction",
+						"$ref": "#/definitions/Normalization_Config.CategoryInstruction",
 						"type": "object"
 					},
 					"type": "array"
@@ -3818,7 +3993,7 @@
 					"type": "array"
 				},
 				"incremental": {
-					"$ref": "#/definitions/Normalizations.IncrementalInstruction",
+					"$ref": "#/definitions/Normalization_Config.IncrementalInstruction",
 					"description": "Incremental describes whether this request is for an incremental import and\nspecifies the column names used for extracting incremental configuration\nfields per row.\n\n(armory.RunConfig.incremental)"
 				},
 				"redaction_threshold": {
@@ -3842,7 +4017,7 @@
 			},
 			"type": "object"
 		},
-		"Normalizations.ConfigEntity": {
+		"Normalization_Config.ConfigEntity": {
 			"description": "ConfigEntity holds all the information regarding a normalisation config.",
 			"properties": {
 				"created_date_time": {
@@ -3863,7 +4038,7 @@
 					"type": "string"
 				},
 				"normalization_config": {
-					"$ref": "#/definitions/Normalizations.Config",
+					"$ref": "#/definitions/Normalization_Config.Config",
 					"description": "Config is the normalization configuration defined by the user."
 				},
 				"updated_date_time": {
@@ -3878,7 +4053,7 @@
 			},
 			"type": "object"
 		},
-		"Normalizations.ConfigSummary": {
+		"Normalization_Config.ConfigSummary": {
 			"description": "ConfigSummary has the information about a config but not the config itself.",
 			"properties": {
 				"created_date_time": {
@@ -3906,7 +4081,7 @@
 			},
 			"type": "object"
 		},
-		"Normalizations.CreateConfigRequest": {
+		"Normalization_Config.CreateConfigRequest": {
 			"properties": {
 				"description": {
 					"description": "Description is the given description for the config.",
@@ -3917,14 +4092,14 @@
 					"type": "string"
 				},
 				"normalization_config": {
-					"$ref": "#/definitions/Normalizations.Config",
+					"$ref": "#/definitions/Normalization_Config.Config",
 					"description": "Config is the normalization configuration defined by the user."
 				}
 			},
 			"title": "CreateConfigRequest creates a new config",
 			"type": "object"
 		},
-		"Normalizations.CreateConfigResponse": {
+		"Normalization_Config.CreateConfigResponse": {
 			"properties": {
 				"id": {
 					"title": "ID is the globally unique ID for the config",
@@ -3934,7 +4109,7 @@
 			"title": "CreateConfigResponse is the response object for rpc CreateConfigRequest",
 			"type": "object"
 		},
-		"Normalizations.CustomCategory": {
+		"Normalization_Config.CustomCategory": {
 			"description": "CustomCategory defines a custom category definition.",
 			"properties": {
 				"is_key": {
@@ -3946,24 +4121,323 @@
 					"type": "string"
 				},
 				"type": {
-					"$ref": "#/definitions/Normalizations.CategoryType",
+					"$ref": "#/definitions/Normalization_Config.CategoryType",
 					"description": "Type describes the types supported by this Category."
 				}
 			},
 			"type": "object"
 		},
-		"Normalizations.DeleteConfigResponse": {
+		"Normalization_Config.DeleteConfigResponse": {
 			"description": "DeleteConfigResponse is the empty response of the DeleteConfig rpc.",
 			"type": "object"
 		},
-		"Normalizations.GetConfigResponse": {
+		"Normalization_Config.GetConfigResponse": {
 			"description": "GetConfigResponse is the response of the GetConfig rpc.",
 			"properties": {
 				"config": {
-					"$ref": "#/definitions/Normalizations.ConfigEntity",
+					"$ref": "#/definitions/Normalization_Config.ConfigEntity",
 					"description": "Config is the normalisation configuration that was requested."
 				}
 			},
+			"type": "object"
+		},
+		"Normalization_Config.IncrementalInstruction": {
+			"description": "IncrementalInstruction defines how incremental fields should be extracted\nfrom row columns.",
+			"properties": {
+				"full_refresh": {
+					"description": "FullRefresh indicates whether this incremental run should fully refresh the\nitems in the db.",
+					"type": "boolean"
+				},
+				"primary_key_columns": {
+					"description": "PrimaryKeyColumns specifies one or more column names used for building a\nprimary key.",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				},
+				"ttl_column": {
+					"description": "TTLColumn specifies an integer column used to specify a timestamp after\nwhich the row will expire.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Normalization_Config.Int64Array": {
+			"description": "Int64Array represents an array of int64 values.",
+			"properties": {
+				"values": {
+					"description": "values represents the actual values within the array.",
+					"items": {
+						"format": "int64",
+						"type": "string"
+					},
+					"type": "array"
+				}
+			},
+			"type": "object"
+		},
+		"Normalization_Config.Int64Range": {
+			"description": "Int64Range represents an int64 range value.",
+			"properties": {
+				"lower": {
+					"description": "lower represents the inclusive lower bound of the range.",
+					"format": "int64",
+					"type": "string"
+				},
+				"upper": {
+					"description": "upper represents the exclusive upper bound of the range.",
+					"format": "int64",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Normalization_Config.IntSet": {
+			"description": "IntSet contains a set of int64 values that make up a representation.",
+			"properties": {
+				"values": {
+					"description": "Values is a list of integers that make up the IntSet message.",
+					"items": {
+						"format": "int64",
+						"type": "string"
+					},
+					"type": "array"
+				}
+			},
+			"type": "object"
+		},
+		"Normalization_Config.IntegerList": {
+			"description": "IntegerList contains a list of integer values that make up a\nrepresentation.",
+			"properties": {
+				"values": {
+					"description": "Values is a list of integers that make up the IntegerList message.",
+					"items": {
+						"format": "int64",
+						"type": "string"
+					},
+					"type": "array"
+				}
+			},
+			"type": "object"
+		},
+		"Normalization_Config.IntegerRange": {
+			"description": "IntegerRange contains a list of ranges that make up the overall range of\na representation.",
+			"properties": {
+				"ranges": {
+					"description": "Ranges is a list of Bounds that make up the overall range\nrepresentation.",
+					"items": {
+						"$ref": "#/definitions/Normalization_Config.Bounds",
+						"type": "object"
+					},
+					"type": "array"
+				}
+			},
+			"type": "object"
+		},
+		"Normalization_Config.ListConfigsResponse": {
+			"description": "ListConfigsResponse is the response of the ListConfigs rpc.",
+			"properties": {
+				"configs": {
+					"description": "Configs is a list of normalization configurations.",
+					"items": {
+						"$ref": "#/definitions/Normalization_Config.ConfigSummary",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"pagination": {
+					"$ref": "#/definitions/PaginationResponse",
+					"description": "Pagination is the pagination details of the returned transforms."
+				}
+			},
+			"type": "object"
+		},
+		"Normalization_Config.Mapping": {
+			"description": "Mapping is a uniquely-identified value map which can be referenced during\nnormalization.",
+			"properties": {
+				"elements": {
+					"description": "elements is the list of key-value pairs which form the mapping.",
+					"items": {
+						"$ref": "#/definitions/Normalization_Config.Pair",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"id": {
+					"description": "id is the unique identifier of the mapping.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Normalization_Config.Null": {
+			"description": "Null is an enum used to map values to JSON null.",
+			"type": "object"
+		},
+		"Normalization_Config.Pair": {
+			"description": "Pair is a key-value pair describing a single element of a mapping.",
+			"properties": {
+				"key": {
+					"$ref": "#/definitions/Normalization_Config.v2.Value",
+					"description": "Key is the key of the Pair."
+				},
+				"value": {
+					"$ref": "#/definitions/Normalization_Config.v2.Value",
+					"description": "Value is the value of the Pair."
+				}
+			},
+			"type": "object"
+		},
+		"Normalization_Config.StringList": {
+			"description": "StringList contains a list of string values that make up a\nrepresentation.",
+			"properties": {
+				"values": {
+					"description": "Values is a list of strings that make up the StringList message.",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				}
+			},
+			"type": "object"
+		},
+		"Normalization_Config.StringSet": {
+			"description": "StringSet contains a set of string values that make up a representation.",
+			"properties": {
+				"validator": {
+					"$ref": "#/definitions/Normalization_Config.StringSet.Validator",
+					"description": "Validator is an optional regex to give structured format to an\notherwise free datatype. Examples include email formats, credit card\nnumbers or phone numbers."
+				},
+				"values": {
+					"description": "Values is a list of strings that make up the StringSet message.",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				}
+			},
+			"type": "object"
+		},
+		"Normalization_Config.StringSet.Validator": {
+			"description": "Validator contains a validation string and a warning in the case when a\nstring fails validation.",
+			"properties": {
+				"validation": {
+					"description": "Validation is the string to create the regex itself for validation.",
+					"type": "string"
+				},
+				"warning": {
+					"description": "Warning is the string used to inform a user the way in which they can\nfix the failed validation.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Normalization_Config.StringValue": {
+			"description": "StringValue allows representations to indicate that they support any\nunique string value. Validation can be given in the form of a regex and\nto make sure unique strings adhere to a particular format. An example\nwould be email address or credit card numbers.",
+			"properties": {
+				"validator": {
+					"$ref": "#/definitions/Normalization_Config.StringValue.Validator",
+					"description": "Validator is an optional regex to give structured format to an\notherwise free datatype. Examples include email formats, credit card\nnumbers or phone numbers."
+				}
+			},
+			"type": "object"
+		},
+		"Normalization_Config.StringValue.Validator": {
+			"description": "Validator contains a validation string and a warning in the case when a\nstring fails validation.",
+			"properties": {
+				"validation": {
+					"description": "Validation is the string to create the regex itself for validation.",
+					"type": "string"
+				},
+				"warning": {
+					"description": "Warning is the string used to inform a user the way in which they can\nfix the failed validation.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Normalization_Config.TextArray": {
+			"description": "TextArray represents an array of string values.",
+			"properties": {
+				"values": {
+					"description": "values represents the actual values within the array.",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				}
+			},
+			"type": "object"
+		},
+		"Normalization_Config.v2.Type": {
+			"default": "TYPE_INVALID",
+			"description": "Type is an enum of all the data types supported\nby the InfoSum products.\n\n - INT64: INT64 is the signed 64-bit integer type.\n - UINT64: UINT64 is the unsigned 64-bit integer type.\n - DOUBLE: DOUBLE is the floating point type.\n - TEXT: TEXT is the string type.\n - BOOLEAN: BOOLEAN is the boolean type.\n - BYTES: BYTES is the bytes type.\n - INT64RANGE: INT64RANGE is the range of signed 64-bit integers type.\n - TEXTARRAY: TEXTARRAY is the text array type.\n - INT64ARRAY: INT64ARRAY is the int64 array type.",
+			"enum": [
+				"TYPE_INVALID",
+				"INT64",
+				"UINT64",
+				"DOUBLE",
+				"TEXT",
+				"BOOLEAN",
+				"BYTES",
+				"INT64RANGE",
+				"TEXTARRAY",
+				"INT64ARRAY"
+			],
+			"type": "string"
+		},
+		"Normalization_Config.v2.Value": {
+			"description": "Value represents an item in a database row.",
+			"properties": {
+				"bool": {
+					"description": "Represents a boolean value.",
+					"type": "boolean"
+				},
+				"bytes": {
+					"description": "Represents an array of bytes.",
+					"format": "byte",
+					"type": "string"
+				},
+				"double": {
+					"description": "Represents a double value.",
+					"format": "double",
+					"type": "number"
+				},
+				"int64": {
+					"description": "Represents an int64 value.",
+					"format": "int64",
+					"type": "string"
+				},
+				"int64array": {
+					"$ref": "#/definitions/Normalization_Config.Int64Array",
+					"description": "Represents an array of int64 values."
+				},
+				"int64range": {
+					"$ref": "#/definitions/Normalization_Config.Int64Range",
+					"description": "Represents a range of int64 values."
+				},
+				"null": {
+					"$ref": "#/definitions/Normalization_Config.Null",
+					"description": "Represents a null value."
+				},
+				"text": {
+					"description": "Represents a string value.",
+					"type": "string"
+				},
+				"textarray": {
+					"$ref": "#/definitions/Normalization_Config.TextArray",
+					"description": "Represents an array of string values."
+				},
+				"uint64": {
+					"description": "Represents an uint64 value.",
+					"format": "uint64",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Normalizations.CancelNormalizationResponse": {
+			"description": "CancelNormalizationResponse is the empty response for the CancelNormalization rpc.",
 			"type": "object"
 		},
 		"Normalizations.GetNormalizationResponse": {
@@ -3999,198 +4473,6 @@
 			},
 			"type": "object"
 		},
-		"Normalizations.IncrementalInstruction": {
-			"description": "IncrementalInstruction defines how incremental fields should be extracted\nfrom row columns.",
-			"properties": {
-				"full_refresh": {
-					"description": "FullRefresh indicates whether this incremental run should fully refresh the\nitems in the db.",
-					"type": "boolean"
-				},
-				"primary_key_columns": {
-					"description": "PrimaryKeyColumns specifies one or more column names used for building a\nprimary key.",
-					"items": {
-						"type": "string"
-					},
-					"type": "array"
-				},
-				"ttl_column": {
-					"description": "TTLColumn specifies an integer column used to specify a timestamp after\nwhich the row will expire.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Normalizations.Int64Array": {
-			"description": "Int64Array represents an array of int64 values.",
-			"properties": {
-				"values": {
-					"description": "values represents the actual values within the array.",
-					"items": {
-						"format": "int64",
-						"type": "string"
-					},
-					"type": "array"
-				}
-			},
-			"type": "object"
-		},
-		"Normalizations.Int64Range": {
-			"description": "Int64Range represents an int64 range value.",
-			"properties": {
-				"lower": {
-					"description": "lower represents the inclusive lower bound of the range.",
-					"format": "int64",
-					"type": "string"
-				},
-				"upper": {
-					"description": "upper represents the exclusive upper bound of the range.",
-					"format": "int64",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Normalizations.IntSet": {
-			"description": "IntSet contains a set of int64 values that make up a representation.",
-			"properties": {
-				"values": {
-					"description": "Values is a list of integers that make up the IntSet message.",
-					"items": {
-						"format": "int64",
-						"type": "string"
-					},
-					"type": "array"
-				}
-			},
-			"type": "object"
-		},
-		"Normalizations.IntegerList": {
-			"description": "IntegerList contains a list of integer values that make up a\nrepresentation.",
-			"properties": {
-				"values": {
-					"description": "Values is a list of integers that make up the IntegerList message.",
-					"items": {
-						"format": "int64",
-						"type": "string"
-					},
-					"type": "array"
-				}
-			},
-			"type": "object"
-		},
-		"Normalizations.IntegerRange": {
-			"description": "IntegerRange contains a list of ranges that make up the overall range of\na representation.",
-			"properties": {
-				"ranges": {
-					"description": "Ranges is a list of Bounds that make up the overall range\nrepresentation.",
-					"items": {
-						"$ref": "#/definitions/Normalizations.Bounds",
-						"type": "object"
-					},
-					"type": "array"
-				}
-			},
-			"type": "object"
-		},
-		"Normalizations.Key": {
-			"description": "Key describes a Key.",
-			"properties": {
-				"categories": {
-					"description": "Categories is a list of Category names and flags to indicate whether the Category is present.",
-					"items": {
-						"$ref": "#/definitions/Normalizations.KeyCategory",
-						"type": "object"
-					},
-					"type": "array"
-				},
-				"id": {
-					"description": "ID is the unique ID of a key.",
-					"format": "int64",
-					"type": "string"
-				},
-				"name": {
-					"description": "Name is the human readable name of the Key.",
-					"type": "string"
-				},
-				"representation_version_ids": {
-					"description": "RepresentationVersionIDs is a list of the representation version IDs in a specific key.",
-					"items": {
-						"format": "int64",
-						"type": "string"
-					},
-					"type": "array"
-				}
-			},
-			"type": "object"
-		},
-		"Normalizations.KeyCategoriesResponse": {
-			"description": "KeyCategoriesResponse is the response from the KeyCategories method.",
-			"properties": {
-				"categories": {
-					"description": "Categories holds data on the key categories in the global schema.",
-					"items": {
-						"$ref": "#/definitions/Normalizations.Category",
-						"type": "object"
-					},
-					"type": "array"
-				},
-				"pagination": {
-					"$ref": "#/definitions/PaginationResponse",
-					"description": "Pagination is the pagination details of the returned categories."
-				}
-			},
-			"type": "object"
-		},
-		"Normalizations.KeyCategory": {
-			"description": "KeyCategory is a message to support a category name being returned as a part of the overall info\nof a Key. It will also return whether or not the category named is currently in-use or if\nit's an \"extra\" one to fulfil in the event the user wishes to use the returned key.",
-			"properties": {
-				"category_name": {
-					"description": "CategoryName is the name a category that owns a representation involved within the Key.",
-					"type": "string"
-				},
-				"is_present": {
-					"description": "IsPresent is to determine whether or not the Category is present in the request. If not,\nthis will be used to indicate what the user is missing in order to use the Key.",
-					"type": "boolean"
-				}
-			},
-			"type": "object"
-		},
-		"Normalizations.KeysResponse": {
-			"description": "KeysResponse is the response from the Keys method.",
-			"properties": {
-				"keys": {
-					"description": "Keys contains all the keys supported by the Normalizer.",
-					"items": {
-						"$ref": "#/definitions/Normalizations.Key",
-						"type": "object"
-					},
-					"type": "array"
-				},
-				"pagination": {
-					"$ref": "#/definitions/PaginationResponse",
-					"description": "Pagination is the pagination details of the returned keys."
-				}
-			},
-			"type": "object"
-		},
-		"Normalizations.ListConfigsResponse": {
-			"description": "ListConfigsResponse is the response of the ListConfigs rpc.",
-			"properties": {
-				"configs": {
-					"description": "Configs is a list of normalization configurations.",
-					"items": {
-						"$ref": "#/definitions/Normalizations.ConfigSummary",
-						"type": "object"
-					},
-					"type": "array"
-				},
-				"pagination": {
-					"$ref": "#/definitions/PaginationResponse",
-					"description": "Pagination is the pagination details of the returned transforms."
-				}
-			},
-			"type": "object"
-		},
 		"Normalizations.ListNormalizationsResponse": {
 			"description": "ListNormalizationsResponse is the response of the ListNormalization rpc.",
 			"properties": {
@@ -4205,24 +4487,6 @@
 				"pagination": {
 					"$ref": "#/definitions/PaginationResponse",
 					"description": "Pagination is the pagination details of the returned transforms."
-				}
-			},
-			"type": "object"
-		},
-		"Normalizations.Mapping": {
-			"description": "Mapping is a uniquely-identified value map which can be referenced during\nnormalization.",
-			"properties": {
-				"elements": {
-					"description": "elements is the list of key-value pairs which form the mapping.",
-					"items": {
-						"$ref": "#/definitions/Normalizations.Pair",
-						"type": "object"
-					},
-					"type": "array"
-				},
-				"id": {
-					"description": "id is the unique identifier of the mapping.",
-					"type": "string"
 				}
 			},
 			"type": "object"
@@ -4340,41 +4604,6 @@
 			},
 			"type": "object"
 		},
-		"Normalizations.Null": {
-			"description": "Null is an enum used to map values to JSON null.",
-			"type": "object"
-		},
-		"Normalizations.Pair": {
-			"description": "Pair is a key-value pair describing a single element of a mapping.",
-			"properties": {
-				"key": {
-					"$ref": "#/definitions/Normalizations.v2.Value",
-					"description": "Key is the key of the Pair."
-				},
-				"value": {
-					"$ref": "#/definitions/Normalizations.v2.Value",
-					"description": "Value is the value of the Pair."
-				}
-			},
-			"type": "object"
-		},
-		"Normalizations.PossibleValues": {
-			"description": "PossibleValues is the list of values the Property can have. It only applies if the Property\nis not a column, i.e. IsColumn is false.",
-			"properties": {
-				"default_value": {
-					"description": "This is the default value that should be assigned if a selection is not made.",
-					"type": "string"
-				},
-				"possible_values": {
-					"description": "PossibleValues is the list of values the Property can have.",
-					"items": {
-						"type": "string"
-					},
-					"type": "array"
-				}
-			},
-			"type": "object"
-		},
 		"Normalizations.Progress": {
 			"description": "Progress holds the information of the progress of the transformation as a whole.",
 			"properties": {
@@ -4382,121 +4611,6 @@
 					"description": "CompletionPercentage is the current amount of data processed as a percentage.",
 					"format": "float",
 					"type": "number"
-				}
-			},
-			"type": "object"
-		},
-		"Normalizations.Property": {
-			"description": "Property describes a configurable attribute of a category.",
-			"properties": {
-				"desc": {
-					"description": "Desc is the description of this Property.",
-					"type": "string"
-				},
-				"is_column": {
-					"description": "IsColumn indicates whether this Property\nmaps to a single column.",
-					"type": "boolean"
-				},
-				"name": {
-					"description": "Name is the name of this Property.",
-					"type": "string"
-				},
-				"optional": {
-					"description": "Optional describes whether this Property is optional.",
-					"type": "boolean"
-				},
-				"possible_values": {
-					"$ref": "#/definitions/Normalizations.PossibleValues",
-					"description": "PossibleValues is the list of values the Property can have. It only applies if the Property\nis not a column, i.e. IsColumn is false."
-				},
-				"type": {
-					"$ref": "#/definitions/Normalizations.v2.Type",
-					"description": "Type is the type of this Property."
-				},
-				"user_input": {
-					"description": "UserInput is to determine whether to show the property to the user to set themselves.",
-					"type": "boolean"
-				}
-			},
-			"type": "object"
-		},
-		"Normalizations.StringList": {
-			"description": "StringList contains a list of string values that make up a\nrepresentation.",
-			"properties": {
-				"values": {
-					"description": "Values is a list of strings that make up the StringList message.",
-					"items": {
-						"type": "string"
-					},
-					"type": "array"
-				}
-			},
-			"type": "object"
-		},
-		"Normalizations.StringSet": {
-			"description": "StringSet contains a set of string values that make up a representation.",
-			"properties": {
-				"validator": {
-					"$ref": "#/definitions/Normalizations.StringSet.Validator",
-					"description": "Validator is an optional regex to give structured format to an\notherwise free datatype. Examples include email formats, credit card\nnumbers or phone numbers."
-				},
-				"values": {
-					"description": "Values is a list of strings that make up the StringSet message.",
-					"items": {
-						"type": "string"
-					},
-					"type": "array"
-				}
-			},
-			"type": "object"
-		},
-		"Normalizations.StringSet.Validator": {
-			"description": "Validator contains a validation string and a warning in the case when a\nstring fails validation.",
-			"properties": {
-				"validation": {
-					"description": "Validation is the string to create the regex itself for validation.",
-					"type": "string"
-				},
-				"warning": {
-					"description": "Warning is the string used to inform a user the way in which they can\nfix the failed validation.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Normalizations.StringValue": {
-			"description": "StringValue allows representations to indicate that they support any\nunique string value. Validation can be given in the form of a regex and\nto make sure unique strings adhere to a particular format. An example\nwould be email address or credit card numbers.",
-			"properties": {
-				"validator": {
-					"$ref": "#/definitions/Normalizations.StringValue.Validator",
-					"description": "Validator is an optional regex to give structured format to an\notherwise free datatype. Examples include email formats, credit card\nnumbers or phone numbers."
-				}
-			},
-			"type": "object"
-		},
-		"Normalizations.StringValue.Validator": {
-			"description": "Validator contains a validation string and a warning in the case when a\nstring fails validation.",
-			"properties": {
-				"validation": {
-					"description": "Validation is the string to create the regex itself for validation.",
-					"type": "string"
-				},
-				"warning": {
-					"description": "Warning is the string used to inform a user the way in which they can\nfix the failed validation.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Normalizations.TextArray": {
-			"description": "TextArray represents an array of string values.",
-			"properties": {
-				"values": {
-					"description": "values represents the actual values within the array.",
-					"items": {
-						"type": "string"
-					},
-					"type": "array"
 				}
 			},
 			"type": "object"
@@ -4519,73 +4633,6 @@
 				"PARTIALLY_COMPLETED"
 			],
 			"type": "string"
-		},
-		"Normalizations.v2.Type": {
-			"default": "TYPE_INVALID",
-			"description": "Type is an enum of all the data types supported\nby the InfoSum products.\n\n - INT64: INT64 is the signed 64-bit integer type.\n - UINT64: UINT64 is the unsigned 64-bit integer type.\n - DOUBLE: DOUBLE is the floating point type.\n - TEXT: TEXT is the string type.\n - BOOLEAN: BOOLEAN is the boolean type.\n - BYTES: BYTES is the bytes type.\n - INT64RANGE: INT64RANGE is the range of signed 64-bit integers type.\n - TEXTARRAY: TEXTARRAY is the text array type.\n - INT64ARRAY: INT64ARRAY is the int64 array type.",
-			"enum": [
-				"TYPE_INVALID",
-				"INT64",
-				"UINT64",
-				"DOUBLE",
-				"TEXT",
-				"BOOLEAN",
-				"BYTES",
-				"INT64RANGE",
-				"TEXTARRAY",
-				"INT64ARRAY"
-			],
-			"type": "string"
-		},
-		"Normalizations.v2.Value": {
-			"description": "Value represents an item in a database row.",
-			"properties": {
-				"bool": {
-					"description": "Represents a boolean value.",
-					"type": "boolean"
-				},
-				"bytes": {
-					"description": "Represents an array of bytes.",
-					"format": "byte",
-					"type": "string"
-				},
-				"double": {
-					"description": "Represents a double value.",
-					"format": "double",
-					"type": "number"
-				},
-				"int64": {
-					"description": "Represents an int64 value.",
-					"format": "int64",
-					"type": "string"
-				},
-				"int64array": {
-					"$ref": "#/definitions/Normalizations.Int64Array",
-					"description": "Represents an array of int64 values."
-				},
-				"int64range": {
-					"$ref": "#/definitions/Normalizations.Int64Range",
-					"description": "Represents a range of int64 values."
-				},
-				"null": {
-					"$ref": "#/definitions/Normalizations.Null",
-					"description": "Represents a null value."
-				},
-				"text": {
-					"description": "Represents a string value.",
-					"type": "string"
-				},
-				"textarray": {
-					"$ref": "#/definitions/Normalizations.TextArray",
-					"description": "Represents an array of string values."
-				},
-				"uint64": {
-					"description": "Represents an uint64 value.",
-					"format": "uint64",
-					"type": "string"
-				}
-			},
-			"type": "object"
 		},
 		"Pagination": {
 			"description": "Pagination holds information on which records to return.",
@@ -5103,90 +5150,7 @@
 			},
 			"type": "object"
 		},
-		"Recordsets.AttributeColumn": {
-			"description": "AttributeColumn contains metadata about an Insight Column.",
-			"properties": {
-				"category_id": {
-					"description": "CategoryId is the category ID in the global schema for the column.",
-					"format": "int64",
-					"type": "string"
-				},
-				"category_name": {
-					"description": "CategoryName is the category name in the global schema for the column.",
-					"type": "string"
-				},
-				"data_type": {
-					"$ref": "#/definitions/Recordsets.DataType",
-					"description": "DataType is how the data should be semantically treated when querying: Continuous or Categorical."
-				},
-				"is_custom": {
-					"description": "IsCustom identifies if this column is a custom attribute (not in the global schema).",
-					"type": "boolean"
-				},
-				"representation_id": {
-					"description": "RepresentationId is the representation ID in the global schema for the column.",
-					"format": "int64",
-					"type": "string"
-				},
-				"representation_name": {
-					"description": "RepresentationName is the category name in the global schema for the column.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Recordsets.CancelExecutionResponse": {
-			"description": "CancelExecutionResponse is the output from the CancelExecution method.",
-			"type": "object"
-		},
-		"Recordsets.Column": {
-			"properties": {
-				"attribute_column": {
-					"$ref": "#/definitions/Recordsets.AttributeColumn"
-				},
-				"key_column": {
-					"$ref": "#/definitions/Recordsets.KeyColumn"
-				},
-				"name": {
-					"title": "name is the column name\nfor key_columns name is the name in the global schema.\nfor AttributeColumns name must be same as RepresentationName\nfor raw_columns name is the name of the column",
-					"type": "string"
-				},
-				"pii": {
-					"title": "pii is set to true if column contains sensitive data",
-					"type": "boolean"
-				},
-				"raw_column": {
-					"$ref": "#/definitions/Recordsets.RawColumn"
-				},
-				"statistics": {
-					"$ref": "#/definitions/Recordsets.ColumnStats",
-					"title": "statistics is the stats for a column"
-				},
-				"value_type": {
-					"$ref": "#/definitions/Recordsets.ValueType",
-					"title": "value_type is the type of values stored in this column"
-				}
-			},
-			"title": "Column contains details of each column in the recordset.\nFor Raw columns it's sufficient to only define name and value_type",
-			"type": "object"
-		},
-		"Recordsets.ColumnStats": {
-			"description": "ColumnStats is the statistics of a column.",
-			"properties": {
-				"cell_count": {
-					"description": "CellCount of non-null cells in the column.\n\nNullCellCount will be \"total_rows - cell_count\".",
-					"format": "int64",
-					"type": "string"
-				},
-				"value_count": {
-					"description": "ValueCount is the count of valid values inside the cells in the column.",
-					"format": "int64",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Recordsets.Config": {
+		"Recordset_Configs.Config": {
 			"description": "Config contains information about a recordset config.",
 			"properties": {
 				"created_by": {
@@ -5241,7 +5205,7 @@
 			},
 			"type": "object"
 		},
-		"Recordsets.CreateConfigRequest": {
+		"Recordset_Configs.CreateConfigRequest": {
 			"description": "CreateConfigRequest contains the information required to create a recordset config.",
 			"properties": {
 				"description": {
@@ -5279,7 +5243,7 @@
 			],
 			"type": "object"
 		},
-		"Recordsets.CreateConfigResponse": {
+		"Recordset_Configs.CreateConfigResponse": {
 			"description": "CreateConfigResponse contains the ID of the Config.",
 			"properties": {
 				"config_id": {
@@ -5289,7 +5253,52 @@
 			},
 			"type": "object"
 		},
-		"Recordsets.CreateExecutionRequest": {
+		"Recordset_Configs.DeleteConfigResponse": {
+			"description": "DeleteConfigResponse is the output from the DeleteConfig method.",
+			"type": "object"
+		},
+		"Recordset_Configs.GetConfigResponse": {
+			"description": "GetConfigResponse contains the requested config.",
+			"properties": {
+				"config": {
+					"$ref": "#/definitions/Recordset_Configs.Config",
+					"description": "The details of the requested config."
+				}
+			},
+			"type": "object"
+		},
+		"Recordset_Configs.ListConfigsResponse": {
+			"description": "ListConfigsResponse returns the matching configs.",
+			"properties": {
+				"configs": {
+					"description": "The list of configs that match the critera of the request.",
+					"items": {
+						"$ref": "#/definitions/Recordset_Configs.Config",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"pagination": {
+					"$ref": "#/definitions/PaginationResponse",
+					"description": "Details of the pagination of this response."
+				}
+			},
+			"type": "object"
+		},
+		"Recordset_Configs.UpdateConfigResponse": {
+			"description": "UpdateConfigResponse is the output from the UpdateConfig method.",
+			"properties": {
+				"config": {
+					"$ref": "#/definitions/Recordset_Configs.Config"
+				}
+			},
+			"type": "object"
+		},
+		"Recordset_Creation.CancelExecutionResponse": {
+			"description": "CancelExecutionResponse is the output from the CancelExecution method.",
+			"type": "object"
+		},
+		"Recordset_Creation.CreateExecutionRequest": {
 			"description": "CreateExecutionRequest contains the information required to create a recordset.",
 			"properties": {
 				"cloud_vault_id": {
@@ -5301,7 +5310,7 @@
 					"type": "string"
 				},
 				"execution_config": {
-					"$ref": "#/definitions/Recordsets.ExecutionConfig",
+					"$ref": "#/definitions/Recordset_Creation.ExecutionConfig",
 					"description": "The required information needed to execute the creation of a recordset."
 				},
 				"filepaths": {
@@ -5323,7 +5332,7 @@
 			],
 			"type": "object"
 		},
-		"Recordsets.CreateExecutionResponse": {
+		"Recordset_Creation.CreateExecutionResponse": {
 			"description": "CreateExecutionResponse contains the ID of the execution.",
 			"properties": {
 				"execution_id": {
@@ -5333,25 +5342,7 @@
 			},
 			"type": "object"
 		},
-		"Recordsets.DataType": {
-			"default": "DATA_TYPE_INVALID",
-			"description": "DataType is how the data should be semantically treated when querying.\n\n - DATA_TYPE_INVALID: DATA_TYPE_UNSPECIFIED\n - CONTINUOUS: CONTINUOUS data can only be represented by integers.\n - CATEGORICAL: CATEGORICAL data can be represented by all data types.",
-			"enum": [
-				"DATA_TYPE_INVALID",
-				"CONTINUOUS",
-				"CATEGORICAL"
-			],
-			"type": "string"
-		},
-		"Recordsets.DeleteConfigResponse": {
-			"description": "DeleteConfigResponse is the output from the DeleteConfig method.",
-			"type": "object"
-		},
-		"Recordsets.DeleteResponse": {
-			"description": "DeleteResponse is an empty response for the Delete file request.",
-			"type": "object"
-		},
-		"Recordsets.Execution": {
+		"Recordset_Creation.Execution": {
 			"description": "Execution contains information about the creation of a\n recordset.",
 			"properties": {
 				"cloud_vault_id": {
@@ -5364,7 +5355,7 @@
 					"type": "string"
 				},
 				"current_status": {
-					"$ref": "#/definitions/Recordsets.v1.Status",
+					"$ref": "#/definitions/Recordset_Creation.v1.Status",
 					"description": "CurrentStatus is the status of the current execution."
 				},
 				"id": {
@@ -5372,7 +5363,7 @@
 					"type": "string"
 				},
 				"progress": {
-					"$ref": "#/definitions/Recordsets.Progress",
+					"$ref": "#/definitions/Recordset_Creation.Progress",
 					"description": "Progress has the information of the progress of the recordset."
 				},
 				"recordset_id": {
@@ -5395,7 +5386,7 @@
 			},
 			"type": "object"
 		},
-		"Recordsets.ExecutionConfig": {
+		"Recordset_Creation.ExecutionConfig": {
 			"description": "ExecutionConfig contains the needed information to create an recordset execution.",
 			"properties": {
 				"header_names": {
@@ -5420,7 +5411,7 @@
 			},
 			"type": "object"
 		},
-		"Recordsets.ExecutionDetails": {
+		"Recordset_Creation.ExecutionDetails": {
 			"description": "ExecutionDetails holds detailed information about an execution and its history.",
 			"properties": {
 				"cloud_vault_id": {
@@ -5437,11 +5428,11 @@
 					"type": "string"
 				},
 				"current_status": {
-					"$ref": "#/definitions/Recordsets.v1.Status",
+					"$ref": "#/definitions/Recordset_Creation.v1.Status",
 					"description": "CurrentStatus is the status of the current execution."
 				},
 				"execution_config": {
-					"$ref": "#/definitions/Recordsets.ExecutionConfig",
+					"$ref": "#/definitions/Recordset_Creation.ExecutionConfig",
 					"description": "ExecutionConfig contains supplied config used to execute the request."
 				},
 				"filepaths": {
@@ -5454,7 +5445,7 @@
 				"history": {
 					"description": "History is the status history of the execution execution.",
 					"items": {
-						"$ref": "#/definitions/Recordsets.History",
+						"$ref": "#/definitions/Recordset_Creation.History",
 						"type": "object"
 					},
 					"type": "array"
@@ -5464,7 +5455,7 @@
 					"type": "string"
 				},
 				"progress": {
-					"$ref": "#/definitions/Recordsets.ExecutionProgress",
+					"$ref": "#/definitions/Recordset_Creation.ExecutionProgress",
 					"description": "Progress has the information of the progress of the recordset."
 				},
 				"recordset_id": {
@@ -5487,7 +5478,7 @@
 			},
 			"type": "object"
 		},
-		"Recordsets.ExecutionProgress": {
+		"Recordset_Creation.ExecutionProgress": {
 			"description": "ExecutionProgress holds progress information of the import execution as a whole.",
 			"properties": {
 				"completion_percentage": {
@@ -5513,37 +5504,17 @@
 			},
 			"type": "object"
 		},
-		"Recordsets.GetConfigResponse": {
-			"description": "GetConfigResponse contains the requested config.",
-			"properties": {
-				"config": {
-					"$ref": "#/definitions/Recordsets.Config",
-					"description": "The details of the requested config."
-				}
-			},
-			"type": "object"
-		},
-		"Recordsets.GetExecutionResponse": {
+		"Recordset_Creation.GetExecutionResponse": {
 			"description": "GetExecutionResponse contains the requested execution.",
 			"properties": {
 				"execution_details": {
-					"$ref": "#/definitions/Recordsets.ExecutionDetails",
+					"$ref": "#/definitions/Recordset_Creation.ExecutionDetails",
 					"description": "The details of the requested execution."
 				}
 			},
 			"type": "object"
 		},
-		"Recordsets.GetResponse": {
-			"description": "GetResponse returns the requested recordset.",
-			"properties": {
-				"recordset": {
-					"$ref": "#/definitions/Recordsets.Recordset",
-					"description": "The details of the requested recordset."
-				}
-			},
-			"type": "object"
-		},
-		"Recordsets.History": {
+		"Recordset_Creation.History": {
 			"description": "History holds information about the status of the recordset creation execution.",
 			"properties": {
 				"date_time": {
@@ -5557,7 +5528,173 @@
 					"type": "string"
 				},
 				"status": {
-					"$ref": "#/definitions/Recordsets.v1.Status"
+					"$ref": "#/definitions/Recordset_Creation.v1.Status"
+				}
+			},
+			"type": "object"
+		},
+		"Recordset_Creation.ListExecutionsResponse": {
+			"description": "ListExecutionsResponse returns the matching executions.",
+			"properties": {
+				"executions": {
+					"description": "The list of executions that match the critera of the request.",
+					"items": {
+						"$ref": "#/definitions/Recordset_Creation.Execution",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"pagination": {
+					"$ref": "#/definitions/PaginationResponse",
+					"description": "Details of the pagination of this response."
+				}
+			},
+			"type": "object"
+		},
+		"Recordset_Creation.Progress": {
+			"description": "Progress holds the information of the progress of the import execution as a whole.",
+			"properties": {
+				"completion_percentage": {
+					"description": "CompletionPercentage indicates the completion of the process.",
+					"format": "float",
+					"type": "number"
+				},
+				"lines_processed": {
+					"description": "LinesProcessed is the number of lines of the input files that have been processed.",
+					"format": "int64",
+					"type": "string"
+				},
+				"malformed_lines": {
+					"description": "MalformedLines is the total number of lines that are malformed.",
+					"format": "int64",
+					"type": "string"
+				},
+				"total_lines": {
+					"description": "TotalLines is the total number of lines in the input files.",
+					"format": "int64",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Recordset_Creation.v1.Status": {
+			"default": "NO_STATUS",
+			"description": "Status is an enum of the different states that an async task can be in.",
+			"enum": [
+				"NO_STATUS",
+				"WAITING",
+				"INITIALIZING",
+				"RUNNING",
+				"FAILED",
+				"COMPLETED",
+				"CANCELING",
+				"CANCELED",
+				"STALE",
+				"PROVISIONING",
+				"PROVISIONED",
+				"PARTIALLY_COMPLETED"
+			],
+			"type": "string"
+		},
+		"Recordsets.AttributeColumn": {
+			"description": "AttributeColumn contains metadata about an Insight Column.",
+			"properties": {
+				"category_id": {
+					"description": "CategoryId is the category ID in the global schema for the column.",
+					"format": "int64",
+					"type": "string"
+				},
+				"category_name": {
+					"description": "CategoryName is the category name in the global schema for the column.",
+					"type": "string"
+				},
+				"data_type": {
+					"$ref": "#/definitions/Recordsets.DataType",
+					"description": "DataType is how the data should be semantically treated when querying: Continuous or Categorical."
+				},
+				"is_custom": {
+					"description": "IsCustom identifies if this column is a custom attribute (not in the global schema).",
+					"type": "boolean"
+				},
+				"representation_id": {
+					"description": "RepresentationId is the representation ID in the global schema for the column.",
+					"format": "int64",
+					"type": "string"
+				},
+				"representation_name": {
+					"description": "RepresentationName is the category name in the global schema for the column.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Recordsets.Column": {
+			"properties": {
+				"attribute_column": {
+					"$ref": "#/definitions/Recordsets.AttributeColumn"
+				},
+				"key_column": {
+					"$ref": "#/definitions/Recordsets.KeyColumn"
+				},
+				"name": {
+					"title": "name is the column name\nfor key_columns name is the name in the global schema.\nfor AttributeColumns name must be same as RepresentationName\nfor raw_columns name is the name of the column",
+					"type": "string"
+				},
+				"pii": {
+					"title": "pii is set to true if column contains sensitive data",
+					"type": "boolean"
+				},
+				"raw_column": {
+					"$ref": "#/definitions/Recordsets.RawColumn"
+				},
+				"statistics": {
+					"$ref": "#/definitions/Recordsets.ColumnStats",
+					"title": "statistics is the stats for a column"
+				},
+				"value_type": {
+					"$ref": "#/definitions/Recordsets.ValueType",
+					"title": "value_type is the type of values stored in this column"
+				}
+			},
+			"title": "Column contains details of each column in the recordset.\nFor Raw columns it's sufficient to only define name and value_type",
+			"type": "object"
+		},
+		"Recordsets.ColumnStats": {
+			"description": "ColumnStats is the statistics of a column.",
+			"properties": {
+				"cell_count": {
+					"description": "CellCount of non-null cells in the column.\n\nNullCellCount will be \"total_rows - cell_count\".",
+					"format": "int64",
+					"type": "string"
+				},
+				"value_count": {
+					"description": "ValueCount is the count of valid values inside the cells in the column.",
+					"format": "int64",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Recordsets.DataType": {
+			"default": "DATA_TYPE_INVALID",
+			"description": "DataType is how the data should be semantically treated when querying.\n\n - DATA_TYPE_INVALID: DATA_TYPE_UNSPECIFIED\n - CONTINUOUS: CONTINUOUS data can only be represented by integers.\n - CATEGORICAL: CATEGORICAL data can be represented by all data types.",
+			"enum": [
+				"DATA_TYPE_INVALID",
+				"CONTINUOUS",
+				"CATEGORICAL"
+			],
+			"type": "string"
+		},
+		"Recordsets.DeleteResponse": {
+			"description": "DeleteResponse is an empty response for the Delete file request.",
+			"type": "object"
+		},
+		"Recordsets.GetResponse": {
+			"description": "GetResponse returns the requested recordset.",
+			"properties": {
+				"recordset": {
+					"$ref": "#/definitions/Recordsets.Recordset",
+					"description": "The details of the requested recordset."
 				}
 			},
 			"type": "object"
@@ -5602,42 +5739,6 @@
 					"description": "The list of Recordset columns that match the critera of the request.",
 					"items": {
 						"$ref": "#/definitions/Recordsets.Column",
-						"type": "object"
-					},
-					"type": "array"
-				},
-				"pagination": {
-					"$ref": "#/definitions/PaginationResponse",
-					"description": "Details of the pagination of this response."
-				}
-			},
-			"type": "object"
-		},
-		"Recordsets.ListConfigsResponse": {
-			"description": "ListConfigsResponse returns the matching configs.",
-			"properties": {
-				"configs": {
-					"description": "The list of configs that match the critera of the request.",
-					"items": {
-						"$ref": "#/definitions/Recordsets.Config",
-						"type": "object"
-					},
-					"type": "array"
-				},
-				"pagination": {
-					"$ref": "#/definitions/PaginationResponse",
-					"description": "Details of the pagination of this response."
-				}
-			},
-			"type": "object"
-		},
-		"Recordsets.ListExecutionsResponse": {
-			"description": "ListExecutionsResponse returns the matching executions.",
-			"properties": {
-				"executions": {
-					"description": "The list of executions that match the critera of the request.",
-					"items": {
-						"$ref": "#/definitions/Recordsets.Execution",
 						"type": "object"
 					},
 					"type": "array"
@@ -5722,32 +5823,6 @@
 				}
 			},
 			"readOnly": true,
-			"type": "object"
-		},
-		"Recordsets.Progress": {
-			"description": "Progress holds the information of the progress of the import execution as a whole.",
-			"properties": {
-				"completion_percentage": {
-					"description": "CompletionPercentage indicates the completion of the process.",
-					"format": "float",
-					"type": "number"
-				},
-				"lines_processed": {
-					"description": "LinesProcessed is the number of lines of the input files that have been processed.",
-					"format": "int64",
-					"type": "string"
-				},
-				"malformed_lines": {
-					"description": "MalformedLines is the total number of lines that are malformed.",
-					"format": "int64",
-					"type": "string"
-				},
-				"total_lines": {
-					"description": "TotalLines is the total number of lines in the input files.",
-					"format": "int64",
-					"type": "string"
-				}
-			},
 			"type": "object"
 		},
 		"Recordsets.RawColumn": {
@@ -5934,15 +6009,6 @@
 			},
 			"type": "object"
 		},
-		"Recordsets.UpdateConfigResponse": {
-			"description": "UpdateConfigResponse is the output from the UpdateConfig method.",
-			"properties": {
-				"config": {
-					"$ref": "#/definitions/Recordsets.Config"
-				}
-			},
-			"type": "object"
-		},
 		"Recordsets.ValidateResponse": {
 			"description": "ValidateResponse returns recordset and if it's valid.",
 			"properties": {
@@ -5977,25 +6043,6 @@
 				"INTEGER_SET",
 				"STRING_ARRAY",
 				"STRING_SET"
-			],
-			"type": "string"
-		},
-		"Recordsets.v1.Status": {
-			"default": "NO_STATUS",
-			"description": "Status is an enum of the different states that an async task can be in.",
-			"enum": [
-				"NO_STATUS",
-				"WAITING",
-				"INITIALIZING",
-				"RUNNING",
-				"FAILED",
-				"COMPLETED",
-				"CANCELING",
-				"CANCELED",
-				"STALE",
-				"PROVISIONING",
-				"PROVISIONED",
-				"PARTIALLY_COMPLETED"
 			],
 			"type": "string"
 		},
@@ -6649,9 +6696,10 @@
 		}
 	},
 	"externalDocs": {
-		"description": "Official documentation",
+		"description": "Official Documentation",
 		"url": "https://infosum.github.io/infosum-docs/"
 	},
+	"host": "api.infosum.com",
 	"info": {
 		"contact": {
 			"email": "support@infosum.com",
@@ -7308,7 +7356,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/CloudVaults.ListResponse"
+							"$ref": "#/definitions/Cloud_Vaults.ListResponse"
 						}
 					},
 					"401": {
@@ -7338,7 +7386,7 @@
 				},
 				"summary": "List Cloud Vaults.",
 				"tags": [
-					"CloudVaults"
+					"Cloud Vaults"
 				]
 			},
 			"post": {
@@ -7350,7 +7398,7 @@
 						"name": "body",
 						"required": true,
 						"schema": {
-							"$ref": "#/definitions/CloudVaults.CreateRequest"
+							"$ref": "#/definitions/Cloud_Vaults.CreateRequest"
 						}
 					}
 				],
@@ -7358,7 +7406,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/CloudVaults.CreateResponse"
+							"$ref": "#/definitions/Cloud_Vaults.CreateResponse"
 						}
 					},
 					"400": {
@@ -7400,7 +7448,7 @@
 				},
 				"summary": "Create a new Cloud Vault.",
 				"tags": [
-					"CloudVaults"
+					"Cloud Vaults"
 				]
 			}
 		},
@@ -7440,7 +7488,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/CloudVaults.UpdateResponse"
+							"$ref": "#/definitions/Cloud_Vaults.UpdateResponse"
 						}
 					},
 					"400": {
@@ -7482,7 +7530,7 @@
 				},
 				"summary": "Update a Cloud Vault",
 				"tags": [
-					"CloudVaults"
+					"Cloud Vaults"
 				]
 			}
 		},
@@ -7516,7 +7564,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/CloudVaults.AssociateResponse"
+							"$ref": "#/definitions/Cloud_Vaults.AssociateResponse"
 						}
 					},
 					"400": {
@@ -7552,7 +7600,7 @@
 				},
 				"summary": "Associate a Cloud Vault with a bunker",
 				"tags": [
-					"CloudVaults"
+					"Cloud Vaults"
 				]
 			}
 		},
@@ -7586,7 +7634,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/CloudVaults.DissociateResponse"
+							"$ref": "#/definitions/Cloud_Vaults.DissociateResponse"
 						}
 					},
 					"400": {
@@ -7622,7 +7670,7 @@
 				},
 				"summary": "Dissociate a Cloud Vault from a bunker",
 				"tags": [
-					"CloudVaults"
+					"Cloud Vaults"
 				]
 			}
 		},
@@ -7649,7 +7697,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/CloudVaults.DeleteResponse"
+							"$ref": "#/definitions/Cloud_Vaults.DeleteResponse"
 						}
 					},
 					"400": {
@@ -7685,7 +7733,7 @@
 				},
 				"summary": "Delete a Cloud Vault.",
 				"tags": [
-					"CloudVaults"
+					"Cloud Vaults"
 				]
 			},
 			"get": {
@@ -7703,7 +7751,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/CloudVaults.GetResponse"
+							"$ref": "#/definitions/Cloud_Vaults.GetResponse"
 						}
 					},
 					"400": {
@@ -7745,7 +7793,7 @@
 				},
 				"summary": "Get a Cloud Vault.",
 				"tags": [
-					"CloudVaults"
+					"Cloud Vaults"
 				]
 			}
 		},
@@ -9456,7 +9504,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Exports.ListDestinationsResponse"
+							"$ref": "#/definitions/Destinations.ListDestinationsResponse"
 						}
 					},
 					"400": {
@@ -9492,7 +9540,7 @@
 				},
 				"summary": "List Destinations",
 				"tags": [
-					"Exports"
+					"Destinations"
 				]
 			},
 			"post": {
@@ -9505,7 +9553,7 @@
 						"name": "body",
 						"required": true,
 						"schema": {
-							"$ref": "#/definitions/Exports.CreateDestinationRequest"
+							"$ref": "#/definitions/Destinations.CreateDestinationRequest"
 						}
 					}
 				],
@@ -9513,7 +9561,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Exports.CreateDestinationResponse"
+							"$ref": "#/definitions/Destinations.CreateDestinationResponse"
 						}
 					},
 					"400": {
@@ -9549,7 +9597,7 @@
 				},
 				"summary": "Create a Destination",
 				"tags": [
-					"Exports"
+					"Destinations"
 				]
 			}
 		},
@@ -9561,7 +9609,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Exports.GetS3CrossAccountDetailsResponse"
+							"$ref": "#/definitions/Destinations.GetS3CrossAccountDetailsResponse"
 						}
 					},
 					"401": {
@@ -9591,7 +9639,7 @@
 				},
 				"summary": "Get S3 Cross Account details",
 				"tags": [
-					"Exports"
+					"Destinations"
 				]
 			}
 		},
@@ -9615,7 +9663,7 @@
 							"description": "Destination is the information required to define destinations.",
 							"properties": {
 								"connector_type": {
-									"$ref": "#/definitions/Exports.ConnectorType",
+									"$ref": "#/definitions/Destinations.ConnectorType",
 									"description": "ConnectorType states the type of connector used by the destination. Output only.",
 									"readOnly": true
 								},
@@ -9635,16 +9683,16 @@
 									"type": "string"
 								},
 								"dv360_customer_match": {
-									"$ref": "#/definitions/Exports.DV360Connector"
+									"$ref": "#/definitions/Destinations.DV360Connector"
 								},
 								"dv360_pair": {
-									"$ref": "#/definitions/Exports.DV360Connector"
+									"$ref": "#/definitions/Destinations.DV360Connector"
 								},
 								"facebook": {
-									"$ref": "#/definitions/Exports.FacebookConnector"
+									"$ref": "#/definitions/Destinations.FacebookConnector"
 								},
 								"gcs": {
-									"$ref": "#/definitions/Exports.GCSConnector"
+									"$ref": "#/definitions/Destinations.GCSConnector"
 								},
 								"name": {
 									"description": "Name is the display name given to this destination.",
@@ -9656,22 +9704,22 @@
 									"type": "string"
 								},
 								"pubmatic": {
-									"$ref": "#/definitions/Exports.PubmaticConnector"
+									"$ref": "#/definitions/Destinations.PubmaticConnector"
 								},
 								"s3": {
-									"$ref": "#/definitions/Exports.S3Connector"
+									"$ref": "#/definitions/Destinations.S3Connector"
 								},
 								"s3_pair": {
-									"$ref": "#/definitions/Exports.S3Connector"
+									"$ref": "#/definitions/Destinations.S3Connector"
 								},
 								"sftp": {
-									"$ref": "#/definitions/Exports.SftpConnector"
+									"$ref": "#/definitions/Destinations.SftpConnector"
 								},
 								"sftp_pair": {
-									"$ref": "#/definitions/Exports.SftpConnector"
+									"$ref": "#/definitions/Destinations.SftpConnector"
 								},
 								"trade_desk_connector": {
-									"$ref": "#/definitions/Exports.TradeDeskConnector"
+									"$ref": "#/definitions/Destinations.TradeDeskConnector"
 								},
 								"updated_time": {
 									"description": "UpdatedTime is the date and time the destination was last updated. Output only.",
@@ -9688,7 +9736,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Exports.UpdateDestinationResponse"
+							"$ref": "#/definitions/Destinations.UpdateDestinationResponse"
 						}
 					},
 					"400": {
@@ -9730,7 +9778,7 @@
 				},
 				"summary": "Update a Destination",
 				"tags": [
-					"Exports"
+					"Destinations"
 				]
 			}
 		},
@@ -9750,7 +9798,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Exports.DeleteDestinationResponse"
+							"$ref": "#/definitions/Destinations.DeleteDestinationResponse"
 						}
 					},
 					"400": {
@@ -9786,7 +9834,7 @@
 				},
 				"summary": "Delete a Destination",
 				"tags": [
-					"Exports"
+					"Destinations"
 				]
 			},
 			"get": {
@@ -9804,7 +9852,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Exports.GetDestinationResponse"
+							"$ref": "#/definitions/Destinations.GetDestinationResponse"
 						}
 					},
 					"400": {
@@ -9846,7 +9894,7 @@
 				},
 				"summary": "Get a Destination",
 				"tags": [
-					"Exports"
+					"Destinations"
 				]
 			}
 		},
@@ -11589,7 +11637,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Normalizations.ListConfigsResponse"
+							"$ref": "#/definitions/Normalization_Config.ListConfigsResponse"
 						}
 					},
 					"400": {
@@ -11625,7 +11673,7 @@
 				},
 				"summary": "List company Normalization Configurations.",
 				"tags": [
-					"Normalizations"
+					"Normalization Config"
 				]
 			},
 			"post": {
@@ -11637,7 +11685,7 @@
 						"name": "body",
 						"required": true,
 						"schema": {
-							"$ref": "#/definitions/Normalizations.CreateConfigRequest"
+							"$ref": "#/definitions/Normalization_Config.CreateConfigRequest"
 						}
 					}
 				],
@@ -11645,7 +11693,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Normalizations.CreateConfigResponse"
+							"$ref": "#/definitions/Normalization_Config.CreateConfigResponse"
 						}
 					},
 					"400": {
@@ -11681,7 +11729,7 @@
 				},
 				"summary": "Creates a normalization config.",
 				"tags": [
-					"Normalizations"
+					"Normalization Config"
 				]
 			}
 		},
@@ -11702,7 +11750,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Normalizations.DeleteConfigResponse"
+							"$ref": "#/definitions/Normalization_Config.DeleteConfigResponse"
 						}
 					},
 					"400": {
@@ -11738,7 +11786,7 @@
 				},
 				"summary": "Delete a Normalization Config.",
 				"tags": [
-					"Normalizations"
+					"Normalization Config"
 				]
 			},
 			"get": {
@@ -11757,7 +11805,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Normalizations.GetConfigResponse"
+							"$ref": "#/definitions/Normalization_Config.GetConfigResponse"
 						}
 					},
 					"400": {
@@ -11799,7 +11847,7 @@
 				},
 				"summary": "Get a Normalization Configuration.",
 				"tags": [
-					"Normalizations"
+					"Normalization Config"
 				]
 			}
 		},
@@ -12114,7 +12162,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Normalizations.CategoriesResponse"
+							"$ref": "#/definitions/Global_Schema.CategoriesResponse"
 						}
 					},
 					"400": {
@@ -12150,7 +12198,7 @@
 				},
 				"summary": "List Global Schema Categories.",
 				"tags": [
-					"Normalizations"
+					"Global Schema"
 				]
 			}
 		},
@@ -12229,7 +12277,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Normalizations.KeysResponse"
+							"$ref": "#/definitions/Global_Schema.KeysResponse"
 						}
 					},
 					"400": {
@@ -12271,7 +12319,7 @@
 				},
 				"summary": "List Global Schema Keys.",
 				"tags": [
-					"Normalizations"
+					"Global Schema"
 				]
 			}
 		},
@@ -12315,7 +12363,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Normalizations.KeyCategoriesResponse"
+							"$ref": "#/definitions/Global_Schema.KeyCategoriesResponse"
 						}
 					},
 					"400": {
@@ -12351,7 +12399,7 @@
 				},
 				"summary": "List Global Schema Key Categories.",
 				"tags": [
-					"Normalizations"
+					"Global Schema"
 				]
 			}
 		},
@@ -12961,7 +13009,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Recordsets.ListConfigsResponse"
+							"$ref": "#/definitions/Recordset_Configs.ListConfigsResponse"
 						}
 					},
 					"400": {
@@ -13003,7 +13051,7 @@
 				},
 				"summary": "List Recordset Configs.",
 				"tags": [
-					"Recordsets"
+					"Recordset Configs"
 				]
 			},
 			"post": {
@@ -13016,7 +13064,7 @@
 						"name": "body",
 						"required": true,
 						"schema": {
-							"$ref": "#/definitions/Recordsets.CreateConfigRequest"
+							"$ref": "#/definitions/Recordset_Configs.CreateConfigRequest"
 						}
 					}
 				],
@@ -13024,7 +13072,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Recordsets.CreateConfigResponse"
+							"$ref": "#/definitions/Recordset_Configs.CreateConfigResponse"
 						}
 					},
 					"400": {
@@ -13072,7 +13120,7 @@
 				},
 				"summary": "Create a Recordset Config.",
 				"tags": [
-					"Recordsets"
+					"Recordset Configs"
 				]
 			}
 		},
@@ -13148,7 +13196,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Recordsets.UpdateConfigResponse"
+							"$ref": "#/definitions/Recordset_Configs.UpdateConfigResponse"
 						}
 					},
 					"400": {
@@ -13196,7 +13244,7 @@
 				},
 				"summary": "Update a Recordset Config.",
 				"tags": [
-					"Recordsets"
+					"Recordset Configs"
 				]
 			}
 		},
@@ -13216,7 +13264,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Recordsets.DeleteConfigResponse"
+							"$ref": "#/definitions/Recordset_Configs.DeleteConfigResponse"
 						}
 					},
 					"400": {
@@ -13258,7 +13306,7 @@
 				},
 				"summary": "Delete a Recordset Config.",
 				"tags": [
-					"Recordsets"
+					"Recordset Configs"
 				]
 			},
 			"get": {
@@ -13277,7 +13325,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Recordsets.GetConfigResponse"
+							"$ref": "#/definitions/Recordset_Configs.GetConfigResponse"
 						}
 					},
 					"400": {
@@ -13319,7 +13367,7 @@
 				},
 				"summary": "Get a Recordset Config.",
 				"tags": [
-					"Recordsets"
+					"Recordset Configs"
 				]
 			}
 		},
@@ -13334,7 +13382,7 @@
 						"name": "body",
 						"required": true,
 						"schema": {
-							"$ref": "#/definitions/Recordsets.CreateExecutionRequest"
+							"$ref": "#/definitions/Recordset_Creation.CreateExecutionRequest"
 						}
 					}
 				],
@@ -13342,7 +13390,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Recordsets.CreateExecutionResponse"
+							"$ref": "#/definitions/Recordset_Creation.CreateExecutionResponse"
 						}
 					},
 					"400": {
@@ -13390,7 +13438,7 @@
 				},
 				"summary": "Create a Recordset.",
 				"tags": [
-					"Recordsets"
+					"Recordset Creation"
 				]
 			}
 		},
@@ -13434,7 +13482,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Recordsets.ListExecutionsResponse"
+							"$ref": "#/definitions/Recordset_Creation.ListExecutionsResponse"
 						}
 					},
 					"400": {
@@ -13476,7 +13524,7 @@
 				},
 				"summary": "List Executions.",
 				"tags": [
-					"Recordsets"
+					"Recordset Creation"
 				]
 			}
 		},
@@ -13497,7 +13545,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Recordsets.GetExecutionResponse"
+							"$ref": "#/definitions/Recordset_Creation.GetExecutionResponse"
 						}
 					},
 					"400": {
@@ -13539,7 +13587,7 @@
 				},
 				"summary": "Get a Recordset Execution.",
 				"tags": [
-					"Recordsets"
+					"Recordset Creation"
 				]
 			}
 		},
@@ -13560,7 +13608,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Recordsets.CancelExecutionResponse"
+							"$ref": "#/definitions/Recordset_Creation.CancelExecutionResponse"
 						}
 					},
 					"400": {
@@ -13602,7 +13650,7 @@
 				},
 				"summary": "Cancel an Execution",
 				"tags": [
-					"Recordsets"
+					"Recordset Creation"
 				]
 			}
 		},
@@ -14750,10 +14798,76 @@
 	"swagger": "2.0",
 	"x-tagGroups": [
 		{
+			"name": "Accounts",
+			"tags": [
+				"Accounts"
+			]
+		},
+		{
+			"name": "Analysis",
+			"tags": [
+				"Connections",
+				"Queries",
+				"Reports"
+			]
+		},
+		{
 			"name": "Automations",
 			"tags": [
-				"Automation Execution",
-				"Automation Configs"
+				"Automation Configs",
+				"Automation Execution"
+			]
+		},
+		{
+			"name": "Datasets",
+			"tags": [
+				"Datasets",
+				"Lineage",
+				"Schema"
+			]
+		},
+		{
+			"name": "Export",
+			"tags": [
+				"Destinations",
+				"Exports"
+			]
+		},
+		{
+			"name": "File Management",
+			"tags": [
+				"Cloud Vaults",
+				"Files"
+			]
+		},
+		{
+			"name": "Import",
+			"tags": [
+				"Import Connectors",
+				"Importers"
+			]
+		},
+		{
+			"name": "Normalization",
+			"tags": [
+				"Global Schema",
+				"Normalization Config",
+				"Normalizations"
+			]
+		},
+		{
+			"name": "Publishing",
+			"tags": [
+				"Dataset Prepare Configs",
+				"Prepares"
+			]
+		},
+		{
+			"name": "Recordsets",
+			"tags": [
+				"Recordsets",
+				"Recordset Configs",
+				"Recordset Creation"
 			]
 		}
 	]
