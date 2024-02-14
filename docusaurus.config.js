@@ -4,8 +4,6 @@
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
-const remarkInfoSumLinks = require('./src/remark/code-links');
-
 /** Consts **/
 const INFOSUM_PORTAL_NAME = 'InfoSum API Guide';
 
@@ -29,7 +27,6 @@ const config = {
       ({
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          beforeDefaultRemarkPlugins:[remarkInfoSumLinks]
         },
         theme: {
           customCss: [
