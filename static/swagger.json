@@ -479,7 +479,7 @@
 		},
 		"BucketOrigin": {
 			"default": "BUCKET_ORIGIN_INVALID",
-			"description": "BucketOrigin denoted whether the bucket is supplied by Infosum or the customer.",
+			"description": "BucketOrigin denoted whether the bucket is supplied by InfoSum or the customer.",
 			"enum": [
 				"BUCKET_ORIGIN_INVALID",
 				"INFOSUM",
@@ -1864,7 +1864,7 @@
 					"type": "string"
 				},
 				"infosum_principal": {
-					"description": "Output only.\nInfosumPrincipal is the Infosum principal used when writing data to an S3 bucket.",
+					"description": "Output only.\nInfosumPrincipal is the InfoSum principal used when writing data to an S3 bucket.",
 					"readOnly": true,
 					"type": "string"
 				},
@@ -2214,7 +2214,7 @@
 					"$ref": "#/definitions/Exports.DV360Remove"
 				},
 				"time_to_live_days": {
-					"description": "TimeToLive is the number of days for the data to live. Must be between 0 and 540 (inclusive).\nSet to 10000 for no expiration for CRM based userlists.",
+					"description": "TimeToLive is the number of days for the data to live. Must be between 0 and 540 (inclusive).\nSet to 10000 for no expiration for CRM based user lists.",
 					"format": "int64",
 					"type": "string"
 				}
@@ -3577,11 +3577,11 @@
 					"type": "string"
 				},
 				"upload_url": {
-					"description": "The temporay upload URL the user will upload their file body to.",
+					"description": "The temporary upload URL the user will upload their file body to.",
 					"type": "string"
 				},
 				"upload_url_expiration_time": {
-					"description": "The expiration date time of the temporay upload URL.",
+					"description": "The expiration date time of the temporary upload URL.",
 					"format": "date-time",
 					"type": "string"
 				}
@@ -3945,7 +3945,7 @@
 					"type": "string"
 				},
 				"convert_to_multivalue": {
-					"description": "ConvertToMultivalue indicates if a column needs to be converted prior being\nassiged as multi_value.",
+					"description": "ConvertToMultivalue indicates if a column needs to be converted prior being\nassigned as multi_value.",
 					"type": "boolean"
 				},
 				"custom_category_def": {
@@ -4491,7 +4491,7 @@
 			"properties": {
 				"normalization_details": {
 					"$ref": "#/definitions/Normalizations.NormalizationDetails",
-					"description": "NormalizationDetails holds all infomation on the normalization as well as the shards being used to process the\nnormalization."
+					"description": "NormalizationDetails holds all information on the normalization as well as the shards being used to process the\nnormalization."
 				}
 			},
 			"type": "object"
@@ -5138,7 +5138,7 @@
 			"description": "CreatePrivatePathResponse is the output of the CreatePrivatePath method.",
 			"properties": {
 				"collaboration_id": {
-					"description": "CollaborationId is the unique ID generated for the private path collaboration.\nThis value must be kept safe by the user as it's not stored by Infosum and cannot be retrieved.",
+					"description": "CollaborationId is the unique ID generated for the private path collaboration.\nThis value must be kept safe by the user as it's not stored by InfoSum and cannot be retrieved.",
 					"type": "string"
 				}
 			},
@@ -5317,7 +5317,7 @@
 			"description": "ListConfigsResponse returns the matching configs.",
 			"properties": {
 				"configs": {
-					"description": "The list of configs that match the critera of the request.",
+					"description": "The list of configs that match the criteria of the request.",
 					"items": {
 						"$ref": "#/definitions/Recordset_Configs.Config",
 						"type": "object"
@@ -5583,7 +5583,7 @@
 			"description": "ListExecutionsResponse returns the matching executions.",
 			"properties": {
 				"executions": {
-					"description": "The list of executions that match the critera of the request.",
+					"description": "The list of executions that match the criteria of the request.",
 					"items": {
 						"$ref": "#/definitions/Recordset_Creation.Execution",
 						"type": "object"
@@ -5782,7 +5782,7 @@
 			"description": "ListColumnsResponse returns the list of Recordset columns.",
 			"properties": {
 				"columns": {
-					"description": "The list of Recordset columns that match the critera of the request.",
+					"description": "The list of Recordset columns that match the criteria of the request.",
 					"items": {
 						"$ref": "#/definitions/Recordsets.Column",
 						"type": "object"
@@ -5804,7 +5804,7 @@
 					"description": "Details of the pagination of this response."
 				},
 				"recordsets": {
-					"description": "The list of recordset overviews that match the critera of the request.",
+					"description": "The list of recordset overviews that match the criteria of the request.",
 					"items": {
 						"$ref": "#/definitions/Recordsets.RecordsetOverview",
 						"type": "object"

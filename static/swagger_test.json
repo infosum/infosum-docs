@@ -337,7 +337,7 @@
 			"description": "ListConfigsResponse returns the matching resources.",
 			"properties": {
 				"configs": {
-					"description": "The automation config that match the critera of the request.",
+					"description": "The automation config that match the criteria of the request.",
 					"items": {
 						"$ref": "#/definitions/Automations.Config",
 						"type": "object"
@@ -355,7 +355,7 @@
 			"description": "ListExecutionResponse returns the matching resources.",
 			"properties": {
 				"executions": {
-					"description": "The ListExecution of automation executions that match the critera of the request.",
+					"description": "The ListExecution of automation executions that match the criteria of the request.",
 					"items": {
 						"$ref": "#/definitions/Automations.Execution",
 						"type": "object"
@@ -483,7 +483,7 @@
 		},
 		"BucketOrigin": {
 			"default": "BUCKET_ORIGIN_INVALID",
-			"description": "BucketOrigin denoted whether the bucket is supplied by Infosum or the customer.",
+			"description": "BucketOrigin denoted whether the bucket is supplied by InfoSum or the customer.",
 			"enum": [
 				"BUCKET_ORIGIN_INVALID",
 				"INFOSUM",
@@ -558,7 +558,7 @@
 				"updated_date_time": {
 					"format": "date-time",
 					"readOnly": true,
-					"title": "Output only. UpdatedDateTime is the date and time that thie Cloud Vault was\nupdated",
+					"title": "Output only. UpdatedDateTime is the date and time that the Cloud Vault was\nupdated",
 					"type": "string"
 				}
 			},
@@ -824,15 +824,15 @@
 			"type": "object"
 		},
 		"Dataset_Prepare_Configs.DeleteConfigCategoriesResponse": {
-			"description": "DeleteConfigCategoriesResponse is the empty reponse for DeleteConfigCategoriesRequest rpc.",
+			"description": "DeleteConfigCategoriesResponse is the empty response for DeleteConfigCategoriesRequest rpc.",
 			"type": "object"
 		},
 		"Dataset_Prepare_Configs.DeleteConfigExportColumnsResponse": {
-			"description": "DeleteConfigExportColumnsResponse is the empty reponse for DeleteConfigExportColumnsRequest rpc.",
+			"description": "DeleteConfigExportColumnsResponse is the empty response for DeleteConfigExportColumnsRequest rpc.",
 			"type": "object"
 		},
 		"Dataset_Prepare_Configs.DeleteConfigKeysResponse": {
-			"description": "DeleteConfigKeysResponse is the empty reponse for DeleteConfigKeysRequest rpc.",
+			"description": "DeleteConfigKeysResponse is the empty response for DeleteConfigKeysRequest rpc.",
 			"type": "object"
 		},
 		"Dataset_Prepare_Configs.DeleteConfigResponse": {
@@ -1642,7 +1642,7 @@
 					"$ref": "#/definitions/Exports.DV360Remove"
 				},
 				"time_to_live_days": {
-					"description": "TimeToLive is the number of days for the data to live. Must be between 0 and 540 (inclusive).\nSet to 10000 for no expiration for CRM based userlists.",
+					"description": "TimeToLive is the number of days for the data to live. Must be between 0 and 540 (inclusive).\nSet to 10000 for no expiration for CRM based user lists.",
 					"format": "int64",
 					"type": "string"
 				}
@@ -2412,7 +2412,7 @@
 					"type": "string"
 				},
 				"infosum_principal": {
-					"description": "Output only.\nInfosumPrincipal is the Infosum principal used when writing data to an S3 bucket.",
+					"description": "Output only.\nInfosumPrincipal is the InfoSum principal used when writing data to an S3 bucket.",
 					"readOnly": true,
 					"type": "string"
 				},
@@ -2642,7 +2642,7 @@
 				},
 				"default_values": {
 					"$ref": "#/definitions/Exports.TradeDeskOverrides",
-					"title": "DefaultValues is a list of default values that may be overriden at push time"
+					"title": "DefaultValues is a list of default values that may be overridden at push time"
 				},
 				"location": {
 					"$ref": "#/definitions/Exports.TDLocation",
@@ -2984,7 +2984,7 @@
 					"type": "string"
 				},
 				"upload_url_expiration_time": {
-					"description": "The expiration date time of the temporay upload URL.",
+					"description": "The expiration date time of the temporary upload URL.",
 					"format": "date-time",
 					"type": "string"
 				}
@@ -3180,7 +3180,7 @@
 					"type": "string"
 				},
 				"target_folder": {
-					"description": "The target folder for the import. This field can be a path contaning subfolders. Valid characters are alphanumeric, '_', '-', '.', '/'. This field cannot start or end with a '/'. The 'Recordsets' folder cannot be imported into. This field will be mandatory in the near future.",
+					"description": "The target folder for the import. This field can be a path containing subfolders. Valid characters are alphanumeric, '_', '-', '.', '/'. This field cannot start or end with a '/'. The 'Recordsets' folder cannot be imported into. This field will be mandatory in the near future.",
 					"type": "string"
 				},
 				"updated_date_time": {
@@ -3808,7 +3808,7 @@
 					"type": "string"
 				},
 				"convert_to_multivalue": {
-					"description": "ConvertToMultivalue indicates if a column needs to be converted prior being\nassiged as multi_value.",
+					"description": "ConvertToMultivalue indicates if a column needs to be converted prior being\nassigned as multi_value.",
 					"type": "boolean"
 				},
 				"custom_category_def": {
@@ -4055,7 +4055,7 @@
 			"properties": {
 				"normalization_details": {
 					"$ref": "#/definitions/Normalizations.NormalizationDetails",
-					"description": "NormalizationDetails holds all infomation on the normalization as well as the shards being used to process the\nnormalization."
+					"description": "NormalizationDetails holds all information on the normalization as well as the shards being used to process the\nnormalization."
 				}
 			},
 			"type": "object"
@@ -4391,7 +4391,7 @@
 			"description": "NormalizeRequest is used to start a normalization.",
 			"properties": {
 				"cloud_vault_id": {
-					"description": "CloudVaultaultID is the ID of the Cloud Vault to perform the normalization in.\n\nreserved 3;",
+					"description": "CloudVaultID is the ID of the Cloud Vault to perform the normalization in.\n\nreserved 3;",
 					"type": "string"
 				},
 				"input_recordset_id": {
@@ -5129,7 +5129,7 @@
 			"description": "CreatePrivatePathResponse is the output of the CreatePrivatePath method.",
 			"properties": {
 				"collaboration_id": {
-					"description": "CollaborationId is the unique ID generated for the private path collaboration.\nThis value must be kept safe by the user as it's not stored by Infosum and cannot be retrieved.",
+					"description": "CollaborationId is the unique ID generated for the private path collaboration.\nThis value must be kept safe by the user as it's not stored by InfoSum and cannot be retrieved.",
 					"type": "string"
 				}
 			},
