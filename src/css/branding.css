@@ -2,6 +2,7 @@
 .navbar--fixed-top {
     background: #13294b;
     color: #ffffff;
+    border-bottom: 4px #F28B2C solid;
 }
 
 .navbar--fixed-top a {
