@@ -10,25 +10,14 @@ The website is hosted at [InfoSum API Documentation](https://infosum.github.io/i
 
 ### Installation
 
-Install `yarn`.
-
 ```
-brew install yarn
-```
-
-If you're on linux or windows then install yarn via your pkg manager or downloader.
-
-Make sure your working DIR is the root of this project and then run `yarn` to install all dependencies.
-
-```
-yarn
-yarn install
+npm i
 ```
 
 ### Local Development
 
 ```
-yarn start
+npx docusaurus start
 ```
 
 This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
@@ -36,7 +25,7 @@ This command starts a local development server and opens up a browser window. Mo
 ### Build
 
 ```
-yarn build
+npm run build
 ```
 
 This command generates static content into the `build` directory and can be served using any static contents hosting service.
