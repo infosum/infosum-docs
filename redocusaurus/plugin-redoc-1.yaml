@@ -2920,15 +2920,7 @@ definitions:
       - TEXTARRAY
       - INT64ARRAY
     type: string
-  Imports.CancelImportExecutionResponse:
-    description: >-
-      CancelImportExecutionResponse is the output from the CancelExecution
-      method.
-    type: object
-  Imports.CancelResponse:
-    description: CancelResponse is the output from the Cancel method.
-    type: object
-  Imports.ConnectorType:
+  Import_Connectors.ConnectorType:
     default: CONNECTOR_TYPE_INVALID
     description: ConnectorType are the possible connector types.
     enum:
@@ -2937,21 +2929,387 @@ definitions:
       - S3_ACCESS_KEYS
       - GCS_SECRET_AUTH
     type: string
-  Imports.CreateImportConnectorRequest:
+  Import_Connectors.CreateImportConnectorRequest:
     description: The input to the CreateImportConnector method.
     properties:
       config:
-        $ref: '#/definitions/Imports.UpsertImportConnector'
+        $ref: '#/definitions/Import_Connectors.UpsertImportConnector'
         description: The configuration to create a new Import Connector with.
         readOnly: true
     type: object
-  Imports.CreateImportConnectorResponse:
+  Import_Connectors.CreateImportConnectorResponse:
     description: The response from the CreateImportConnector method.
     properties:
       config_id:
         description: The id of the Import Connector that has been created.
         readOnly: true
         type: string
+    type: object
+  Import_Connectors.DeleteImportConnectorResponse:
+    description: DeleteResponse is the output from the Delete method.
+    type: object
+  Import_Connectors.GCSConnector:
+    description: GCSConnector is the information required to define an GCS Connector.
+    properties:
+      bucket:
+        description: Bucket is the name of the GCS Bucket.
+        type: string
+      filenames:
+        description: >-
+          Filenames can be a pattern or an exact file to allow multiple files to
+          be specified.
+        items:
+          type: string
+        type: array
+      prefix:
+        description: Prefix is the prefix of files.
+        type: string
+      secret_auth:
+        $ref: '#/definitions/Import_Connectors.GCSSecretAuth'
+        description: SecretAuth is the auth details for GCS
+    type: object
+  Import_Connectors.GCSProvider:
+    description: GCSProvider is the information about the connector that can be returned.
+    properties:
+      bucket:
+        description: Bucket is the name of the GCS Bucket.
+        type: string
+      filenames:
+        description: >-
+          Filenames can be a pattern or an exact file to allow multiple files to
+          be specified.
+        items:
+          type: string
+        type: array
+      prefix:
+        description: Prefix is the prefix of files.
+        type: string
+    type: object
+  Import_Connectors.GCSSecretAuth:
+    description: GCSSecretAuth holds the GCS Credentials JSON as a string.
+    properties:
+      credentials_json:
+        description: CredentialsJSON is a string of the credentials for GCS as JSON.
+        type: string
+    type: object
+  Import_Connectors.GetImportConnectorResponse:
+    description: The response from the GetImportConnector method.
+    properties:
+      config:
+        $ref: '#/definitions/Import_Connectors.ImportConnector'
+        description: The configuration of the Import Connector that was requested.
+        readOnly: true
+    type: object
+  Import_Connectors.ImportConnector:
+    description: >-
+      ImportConnector is the information that can be retrieved about an import
+      connector config.
+    properties:
+      connector_type:
+        $ref: '#/definitions/Import_Connectors.ConnectorType'
+        description: ConnectorType identifies the connector type.
+        readOnly: true
+      created_date_time:
+        description: The date and time the import connector config was created.
+        format: date-time
+        readOnly: true
+        type: string
+      description:
+        description: >-
+          Description is an optional description given to this import connector
+          config.
+        readOnly: true
+        type: string
+      gcs_connector:
+        $ref: '#/definitions/Import_Connectors.GCSProvider'
+        description: S3Connector is the S3 specific information.
+        readOnly: true
+      id:
+        description: ID is the globally unique ID of the import connector config.
+        readOnly: true
+        type: string
+      name:
+        description: Name is the display name given to this import connector config.
+        readOnly: true
+        type: string
+      owner_id:
+        type: string
+      s3_connector:
+        $ref: '#/definitions/Import_Connectors.S3Provider'
+        description: S3Connector is the S3 specific information.
+        readOnly: true
+      updated_date_time:
+        description: The date and time the import connector config was last updated.
+        format: date-time
+        readOnly: true
+        type: string
+      user_id:
+        description: UserId is the ID of the user who created the import connector config.
+        readOnly: true
+        type: string
+    type: object
+  Import_Connectors.ListImportConnectorsResponse:
+    description: The response from the ListImportConnectors method.
+    properties:
+      configs:
+        description: A list of configurations of Import Connectors.
+        items:
+          $ref: '#/definitions/Import_Connectors.ImportConnector'
+          readOnly: true
+          type: object
+        type: array
+      pagination:
+        $ref: '#/definitions/PaginationResponse'
+        description: Pagination information for the returned list.
+        readOnly: true
+    type: object
+  Import_Connectors.S3AccessKeysAuth:
+    description: >-
+      S3AccessKeysAuth holds the details needed for authentication using access
+      keys.
+    properties:
+      access_key_id:
+        description: AccessKey is the S3 access key ID.
+        type: string
+      secret_access_key:
+        description: SecretAccessKey is the S3 secret access key.
+        type: string
+    type: object
+  Import_Connectors.S3AccessKeysAuthDetail:
+    description: S3AccessKeysAuthDetail holds any auth details.
+    type: object
+  Import_Connectors.S3Connector:
+    description: S3Connector is the information required to define an S3 Connector.
+    properties:
+      access_keys:
+        $ref: '#/definitions/Import_Connectors.S3AccessKeysAuth'
+        description: S3AccessKeysAuth is auth for S3 using access keys
+      bucket:
+        description: Bucket is the name of the S3 Bucket.
+        type: string
+      cross_account:
+        $ref: '#/definitions/Import_Connectors.S3CrossAccountAuth'
+        description: S3CrossAccountAuth is auth for S3 cross account
+      filenames:
+        description: >-
+          Filenames can be a pattern or an exact file to allow multiple files to
+          be specified.
+        items:
+          type: string
+        type: array
+      prefix:
+        description: Prefix is the prefix of the files.
+        type: string
+    type: object
+  Import_Connectors.S3CrossAccountAuth:
+    description: >-
+      S3CrossAccountAuth holds the details needed for cross-account
+      authentication.
+    properties:
+      external_id:
+        description: ExternalId is the external ID for the trust relationship.
+        readOnly: true
+        type: string
+      principal:
+        description: Principal is the principal for the trust relationship.
+        readOnly: true
+        type: string
+      session_name:
+        description: Session name is the identifier of the session.
+        type: string
+      user_arn:
+        description: UserArn is the Amazon Resource Name (ARN) of the role to assume.
+        type: string
+    type: object
+  Import_Connectors.S3Provider:
+    description: S3Provider is the information about the connector that can be returned.
+    properties:
+      access_keys:
+        $ref: '#/definitions/Import_Connectors.S3AccessKeysAuthDetail'
+        description: S3AccessKeysAuth is auth for S3 using access keys
+      bucket:
+        description: Bucket is the name of the S3 Bucket.
+        type: string
+      cross_account:
+        $ref: '#/definitions/Import_Connectors.S3CrossAccountAuth'
+        description: S3CrossAccountAuth is auth for S3 cross account
+      filenames:
+        description: >-
+          Filenames can be a pattern or an exact file to allow multiple files to
+          be specified.
+        items:
+          type: string
+        type: array
+      prefix:
+        description: Prefix is the prefix of files.
+        type: string
+    type: object
+  Import_Connectors.UpdateImportConnectorResponse:
+    description: The response from the UpdateImportConnector method.
+    properties:
+      config:
+        $ref: '#/definitions/Import_Connectors.ImportConnector'
+        description: The configuration of the Import Connector that was updated.
+        readOnly: true
+    type: object
+  Import_Connectors.UpsertImportConnector:
+    description: >-
+      UpsertImportConnector is the entity that contains the information to
+      define an Import Connector Config.
+    properties:
+      description:
+        description: >-
+          Description is an optional description given to this import connector
+          config.
+        type: string
+      gcs_connector:
+        $ref: '#/definitions/Import_Connectors.GCSConnector'
+        description: GCSConnector is the GCS specific information.
+      id:
+        description: ID is the globally unique ID of the import connector config.
+        readOnly: true
+        type: string
+      name:
+        description: Name is the display name given to this import connector config.
+        type: string
+      s3_connector:
+        $ref: '#/definitions/Import_Connectors.S3Connector'
+        description: S3Connector is the S3 specific information.
+    type: object
+  Importers.CancelImportExecutionResponse:
+    description: >-
+      CancelImportExecutionResponse is the output from the CancelExecution
+      method.
+    type: object
+  Importers.ExecuteImportResponse:
+    description: the response from the ExecuteImport method.
+    properties:
+      execution_id:
+        description: The execution id of the running Import task.
+        type: string
+    type: object
+  Importers.GetImportExecutionResponse:
+    description: The response from the GetExecution method.
+    properties:
+      execution_details:
+        $ref: '#/definitions/Importers.ImportExecutionDetails'
+        description: Details of the requested Import execution task.
+    type: object
+  Importers.History:
+    description: Information about the status of the task.
+    properties:
+      date_time:
+        description: The date and time of this entry.
+        format: date-time
+        type: string
+      details:
+        description: The details of this entry. Deprecated please use the 'message' field
+        type: string
+      error:
+        $ref: '#/definitions/Error'
+        description: The error produced by this entry entry.
+      message:
+        description: The details of this entry.
+        type: string
+      status:
+        $ref: '#/definitions/Importers.v1.Status'
+        description: The status of the task for this entry.
+    type: object
+  Importers.ImportExecution:
+    description: Detailed information about an execution and their history.
+    properties:
+      cloud_vault_id:
+        description: The ID of the Cloud Vault used during the execution.
+        type: string
+      created_date_time:
+        description: The creation date and time of the current execution.
+        format: date-time
+        type: string
+      current_status:
+        $ref: '#/definitions/Importers.v1.Status'
+        description: The status of the current execution.
+      id:
+        description: The ID of the execution.
+        type: string
+      import_id:
+        description: The ID of the import used in the execution.
+        type: string
+      progress:
+        $ref: '#/definitions/Importers.Progress'
+        description: The information of the progress of the import as whole.
+      updated_date_time:
+        description: The date and time the execution was updated.
+        format: date-time
+        type: string
+      user_id:
+        description: The ID of the user who executed the import.
+        type: string
+    type: object
+  Importers.ImportExecutionDetails:
+    description: Deailed information about an execution and their history.
+    properties:
+      execution:
+        $ref: '#/definitions/Importers.ImportExecution'
+        description: Global information about a execution.
+      history:
+        description: The status history of the execution execution.
+        items:
+          $ref: '#/definitions/Importers.History'
+          type: object
+        type: array
+    type: object
+  Importers.ListImportExecutionsResponse:
+    description: The response from the ListExecutions method.
+    properties:
+      executions:
+        description: A list of Import execution tasks.
+        items:
+          $ref: '#/definitions/Importers.ImportExecution'
+          type: object
+        type: array
+      pagination:
+        $ref: '#/definitions/PaginationResponse'
+        description: Pagination information for the returned list.
+    type: object
+  Importers.Progress:
+    description: The information of the progress of the import execution as a whole.
+    properties:
+      completion_percentage:
+        description: The current transferred bytes as a percentage.
+        format: float
+        type: number
+      speed:
+        description: The transferred average number of bytes per second.
+        format: int64
+        type: string
+      total_bytes:
+        description: The total number of bytes to be transferred.
+        format: int64
+        type: string
+      transferred_bytes:
+        description: The current transferred number of bytes.
+        format: int64
+        type: string
+    type: object
+  Importers.v1.Status:
+    default: NO_STATUS
+    description: Status is an enum of the different states that an async task can be in.
+    enum:
+      - NO_STATUS
+      - WAITING
+      - INITIALIZING
+      - RUNNING
+      - FAILED
+      - COMPLETED
+      - CANCELING
+      - CANCELED
+      - STALE
+      - PROVISIONING
+      - PROVISIONED
+      - PARTIALLY_COMPLETED
+    type: string
+  Imports.CancelResponse:
+    description: CancelResponse is the output from the Cancel method.
     type: object
   Imports.CreateImportRequest:
     description: The input to the CreateImport method.
@@ -3014,77 +3372,8 @@ definitions:
           type: string
         type: array
     type: object
-  Imports.DeleteImportConnectorResponse:
-    description: DeleteResponse is the output from the Delete method.
-    type: object
   Imports.DeleteImportResponse:
     description: DeleteImportResponse is the output from the Delete method.
-    type: object
-  Imports.ExecuteImportResponse:
-    description: the response from the ExecuteImport method.
-    properties:
-      execution_id:
-        description: The execution id of the running Import task.
-        type: string
-    type: object
-  Imports.GCSConnector:
-    description: GCSConnector is the information required to define an GCS Connector.
-    properties:
-      bucket:
-        description: Bucket is the name of the GCS Bucket.
-        type: string
-      filenames:
-        description: >-
-          Filenames can be a pattern or an exact file to allow multiple files to
-          be specified.
-        items:
-          type: string
-        type: array
-      prefix:
-        description: Prefix is the prefix of files.
-        type: string
-      secret_auth:
-        $ref: '#/definitions/Imports.GCSSecretAuth'
-        description: SecretAuth is the auth details for GCS
-    type: object
-  Imports.GCSProvider:
-    description: GCSProvider is the information about the connector that can be returned.
-    properties:
-      bucket:
-        description: Bucket is the name of the GCS Bucket.
-        type: string
-      filenames:
-        description: >-
-          Filenames can be a pattern or an exact file to allow multiple files to
-          be specified.
-        items:
-          type: string
-        type: array
-      prefix:
-        description: Prefix is the prefix of files.
-        type: string
-    type: object
-  Imports.GCSSecretAuth:
-    description: GCSSecretAuth holds the GCS Credentials JSON as a string.
-    properties:
-      credentials_json:
-        description: CredentialsJSON is a string of the credentials for GCS as JSON.
-        type: string
-    type: object
-  Imports.GetImportConnectorResponse:
-    description: The response from the GetImportConnector method.
-    properties:
-      config:
-        $ref: '#/definitions/Imports.ImportConnector'
-        description: The configuration of the Import Connector that was requested.
-        readOnly: true
-    type: object
-  Imports.GetImportExecutionResponse:
-    description: The response from the GetExecution method.
-    properties:
-      execution_details:
-        $ref: '#/definitions/Imports.ImportExecutionDetails'
-        description: Details of the requested Import execution task.
     type: object
   Imports.GetImportResponse:
     description: The response from the GetImport method.
@@ -3166,125 +3455,6 @@ definitions:
         readOnly: true
         type: string
     type: object
-  Imports.ImportConnector:
-    description: >-
-      ImportConnector is the information that can be retrieved about an import
-      connector config.
-    properties:
-      connector_type:
-        $ref: '#/definitions/Imports.ConnectorType'
-        description: ConnectorType identifies the connector type.
-        readOnly: true
-      created_date_time:
-        description: The date and time the import connector config was created.
-        format: date-time
-        readOnly: true
-        type: string
-      description:
-        description: >-
-          Description is an optional description given to this import connector
-          config.
-        readOnly: true
-        type: string
-      gcs_connector:
-        $ref: '#/definitions/Imports.GCSProvider'
-        description: S3Connector is the S3 specific information.
-        readOnly: true
-      id:
-        description: ID is the globally unique ID of the import connector config.
-        readOnly: true
-        type: string
-      name:
-        description: Name is the display name given to this import connector config.
-        readOnly: true
-        type: string
-      owner_id:
-        type: string
-      s3_connector:
-        $ref: '#/definitions/Imports.S3Provider'
-        description: S3Connector is the S3 specific information.
-        readOnly: true
-      updated_date_time:
-        description: The date and time the import connector config was last updated.
-        format: date-time
-        readOnly: true
-        type: string
-      user_id:
-        description: UserId is the ID of the user who created the import connector config.
-        readOnly: true
-        type: string
-    type: object
-  Imports.ImportExecution:
-    description: Detailed information about an execution and their history.
-    properties:
-      cloud_vault_id:
-        description: The ID of the Cloud Vault used during the execution.
-        type: string
-      created_date_time:
-        description: The creation date and time of the current execution.
-        format: date-time
-        type: string
-      current_status:
-        $ref: '#/definitions/Imports.v1.Status'
-        description: The status of the current execution.
-      id:
-        description: The ID of the execution.
-        type: string
-      import_id:
-        description: The ID of the import used in the execution.
-        type: string
-      progress:
-        $ref: '#/definitions/Imports.Progress'
-        description: The information of the progress of the import as whole.
-      updated_date_time:
-        description: The date and time the execution was updated.
-        format: date-time
-        type: string
-      user_id:
-        description: The ID of the user who executed the import.
-        type: string
-    type: object
-  Imports.ImportExecutionDetails:
-    description: Deailed information about an execution and their history.
-    properties:
-      execution:
-        $ref: '#/definitions/Imports.ImportExecution'
-        description: Global information about a execution.
-      history:
-        description: The status history of the execution execution.
-        items:
-          $ref: '#/definitions/Imports.History'
-          type: object
-        type: array
-    type: object
-  Imports.ListImportConnectorsResponse:
-    description: The response from the ListImportConnectors method.
-    properties:
-      configs:
-        description: A list of configurations of Import Connectors.
-        items:
-          $ref: '#/definitions/Imports.ImportConnector'
-          readOnly: true
-          type: object
-        type: array
-      pagination:
-        $ref: '#/definitions/PaginationResponse'
-        description: Pagination information for the returned list.
-        readOnly: true
-    type: object
-  Imports.ListImportExecutionsResponse:
-    description: The response from the ListExecutions method.
-    properties:
-      executions:
-        description: A list of Import execution tasks.
-        items:
-          $ref: '#/definitions/Imports.ImportExecution'
-          type: object
-        type: array
-      pagination:
-        $ref: '#/definitions/PaginationResponse'
-        description: Pagination information for the returned list.
-    type: object
   Imports.ListImportsResponse:
     description: The response from the ListImports method.
     properties:
@@ -3353,145 +3523,12 @@ definitions:
         $ref: '#/definitions/Imports.LocalFileUpload'
         description: Information about the local file upload.
     type: object
-  Imports.Progress:
-    description: The information of the progress of the import execution as a whole.
-    properties:
-      completion_percentage:
-        description: The current transferred bytes as a percentage.
-        format: float
-        type: number
-      speed:
-        description: The transferred average number of bytes per second.
-        format: int64
-        type: string
-      total_bytes:
-        description: The total number of bytes to be transferred.
-        format: int64
-        type: string
-      transferred_bytes:
-        description: The current transferred number of bytes.
-        format: int64
-        type: string
-    type: object
-  Imports.S3AccessKeysAuth:
-    description: >-
-      S3AccessKeysAuth holds the details needed for authentication using access
-      keys.
-    properties:
-      access_key_id:
-        description: AccessKey is the S3 access key ID.
-        type: string
-      secret_access_key:
-        description: SecretAccessKey is the S3 secret access key.
-        type: string
-    type: object
-  Imports.S3AccessKeysAuthDetail:
-    description: S3AccessKeysAuthDetail holds any auth details.
-    type: object
-  Imports.S3Connector:
-    description: S3Connector is the information required to define an S3 Connector.
-    properties:
-      access_keys:
-        $ref: '#/definitions/Imports.S3AccessKeysAuth'
-        description: S3AccessKeysAuth is auth for S3 using access keys
-      bucket:
-        description: Bucket is the name of the S3 Bucket.
-        type: string
-      cross_account:
-        $ref: '#/definitions/Imports.S3CrossAccountAuth'
-        description: S3CrossAccountAuth is auth for S3 cross account
-      filenames:
-        description: >-
-          Filenames can be a pattern or an exact file to allow multiple files to
-          be specified.
-        items:
-          type: string
-        type: array
-      prefix:
-        description: Prefix is the prefix of the files.
-        type: string
-    type: object
-  Imports.S3CrossAccountAuth:
-    description: >-
-      S3CrossAccountAuth holds the details needed for cross-account
-      authentication.
-    properties:
-      external_id:
-        description: ExternalId is the external ID for the trust relationship.
-        readOnly: true
-        type: string
-      principal:
-        description: Principal is the principal for the trust relationship.
-        readOnly: true
-        type: string
-      session_name:
-        description: Session name is the identifier of the session.
-        type: string
-      user_arn:
-        description: UserArn is the Amazon Resource Name (ARN) of the role to assume.
-        type: string
-    type: object
-  Imports.S3Provider:
-    description: S3Provider is the information about the connector that can be returned.
-    properties:
-      access_keys:
-        $ref: '#/definitions/Imports.S3AccessKeysAuthDetail'
-        description: S3AccessKeysAuth is auth for S3 using access keys
-      bucket:
-        description: Bucket is the name of the S3 Bucket.
-        type: string
-      cross_account:
-        $ref: '#/definitions/Imports.S3CrossAccountAuth'
-        description: S3CrossAccountAuth is auth for S3 cross account
-      filenames:
-        description: >-
-          Filenames can be a pattern or an exact file to allow multiple files to
-          be specified.
-        items:
-          type: string
-        type: array
-      prefix:
-        description: Prefix is the prefix of files.
-        type: string
-    type: object
-  Imports.UpdateImportConnectorResponse:
-    description: The response from the UpdateImportConnector method.
-    properties:
-      config:
-        $ref: '#/definitions/Imports.ImportConnector'
-        description: The configuration of the Import Connector that was updated.
-        readOnly: true
-    type: object
   Imports.UpdateImportResponse:
     description: The response from the UpdateImport method.
     properties:
       import:
         $ref: '#/definitions/Imports.Import'
         description: he configuration of the Import that was updated.
-    type: object
-  Imports.UpsertImportConnector:
-    description: >-
-      UpsertImportConnector is the entity that contains the information to
-      define an Import Connector Config.
-    properties:
-      description:
-        description: >-
-          Description is an optional description given to this import connector
-          config.
-        type: string
-      gcs_connector:
-        $ref: '#/definitions/Imports.GCSConnector'
-        description: GCSConnector is the GCS specific information.
-      id:
-        description: ID is the globally unique ID of the import connector config.
-        readOnly: true
-        type: string
-      name:
-        description: Name is the display name given to this import connector config.
-        type: string
-      s3_connector:
-        $ref: '#/definitions/Imports.S3Connector'
-        description: S3Connector is the S3 specific information.
     type: object
   Imports.v1.Status:
     default: NO_STATUS
@@ -9023,7 +9060,7 @@ paths:
         '200':
           description: A successful response.
           schema:
-            $ref: '#/definitions/Imports.ListImportConnectorsResponse'
+            $ref: '#/definitions/Import_Connectors.ListImportConnectorsResponse'
         '400':
           description: Returned when the request was not valid.
           schema:
@@ -9046,7 +9083,7 @@ paths:
             $ref: '#/definitions/Error'
       summary: List Import Connector Config.
       tags:
-        - Imports
+        - Import Connectors
     post:
       description: Creates a configuration for importing data from a connector.
       operationId: CreateImportConnector
@@ -9056,12 +9093,12 @@ paths:
           name: body
           required: true
           schema:
-            $ref: '#/definitions/Imports.CreateImportConnectorRequest'
+            $ref: '#/definitions/Import_Connectors.CreateImportConnectorRequest'
       responses:
         '200':
           description: A successful response.
           schema:
-            $ref: '#/definitions/Imports.CreateImportConnectorResponse'
+            $ref: '#/definitions/Import_Connectors.CreateImportConnectorResponse'
         '400':
           description: Returned when the request was not valid.
           schema:
@@ -9090,7 +9127,7 @@ paths:
             $ref: '#/definitions/Error'
       summary: Creates an Import Connector Config.
       tags:
-        - Imports
+        - Import Connectors
   /api/v2/imports/connector-configs/{config.id}:
     patch:
       description: Updates the provided fields in a specific Import Connector Config.
@@ -9115,7 +9152,7 @@ paths:
                   connector config.
                 type: string
               gcs_connector:
-                $ref: '#/definitions/Imports.GCSConnector'
+                $ref: '#/definitions/Import_Connectors.GCSConnector'
                 description: GCSConnector is the GCS specific information.
               name:
                 description: >-
@@ -9123,14 +9160,14 @@ paths:
                   config.
                 type: string
               s3_connector:
-                $ref: '#/definitions/Imports.S3Connector'
+                $ref: '#/definitions/Import_Connectors.S3Connector'
                 description: S3Connector is the S3 specific information.
             type: object
       responses:
         '200':
           description: A successful response.
           schema:
-            $ref: '#/definitions/Imports.UpdateImportConnectorResponse'
+            $ref: '#/definitions/Import_Connectors.UpdateImportConnectorResponse'
         '400':
           description: Returned when the request was not valid.
           schema:
@@ -9157,7 +9194,7 @@ paths:
             $ref: '#/definitions/Error'
       summary: Update an Import Connector Config
       tags:
-        - Imports
+        - Import Connectors
   /api/v2/imports/connector-configs/{config_id}:
     delete:
       description: Deletes a specific Import Connector Config.
@@ -9172,7 +9209,7 @@ paths:
         '200':
           description: A successful response.
           schema:
-            $ref: '#/definitions/Imports.DeleteImportConnectorResponse'
+            $ref: '#/definitions/Import_Connectors.DeleteImportConnectorResponse'
         '400':
           description: Returned when the request was not valid.
           schema:
@@ -9195,7 +9232,7 @@ paths:
             $ref: '#/definitions/Error'
       summary: Delete an Import Connector Config.
       tags:
-        - Imports
+        - Import Connectors
     get:
       description: Get the details of a specific Import Connector Config.
       operationId: GetImportConnector
@@ -9209,7 +9246,7 @@ paths:
         '200':
           description: A successful response.
           schema:
-            $ref: '#/definitions/Imports.GetImportConnectorResponse'
+            $ref: '#/definitions/Import_Connectors.GetImportConnectorResponse'
         '400':
           description: Returned when the request was not valid.
           schema:
@@ -9236,7 +9273,7 @@ paths:
             $ref: '#/definitions/Error'
       summary: Get an Import Connector Config.
       tags:
-        - Imports
+        - Import Connectors
   /api/v2/imports/executions:
     get:
       description: List all import executions.
@@ -9274,7 +9311,7 @@ paths:
         '200':
           description: A successful response.
           schema:
-            $ref: '#/definitions/Imports.ListImportExecutionsResponse'
+            $ref: '#/definitions/Importers.ListImportExecutionsResponse'
         '400':
           description: Returned when the request was not valid.
           schema:
@@ -9297,7 +9334,7 @@ paths:
             $ref: '#/definitions/Error'
       summary: List Executions.
       tags:
-        - Imports
+        - Importers
   /api/v2/imports/executions/{execution_id}:
     get:
       description: Gets a specific import execution.
@@ -9312,7 +9349,7 @@ paths:
         '200':
           description: A successful response.
           schema:
-            $ref: '#/definitions/Imports.GetImportExecutionResponse'
+            $ref: '#/definitions/Importers.GetImportExecutionResponse'
         '400':
           description: Returned when the request was not valid.
           schema:
@@ -9339,7 +9376,7 @@ paths:
             $ref: '#/definitions/Error'
       summary: Gets an Execution
       tags:
-        - Imports
+        - Importers
   /api/v2/imports/executions/{execution_id}/cancel:
     post:
       description: Cancels a specific import execution.
@@ -9354,7 +9391,7 @@ paths:
         '200':
           description: A successful response.
           schema:
-            $ref: '#/definitions/Imports.CancelImportExecutionResponse'
+            $ref: '#/definitions/Importers.CancelImportExecutionResponse'
         '400':
           description: Returned when the request was not valid.
           schema:
@@ -9381,7 +9418,7 @@ paths:
             $ref: '#/definitions/Error'
       summary: Cancel an Execution
       tags:
-        - Imports
+        - Importers
   /api/v2/imports/importers:
     get:
       description: List available Imports.
@@ -9668,7 +9705,7 @@ paths:
         '200':
           description: A successful response.
           schema:
-            $ref: '#/definitions/Imports.ExecuteImportResponse'
+            $ref: '#/definitions/Importers.ExecuteImportResponse'
         '400':
           description: Returned when the request was not valid.
           schema:
@@ -9695,7 +9732,7 @@ paths:
             $ref: '#/definitions/Error'
       summary: Executes an Import
       tags:
-        - Imports
+        - Importers
   /api/v2/imports/uploads:
     get:
       description: List all local file uploads.
