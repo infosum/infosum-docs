@@ -4,21 +4,33 @@
  */
 
 .heroBanner {
-  padding: 4rem 0;
   text-align: center;
   position: relative;
   overflow: hidden;
-  background: #F28B2C;
-  color: white;
-  background-image: url(https://s3.eu-west-2.amazonaws.com/infosum.com-assets/images/hero-section.jpg);
+  background: #13294b;
+  color: #fff;
+  font-family: Circular,sans-serif;
+  justify-content: center;
+  padding-bottom: 1rem;
+  background-image: url('../../static/img/halftone-right.svg');
   background-repeat: no-repeat;
-  background-size: cover;
-  padding: 12rem 0;
+  background-size:auto;
+  background-position: right bottom;
+  flex-grow: 1;
+}
+
+.heroContainer{
+  font-size: 2.4rem;
+  max-width: 40rem;
+}
+
+.heroText{
+  margin-bottom: 2rem;
 }
 
 @media screen and (max-width: 996px) {
   .heroBanner {
-    padding: 2rem;
+    padding: 4rem;
   }
 }
 

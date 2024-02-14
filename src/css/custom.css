@@ -14,6 +14,8 @@
   --ifm-color-primary-lighter: hsla(215, 14%, 51%, 1);
   --ifm-color-primary-lightest: hsla(215, 14%, 75%, 1);
   --ifm-code-font-size: 95%;
+  --ifm-font-family: Circular,sans-serif;
+  --ifm-font-family-base: Circular,sans-serif;
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
@@ -36,4 +38,16 @@
 
 [data-theme='dark'] .docusaurus-highlight-code-line {
   background-color: rgba(0, 0, 0, 0.3);
+}
+
+.main-wrapper{
+  display: flex;
+}
+
+.center_half_image{
+  display: block;
+  width: 50%;
+  height: 50%;
+  margin-left: auto;
+  margin-right: auto;
 }

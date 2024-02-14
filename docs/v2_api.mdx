@@ -1,0 +1,42 @@
+---
+sidebar_position: 2
+---
+
+import NoAPIKeysImageURL from '@site/static/img/authentication/no-api-keys-v2.png';
+import SetExpiryImageURL from '@site/static/img/authentication/set-api-key-expiry-v2.png';
+import GrantedAPIKeysImageURL from '@site/static/img/authentication/granted-public-private-api-keys-v2.png';
+import Admonition from '@theme/Admonition';
+
+# V2 API
+
+The InfoSum v2 API is the next generation of APIs from InfoSum and is being developed in tandem with new platform features. Eventually the v2 API will support all platform functionality and the v1 API will be deprecated.
+
+Visit the [REST API Reference Documentation](/api/v2) to explore the avalible endpoints.
+
+<Admonition type="warning">
+The v2 API is in active development, only avalible for selected customers, and subject to change without notice.
+</Admonition>
+
+
+## Authentication
+
+In order to get started building with the v2 API you first need to generate a v2 API token via the Platform UI.
+
+<Admonition type="note">
+You must provide your v2 API token in the authorization header for all API requests to `/api/v2` paths.
+</Admonition>
+
+Head to the [V2 API Access Keys](https://accounts.infosum.com/access/api-keys-v2) page in your [InfoSum Account](https://accounts.infosum.com/). It appears in the sidebar navigation under **Access &rarr; API Keys V2**. 
+
+If you do not see **API Keys V2** in the sidebar then you do not have access to this API yet. Please contact your InfoSum customer success representative.
+
+If you have previously generated keys you will see them listed here. If not you will see the following screen:
+
+<img src={NoAPIKeysImageURL}/><p/>
+Select **NEW API KEY** and you will be given a date selector for the expiry date for the new API token:
+
+<img src={SetExpiryImageURL} className="center_half_image" /><p/>
+On submitting the expiry time you will be given your API Key Token:
+
+<img src={GrantedAPIKeysImageURL} className="center_half_image"/><p/>
+Please store your API Key Token safely for later use. After you close this pop-up, you will not be able to view the key token again.

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 400 200">
+  <defs>
+    <style>
+      .cls-1 {
+        stroke: url(#linear-gradient-2);
+      }
+
+      .cls-1, .cls-2 {
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 12px;
+      }
+
+      .cls-2 {
+        stroke: url(#linear-gradient);
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="45.48" y1="69.95" x2="311" y2="69.95" gradientTransform="translate(0 -6)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#6cace4" stop-opacity="0"/>
+      <stop offset=".06" stop-color="#6cace4" stop-opacity=".11"/>
+      <stop offset=".19" stop-color="#6cace4" stop-opacity=".34"/>
+      <stop offset=".33" stop-color="#6cace4" stop-opacity=".54"/>
+      <stop offset=".47" stop-color="#6cace4" stop-opacity=".71"/>
+      <stop offset=".61" stop-color="#6cace4" stop-opacity=".84"/>
+      <stop offset=".74" stop-color="#6cace4" stop-opacity=".93"/>
+      <stop offset=".87" stop-color="#6cace4" stop-opacity=".98"/>
+      <stop offset="1" stop-color="#6cace4"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="22" y1="136.17" x2="389.09" y2="136.17" gradientTransform="translate(0 -6)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f68d2e" stop-opacity="0"/>
+      <stop offset=".09" stop-color="#f68d2e" stop-opacity=".17"/>
+      <stop offset=".22" stop-color="#f68d2e" stop-opacity=".39"/>
+      <stop offset=".36" stop-color="#f68d2e" stop-opacity=".58"/>
+      <stop offset=".49" stop-color="#f68d2e" stop-opacity=".73"/>
+      <stop offset=".62" stop-color="#f68d2e" stop-opacity=".85"/>
+      <stop offset=".75" stop-color="#f68d2e" stop-opacity=".93"/>
+      <stop offset=".88" stop-color="#f68d2e" stop-opacity=".98"/>
+      <stop offset="1" stop-color="#f68d2e"/>
+    </linearGradient>
+  </defs>
+  <polyline class="cls-2" points="51.48 87.91 216.41 87.91 216.41 40 305 40"/>
+  <line class="cls-1" x1="28" y1="130.17" x2="383.09" y2="130.17"/>
+</svg>
