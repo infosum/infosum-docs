@@ -523,9 +523,6 @@
 			},
 			"type": "object"
 		},
-		"Cloud_Vaults.AssociateResponse": {
-			"type": "object"
-		},
 		"Cloud_Vaults.CloudVault": {
 			"description": "CloudVault is the details about a specific Cloud Vault.",
 			"properties": {
@@ -602,9 +599,6 @@
 			"type": "object"
 		},
 		"Cloud_Vaults.DeleteResponse": {
-			"type": "object"
-		},
-		"Cloud_Vaults.DissociateResponse": {
 			"type": "object"
 		},
 		"Cloud_Vaults.GetResponse": {
@@ -7575,146 +7569,6 @@
 					}
 				},
 				"summary": "Update a Cloud Vault",
-				"tags": [
-					"Cloud Vaults"
-				]
-			}
-		},
-		"/api/v2/cloud_vaults/{cloud_vault_id}/associate": {
-			"post": {
-				"description": "Associate a Cloud Vault with a bunker, a Cloud Vault can be associated with with multiple bunkers",
-				"operationId": "Associate",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "cloud_vault_id",
-						"required": true,
-						"type": "string"
-					},
-					{
-						"in": "body",
-						"name": "body",
-						"required": true,
-						"schema": {
-							"description": "AssociateRequest used to associate a Cloud Vault with the supplied bunker.",
-							"properties": {
-								"bunker_id": {
-									"type": "string"
-								}
-							},
-							"type": "object"
-						}
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "A successful response.",
-						"schema": {
-							"$ref": "#/definitions/Cloud_Vaults.AssociateResponse"
-						}
-					},
-					"400": {
-						"description": "Returned when the request was not valid.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"401": {
-						"description": "Returned when the user could not be authorized.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"403": {
-						"description": "Returned when the user does not have the required permission.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"500": {
-						"description": "Internal Server Error",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"default": {
-						"description": "An unexpected error response.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					}
-				},
-				"summary": "Associate a Cloud Vault with a bunker",
-				"tags": [
-					"Cloud Vaults"
-				]
-			}
-		},
-		"/api/v2/cloud_vaults/{cloud_vault_id}/dissociate": {
-			"post": {
-				"description": "Dissociate a Cloud Vault from a bunker",
-				"operationId": "Dissociate",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "cloud_vault_id",
-						"required": true,
-						"type": "string"
-					},
-					{
-						"in": "body",
-						"name": "body",
-						"required": true,
-						"schema": {
-							"description": "DissociateRequest used to dissociate a Cloud Vault from the supplied bunker.",
-							"properties": {
-								"bunker_id": {
-									"type": "string"
-								}
-							},
-							"type": "object"
-						}
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "A successful response.",
-						"schema": {
-							"$ref": "#/definitions/Cloud_Vaults.DissociateResponse"
-						}
-					},
-					"400": {
-						"description": "Returned when the request was not valid.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"401": {
-						"description": "Returned when the user could not be authorized.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"403": {
-						"description": "Returned when the user does not have the required permission.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"500": {
-						"description": "Internal Server Error",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"default": {
-						"description": "An unexpected error response.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					}
-				},
-				"summary": "Dissociate a Cloud Vault from a bunker",
 				"tags": [
 					"Cloud Vaults"
 				]
