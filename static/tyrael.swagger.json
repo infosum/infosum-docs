@@ -616,7 +616,7 @@
           },
           {
             "name": "filter.min_intersection",
-            "description": "Min Intersection. The lowest acceptable intersection relative to the\nsize of the connected Dataset. This is calculated by taking the number\nof rows in the from Dataset that are also in the to Dataset when using\nthe 'best' key, and diving by the total number of rows in the from\nDataset.  Values can be between 0 and 1, inclusive. If omitted, any\nintersection will be allowed.",
+            "description": "Min Intersection. The lowest acceptable intersection relative to the\nsize of the connected Dataset. This is calculated by taking the number\nof rows in the from Dataset that are also in the to Dataset when using\nthe 'best' key, and diving by the total number of rows in the from\nDataset.  Values can be between 0 and 1, inclusive. If ommitted, any\nintersection will be allowed.",
             "in": "query",
             "required": false,
             "type": "number",
@@ -982,7 +982,7 @@
     "/api/v1/explain": {
       "post": {
         "summary": "ExplainQuery explains how a query will be executed.",
-        "description": "Provides information about the choices made by the platform before executing a query.",
+        "description": "Provides information about the choices made by the platfrom before executing a query.",
         "operationId": "ExplainQuery",
         "responses": {
           "200": {
@@ -2521,7 +2521,7 @@
         "min_intersection": {
           "type": "number",
           "format": "double",
-          "description": "The lowest acceptable intersection relative to the\nsize of the connected Dataset. This is calculated by taking the number\nof rows in the from Dataset that are also in the to Dataset when using\nthe 'best' key, and diving by the total number of rows in the from\nDataset.  Values can be between 0 and 1, inclusive. If omitted, any\nintersection will be allowed.",
+          "description": "The lowest acceptable intersection relative to the\nsize of the connected Dataset. This is calculated by taking the number\nof rows in the from Dataset that are also in the to Dataset when using\nthe 'best' key, and diving by the total number of rows in the from\nDataset.  Values can be between 0 and 1, inclusive. If ommitted, any\nintersection will be allowed.",
           "title": "Min Intersection"
         }
       },
@@ -3319,7 +3319,7 @@
           "title": "Options"
         }
       },
-      "description": "Fields specify the values that must be specified to configure a Push Connector.",
+      "description": "Fields specify the values that must be specified to configurea Push Connector.",
       "title": "Form Field"
     },
     "tyraelFormPanel": {
@@ -3698,7 +3698,7 @@
         "null_fraction": {
           "type": "number",
           "format": "double",
-          "description": "The fraction of the values in this Key that are `null`,\nin the range (0, 1], representing a percentage value between 0% and 100%.",
+          "description": "The fraction of the values in this Key that are `null`,\nin the range (0, 1], representating a percentage value between 0% and 100%.",
           "title": "NullFraction"
         },
         "num_distinct": {
@@ -3949,7 +3949,7 @@
         "frequency": {
           "type": "number",
           "format": "double",
-          "description": "The frequency with which this Value appears in the Representation,\nin the range (0, 1], representing a percentage value between 0% and 100%.",
+          "description": "The frequency with which this Value appears in the Representation,\nin the range (0, 1], representating a percentage value between 0% and 100%.",
           "title": "Frequency"
         }
       },
@@ -4015,7 +4015,7 @@
         },
         "accepted": {
           "type": "boolean",
-          "description": "Indicates whether the Permission has been accepted by the Recipient.",
+          "description": "Indicates whether the Permission has been accpeted by the Recipient.",
           "title": "Accepted"
         },
         "credits": {
@@ -4329,7 +4329,7 @@
         "precision": {
           "type": "number",
           "format": "double",
-          "description": "How accurate this Representation is to the source data. It is\nin the range (0, 1], representing a percentage value between 0% and 100%.\nThings that affect the Precision of a Representation include any data transformations\nthat had to be performed to match the source data into this Representation.",
+          "description": "How accurate this Representation is to the source data. It is\nin the range (0, 1], representating a percentage value between 0% and 100%.\nThings that affect the Precision of a Representation include any data transformations\nthat had to be performed to match the source data into this Representation.",
           "title": "Precision"
         },
         "statistics": {
@@ -4533,7 +4533,7 @@
         "null_fraction": {
           "type": "number",
           "format": "double",
-          "description": "The fraction of the values in this Representation that are `null`,\nin the range (0, 1], representing a percentage value between 0% and 100%.",
+          "description": "The fraction of the values in this Representation that are `null`,\nin the range (0, 1], representating a percentage value between 0% and 100%.",
           "title": "NullFraction"
         },
         "num_distinct": {
@@ -4669,7 +4669,7 @@
       "properties": {
         "success": {
           "type": "boolean",
-          "description": "True if the Identity Query was successfully validated.",
+          "description": "True if the Identity Query was successully validated.",
           "title": "Success"
         }
       },
