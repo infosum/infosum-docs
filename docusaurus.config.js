@@ -47,10 +47,12 @@ const config = {
         // Plugin Options for loading OpenAPI files
         specs: [
           {
+            id: 'infosum-v1-swagger',
             spec: 'static/tyrael.swagger.json',
             route: '/api/v1'
           },
           {
+            id: 'infosum-v2-swagger',
             spec: 'static/swagger.json',
             route: '/api/v2'
           },
