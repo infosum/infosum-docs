@@ -1,0 +1,87 @@
+---
+sidebar_position: 2
+---
+
+# Filtering
+
+Most v2 APIs for listing resources accept a filter string. A filter can be built of sub filters joined by the logical AND and OR operators, each sub filter is a field or precedence group followed by an operator followed by a value. A sub filter may have a prefix of the logical NOT operator. One or more sub filters can be grouped with the precedence operators. The sub filters in a precedence grouping are evaluated to a result before evaluating the rest of the filter. Precedence groups can be nested.
+
+Use single quotes (`'`) to surround strings. 
+A filter is provided as a query parameter like: `api.infosum.com/api/v2/foo_bar?filter=name co 'foo' or name co 'bar'`. Filter strings can be constructed using the operations here:
+<table>
+    <tr>
+        <th>Operator</th>
+        <th>Meaning</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>eq</td>
+        <td>Is Equal To</td>
+        <td>name eq 'foo'</td>
+    </tr>
+    <tr>
+        <td>ne</td>
+        <td>Not Equal To</td>
+        <td>name ne 'foo'</td>
+    </tr>
+    <tr>
+        <td>co</td>
+        <td>Contains</td>
+        <td>name co 'Bar'</td>
+    </tr>
+    <tr>
+        <td>ico</td>
+        <td>Contains (Case-Insensitive)</td>
+        <td>name ne 'bar'</td>
+    </tr>
+    <tr>
+        <td>nc</td>
+        <td>Does Not Contain</td>
+        <td>name nc 'Bar'</td>
+    </tr>
+    <tr>
+        <td>inc</td>
+        <td>Does Not Contain (Case-Insensitive)</td>
+        <td>name inc 'bar'</td>
+    </tr>
+    <tr>
+        <td>lt</td>
+        <td>Less Than</td>
+        <td>score lt 10</td>
+    </tr>
+    <tr>
+        <td>le</td>
+        <td>Less Than Or Equal To</td>
+        <td>score le 10</td>
+    </tr>
+    <tr>
+        <td>gt</td>
+        <td>Greater Than</td>
+        <td>score gt 10</td>
+    </tr>
+    <tr>
+        <td>ge</td>
+        <td>Greater Than Or Equal To</td>
+        <td>score ge 10</td>
+    </tr>
+    <tr>
+        <td>and</td>
+        <td>Logical AND</td>
+        <td>score eq 10 and name eq 'foo'</td>
+    </tr>
+    <tr>
+        <td>or</td>
+        <td>Logical OR</td>
+        <td>score eq 10 or score eq 10</td>
+    </tr>
+    <tr>
+        <td>not</td>
+        <td>Logical NOT</td>
+        <td>not score eq 10</td>
+    </tr>
+    <tr>
+        <td>( )</td>
+        <td>Precedence</td>
+        <td>(score lt 100 and score gt 10) or name eq 'foo'</td>
+    </tr>
+</table>
