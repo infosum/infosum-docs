@@ -4,9 +4,11 @@ sidebar_position: 2
 
 # Filtering
 
-Most v2 APIs for listing resources accept a filter string. A filter can be built of sub filters joined by the logical AND and OR operators, each sub filter is a field or precedence group followed by an operator followed by a value. A sub filter may have a prefix of the logical NOT operator. One or more sub filters can be grouped with the precedence operators. The sub filters in a precedence grouping are evaluated to a result before evaluating the rest of the filter. Precedence groups can be nested.
+Most v2 APIs for listing resources accept a filter string. A filter can be built of sub filters joined by the logical AND and OR operators, each sub filter is a field or precedence group followed by an operator followed by a value.
+A sub filter may have a prefix of the logical NOT operator. One or more sub filters can be grouped with the precedence operators.
+The sub filters in a precedence grouping are evaluated to a result before evaluating the rest of the filter. Precedence groups can be nested.
 
-Use single quotes (`'`) to surround strings. 
+Use single quotes (`'`) to surround strings. Dates used in filters are accepted in [RFC3339 format](https://datatracker.ietf.org/doc/html/rfc3339) such as `"2006-01-02T15:04:05Z07:00"`, `"2006-01-02T15:04:05"` or `"2006-01-02"`.
 A filter is provided as a query parameter like: `api.infosum.com/api/v2/foo_bar?filter=name co 'foo' or name co 'bar'`. Filter strings can be constructed using the operations here:
 <table>
     <tr>
