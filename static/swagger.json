@@ -268,7 +268,17 @@
 			},
 			"type": "object"
 		},
-		"Automation_Configs.UpdateConfig": {
+		"Automation_Configs.UpdateConfigResponse": {
+			"description": "UpdateConfigResponse is the response from updating an Automation.",
+			"properties": {
+				"config": {
+					"$ref": "#/definitions/Automation_Configs.Config",
+					"description": "The updated Automation Config."
+				}
+			},
+			"type": "object"
+		},
+		"Automation_Configs.v2.UpdateConfig": {
 			"description": "The mutable fields of an Automation.",
 			"properties": {
 				"cron_timer": {
@@ -300,16 +310,6 @@
 				"timezone_identifier": {
 					"description": "The Timezone Identifier to schedule Automation Executions relative to. The format is form the IANA TZ database e.g. 'Europe/London' or 'America/New_York' from: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones",
 					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Automation_Configs.UpdateConfigResponse": {
-			"description": "UpdateConfigResponse is the response from updating an Automation.",
-			"properties": {
-				"config": {
-					"$ref": "#/definitions/Automation_Configs.Config",
-					"description": "The updated Automation Config."
 				}
 			},
 			"type": "object"
@@ -690,12 +690,53 @@
 			},
 			"type": "object"
 		},
+		"Dataset_Prepare_Configs.AddConfigCategoriesBody": {
+			"properties": {
+				"categories": {
+					"items": {
+						"format": "int64",
+						"type": "string"
+					},
+					"title": "Categories is the list of category ids to be added to the config",
+					"type": "array"
+				}
+			},
+			"title": "AddConfigCategoriesRequest",
+			"type": "object"
+		},
 		"Dataset_Prepare_Configs.AddConfigCategoriesResponse": {
 			"title": "AddConfigCategoriesResponse",
 			"type": "object"
 		},
+		"Dataset_Prepare_Configs.AddConfigExportColumnsBody": {
+			"properties": {
+				"export_columns": {
+					"items": {
+						"type": "string"
+					},
+					"title": "ExportColumns is the list of export column names to be added to the config",
+					"type": "array"
+				}
+			},
+			"title": "AddConfigExportColumnsRequest",
+			"type": "object"
+		},
 		"Dataset_Prepare_Configs.AddConfigExportColumnsResponse": {
 			"title": "AddConfigExportColumnsResponse",
+			"type": "object"
+		},
+		"Dataset_Prepare_Configs.AddConfigKeysBody": {
+			"properties": {
+				"keys": {
+					"items": {
+						"format": "int64",
+						"type": "string"
+					},
+					"title": "Keys is the list of key ids to be added to the config",
+					"type": "array"
+				}
+			},
+			"title": "AddConfigKeysRequest",
 			"type": "object"
 		},
 		"Dataset_Prepare_Configs.AddConfigKeysResponse": {
@@ -983,6 +1024,24 @@
 			},
 			"type": "object"
 		},
+		"Dataset_Prepare_Configs.UpdateConfigBody": {
+			"description": "UpdateConfigRequest is used to update name and description.",
+			"properties": {
+				"config": {
+					"$ref": "#/definitions/Dataset_Prepare_Configs.DatasetPublishConfig",
+					"title": "Config is the dataset prepare config - can be updated after creation"
+				},
+				"description": {
+					"description": "Description is a description of the dataset prepare config.",
+					"type": "string"
+				},
+				"name": {
+					"description": "Name is the name assigned to the dataset prepare config.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
 		"Dataset_Prepare_Configs.UpdateConfigResponse": {
 			"description": "UpdateConfigResponse is the empty response of the UpdateConfig rpc.",
 			"type": "object"
@@ -1145,42 +1204,12 @@
 			},
 			"type": "object"
 		},
-		"Datasets.KeyColumnStats": {
-			"description": "KeyColumnStats holds stats information for a key column.",
-			"properties": {
-				"distinct_identifiers": {
-					"description": "DistinctIdentifiers is the number of distinct identifiers for this key column.",
-					"format": "uint64",
-					"type": "string"
-				},
-				"distinct_values": {
-					"description": "DistinctValues is the number of distinct values for this key column.",
-					"format": "uint64",
-					"type": "string"
-				},
-				"identifiers": {
-					"description": "Identifiers is the number of identifiers for this key column.",
-					"format": "uint64",
-					"type": "string"
-				},
-				"multi_value": {
-					"description": "MultiValue is set to true if this is a multi-value key column.",
-					"type": "boolean"
-				},
-				"valid_values": {
-					"description": "ValidValues is the number of valid values for this key column.",
-					"format": "uint64",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
 		"Datasets.KeyColumnStatsResponse": {
 			"description": "KeyColumnStatsResponse is the response returned by KeyColumnStats method.",
 			"properties": {
 				"key_id_to_stats": {
 					"additionalProperties": {
-						"$ref": "#/definitions/Datasets.KeyColumnStats"
+						"$ref": "#/definitions/Datasets.v2.KeyColumnStats"
 					},
 					"description": "KeyIdToStats is a map of key column ID to its corresponding stats.",
 					"type": "object"
@@ -1356,7 +1385,41 @@
 			},
 			"type": "object"
 		},
-		"Datasets.UpdateDataset": {
+		"Datasets.UpdateDatasetResponse": {
+			"description": "UpdateDatasetResponse is the response for UpdateDataset rpc.",
+			"type": "object"
+		},
+		"Datasets.v2.KeyColumnStats": {
+			"description": "KeyColumnStats holds stats information for a key column.",
+			"properties": {
+				"distinct_identifiers": {
+					"description": "DistinctIdentifiers is the number of distinct identifiers for this key column.",
+					"format": "uint64",
+					"type": "string"
+				},
+				"distinct_values": {
+					"description": "DistinctValues is the number of distinct values for this key column.",
+					"format": "uint64",
+					"type": "string"
+				},
+				"identifiers": {
+					"description": "Identifiers is the number of identifiers for this key column.",
+					"format": "uint64",
+					"type": "string"
+				},
+				"multi_value": {
+					"description": "MultiValue is set to true if this is a multi-value key column.",
+					"type": "boolean"
+				},
+				"valid_values": {
+					"description": "ValidValues is the number of valid values for this key column.",
+					"format": "uint64",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Datasets.v2.UpdateDataset": {
 			"description": "Dataset contains details of the update which can be partial.",
 			"properties": {
 				"description": {
@@ -1376,10 +1439,6 @@
 					"type": "string"
 				}
 			},
-			"type": "object"
-		},
-		"Datasets.UpdateDatasetResponse": {
-			"description": "UpdateDatasetResponse is the response for UpdateDataset rpc.",
 			"type": "object"
 		},
 		"Destinations.AwsRegion": {
@@ -2770,6 +2829,21 @@
 				"RECORDSET"
 			],
 			"type": "string"
+		},
+		"Files.UpdateBulkBody": {
+			"description": "UpdateBulkRequest is the information provided when updating the metadata for multiple files",
+			"properties": {
+				"update": {
+					"$ref": "#/definitions/Files.UpdateBulkMetadataBody",
+					"description": "The content of the update specifying the files to be updated and the metadata to apply to them."
+				},
+				"update_mask": {
+					"description": "The Update Mask used to update the correct metadata fields.",
+					"readOnly": true,
+					"type": "string"
+				}
+			},
+			"type": "object"
 		},
 		"Files.UpdateBulkMetadataBody": {
 			"description": "UpdateBulkMetadataBody is the body of the UpdateBulkMetadataRequest.",
@@ -6039,6 +6113,16 @@
 			},
 			"type": "object"
 		},
+		"Recordsets.RenameBody": {
+			"description": "RenameRequest is the information provided when renaming a recordset.",
+			"properties": {
+				"new_name": {
+					"description": "The new name of the recordset. Valid characters are alphanumeric, '_', '-', ' '.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
 		"Recordsets.RenameResponse": {
 			"description": "RenameResponse returns the renamed recordset.",
 			"properties": {
@@ -7095,7 +7179,7 @@
 						"name": "config",
 						"required": true,
 						"schema": {
-							"$ref": "#/definitions/Automation_Configs.UpdateConfig",
+							"$ref": "#/definitions/Automation_Configs.v2.UpdateConfig",
 							"description": "The Automation Config."
 						}
 					}
@@ -8025,22 +8109,7 @@
 						"name": "body",
 						"required": true,
 						"schema": {
-							"description": "UpdateConfigRequest is used to update name and description.",
-							"properties": {
-								"config": {
-									"$ref": "#/definitions/Dataset_Prepare_Configs.DatasetPublishConfig",
-									"title": "Config is the dataset prepare config - can be updated after creation"
-								},
-								"description": {
-									"description": "Description is a description of the dataset prepare config.",
-									"type": "string"
-								},
-								"name": {
-									"description": "Name is the name assigned to the dataset prepare config.",
-									"type": "string"
-								}
-							},
-							"type": "object"
+							"$ref": "#/definitions/Dataset_Prepare_Configs.UpdateConfigBody"
 						}
 					}
 				],
@@ -8264,18 +8333,7 @@
 						"name": "body",
 						"required": true,
 						"schema": {
-							"properties": {
-								"categories": {
-									"items": {
-										"format": "int64",
-										"type": "string"
-									},
-									"title": "Categories is the list of category ids to be added to the config",
-									"type": "array"
-								}
-							},
-							"title": "AddConfigCategoriesRequest",
-							"type": "object"
+							"$ref": "#/definitions/Dataset_Prepare_Configs.AddConfigCategoriesBody"
 						}
 					}
 				],
@@ -8499,17 +8557,7 @@
 						"name": "body",
 						"required": true,
 						"schema": {
-							"properties": {
-								"export_columns": {
-									"items": {
-										"type": "string"
-									},
-									"title": "ExportColumns is the list of export column names to be added to the config",
-									"type": "array"
-								}
-							},
-							"title": "AddConfigExportColumnsRequest",
-							"type": "object"
+							"$ref": "#/definitions/Dataset_Prepare_Configs.AddConfigExportColumnsBody"
 						}
 					}
 				],
@@ -8733,18 +8781,7 @@
 						"name": "body",
 						"required": true,
 						"schema": {
-							"properties": {
-								"keys": {
-									"items": {
-										"format": "int64",
-										"type": "string"
-									},
-									"title": "Keys is the list of key ids to be added to the config",
-									"type": "array"
-								}
-							},
-							"title": "AddConfigKeysRequest",
-							"type": "object"
+							"$ref": "#/definitions/Dataset_Prepare_Configs.AddConfigKeysBody"
 						}
 					}
 				],
@@ -9317,7 +9354,7 @@
 						"name": "dataset",
 						"required": true,
 						"schema": {
-							"$ref": "#/definitions/Datasets.UpdateDataset"
+							"$ref": "#/definitions/Datasets.v2.UpdateDataset"
 						}
 					}
 				],
@@ -9880,19 +9917,7 @@
 						"name": "body",
 						"required": true,
 						"schema": {
-							"description": "UpdateBulkRequest is the information provided when updating the metadata for multiple files",
-							"properties": {
-								"update": {
-									"$ref": "#/definitions/Files.UpdateBulkMetadataBody",
-									"description": "The content of the update specifying the files to be updated and the metadata to apply to them."
-								},
-								"update_mask": {
-									"description": "The Update Mask used to update the correct metadata fields.",
-									"readOnly": true,
-									"type": "string"
-								}
-							},
-							"type": "object"
+							"$ref": "#/definitions/Files.UpdateBulkBody"
 						}
 					}
 				],
@@ -13794,14 +13819,7 @@
 						"name": "body",
 						"required": true,
 						"schema": {
-							"description": "RenameRequest is the information provided when renaming a recordset.",
-							"properties": {
-								"new_name": {
-									"description": "The new name of the recordset. Valid characters are alphanumeric, '_', '-', ' '.",
-									"type": "string"
-								}
-							},
-							"type": "object"
+							"$ref": "#/definitions/Recordsets.RenameBody"
 						}
 					}
 				],
