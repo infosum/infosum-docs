@@ -1093,14 +1093,14 @@
 			"description": "CreateDatasetResponse is the response for CreateDataset rpc.",
 			"properties": {
 				"dataset_id": {
-					"description": "DatasetId is the ID assigned to the newly created Sigma dataset.",
+					"description": "DatasetId is the ID assigned to the newly created dataset.",
 					"type": "string"
 				}
 			},
 			"type": "object"
 		},
 		"Datasets.Dataset": {
-			"description": "Dataset is the summary of a Sigma dataset returned when getting a dataset.",
+			"description": "Dataset is the summary of a dataset returned when getting a dataset.",
 			"properties": {
 				"created_by": {
 					"description": "CreatedBy is the user ID who creates the dataset.",
@@ -1199,7 +1199,7 @@
 			"properties": {
 				"dataset": {
 					"$ref": "#/definitions/Datasets.Dataset",
-					"description": "Dataset is the Sigma datasets and their summary info."
+					"description": "Dataset is summary information about the requested dataset."
 				}
 			},
 			"type": "object"
@@ -1221,7 +1221,7 @@
 			"description": "ListDatasetsResponse is the response for ListDatasets rpc.",
 			"properties": {
 				"datasets": {
-					"description": "Datasets is the list of Sigma datasets and their summary info.",
+					"description": "Datasets is the list of datasets and their summary info.",
 					"items": {
 						"$ref": "#/definitions/Datasets.ListedDataset",
 						"type": "object"
@@ -1236,7 +1236,7 @@
 			"type": "object"
 		},
 		"Datasets.ListedDataset": {
-			"description": "ListedDataset is the summary of a Sigma dataset returned when listing datasets.",
+			"description": "ListedDataset is the summary of a dataset returned when listing datasets.",
 			"properties": {
 				"created_by": {
 					"description": "CreatedBy is the user ID who creates the dataset.",
@@ -8837,7 +8837,7 @@
 		},
 		"/api/v2/datasets": {
 			"get": {
-				"description": "Returns a list of Sigma datasets and their summary information.",
+				"description": "Returns a list of datasets and their summary information.",
 				"operationId": "ListDatasets",
 				"parameters": [
 					{
@@ -8909,13 +8909,13 @@
 						}
 					}
 				},
-				"summary": "Returns a list of Sigma datasets and their summary information.",
+				"summary": "Returns a list of datasets and their summary information.",
 				"tags": [
 					"Datasets"
 				]
 			},
 			"post": {
-				"description": "Creates a Sigma dataset.",
+				"description": "Creates a dataset.",
 				"operationId": "CreateDataset",
 				"parameters": [
 					{
@@ -8966,7 +8966,7 @@
 						}
 					}
 				},
-				"summary": "Creates a Sigma dataset.",
+				"summary": "Creates a dataset.",
 				"tags": [
 					"Datasets"
 				]
@@ -9222,7 +9222,7 @@
 		},
 		"/api/v2/datasets/{dataset_id}": {
 			"delete": {
-				"description": "Deletes a Sigma dataset and any underlying compute resource.",
+				"description": "Deletes a dataset and any underlying compute resource.",
 				"operationId": "DeleteDataset",
 				"parameters": [
 					{
@@ -9271,13 +9271,13 @@
 						}
 					}
 				},
-				"summary": "Deletes a Sigma dataset and any underlying compute resource.",
+				"summary": "Deletes a dataset and any underlying compute resource.",
 				"tags": [
 					"Datasets"
 				]
 			},
 			"get": {
-				"description": "Returns a Sigma dataset and the summary information.",
+				"description": "Returns a dataset and the summary information.",
 				"operationId": "GetDataset",
 				"parameters": [
 					{
@@ -9332,13 +9332,13 @@
 						}
 					}
 				},
-				"summary": "Returns a Sigma dataset and the summary information.",
+				"summary": "Returns a dataset and the summary information.",
 				"tags": [
 					"Datasets"
 				]
 			},
 			"patch": {
-				"description": "Updates the top level information about a Sigma dataset.",
+				"description": "Updates the top level information about a dataset.",
 				"operationId": "UpdateDataset",
 				"parameters": [
 					{
@@ -9396,7 +9396,7 @@
 						}
 					}
 				},
-				"summary": "Updates the top level information about a Sigma dataset.",
+				"summary": "Updates the top level information about a dataset.",
 				"tags": [
 					"Datasets"
 				]
