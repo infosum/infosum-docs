@@ -5428,7 +5428,7 @@
 					"description": "The required information needed to execute the creation of a recordset."
 				},
 				"filepaths": {
-					"description": "A list of input files, including the full path from the root of the CloudVault.",
+					"description": "A list of input files including the full path from the root of the CloudVault to be used to create the recordset. All files must be in the same format. Must not be set if `folder` has been specified.",
 					"items": {
 						"type": "string"
 					},
@@ -5441,8 +5441,7 @@
 			},
 			"required": [
 				"cloud_vault_id",
-				"recordset_name",
-				"filepaths"
+				"recordset_name"
 			],
 			"type": "object"
 		},
