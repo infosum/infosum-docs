@@ -4,15 +4,13 @@
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
-const remarkInfoSumLinks = require('./src/remark/code-links');
-
 /** Consts **/
-const INFOSUM_PORTAL_NAME = 'InfoSum Developer Documentation';
+const INFOSUM_PORTAL_NAME = 'InfoSum API Guide';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: INFOSUM_PORTAL_NAME,
-  tagline: 'Data Collaboration Platform',
+  tagline: 'The World’s Leading Data Collaboration Platform',
   url: 'https://infosum.github.io',
   baseUrl: process.env.BASE_URL || '/infosum-docs/',
   onBrokenLinks: 'throw',
@@ -29,13 +27,7 @@ const config = {
       ({
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          editUrl: 'https://github.com/infosum/infosum-docs/tree/main',
-          beforeDefaultRemarkPlugins:[remarkInfoSumLinks]
         },
-        // blog: {
-        //   showReadingTime: true,
-        //   editUrl: 'https://github.com/infosum/infosum-docs/tree/main/blog/',
-        // },
         theme: {
           customCss: [
             require.resolve('./src/css/custom.css'),
@@ -55,10 +47,12 @@ const config = {
         // Plugin Options for loading OpenAPI files
         specs: [
           {
+            id: 'infosum-openapi-v1',
             spec: 'static/tyrael.swagger.json',
             route: '/api/v1'
           },
           {
+            id: 'infosum-openapi-v2',
             spec: 'static/swagger.json',
             route: '/api/v2'
           },
@@ -107,21 +101,20 @@ const config = {
         respectPrefersColorScheme: true,
       },
       navbar: {
-        title: INFOSUM_PORTAL_NAME,
         logo: {
           alt: 'InfoSum',
-          src: '/img/infosum.png',
+          src: '/img/infosum-banner.svg',
+          href: 'https://infosum.github.io/infosum-docs/'
         },
         items: [
-          // {
-          //   type: 'doc',
-          //   docId: 'intro',
-          //   position: 'left',
-          //   label: 'Docs',
-          // },
-          { to: '/api/v1', label: 'API V1', position: 'left' },
-          { to: '/api/v2', label: 'Σ API', position: 'left' },
-          // { to: '/blog', label: 'Blog', position: 'left' },
+          { to: '/docs/intro', label: 'Docs', position: 'left'},
+          { type: 'dropdown',
+          label: 'REST Reference',
+          position: 'left',
+          items:[
+            { to: '/api/v2', label: 'v2'},
+            { to: '/api/v1', label: 'v1' },
+          ]},
           {
             href: 'https://github.com/infosum',
             label: 'GitHub',
@@ -133,12 +126,16 @@ const config = {
         style: 'dark',
         links: [
           {
-            title: 'Docs',
+            title: 'Company',
             items: [
-              // {
-              //   label: 'Tutorial',
-              //   to: '/docs/intro',
-              // },
+              {
+                label: 'Home',
+                to: 'https://infosum.com/',
+              },
+              {
+                label: 'InfoSum Platform',
+                to: 'https://platform.infosum.com/',
+              },
               {
                 label: 'Help Center',
                 to: 'https://support.infosum.com/',
@@ -146,37 +143,29 @@ const config = {
             ],
           },
           {
-            title: 'Community',
+            title: 'Follow Us',
             items: [
               {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-              },
-              {
-                label: 'Discord',
-                href: 'https://discordapp.com/invite/docusaurus',
-              },
-              {
-                label: 'Twitter',
-                href: 'https://twitter.com/infosum',
-              },
-            ],
+                  label: 'GitHub',
+                  href: 'https://github.com/infosum',
+                },
+                {
+                  label: 'LinkedIn',
+                  href: 'https://www.linkedin.com/company/infosumhq',
+                },
+              ],
           },
           {
-            title: 'More',
+            title: 'Contact Us',
             items: [
-              // {
-              //   label: 'Developer Blog',
-              //   to: '/blog',
-              // },
               {
-                label: 'GitHub',
-                href: 'https://github.com/infosum',
+                label: 'New to InfoSum?',
+                to: 'https://www.infosum.com/company/contact',
               },
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} InfoSum Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} InfoSum. Built with Docusaurus.`,
       },
       prism: {
         theme: lightCodeTheme,

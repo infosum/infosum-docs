@@ -1,0 +1,37 @@
+---
+sidebar_position: 3
+---
+
+import NoAPIKeysImageURL from '@site/static/img/authentication/no-api-keys.png';
+import SetExpiryImageURL from '@site/static/img/authentication/set-api-key-expiry.png';
+import GrantedAPIKeysImageURL from '@site/static/img/authentication/granted-public-private-api-keys.png';
+import Admonition from '@theme/Admonition';
+
+# Getting Started
+
+The InfoSum v1 API has everything you need to run regular queries and push activation results to your destination via a push connector. It is stable, but being superseded by the v2 API which will cover all aspects of platform usage.
+
+The v1 API is ideal if you already have a bunker in the InfoSum Platform and want to run queries on a regular cadence.
+
+Visit the [REST API Reference Documentation](/api/v1) to explore the available endpoints.
+
+## Authentication
+
+In order to get started building with the v1 API you first need to generate a v1 API key via the Platform UI which consists of a public-private key pair.
+
+<Admonition type="note">
+You must provide your v1 API public-private keypair in the authorization header for all API requests to `/api/v1` paths in the format `<public_token>/<private_token>`.
+</Admonition>
+
+Head to the [API Access Keys](https://accounts.infosum.com/access/api-keys) page in your [InfoSum Account](https://accounts.infosum.com/). It appears in the sidebar navigation under **Access &rarr; API Keys**.
+
+If you have previously generated keys you will see them listed here. If not you will see the following screen:
+
+<img src={NoAPIKeysImageURL} class="image_md"/><p/>
+Select **NEW API KEY** and you will be given a date selector for the expiry date for the new API key:
+
+<img src={SetExpiryImageURL} class="center_half_image"/><p/>
+On submitting the expiry time you will be given your API key in the form of a **public** and **private** key:
+
+<img src={GrantedAPIKeysImageURL} class="center_half_image"/><p/>
+Please store the **private** key safely for later use. After you close this pop-up, you will not be able to view the private key again.

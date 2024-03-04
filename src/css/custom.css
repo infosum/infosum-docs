@@ -6,18 +6,30 @@
 
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: hsla(216, 60%, 18%, 1);
-  --ifm-color-primary-dark: hsla(216, 60%, 17%, 1);
-  --ifm-color-primary-darker: hsla(216, 61%, 13%, 1);
-  --ifm-color-primary-darkest: hsla(218, 58%, 7%, 1);
-  --ifm-color-primary-light: hsla(216, 25%, 35%, 1);
-  --ifm-color-primary-lighter: hsla(215, 14%, 51%, 1);
-  --ifm-color-primary-lightest: hsla(215, 14%, 75%, 1);
+  --swatch--navy: #13294b;
+  --swatch--orange: #f68d2e;
+  --swatch--blue: #6cace4;
+
+  --background--fill:  white;
+  --text--color: var(--swatch--navy);
+
+  --ifm-color-primary: #13294b;
+  --ifm-color-primary-dark: #112544;
+  --ifm-color-primary-darker: #102340;
+  --ifm-color-primary-darkest: #0d1d35;
+  --ifm-color-primary-light: #152d53;
+  --ifm-color-primary-lighter: #162f56;
+  --ifm-color-primary-lightest: #193562;
   --ifm-code-font-size: 95%;
+  --ifm-font-family: Circular,sans-serif;
+  --ifm-font-family-base: Circular,sans-serif;
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
+  --background--fill: var(--swatch--navy);
+  --text--color: white;
+
   --ifm-color-primary: hsla(208, 69%, 66%, 1);
   --ifm-color-primary-dark: hsla(208, 40%, 53%, 1);
   --ifm-color-primary-darker: hsla(209, 36%, 46%, 1);
@@ -36,4 +48,16 @@
 
 [data-theme='dark'] .docusaurus-highlight-code-line {
   background-color: rgba(0, 0, 0, 0.3);
+}
+
+.main-wrapper{
+  display: flex;
+}
+
+.center_half_image{
+  display: block;
+  width: 50%;
+  height: 50%;
+  margin-left: auto;
+  margin-right: auto;
 }
