@@ -242,7 +242,14 @@ definitions:
         description: The Recordset Creation Config ID to execute for the Automation Step.
         type: string
     type: object
-  Automation_Configs.UpdateConfig:
+  Automation_Configs.UpdateConfigResponse:
+    description: UpdateConfigResponse is the response from updating an Automation.
+    properties:
+      config:
+        $ref: '#/definitions/Automation_Configs.Config'
+        description: The updated Automation Config.
+    type: object
+  Automation_Configs.v2.UpdateConfig:
     description: The mutable fields of an Automation.
     properties:
       cron_timer:
@@ -280,13 +287,6 @@ definitions:
           'America/New_York' from:
           https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
         type: string
-    type: object
-  Automation_Configs.UpdateConfigResponse:
-    description: UpdateConfigResponse is the response from updating an Automation.
-    properties:
-      config:
-        $ref: '#/definitions/Automation_Configs.Config'
-        description: The updated Automation Config.
     type: object
   Automation_Execution.ExecuteResponse:
     description: ExecuteResponse returns the requested Automation Execution ID.
@@ -422,7 +422,7 @@ definitions:
   BucketOrigin:
     default: BUCKET_ORIGIN_INVALID
     description: >-
-      BucketOrigin denoted whether the bucket is supplied by Infosum or the
+      BucketOrigin denoted whether the bucket is supplied by InfoSum or the
       customer.
     enum:
       - BUCKET_ORIGIN_INVALID
@@ -452,8 +452,6 @@ definitions:
         items:
           type: string
         type: array
-    type: object
-  Cloud_Vaults.AssociateResponse:
     type: object
   Cloud_Vaults.CloudVault:
     description: CloudVault is the details about a specific Cloud Vault.
@@ -499,8 +497,8 @@ definitions:
         format: date-time
         readOnly: true
         title: >-
-          Output only. UpdatedDateTime is the date and time that thie Cloud
-          Vault was
+          Output only. UpdatedDateTime is the date and time that the Cloud Vault
+          was
 
           updated
         type: string
@@ -529,8 +527,6 @@ definitions:
         $ref: '#/definitions/Cloud_Vaults.CloudVault'
     type: object
   Cloud_Vaults.DeleteResponse:
-    type: object
-  Cloud_Vaults.DissociateResponse:
     type: object
   Cloud_Vaults.GetResponse:
     properties:
@@ -614,11 +610,42 @@ definitions:
         format: int64
         type: string
     type: object
+  Dataset_Prepare_Configs.AddConfigCategoriesBody:
+    properties:
+      categories:
+        items:
+          format: int64
+          type: string
+        title: Categories is the list of category ids to be added to the config
+        type: array
+    title: AddConfigCategoriesRequest
+    type: object
   Dataset_Prepare_Configs.AddConfigCategoriesResponse:
     title: AddConfigCategoriesResponse
     type: object
+  Dataset_Prepare_Configs.AddConfigExportColumnsBody:
+    properties:
+      export_columns:
+        items:
+          type: string
+        title: >-
+          ExportColumns is the list of export column names to be added to the
+          config
+        type: array
+    title: AddConfigExportColumnsRequest
+    type: object
   Dataset_Prepare_Configs.AddConfigExportColumnsResponse:
     title: AddConfigExportColumnsResponse
+    type: object
+  Dataset_Prepare_Configs.AddConfigKeysBody:
+    properties:
+      keys:
+        items:
+          format: int64
+          type: string
+        title: Keys is the list of key ids to be added to the config
+        type: array
+    title: AddConfigKeysRequest
     type: object
   Dataset_Prepare_Configs.AddConfigKeysResponse:
     title: AddConfigKeysResponse
@@ -751,17 +778,17 @@ definitions:
     type: object
   Dataset_Prepare_Configs.DeleteConfigCategoriesResponse:
     description: >-
-      DeleteConfigCategoriesResponse is the empty reponse for
+      DeleteConfigCategoriesResponse is the empty response for
       DeleteConfigCategoriesRequest rpc.
     type: object
   Dataset_Prepare_Configs.DeleteConfigExportColumnsResponse:
     description: >-
-      DeleteConfigExportColumnsResponse is the empty reponse for
+      DeleteConfigExportColumnsResponse is the empty response for
       DeleteConfigExportColumnsRequest rpc.
     type: object
   Dataset_Prepare_Configs.DeleteConfigKeysResponse:
     description: >-
-      DeleteConfigKeysResponse is the empty reponse for DeleteConfigKeysRequest
+      DeleteConfigKeysResponse is the empty response for DeleteConfigKeysRequest
       rpc.
     type: object
   Dataset_Prepare_Configs.DeleteConfigResponse:
@@ -926,6 +953,19 @@ definitions:
         format: int64
         type: integer
     type: object
+  Dataset_Prepare_Configs.UpdateConfigBody:
+    description: UpdateConfigRequest is used to update name and description.
+    properties:
+      config:
+        $ref: '#/definitions/Dataset_Prepare_Configs.DatasetPublishConfig'
+        title: Config is the dataset prepare config - can be updated after creation
+      description:
+        description: Description is a description of the dataset prepare config.
+        type: string
+      name:
+        description: Name is the name assigned to the dataset prepare config.
+        type: string
+    type: object
   Dataset_Prepare_Configs.UpdateConfigResponse:
     description: UpdateConfigResponse is the empty response of the UpdateConfig rpc.
     type: object
@@ -987,11 +1027,11 @@ definitions:
     description: CreateDatasetResponse is the response for CreateDataset rpc.
     properties:
       dataset_id:
-        description: DatasetId is the ID assigned to the newly created Sigma dataset.
+        description: DatasetId is the ID assigned to the newly created dataset.
         type: string
     type: object
   Datasets.Dataset:
-    description: Dataset is the summary of a Sigma dataset returned when getting a dataset.
+    description: Dataset is the summary of a dataset returned when getting a dataset.
     properties:
       created_by:
         description: CreatedBy is the user ID who creates the dataset.
@@ -1073,39 +1113,14 @@ definitions:
     properties:
       dataset:
         $ref: '#/definitions/Datasets.Dataset'
-        description: Dataset is the Sigma datasets and their summary info.
-    type: object
-  Datasets.KeyColumnStats:
-    description: KeyColumnStats holds stats information for a key column.
-    properties:
-      distinct_identifiers:
-        description: >-
-          DistinctIdentifiers is the number of distinct identifiers for this key
-          column.
-        format: uint64
-        type: string
-      distinct_values:
-        description: DistinctValues is the number of distinct values for this key column.
-        format: uint64
-        type: string
-      identifiers:
-        description: Identifiers is the number of identifiers for this key column.
-        format: uint64
-        type: string
-      multi_value:
-        description: MultiValue is set to true if this is a multi-value key column.
-        type: boolean
-      valid_values:
-        description: ValidValues is the number of valid values for this key column.
-        format: uint64
-        type: string
+        description: Dataset is summary information about the requested dataset.
     type: object
   Datasets.KeyColumnStatsResponse:
     description: KeyColumnStatsResponse is the response returned by KeyColumnStats method.
     properties:
       key_id_to_stats:
         additionalProperties:
-          $ref: '#/definitions/Datasets.KeyColumnStats'
+          $ref: '#/definitions/Datasets.v2.KeyColumnStats'
         description: KeyIdToStats is a map of key column ID to its corresponding stats.
         type: object
     type: object
@@ -1113,7 +1128,7 @@ definitions:
     description: ListDatasetsResponse is the response for ListDatasets rpc.
     properties:
       datasets:
-        description: Datasets is the list of Sigma datasets and their summary info.
+        description: Datasets is the list of datasets and their summary info.
         items:
           $ref: '#/definitions/Datasets.ListedDataset'
           type: object
@@ -1123,9 +1138,7 @@ definitions:
         description: Pagination is the information on how the results were paginated.
     type: object
   Datasets.ListedDataset:
-    description: >-
-      ListedDataset is the summary of a Sigma dataset returned when listing
-      datasets.
+    description: ListedDataset is the summary of a dataset returned when listing datasets.
     properties:
       created_by:
         description: CreatedBy is the user ID who creates the dataset.
@@ -1257,7 +1270,35 @@ definitions:
         format: uint64
         type: string
     type: object
-  Datasets.UpdateDataset:
+  Datasets.UpdateDatasetResponse:
+    description: UpdateDatasetResponse is the response for UpdateDataset rpc.
+    type: object
+  Datasets.v2.KeyColumnStats:
+    description: KeyColumnStats holds stats information for a key column.
+    properties:
+      distinct_identifiers:
+        description: >-
+          DistinctIdentifiers is the number of distinct identifiers for this key
+          column.
+        format: uint64
+        type: string
+      distinct_values:
+        description: DistinctValues is the number of distinct values for this key column.
+        format: uint64
+        type: string
+      identifiers:
+        description: Identifiers is the number of identifiers for this key column.
+        format: uint64
+        type: string
+      multi_value:
+        description: MultiValue is set to true if this is a multi-value key column.
+        type: boolean
+      valid_values:
+        description: ValidValues is the number of valid values for this key column.
+        format: uint64
+        type: string
+    type: object
+  Datasets.v2.UpdateDataset:
     description: Dataset contains details of the update which can be partial.
     properties:
       description:
@@ -1289,9 +1330,6 @@ definitions:
           underscore and spaces with a max length of 100 and a minimum length of
           1.
         type: string
-    type: object
-  Datasets.UpdateDatasetResponse:
-    description: UpdateDatasetResponse is the response for UpdateDataset rpc.
     type: object
   Destinations.AwsRegion:
     default: UNKNOWN_REGION
@@ -1909,7 +1947,7 @@ definitions:
       default_values:
         $ref: '#/definitions/Destinations.TradeDeskOverrides'
         title: >-
-          DefaultValues is a list of default values that may be overriden at
+          DefaultValues is a list of default values that may be overridden at
           push time
       location:
         $ref: '#/definitions/Destinations.TDLocation'
@@ -2096,7 +2134,7 @@ definitions:
           TimeToLive is the number of days for the data to live. Must be between
           0 and 540 (inclusive).
 
-          Set to 10000 for no expiration for CRM based userlists.
+          Set to 10000 for no expiration for CRM based user lists.
         format: int64
         type: string
     type: object
@@ -2690,6 +2728,21 @@ definitions:
       - FOLDER
       - RECORDSET
     type: string
+  Files.UpdateBulkBody:
+    description: >-
+      UpdateBulkRequest is the information provided when updating the metadata
+      for multiple files
+    properties:
+      update:
+        $ref: '#/definitions/Files.UpdateBulkMetadataBody'
+        description: >-
+          The content of the update specifying the files to be updated and the
+          metadata to apply to them.
+      update_mask:
+        description: The Update Mask used to update the correct metadata fields.
+        readOnly: true
+        type: string
+    type: object
   Files.UpdateBulkMetadataBody:
     description: UpdateBulkMetadataBody is the body of the UpdateBulkMetadataRequest.
     properties:
@@ -3246,7 +3299,7 @@ definitions:
         type: string
     type: object
   Importers.ImportExecutionDetails:
-    description: Deailed information about an execution and their history.
+    description: Detailed information about an execution and their history.
     properties:
       execution:
         $ref: '#/definitions/Importers.ImportExecution'
@@ -3354,10 +3407,10 @@ definitions:
         description: The ID of the local file upload task.
         type: string
       upload_url:
-        description: The temporay upload URL the user will upload their file body to.
+        description: The temporary upload URL the user will upload their file body to.
         type: string
       upload_url_expiration_time:
-        description: The expiration date time of the temporay upload URL.
+        description: The expiration date time of the temporary upload URL.
         format: date-time
         type: string
     type: object
@@ -3439,7 +3492,7 @@ definitions:
         type: string
       target_folder:
         description: >-
-          The target folder for the import. This field can be a path contaning
+          The target folder for the import. This field can be a path containing
           subfolders. Valid characters are alphanumeric, '_', '-', '.', '/'.
           This field cannot start or end with a '/'. The 'Recordsets' folder
           cannot be imported into. This field will be mandatory in the near
@@ -3650,7 +3703,7 @@ definitions:
           ConvertToMultivalue indicates if a column needs to be converted prior
           being
 
-          assiged as multi_value.
+          assigned as multi_value.
         type: boolean
       custom_category_def:
         $ref: '#/definitions/Normalization_Config.CustomCategory'
@@ -4207,8 +4260,8 @@ definitions:
       normalization_details:
         $ref: '#/definitions/Normalizations.NormalizationDetails'
         description: >-
-          NormalizationDetails holds all infomation on the normalization as well
-          as the shards being used to process the
+          NormalizationDetails holds all information on the normalization as
+          well as the shards being used to process the
 
           normalization.
     type: object
@@ -4329,8 +4382,8 @@ definitions:
     properties:
       cloud_vault_id:
         description: >-
-          CloudVaultaultID is the ID of the Cloud Vault to perform the
-          normalization in.
+          CloudVaultID is the ID of the Cloud Vault to perform the normalization
+          in.
 
 
           reserved 3;
@@ -4853,7 +4906,7 @@ definitions:
           CollaborationId is the unique ID generated for the private path
           collaboration.
 
-          This value must be kept safe by the user as it's not stored by Infosum
+          This value must be kept safe by the user as it's not stored by InfoSum
           and cannot be retrieved.
         type: string
     type: object
@@ -5047,8 +5100,9 @@ definitions:
           recordset.
       filepaths:
         description: >-
-          A list of input files, including the full path from the root of the
-          CloudVault.
+          A list of input files including the full path from the root of the
+          CloudVault to be used to create the recordset. All files must be in
+          the same format. Must not be set if `folder` has been specified.
         items:
           type: string
         type: array
@@ -5058,7 +5112,6 @@ definitions:
     required:
       - cloud_vault_id
       - recordset_name
-      - filepaths
     type: object
   Recordset_Creation.CreateExecutionResponse:
     description: CreateExecutionResponse contains the ID of the execution.
@@ -5240,7 +5293,7 @@ definitions:
     description: ListExecutionsResponse returns the matching executions.
     properties:
       executions:
-        description: The list of executions that match the critera of the request.
+        description: The list of executions that match the criteria of the request.
         items:
           $ref: '#/definitions/Recordset_Creation.Execution'
           type: object
@@ -5433,7 +5486,7 @@ definitions:
     description: ListColumnsResponse returns the list of Recordset columns.
     properties:
       columns:
-        description: The list of Recordset columns that match the critera of the request.
+        description: The list of Recordset columns that match the criteria of the request.
         items:
           $ref: '#/definitions/Recordsets.Column'
           type: object
@@ -5449,7 +5502,9 @@ definitions:
         $ref: '#/definitions/PaginationResponse'
         description: Details of the pagination of this response.
       recordsets:
-        description: The list of recordset overviews that match the critera of the request.
+        description: >-
+          The list of recordset overviews that match the criteria of the
+          request.
         items:
           $ref: '#/definitions/Recordsets.RecordsetOverview'
           type: object
@@ -5643,6 +5698,15 @@ definitions:
           UpdatedDateTime is date time of when the recordset was last updated
           (renamed).
         format: date-time
+        type: string
+    type: object
+  Recordsets.RenameBody:
+    description: RenameRequest is the information provided when renaming a recordset.
+    properties:
+      new_name:
+        description: >-
+          The new name of the recordset. Valid characters are alphanumeric, '_',
+          '-', ' '.
         type: string
     type: object
   Recordsets.RenameResponse:
@@ -6551,7 +6615,7 @@ paths:
           name: config
           required: true
           schema:
-            $ref: '#/definitions/Automation_Configs.UpdateConfig'
+            $ref: '#/definitions/Automation_Configs.v2.UpdateConfig'
             description: The Automation Config.
       responses:
         '200':
@@ -6905,104 +6969,6 @@ paths:
       summary: Update a Cloud Vault
       tags:
         - Cloud Vaults
-  /api/v2/cloud_vaults/{cloud_vault_id}/associate:
-    post:
-      description: >-
-        Associate a Cloud Vault with a bunker, a Cloud Vault can be associated
-        with with multiple bunkers
-      operationId: Associate
-      parameters:
-        - in: path
-          name: cloud_vault_id
-          required: true
-          type: string
-        - in: body
-          name: body
-          required: true
-          schema:
-            description: >-
-              AssociateRequest used to associate a Cloud Vault with the supplied
-              bunker.
-            properties:
-              bunker_id:
-                type: string
-            type: object
-      responses:
-        '200':
-          description: A successful response.
-          schema:
-            $ref: '#/definitions/Cloud_Vaults.AssociateResponse'
-        '400':
-          description: Returned when the request was not valid.
-          schema:
-            $ref: '#/definitions/Error'
-        '401':
-          description: Returned when the user could not be authorized.
-          schema:
-            $ref: '#/definitions/Error'
-        '403':
-          description: Returned when the user does not have the required permission.
-          schema:
-            $ref: '#/definitions/Error'
-        '500':
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/Error'
-        default:
-          description: An unexpected error response.
-          schema:
-            $ref: '#/definitions/Error'
-      summary: Associate a Cloud Vault with a bunker
-      tags:
-        - Cloud Vaults
-  /api/v2/cloud_vaults/{cloud_vault_id}/dissociate:
-    post:
-      description: Dissociate a Cloud Vault from a bunker
-      operationId: Dissociate
-      parameters:
-        - in: path
-          name: cloud_vault_id
-          required: true
-          type: string
-        - in: body
-          name: body
-          required: true
-          schema:
-            description: >-
-              DissociateRequest used to dissociate a Cloud Vault from the
-              supplied bunker.
-            properties:
-              bunker_id:
-                type: string
-            type: object
-      responses:
-        '200':
-          description: A successful response.
-          schema:
-            $ref: '#/definitions/Cloud_Vaults.DissociateResponse'
-        '400':
-          description: Returned when the request was not valid.
-          schema:
-            $ref: '#/definitions/Error'
-        '401':
-          description: Returned when the user could not be authorized.
-          schema:
-            $ref: '#/definitions/Error'
-        '403':
-          description: Returned when the user does not have the required permission.
-          schema:
-            $ref: '#/definitions/Error'
-        '500':
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/Error'
-        default:
-          description: An unexpected error response.
-          schema:
-            $ref: '#/definitions/Error'
-      summary: Dissociate a Cloud Vault from a bunker
-      tags:
-        - Cloud Vaults
   /api/v2/cloud_vaults/{id}:
     delete:
       description: Deletes a specific Cloud Vault.
@@ -7343,20 +7309,7 @@ paths:
           name: body
           required: true
           schema:
-            description: UpdateConfigRequest is used to update name and description.
-            properties:
-              config:
-                $ref: '#/definitions/Dataset_Prepare_Configs.DatasetPublishConfig'
-                title: >-
-                  Config is the dataset prepare config - can be updated after
-                  creation
-              description:
-                description: Description is a description of the dataset prepare config.
-                type: string
-              name:
-                description: Name is the name assigned to the dataset prepare config.
-                type: string
-            type: object
+            $ref: '#/definitions/Dataset_Prepare_Configs.UpdateConfigBody'
       responses:
         '200':
           description: A successful response.
@@ -7535,17 +7488,7 @@ paths:
           name: body
           required: true
           schema:
-            properties:
-              categories:
-                items:
-                  format: int64
-                  type: string
-                title: >-
-                  Categories is the list of category ids to be added to the
-                  config
-                type: array
-            title: AddConfigCategoriesRequest
-            type: object
+            $ref: '#/definitions/Dataset_Prepare_Configs.AddConfigCategoriesBody'
       responses:
         '200':
           description: A successful response.
@@ -7725,16 +7668,7 @@ paths:
           name: body
           required: true
           schema:
-            properties:
-              export_columns:
-                items:
-                  type: string
-                title: >-
-                  ExportColumns is the list of export column names to be added
-                  to the config
-                type: array
-            title: AddConfigExportColumnsRequest
-            type: object
+            $ref: '#/definitions/Dataset_Prepare_Configs.AddConfigExportColumnsBody'
       responses:
         '200':
           description: A successful response.
@@ -7913,15 +7847,7 @@ paths:
           name: body
           required: true
           schema:
-            properties:
-              keys:
-                items:
-                  format: int64
-                  type: string
-                title: Keys is the list of key ids to be added to the config
-                type: array
-            title: AddConfigKeysRequest
-            type: object
+            $ref: '#/definitions/Dataset_Prepare_Configs.AddConfigKeysBody'
       responses:
         '200':
           description: A successful response.
@@ -7956,7 +7882,7 @@ paths:
         - Dataset Prepare Configs
   /api/v2/datasets:
     get:
-      description: Returns a list of Sigma datasets and their summary information.
+      description: Returns a list of datasets and their summary information.
       operationId: ListDatasets
       parameters:
         - description: >-
@@ -8057,11 +7983,11 @@ paths:
           description: An unexpected error response.
           schema:
             $ref: '#/definitions/Error'
-      summary: Returns a list of Sigma datasets and their summary information.
+      summary: Returns a list of datasets and their summary information.
       tags:
         - Datasets
     post:
-      description: Creates a Sigma dataset.
+      description: Creates a dataset.
       operationId: CreateDataset
       parameters:
         - description: CreateDatasetRequest is the input used by the CreateDataset rpc.
@@ -8095,7 +8021,7 @@ paths:
           description: An unexpected error response.
           schema:
             $ref: '#/definitions/Error'
-      summary: Creates a Sigma dataset.
+      summary: Creates a dataset.
       tags:
         - Datasets
   /api/v2/datasets/stats/attribute_columns/{dataset_id}:
@@ -8264,7 +8190,7 @@ paths:
         - Datasets
   /api/v2/datasets/{dataset_id}:
     delete:
-      description: Deletes a Sigma dataset and any underlying compute resource.
+      description: Deletes a dataset and any underlying compute resource.
       operationId: DeleteDataset
       parameters:
         - description: DatasetId is the ID of the dataset to be deleted.
@@ -8297,11 +8223,11 @@ paths:
           description: An unexpected error response.
           schema:
             $ref: '#/definitions/Error'
-      summary: Deletes a Sigma dataset and any underlying compute resource.
+      summary: Deletes a dataset and any underlying compute resource.
       tags:
         - Datasets
     get:
-      description: Returns a Sigma dataset and the summary information.
+      description: Returns a dataset and the summary information.
       operationId: GetDataset
       parameters:
         - description: DatasetId is the ID of the dataset to be retrived.
@@ -8338,11 +8264,11 @@ paths:
           description: An unexpected error response.
           schema:
             $ref: '#/definitions/Error'
-      summary: Returns a Sigma dataset and the summary information.
+      summary: Returns a dataset and the summary information.
       tags:
         - Datasets
     patch:
-      description: Updates the top level information about a Sigma dataset.
+      description: Updates the top level information about a dataset.
       operationId: UpdateDataset
       parameters:
         - description: DatasetId is the ID of the dataset to be updated.
@@ -8355,7 +8281,7 @@ paths:
           name: dataset
           required: true
           schema:
-            $ref: '#/definitions/Datasets.UpdateDataset'
+            $ref: '#/definitions/Datasets.v2.UpdateDataset'
       responses:
         '200':
           description: A successful response.
@@ -8381,7 +8307,7 @@ paths:
           description: An unexpected error response.
           schema:
             $ref: '#/definitions/Error'
-      summary: Updates the top level information about a Sigma dataset.
+      summary: Updates the top level information about a dataset.
       tags:
         - Datasets
   /api/v2/exports/destinations:
@@ -8769,20 +8695,7 @@ paths:
           name: body
           required: true
           schema:
-            description: >-
-              UpdateBulkRequest is the information provided when updating the
-              metadata for multiple files
-            properties:
-              update:
-                $ref: '#/definitions/Files.UpdateBulkMetadataBody'
-                description: >-
-                  The content of the update specifying the files to be updated
-                  and the metadata to apply to them.
-              update_mask:
-                description: The Update Mask used to update the correct metadata fields.
-                readOnly: true
-                type: string
-            type: object
+            $ref: '#/definitions/Files.UpdateBulkBody'
       responses:
         '200':
           description: Returned when the request is accepted
@@ -9565,7 +9478,7 @@ paths:
               target_folder:
                 description: >-
                   The target folder for the import. This field can be a path
-                  contaning subfolders. Valid characters are alphanumeric, '_',
+                  containing subfolders. Valid characters are alphanumeric, '_',
                   '-', '.', '/'. This field cannot start or end with a '/'. The
                   'Recordsets' folder cannot be imported into. This field will
                   be mandatory in the near future.
@@ -9753,7 +9666,7 @@ paths:
           required: false
           type: integer
         - description: >-
-            A comma seperated value to define sorting e.g 'current_status DESC'.
+            A comma separated value to define sorting e.g 'current_status DESC'.
             The values are seperated by a space: '{column} {ASC/DESC}'.
           in: query
           name: order_by
@@ -11688,16 +11601,7 @@ paths:
           name: body
           required: true
           schema:
-            description: >-
-              RenameRequest is the information provided when renaming a
-              recordset.
-            properties:
-              new_name:
-                description: >-
-                  The new name of the recordset. Valid characters are
-                  alphanumeric, '_', '-', ' '.
-                type: string
-            type: object
+            $ref: '#/definitions/Recordsets.RenameBody'
       responses:
         '200':
           description: A successful response.
