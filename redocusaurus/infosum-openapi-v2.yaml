@@ -70,13 +70,16 @@ definitions:
           ID.
         type: string
       created_date_time:
-        description: The UTC date-time the Automation Config was created. Output Only.
+        description: >-
+          The UTC date-time the Automation Config was created in RFC3339 format.
+          Output Only.
         format: date-time
         type: string
       cron_timer:
         description: >-
           The execution schedule of the Automation in UNIX CRON format as
-          described in https://man7.org/linux/man-pages/man5/crontab.5.html
+          described in https://man7.org/linux/man-pages/man5/crontab.5.html.
+        example: 0 */3 * * *
         type: string
       description:
         description: The user-friendly description of the Automation Config.
@@ -88,8 +91,10 @@ definitions:
         type: boolean
       end_date_time:
         description: >-
-          Optional UTC date-time to cease triggering Automation Executions.
-          Format is RFC 3339 e.g. 2019-11-23T18:30:00Z
+          Optional date-time to cease triggering Automation Executions. Format
+          is RFC3339. An empty value indicates that the schedule should never
+          cease.
+        example: '2019-11-23T18:30:00Z'
         format: date-time
         type: string
       id:
@@ -102,19 +107,26 @@ definitions:
         type: string
       start_date_time:
         description: >-
-          The UTC date-time to begin triggering Automation Executions based on
-          the CRON schedule. Format is RFC 3339 e.g. 2019-11-23T18:30:00Z
+          Optional date-time to begin triggering Automation Executions based on
+          the CRON schedule. Format is RFC3339. An empty value indicates that
+          the schedule should begin as soon as possible.
+        example: '2019-11-22T18:30:00Z'
         format: date-time
         type: string
       timezone_identifier:
         description: >-
           The Timezone Identifier to schedule Automation Executions relative to.
-          The format is form the IANA TZ database e.g. 'Europe/London' or
-          'America/New_York' from:
-          https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+          The format is form the IANA TZ database:
+          https://en.wikipedia.org/wiki/List_of_tz_database_time_zones. Be aware
+          that scheduling near the lost or gained hour in a timezone which
+          implements daylight savings time (DST) can lead to schedule disruption
+          during transitions.
+        example: Europe/London
         type: string
       updated_date_time:
-        description: The UTC date-time the Automation Config was last updated. Output Only.
+        description: >-
+          The UTC date-time the Automation Config was last updated in RFC3339
+          format. Output Only.
         format: date-time
         type: string
     type: object
@@ -131,7 +143,8 @@ definitions:
       cron_timer:
         description: >-
           The execution schedule of the Automation in UNIX CRON format as
-          described in https://man7.org/linux/man-pages/man5/crontab.5.html
+          described in https://man7.org/linux/man-pages/man5/crontab.5.html.
+        example: 0 */3 * * *
         type: string
       description:
         description: The user-friendly description of the Automation Config.
@@ -143,17 +156,23 @@ definitions:
         type: boolean
       end_date_time:
         description: >-
-          Optional UTC date-time to cease triggering Automation Executions.
-          Format is ISO 8601 e.g. 2019-11-23T18:30:00Z
+          Optional date-time to cease triggering Automation Executions. Format
+          is RFC3339. An empty value indicates that the schedule should never
+          cease.
+        example: '2019-11-23T18:30:00Z'
         format: date-time
         type: string
       name:
-        description: The user-friendly name of the Automation Config.
+        description: >-
+          The user-friendly name of the Automation Config. Valid characters are
+          alphanumeric, '_', '-' and spaces.
         type: string
       start_date_time:
         description: >-
-          The UTC date-time to begin triggering Automation Executions based on
-          the CRON schedule. Format is ISO 8601 e.g. 2019-11-23T18:30:00Z
+          Optional date-time to begin triggering Automation Executions based on
+          the CRON schedule. Format is RFC3339. An empty value indicates that
+          the schedule should begin as soon as possible.
+        example: '2019-11-22T18:30:00Z'
         format: date-time
         type: string
       steps:
@@ -167,9 +186,12 @@ definitions:
       timezone_identifier:
         description: >-
           The Timezone Identifier to schedule Automation Executions relative to.
-          The format is form the IANA TZ database e.g. 'Europe/London' or
-          'America/New_York' from:
-          https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+          The format is form the IANA TZ database:
+          https://en.wikipedia.org/wiki/List_of_tz_database_time_zones. Be aware
+          that scheduling near the lost or gained hour in a timezone which
+          implements daylight savings time (DST) can lead to schedule disruption
+          during transitions.
+        example: Europe/London
         type: string
     type: object
   Automation_Configs.CreateConfigResponse:
@@ -178,11 +200,10 @@ definitions:
       config:
         $ref: '#/definitions/Automation_Configs.Config'
         description: The new Automation Config.
+        title: The returned automation config
     type: object
   Automation_Configs.DeleteConfigResponse:
-    description: >-
-      DeleteConfigResponse is an empty response for the DeleteConfig resource
-      request.
+    description: Success returns an empty response body.
     type: object
   Automation_Configs.GetConfigResponse:
     description: GetConfigResponse returns the requested Automation Config.
@@ -209,14 +230,14 @@ definitions:
       request parameters.
     properties:
       configs:
-        description: The Automation Configs which matched the criteria of the request.
+        description: Array of Automation Configs based on the request filters and sorting.
         items:
           $ref: '#/definitions/Automation_Configs.Config'
           type: object
         type: array
       pagination:
         $ref: '#/definitions/PaginationResponse'
-        description: Details of the pagination of this response.
+        description: Pagination information for returned Configs.
     type: object
   Automation_Configs.NormalizationConfig:
     description: A config to define Normalization as an Automation Step.
@@ -255,7 +276,8 @@ definitions:
       cron_timer:
         description: >-
           The execution schedule of the Automation in UNIX CRON format as
-          described in https://man7.org/linux/man-pages/man5/crontab.5.html
+          described in https://man7.org/linux/man-pages/man5/crontab.5.html.
+        example: 0 */3 * * *
         type: string
       description:
         description: The user-friendly description of the Automation Config.
@@ -267,25 +289,34 @@ definitions:
         type: boolean
       end_date_time:
         description: >-
-          The UTC date-time to cease triggering Automation Executions. Format is
-          RFC 3339 e.g. 2019-11-23T18:30:00Z
+          Optional date-time to cease triggering Automation Executions. Format
+          is RFC3339. An empty value indicates that the schedule should never
+          cease.
+        example: '2019-11-23T18:30:00Z'
         format: date-time
         type: string
       name:
-        description: The user-friendly name of the Automation Config.
+        description: >-
+          The user-friendly name of the Automation Config. Valid characters are
+          alphanumeric, '_', '-' and spaces.
         type: string
       start_date_time:
         description: >-
-          The UTC date-time to begin triggering Automation Executions based on
-          the CRON schedule. Format is RFC 3339 e.g. 2019-11-23T18:30:00Z
+          Optional date-time to begin triggering Automation Executions based on
+          the CRON schedule. Format is RFC3339. An empty value indicates that
+          the schedule should begin as soon as possible.
+        example: '2019-11-22T18:30:00Z'
         format: date-time
         type: string
       timezone_identifier:
         description: >-
           The Timezone Identifier to schedule Automation Executions relative to.
-          The format is form the IANA TZ database e.g. 'Europe/London' or
-          'America/New_York' from:
-          https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+          The format is form the IANA TZ database:
+          https://en.wikipedia.org/wiki/List_of_tz_database_time_zones. Be aware
+          that scheduling near the lost or gained hour in a timezone which
+          implements daylight savings time (DST) can lead to schedule disruption
+          during transitions.
+        example: Europe/London
         type: string
     type: object
   Automation_Execution.ExecuteResponse:
@@ -4449,32 +4480,35 @@ definitions:
       - PARTIALLY_COMPLETED
     type: string
   Pagination:
-    description: Pagination holds information on which records to return.
+    description: Details to configure paginated record responses.
     properties:
       page:
-        description: >-
-          Page is the page to view. Pages use one-based indexing so the first
-          page is always page 1.
+        default: '1'
+        description: The requested page of records.
         format: int32
+        minimum: 1
         type: integer
       per_page:
-        description: PerPage is the number of items per page.
+        default: '100'
+        description: The number of records to return per page. Maximum is 500.
         format: int32
+        maximum: 500
+        minimum: 1
         type: integer
     type: object
   PaginationResponse:
-    description: PaginationResponse holds information on the returned records.
+    description: Details to allow follow-up requests to page through records.
     properties:
       next_page:
-        description: NextPage is the next page to view.
+        description: The next page to request to fetch the next batch of records.
         format: int32
         type: integer
       results:
-        description: Results is the count of the returned results.
+        description: The count of records returned in this response.
         format: int32
         type: integer
       total_results:
-        description: TotalResults is the total number of results available.
+        description: The total number of records available for the given request.
         format: int32
         type: integer
     type: object
@@ -6356,15 +6390,15 @@ paths:
       description: List users' display name and company name.
       operationId: ListDisplayNames
       parameters:
-        - description: >-
-            Page is the page to view. Pages use one-based indexing so the first
-            page is always page 1.
+        - default: '1'
+          description: The requested page of records.
           format: int32
           in: query
           name: pagination.page
           required: false
           type: integer
-        - description: PerPage is the number of items per page.
+        - default: '100'
+          description: The number of records to return per page. Maximum is 500.
           format: int32
           in: query
           name: pagination.per_page
@@ -6405,44 +6439,40 @@ paths:
         - Accounts
   /api/v2/automations/configs:
     get:
-      description: >-
-        List Automation Configs retrieves Automation Configs belonging to the
-        user's company subject to the provided filters.
+      description: Lists configs belonging to your company subject to the provided filter.
       operationId: ListConfigs
       parameters:
-        - description: >-
-            Page is the page to view. Pages use one-based indexing so the first
-            page is always page 1.
+        - default: '1'
+          description: The requested page of records.
           format: int32
           in: query
           name: pagination.page
           required: false
           type: integer
-        - description: PerPage is the number of items per page.
+        - default: '100'
+          description: The number of records to return per page. Maximum is 500.
           format: int32
           in: query
           name: pagination.per_page
           required: false
           type: integer
-        - description: |-
-            OrderBy is a comma separated value to define sorting.
-            e.g 'name,CreateConfigd_time DESC'.
-            The values are separated by space, '{column} {ASC/DESC}'.
-            These are the values that are sortable:
-              none
+        - default: updated_date_time DESC
+          description: >-
+            Comma separated list of sorting parameters and ordering in the form
+            of `{sort_column} {ASC/DESC}`. Supported sort fields are: `id`,
+            `config_id`, `executed_by`, `started_date_time`,
+            `last_updated_date_time`, `current_step`, `current_step_status`,
+            `cloud_vault_id`.
           in: query
           name: order_by
           required: false
           type: string
         - description: >-
-            Filter is a string containing logic that can specify a restricted
-            set of
-
-            Recordsets to be returned. e.g. `name co 'Test' or name co 'Acme'`.
-            These are
-
-            the supported fields for filtering:
-              none
+            Filter string as per the
+            [docs](https://infosum.github.io/infosum-docs/docs/v2%20API/filtering).
+            Supported filter fields are: `id`, `config_id`, `executed_by`,
+            `started_date_time`, `last_updated_date_time`, `current_step`,
+            `current_step_status`, `cloud_vault_id`.
           in: query
           name: filter
           required: false
@@ -6477,8 +6507,8 @@ paths:
         - Automation Configs
     post:
       description: >-
-        Create Automation Config validates and creates an Automation Config
-        based on the provided ordered tasks.
+        Creates and validates an Automation Config based on the provided list of
+        ordered tasks.
       operationId: CreateConfig
       parameters:
         - description: >-
@@ -6524,9 +6554,9 @@ paths:
   /api/v2/automations/configs/{config_id}:
     delete:
       description: >-
-        Delete Automation Config removes the specified Automation Config along
-        with any execution information and history. No new executions will be
-        triggered for deleted Automation Configs.
+        Remove the specified Automation Config along with any execution
+        information and history. No new executions can be triggered for deleted
+        Automation Configs.
       operationId: DeleteConfig
       parameters:
         - description: The ID of the Automation Config to be deleted.
@@ -6559,7 +6589,7 @@ paths:
       tags:
         - Automation Configs
     get:
-      description: Get Automation Config returns an Automation Config by ID.
+      description: Fetches an Automation Config by its Config ID.
       operationId: GetConfig
       parameters:
         - description: The ID of the Automation Config to retrieve.
@@ -6601,8 +6631,8 @@ paths:
         - Automation Configs
     patch:
       description: >-
-        Update Automation Config updates the specified Automation Config,
-        overriding any old fields with new ones provided on the request.
+        Updates the specified Automation Config, overriding any old fields with
+        new ones provided on the request.
       operationId: UpdateConfig
       parameters:
         - description: The ID of the Automation Config to be updated.
@@ -6700,15 +6730,15 @@ paths:
         provided filters.
       operationId: ListExecution
       parameters:
-        - description: >-
-            Page is the page to view. Pages use one-based indexing so the first
-            page is always page 1.
+        - default: '1'
+          description: The requested page of records.
           format: int32
           in: query
           name: pagination.page
           required: false
           type: integer
-        - description: PerPage is the number of items per page.
+        - default: '100'
+          description: The number of records to return per page. Maximum is 500.
           format: int32
           in: query
           name: pagination.per_page
@@ -6812,15 +6842,15 @@ paths:
       description: List available Cloud Vaults.
       operationId: List
       parameters:
-        - description: >-
-            Page is the page to view. Pages use one-based indexing so the first
-            page is always page 1.
+        - default: '1'
+          description: The requested page of records.
           format: int32
           in: query
           name: pagination.page
           required: false
           type: integer
-        - description: PerPage is the number of items per page.
+        - default: '100'
+          description: The number of records to return per page. Maximum is 500.
           format: int32
           in: query
           name: pagination.per_page
@@ -7104,15 +7134,15 @@ paths:
       description: List company dataset prepare configurations
       operationId: ListConfigs
       parameters:
-        - description: >-
-            Page is the page to view. Pages use one-based indexing so the first
-            page is always page 1.
+        - default: '1'
+          description: The requested page of records.
           format: int32
           in: query
           name: pagination.page
           required: false
           type: integer
-        - description: PerPage is the number of items per page.
+        - default: '100'
+          description: The number of records to return per page. Maximum is 500.
           format: int32
           in: query
           name: pagination.per_page
@@ -7399,15 +7429,15 @@ paths:
           name: config_id
           required: true
           type: string
-        - description: >-
-            Page is the page to view. Pages use one-based indexing so the first
-            page is always page 1.
+        - default: '1'
+          description: The requested page of records.
           format: int32
           in: query
           name: pagination.page
           required: false
           type: integer
-        - description: PerPage is the number of items per page.
+        - default: '100'
+          description: The number of records to return per page. Maximum is 500.
           format: int32
           in: query
           name: pagination.per_page
@@ -7578,15 +7608,15 @@ paths:
           name: config_id
           required: true
           type: string
-        - description: >-
-            Page is the page to view. Pages use one-based indexing so the first
-            page is always page 1.
+        - default: '1'
+          description: The requested page of records.
           format: int32
           in: query
           name: pagination.page
           required: false
           type: integer
-        - description: PerPage is the number of items per page.
+        - default: '100'
+          description: The number of records to return per page. Maximum is 500.
           format: int32
           in: query
           name: pagination.per_page
@@ -7758,15 +7788,15 @@ paths:
           name: config_id
           required: true
           type: string
-        - description: >-
-            Page is the page to view. Pages use one-based indexing so the first
-            page is always page 1.
+        - default: '1'
+          description: The requested page of records.
           format: int32
           in: query
           name: pagination.page
           required: false
           type: integer
-        - description: PerPage is the number of items per page.
+        - default: '100'
+          description: The number of records to return per page. Maximum is 500.
           format: int32
           in: query
           name: pagination.per_page
@@ -7885,15 +7915,15 @@ paths:
       description: Returns a list of datasets and their summary information.
       operationId: ListDatasets
       parameters:
-        - description: >-
-            Page is the page to view. Pages use one-based indexing so the first
-            page is always page 1.
+        - default: '1'
+          description: The requested page of records.
           format: int32
           in: query
           name: pagination.page
           required: false
           type: integer
-        - description: PerPage is the number of items per page.
+        - default: '100'
+          description: The number of records to return per page. Maximum is 500.
           format: int32
           in: query
           name: pagination.per_page
@@ -8315,15 +8345,15 @@ paths:
       description: Lists available Destinations.
       operationId: ListDestinations
       parameters:
-        - description: >-
-            Page is the page to view. Pages use one-based indexing so the first
-            page is always page 1.
+        - default: '1'
+          description: The requested page of records.
           format: int32
           in: query
           name: pagination.page
           required: false
           type: integer
-        - description: PerPage is the number of items per page.
+        - default: '100'
+          description: The number of records to return per page. Maximum is 500.
           format: int32
           in: query
           name: pagination.per_page
@@ -8840,15 +8870,15 @@ paths:
           pattern: .+
           required: true
           type: string
-        - description: >-
-            Page is the page to view. Pages use one-based indexing so the first
-            page is always page 1.
+        - default: '1'
+          description: The requested page of records.
           format: int32
           in: query
           name: pagination.page
           required: false
           type: integer
-        - description: PerPage is the number of items per page.
+        - default: '100'
+          description: The number of records to return per page. Maximum is 500.
           format: int32
           in: query
           name: pagination.per_page
@@ -8926,15 +8956,15 @@ paths:
       description: List available Import Connector Configs.
       operationId: ListImportConnectors
       parameters:
-        - description: >-
-            Page is the page to view. Pages use one-based indexing so the first
-            page is always page 1.
+        - default: '1'
+          description: The requested page of records.
           format: int32
           in: query
           name: pagination.page
           required: false
           type: integer
-        - description: PerPage is the number of items per page.
+        - default: '100'
+          description: The number of records to return per page. Maximum is 500.
           format: int32
           in: query
           name: pagination.per_page
@@ -9192,15 +9222,15 @@ paths:
       description: List all import executions.
       operationId: ListImportExecutions
       parameters:
-        - description: >-
-            Page is the page to view. Pages use one-based indexing so the first
-            page is always page 1.
+        - default: '1'
+          description: The requested page of records.
           format: int32
           in: query
           name: pagination.page
           required: false
           type: integer
-        - description: PerPage is the number of items per page.
+        - default: '100'
+          description: The number of records to return per page. Maximum is 500.
           format: int32
           in: query
           name: pagination.per_page
@@ -9337,15 +9367,15 @@ paths:
       description: List available Imports.
       operationId: ListImports
       parameters:
-        - description: >-
-            Page is the page to view. Pages use one-based indexing so the first
-            page is always page 1.
+        - default: '1'
+          description: The requested page of records.
           format: int32
           in: query
           name: pagination.page
           required: false
           type: integer
-        - description: PerPage is the number of items per page.
+        - default: '100'
+          description: The number of records to return per page. Maximum is 500.
           format: int32
           in: query
           name: pagination.per_page
@@ -9651,15 +9681,15 @@ paths:
       description: List all local file uploads.
       operationId: List
       parameters:
-        - description: >-
-            Page is the page to view. Pages use one-based indexing so the first
-            page is always page 1.
+        - default: '1'
+          description: The requested page of records.
           format: int32
           in: query
           name: pagination.page
           required: false
           type: integer
-        - description: PerPage is the number of items per page.
+        - default: '100'
+          description: The number of records to return per page. Maximum is 500.
           format: int32
           in: query
           name: pagination.per_page
@@ -9880,15 +9910,15 @@ paths:
       description: List company normalization configurations
       operationId: ListConfigs
       parameters:
-        - description: >-
-            Page is the page to view. Pages use one-based indexing so the first
-            page is always page 1.
+        - default: '1'
+          description: The requested page of records.
           format: int32
           in: query
           name: pagination.page
           required: false
           type: integer
-        - description: PerPage is the number of items per page.
+        - default: '100'
+          description: The number of records to return per page. Maximum is 500.
           format: int32
           in: query
           name: pagination.per_page
@@ -10120,15 +10150,15 @@ paths:
       description: List company normalizations
       operationId: ListNormalizations
       parameters:
-        - description: >-
-            Page is the page to view. Pages use one-based indexing so the first
-            page is always page 1.
+        - default: '1'
+          description: The requested page of records.
           format: int32
           in: query
           name: pagination.page
           required: false
           type: integer
-        - description: PerPage is the number of items per page.
+        - default: '100'
+          description: The number of records to return per page. Maximum is 500.
           format: int32
           in: query
           name: pagination.per_page
@@ -10265,15 +10295,15 @@ paths:
       description: List global schema categories
       operationId: Categories
       parameters:
-        - description: >-
-            Page is the page to view. Pages use one-based indexing so the first
-            page is always page 1.
+        - default: '1'
+          description: The requested page of records.
           format: int32
           in: query
           name: pagination.page
           required: false
           type: integer
-        - description: PerPage is the number of items per page.
+        - default: '100'
+          description: The number of records to return per page. Maximum is 500.
           format: int32
           in: query
           name: pagination.per_page
@@ -10336,15 +10366,15 @@ paths:
       description: List global schema keys
       operationId: Keys
       parameters:
-        - description: >-
-            Page is the page to view. Pages use one-based indexing so the first
-            page is always page 1.
+        - default: '1'
+          description: The requested page of records.
           format: int32
           in: query
           name: pagination.page
           required: false
           type: integer
-        - description: PerPage is the number of items per page.
+        - default: '100'
+          description: The number of records to return per page. Maximum is 500.
           format: int32
           in: query
           name: pagination.per_page
@@ -10454,15 +10484,15 @@ paths:
       description: List global schema key categories
       operationId: KeyCategories
       parameters:
-        - description: >-
-            Page is the page to view. Pages use one-based indexing so the first
-            page is always page 1.
+        - default: '1'
+          description: The requested page of records.
           format: int32
           in: query
           name: pagination.page
           required: false
           type: integer
-        - description: PerPage is the number of items per page.
+        - default: '100'
+          description: The number of records to return per page. Maximum is 500.
           format: int32
           in: query
           name: pagination.per_page
@@ -10570,15 +10600,15 @@ paths:
       description: List company prepares
       operationId: ListPrepares
       parameters:
-        - description: >-
-            Page is the page to view. Pages use one-based indexing so the first
-            page is always page 1.
+        - default: '1'
+          description: The requested page of records.
           format: int32
           in: query
           name: pagination.page
           required: false
           type: integer
-        - description: PerPage is the number of items per page.
+        - default: '100'
+          description: The number of records to return per page. Maximum is 500.
           format: int32
           in: query
           name: pagination.per_page
@@ -10917,15 +10947,15 @@ paths:
       description: List all recordset configs.
       operationId: ListConfigs
       parameters:
-        - description: >-
-            Page is the page to view. Pages use one-based indexing so the first
-            page is always page 1.
+        - default: '1'
+          description: The requested page of records.
           format: int32
           in: query
           name: pagination.page
           required: false
           type: integer
-        - description: PerPage is the number of items per page.
+        - default: '100'
+          description: The number of records to return per page. Maximum is 500.
           format: int32
           in: query
           name: pagination.per_page
@@ -11264,15 +11294,15 @@ paths:
       description: List all recordset executions.
       operationId: ListExecutions
       parameters:
-        - description: >-
-            Page is the page to view. Pages use one-based indexing so the first
-            page is always page 1.
+        - default: '1'
+          description: The requested page of records.
           format: int32
           in: query
           name: pagination.page
           required: false
           type: integer
-        - description: PerPage is the number of items per page.
+        - default: '100'
+          description: The number of records to return per page. Maximum is 500.
           format: int32
           in: query
           name: pagination.per_page
@@ -11418,15 +11448,15 @@ paths:
           name: cloud_vault_id
           required: true
           type: string
-        - description: >-
-            Page is the page to view. Pages use one-based indexing so the first
-            page is always page 1.
+        - default: '1'
+          description: The requested page of records.
           format: int32
           in: query
           name: pagination.page
           required: false
           type: integer
-        - description: PerPage is the number of items per page.
+        - default: '100'
+          description: The number of records to return per page. Maximum is 500.
           format: int32
           in: query
           name: pagination.per_page
@@ -11653,15 +11683,15 @@ paths:
           name: recordset_id
           required: true
           type: string
-        - description: >-
-            Page is the page to view. Pages use one-based indexing so the first
-            page is always page 1.
+        - default: '1'
+          description: The requested page of records.
           format: int32
           in: query
           name: pagination.page
           required: false
           type: integer
-        - description: PerPage is the number of items per page.
+        - default: '100'
+          description: The number of records to return per page. Maximum is 500.
           format: int32
           in: query
           name: pagination.per_page
@@ -11782,15 +11812,15 @@ paths:
       description: List insight reports.
       operationId: List
       parameters:
-        - description: >-
-            Page is the page to view. Pages use one-based indexing so the first
-            page is always page 1.
+        - default: '1'
+          description: The requested page of records.
           format: int32
           in: query
           name: pagination.page
           required: false
           type: integer
-        - description: PerPage is the number of items per page.
+        - default: '100'
+          description: The number of records to return per page. Maximum is 500.
           format: int32
           in: query
           name: pagination.per_page
@@ -12027,15 +12057,15 @@ paths:
           name: report_id
           required: true
           type: string
-        - description: >-
-            Page is the page to view. Pages use one-based indexing so the first
-            page is always page 1.
+        - default: '1'
+          description: The requested page of records.
           format: int32
           in: query
           name: pagination.page
           required: false
           type: integer
-        - description: PerPage is the number of items per page.
+        - default: '100'
+          description: The number of records to return per page. Maximum is 500.
           format: int32
           in: query
           name: pagination.per_page
@@ -12142,15 +12172,15 @@ paths:
         audience_id.
       operationId: ListSchemaCategories
       parameters:
-        - description: >-
-            Page is the page to view. Pages use one-based indexing so the first
-            page is always page 1.
+        - default: '1'
+          description: The requested page of records.
           format: int32
           in: query
           name: pagination.page
           required: false
           type: integer
-        - description: PerPage is the number of items per page.
+        - default: '100'
+          description: The number of records to return per page. Maximum is 500.
           format: int32
           in: query
           name: pagination.per_page
@@ -12204,15 +12234,15 @@ paths:
       description: List the representations associated with each category.
       operationId: ListRepresentations
       parameters:
-        - description: >-
-            Page is the page to view. Pages use one-based indexing so the first
-            page is always page 1.
+        - default: '1'
+          description: The requested page of records.
           format: int32
           in: query
           name: pagination.page
           required: false
           type: integer
-        - description: PerPage is the number of items per page.
+        - default: '100'
+          description: The number of records to return per page. Maximum is 500.
           format: int32
           in: query
           name: pagination.per_page
