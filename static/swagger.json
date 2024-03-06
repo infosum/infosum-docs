@@ -1203,7 +1203,7 @@
 		},
 		"Destinations.ConnectorType": {
 			"default": "CONNECTOR_TYPE_INVALID",
-			"description": "ConnectorType is the types of authentication used by a destination.\n\n - S3_ACCESS_KEYS: S3_ACCESS_KEYS indicates the destination is targeting S3 and using access/secret keys for authentication.\n - PUBMATIC: PUBMATIC  indicates the destination is targeting PubMatic.\n - S3_CROSS_ACCOUNT: S3_CROSS_ACCOUNT indicates the destination is targeting S3 and assuming an iam role for authentication.\n - SFTP: SFTP indicates the destination is targeting a sftp server.\n - GCS: GCS indicates indicates the destination is targeting Google Cloud Platform for authentication.\n - FACEBOOK: FACEBOOK indicates the destination is targeting Facebook.\n - DV360_PAIR: DV360_PAIR indicates the destination is targeting DV360 using PAIR encryption.\n - S3_ACCESS_KEYS_PAIR: S3_ACCESS_KEYS_PAIR indicates the destination is targeting S3 using access/secret keys for authentication and using PAIR encryption.\n - S3_CROSS_ACCOUNT_PAIR: S3_CROSS_ACCOUNT_PAIR indicates the destination is targeting S3 assuming an iam role for authentication and using PAIR encryption.\n - SFTP_PAIR: SFTP_PAIR indicates the destination is targeting a SFTP server for authentication and using PAIR encryption.\n - DV360_CUSTOMER_MATCH: DV360_CUSTOMER_MATCH indicates the destination is targeting DV360 Customer Match.\n - TRADEDESK: TRADEDESK indicates the destination is targeting trade desk",
+			"description": "ConnectorType is the types of authentication used by a destination.\n\n - S3_ACCESS_KEYS: S3_ACCESS_KEYS indicates the destination is targeting S3 and using access/secret keys for authentication.\n - PUBMATIC: PUBMATIC  indicates the destination is targeting PubMatic.\n - S3_CROSS_ACCOUNT: S3_CROSS_ACCOUNT indicates the destination is targeting S3 and assuming an iam role for authentication.\n - SFTP: SFTP indicates the destination is targeting a sftp server.\n - GCS: GCS indicates indicates the destination is targeting Google Cloud Platform for authentication.\n - FACEBOOK: FACEBOOK indicates the destination is targeting Facebook.\n - DV360_PAIR: DV360_PAIR indicates the destination is targeting DV360 using PAIR encryption.\n - S3_ACCESS_KEYS_PAIR: S3_ACCESS_KEYS_PAIR indicates the destination is targeting S3 using access/secret keys for authentication and using PAIR encryption.\n - S3_CROSS_ACCOUNT_PAIR: S3_CROSS_ACCOUNT_PAIR indicates the destination is targeting S3 assuming an iam role for authentication and using PAIR encryption.\n - SFTP_PAIR: SFTP_PAIR indicates the destination is targeting a SFTP server for authentication and using PAIR encryption.\n - DV360_CUSTOMER_MATCH: DV360_CUSTOMER_MATCH indicates the destination is targeting DV360 Customer Match.\n - TRADEDESK: TRADEDESK indicates the destination is targeting trade desk\n - TRADEDESK_CRM: TRADEDESK_CRM indicates the destination is targeting trade desk crm",
 			"enum": [
 				"CONNECTOR_TYPE_INVALID",
 				"S3_ACCESS_KEYS",
@@ -1217,7 +1217,8 @@
 				"S3_CROSS_ACCOUNT_PAIR",
 				"SFTP_PAIR",
 				"DV360_CUSTOMER_MATCH",
-				"TRADEDESK"
+				"TRADEDESK",
+				"TRADEDESK_CRM"
 			],
 			"type": "string"
 		},
@@ -1512,6 +1513,15 @@
 			"properties": {
 				"path": {
 					"description": "Path is the path in the sftp server to export data to.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Destinations.GetDestinationPushSchemaResponse": {
+			"description": "GetDestinationPushSchemaResponse is the output of the GetDestinationPushSchema method.",
+			"properties": {
+				"push_schema": {
 					"type": "string"
 				}
 			},
@@ -9544,6 +9554,68 @@
 					}
 				},
 				"summary": "Get a Destination",
+				"tags": [
+					"Destinations"
+				]
+			}
+		},
+		"/api/v2/exports/destinations/{destination_id}/push-schema": {
+			"get": {
+				"description": "Returns the push time schema for a specific destination.",
+				"operationId": "GetDestinationPushSchema",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "destination_id",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Destinations.GetDestinationPushSchemaResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the right to view Destinations.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"404": {
+						"description": "Returned when the Destination could not be found.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Get Destination Push Schema",
 				"tags": [
 					"Destinations"
 				]
