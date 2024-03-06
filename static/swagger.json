@@ -703,371 +703,212 @@
 			},
 			"type": "object"
 		},
-		"Dataset_Prepare_Configs.AddConfigCategoriesBody": {
+		"Dataset_Lineage.GetPublishResponse": {
+			"description": "GetPublishResponse is the information returned when getting a published dataset lineage.",
 			"properties": {
-				"categories": {
-					"items": {
-						"format": "int64",
-						"type": "string"
-					},
-					"title": "Categories is the list of category ids to be added to the config",
-					"type": "array"
-				}
-			},
-			"title": "AddConfigCategoriesRequest",
-			"type": "object"
-		},
-		"Dataset_Prepare_Configs.AddConfigCategoriesResponse": {
-			"title": "AddConfigCategoriesResponse",
-			"type": "object"
-		},
-		"Dataset_Prepare_Configs.AddConfigExportColumnsBody": {
-			"properties": {
-				"export_columns": {
-					"items": {
-						"type": "string"
-					},
-					"title": "ExportColumns is the list of export column names to be added to the config",
-					"type": "array"
-				}
-			},
-			"title": "AddConfigExportColumnsRequest",
-			"type": "object"
-		},
-		"Dataset_Prepare_Configs.AddConfigExportColumnsResponse": {
-			"title": "AddConfigExportColumnsResponse",
-			"type": "object"
-		},
-		"Dataset_Prepare_Configs.AddConfigKeysBody": {
-			"properties": {
-				"keys": {
-					"items": {
-						"format": "int64",
-						"type": "string"
-					},
-					"title": "Keys is the list of key ids to be added to the config",
-					"type": "array"
-				}
-			},
-			"title": "AddConfigKeysRequest",
-			"type": "object"
-		},
-		"Dataset_Prepare_Configs.AddConfigKeysResponse": {
-			"title": "AddConfigKeysResponse",
-			"type": "object"
-		},
-		"Dataset_Prepare_Configs.Config": {
-			"description": "Config holds all the information regarding a dataset publish config.",
-			"properties": {
-				"created_date_time": {
-					"description": "CreatedDateTime is the time that this Config was created and stored.",
-					"format": "date-time",
+				"cloud_vault_id": {
+					"description": "The ID of the Cloud Vault used to the publish the dataset.",
 					"type": "string"
 				},
-				"dataset_publish_config": {
-					"$ref": "#/definitions/Dataset_Prepare_Configs.DatasetPublishConfig",
-					"description": "DatasetPublishConfig is the dataset publish configuration defined by the user."
-				},
-				"description": {
-					"description": "Description is the description given to the config to help identify what exactly is being\nstored within the config.",
-					"type": "string"
-				},
-				"id": {
-					"description": "ID is the ID of the config.",
-					"type": "string"
-				},
-				"name": {
-					"description": "Name is the name given to the config.",
-					"type": "string"
-				},
-				"updated_date_time": {
-					"description": "UpdatedDateTime is the last time that this Config was updated and stored.",
-					"format": "date-time",
-					"type": "string"
-				},
-				"user_id": {
-					"description": "UserId is the ID of the user that created the config.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Dataset_Prepare_Configs.CreateConfigRequest": {
-			"properties": {
-				"config": {
-					"$ref": "#/definitions/Dataset_Prepare_Configs.DatasetPublishConfig",
-					"title": "Config is the dataset prepare config - can be updated after creation"
-				},
-				"description": {
-					"title": "Description is the user assigned description for the config",
-					"type": "string"
-				},
-				"name": {
-					"title": "Name is the user assigned name of the config",
-					"type": "string"
-				}
-			},
-			"title": "CreateConfigRequest creates a new config",
-			"type": "object"
-		},
-		"Dataset_Prepare_Configs.CreateConfigResponse": {
-			"properties": {
-				"id": {
-					"title": "ID is the globally unique ID for the config",
-					"type": "string"
-				}
-			},
-			"title": "CreateConfigResponse is the response object for rpc CreateConfigRequest",
-			"type": "object"
-		},
-		"Dataset_Prepare_Configs.DatasetPublishConfig": {
-			"description": "DatasetPublishConfig configures a prepare task.",
-			"properties": {
-				"category_selection": {
-					"description": "CategorySelection defines a subset of Categories IDs to prepare. If this is not set then all Categories are prepared (up to a predefined limit).",
+				"lineage": {
+					"description": "The lineage of the published dataset.",
 					"items": {
-						"format": "int64",
-						"type": "string"
-					},
-					"type": "array"
-				},
-				"export_column_selection": {
-					"description": "ExportColumnSelection defines a subset of Export Column names to prepare. If this is not set then all Export Columns are prepared (up to a predefined limit).",
-					"items": {
-						"type": "string"
-					},
-					"type": "array"
-				},
-				"incremental_full_refresh": {
-					"description": "IncrementalFullRefresh is a flag indicating that the data from the previous incremental run should not be carried\nforward. It is only valid when supports_incremental flag is set to true.",
-					"type": "boolean"
-				},
-				"key_selection": {
-					"description": "KeySelection defines a subset of Key IDs to prepare. If this is not set then all Keys are prepared (up to a predefined limit).",
-					"items": {
-						"format": "int64",
-						"type": "string"
-					},
-					"type": "array"
-				},
-				"purge_expired_rows_only": {
-					"description": "PurgeExpiredRowsOnly is a flag indicating that this is an expire only incremental run. InsightWriter should not\nexpect any subsequent Write calls with a Body, only a single call with the Header. All necessary stats\nwill be populated in the response to the Write call to the Header. This property is only valid if the\nsupports_incremental flag is set to true. All other properties in the Header will be ignored and will not be\nvalidated.",
-					"type": "boolean"
-				},
-				"redaction_threshold": {
-					"description": "RedactionThreshold corresponds to the minimum number of results required\nfor a bin to be included in the results returned.\nDefault value is 100, minimum value is 25.",
-					"format": "int64",
-					"type": "integer"
-				},
-				"rounding_threshold": {
-					"description": "RoundingThreshold is the number that bin counts will be rounded down by.\nDefault value is 100, minimum value is 25.",
-					"format": "int64",
-					"type": "integer"
-				}
-			},
-			"type": "object"
-		},
-		"Dataset_Prepare_Configs.DeleteConfigCategoriesResponse": {
-			"description": "DeleteConfigCategoriesResponse is the empty response for DeleteConfigCategoriesRequest rpc.",
-			"type": "object"
-		},
-		"Dataset_Prepare_Configs.DeleteConfigExportColumnsResponse": {
-			"description": "DeleteConfigExportColumnsResponse is the empty response for DeleteConfigExportColumnsRequest rpc.",
-			"type": "object"
-		},
-		"Dataset_Prepare_Configs.DeleteConfigKeysResponse": {
-			"description": "DeleteConfigKeysResponse is the empty response for DeleteConfigKeysRequest rpc.",
-			"type": "object"
-		},
-		"Dataset_Prepare_Configs.DeleteConfigResponse": {
-			"description": "DeleteConfigResponse is the empty response of the DeleteConfig rpc.",
-			"type": "object"
-		},
-		"Dataset_Prepare_Configs.GetConfigResponse": {
-			"description": "GetConfigResponse is the response of the GetConfig rpc.",
-			"properties": {
-				"config": {
-					"$ref": "#/definitions/Dataset_Prepare_Configs.Config",
-					"description": "Config is the dataset prepare configuration that was requested."
-				}
-			},
-			"type": "object"
-		},
-		"Dataset_Prepare_Configs.ListConfigCategoriesResponse": {
-			"description": "ListConfigCategoriesResponse is the response of ListConfigCategoriesRequest rpc.",
-			"properties": {
-				"categories": {
-					"items": {
-						"type": "string"
-					},
-					"title": "Categories are the categories in the dataset prepare config",
-					"type": "array"
-				},
-				"pagination": {
-					"$ref": "#/definitions/PaginationResponse",
-					"description": "Pagination is the pagination instructions for returned dataset prepare config categories."
-				}
-			},
-			"type": "object"
-		},
-		"Dataset_Prepare_Configs.ListConfigExportColumnsResponse": {
-			"description": "ListConfigExportColumnsResponse is the response of ListConfigExportColumnsRequest rpc.",
-			"properties": {
-				"export_columns": {
-					"items": {
-						"type": "string"
-					},
-					"title": "Export columns are the export columns in the dataset prepare config",
-					"type": "array"
-				},
-				"pagination": {
-					"$ref": "#/definitions/PaginationResponse",
-					"description": "Pagination is the pagination instructions for returned dataset prepare config export columns."
-				}
-			},
-			"type": "object"
-		},
-		"Dataset_Prepare_Configs.ListConfigKeysResponse": {
-			"description": "ListConfigKeysResponse is the response of ListConfigKeysRequest rpc.",
-			"properties": {
-				"keys": {
-					"items": {
-						"type": "string"
-					},
-					"title": "Keys are the keys in the dataset prepare config",
-					"type": "array"
-				},
-				"pagination": {
-					"$ref": "#/definitions/PaginationResponse",
-					"description": "Pagination is the pagination instructions for returned dataset prepare config keys."
-				}
-			},
-			"type": "object"
-		},
-		"Dataset_Prepare_Configs.ListConfigsResponse": {
-			"description": "ListConfigsResponse is the response of the ListConfigs rpc.",
-			"properties": {
-				"configs": {
-					"description": "Configs is a list of dataset prepare configurations.",
-					"items": {
-						"$ref": "#/definitions/Dataset_Prepare_Configs.ListedConfigDetails",
+						"$ref": "#/definitions/Dataset_Lineage.Lineage",
 						"type": "object"
 					},
 					"type": "array"
-				},
-				"pagination": {
-					"$ref": "#/definitions/PaginationResponse",
-					"description": "Pagination is the pagination details of the returned dataset prepare configs."
 				}
 			},
 			"type": "object"
 		},
-		"Dataset_Prepare_Configs.ListedConfigDetails": {
-			"description": "ListedConfigDetails is a reduced version of Config for list endpoints.",
+		"Dataset_Lineage.ImportConfig": {
+			"description": "The import config.",
 			"properties": {
-				"created_date_time": {
-					"description": "CreatedDateTime is the time that this Config was created and stored.",
-					"format": "date-time",
-					"type": "string"
-				},
-				"dataset_publish_config_summary": {
-					"$ref": "#/definitions/Dataset_Prepare_Configs.PublishConfigSummary",
-					"description": "PrepareConfigSummary is the dataset prepare configuration defined by the user."
-				},
-				"description": {
-					"description": "Description is the description given to the config to help identify what exactly is being\nstored within the config.",
-					"type": "string"
-				},
-				"id": {
-					"description": "ID is the ID of the config.",
-					"type": "string"
-				},
-				"name": {
-					"description": "Name is the name given to the config.",
-					"type": "string"
-				},
-				"updated_date_time": {
-					"description": "UpdatedDateTime is the last time that this Config was updated and stored.",
-					"format": "date-time",
-					"type": "string"
-				},
-				"user_id": {
-					"description": "UserId is the ID of the user that created the config.",
+				"config_id": {
+					"description": "The config ID used for the import, if one was used.",
 					"type": "string"
 				}
 			},
 			"type": "object"
 		},
-		"Dataset_Prepare_Configs.PublishConfigSummary": {
-			"description": "PublishConfigSummary is a Config without the full column selection due to message size limits.",
+		"Dataset_Lineage.Lineage": {
+			"description": "The lineage config.",
 			"properties": {
-				"category_column_count": {
-					"description": "CategoryColumnCount is the number of category columns in the config.",
-					"format": "int64",
-					"type": "integer"
+				"import": {
+					"$ref": "#/definitions/Dataset_Lineage.ImportConfig",
+					"description": "The import config."
 				},
-				"export_column_count": {
-					"description": "ExportColumnCount is the number of export columns in the config.",
-					"format": "int64",
-					"type": "integer"
+				"normalization": {
+					"$ref": "#/definitions/Dataset_Lineage.NormalizationConfig",
+					"description": "The normalization config."
 				},
-				"incremental_full_refresh": {
-					"description": "IncrementalFullRefresh is a flag indicating that the data from the previous incremental run should not be carried\nforward. It is only valid when supports_incremental flag is set to true.",
-					"type": "boolean"
+				"publish": {
+					"$ref": "#/definitions/Dataset_Lineage.PublishConfig",
+					"description": "The publish config."
 				},
-				"key_column_count": {
-					"description": "KeyColumnCount is the number of key columns in the config.",
-					"format": "int64",
-					"type": "integer"
-				},
-				"purge_expired_rows_only": {
-					"description": "PurgeExpiredRowsOnly is a flag indicating that this is an expire only incremental run. InsightWriter should not\nexpect any subsequent Write calls with a Body, only a single call with the Header. All necessary stats\nwill be populated in the response to the Write call to the Header. This property is only valid if the\nsupports_incremental flag is set to true. All other properties in the Header will be ignored and will not be\nvalidated.",
-					"type": "boolean"
-				},
-				"redaction_threshold": {
-					"description": "RedactionThreshold corresponds to the minimum number of results required\nfor a bin to be included in the results returned.",
-					"format": "int64",
-					"type": "integer"
-				},
-				"rounding_threshold": {
-					"description": "RoundingThreshold is the number that bin counts will be rounded down by.",
-					"format": "int64",
-					"type": "integer"
+				"recordset_creation": {
+					"$ref": "#/definitions/Dataset_Lineage.RecordsetCreationConfig",
+					"description": "The recordset creation config."
 				}
 			},
 			"type": "object"
 		},
-		"Dataset_Prepare_Configs.UpdateConfigBody": {
-			"description": "UpdateConfigRequest is used to update name and description.",
+		"Dataset_Lineage.NormalizationConfig": {
+			"description": "The normalization config.",
 			"properties": {
-				"config": {
-					"$ref": "#/definitions/Dataset_Prepare_Configs.DatasetPublishConfig",
-					"title": "Config is the dataset prepare config - can be updated after creation"
-				},
-				"description": {
-					"description": "Description is a description of the dataset prepare config.",
-					"type": "string"
-				},
-				"name": {
-					"description": "Name is the name assigned to the dataset prepare config.",
+				"config_id": {
+					"description": "The config ID used for the normalization, if one was used.",
 					"type": "string"
 				}
 			},
 			"type": "object"
 		},
-		"Dataset_Prepare_Configs.UpdateConfigResponse": {
-			"description": "UpdateConfigResponse is the empty response of the UpdateConfig rpc.",
+		"Dataset_Lineage.PublishConfig": {
+			"description": "The publish config.",
+			"properties": {
+				"config_id": {
+					"description": "The config ID used for the publish, if one was used.",
+					"type": "string"
+				}
+			},
 			"type": "object"
 		},
-		"Datasets.AttributeColumnStatsResponse": {
+		"Dataset_Lineage.RecordsetCreationConfig": {
+			"description": "The recordset creation config.",
+			"properties": {
+				"config_id": {
+					"description": "The config ID used for the recordset creation, if one was used.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Dataset_Stats.AttributeColumnStatsResponse": {
 			"description": "AttributeColumnStatsResponse is the response returned by AttributeColumnStats method.",
 			"properties": {
 				"id_to_representations_stats": {
 					"additionalProperties": {
-						"$ref": "#/definitions/Datasets.RepresentationStatsList"
+						"$ref": "#/definitions/Dataset_Stats.RepresentationStatsList"
 					},
 					"description": "IdToRepresentationsStats is a map of attribute column ID to a list of their corresponding representations stats.",
 					"type": "object"
+				}
+			},
+			"type": "object"
+		},
+		"Dataset_Stats.ExportColumnStatsResponse": {
+			"description": "ExportColumnStatsResponse is the response to ExportColumnStats method.",
+			"properties": {
+				"valid_values": {
+					"description": "ValidValues is the number of valid values for this export column.",
+					"format": "uint64",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Dataset_Stats.KeyColumnStatsResponse": {
+			"description": "KeyColumnStatsResponse is the response returned by KeyColumnStats method.",
+			"properties": {
+				"key_id_to_stats": {
+					"additionalProperties": {
+						"$ref": "#/definitions/Dataset_Stats.v2.KeyColumnStats"
+					},
+					"description": "KeyIdToStats is a map of key column ID to its corresponding stats.",
+					"type": "object"
+				}
+			},
+			"type": "object"
+		},
+		"Dataset_Stats.RepresentationStats": {
+			"description": "RepresentationStats holds stats information for a attribute column representation.",
+			"properties": {
+				"distinct_values": {
+					"description": "DistinctValues is the number of distinct values for this representation.",
+					"format": "uint64",
+					"type": "string"
+				},
+				"multi_value": {
+					"description": "MultiValue is set to true if this is a multi-value key column.",
+					"type": "boolean"
+				},
+				"representation_id": {
+					"description": "RepresentationId is the ID of the representation.",
+					"type": "string"
+				},
+				"valid_values": {
+					"description": "ValidValues is the number of valid values for this representation.",
+					"format": "uint64",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Dataset_Stats.RepresentationStatsList": {
+			"description": "RepresentationStatsList contains a list of RepresentationStats that can be used in a map field.",
+			"properties": {
+				"representations_stats": {
+					"items": {
+						"$ref": "#/definitions/Dataset_Stats.RepresentationStats",
+						"type": "object"
+					},
+					"type": "array"
+				}
+			},
+			"type": "object"
+		},
+		"Dataset_Stats.SummaryStatsResponse": {
+			"description": "SummaryStatsResponse is the response returned by SummaryStats method.",
+			"properties": {
+				"attribute_columns": {
+					"description": "AttributeColumns is the number of attributes of the dataset.",
+					"format": "uint64",
+					"type": "string"
+				},
+				"export_columns": {
+					"description": "ExportColumns is the number of export columns of the dataset.",
+					"format": "uint64",
+					"type": "string"
+				},
+				"key_columns": {
+					"description": "KeyColumns is the number of keys of the dataset.",
+					"format": "uint64",
+					"type": "string"
+				},
+				"total_rows": {
+					"description": "TotalRows is the total rows of the dataset.",
+					"format": "uint64",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Dataset_Stats.v2.KeyColumnStats": {
+			"description": "KeyColumnStats holds stats information for a key column.",
+			"properties": {
+				"distinct_identifiers": {
+					"description": "DistinctIdentifiers is the number of distinct identifiers for this key column.",
+					"format": "uint64",
+					"type": "string"
+				},
+				"distinct_values": {
+					"description": "DistinctValues is the number of distinct values for this key column.",
+					"format": "uint64",
+					"type": "string"
+				},
+				"identifiers": {
+					"description": "Identifiers is the number of identifiers for this key column.",
+					"format": "uint64",
+					"type": "string"
+				},
+				"multi_value": {
+					"description": "MultiValue is set to true if this is a multi-value key column.",
+					"type": "boolean"
+				},
+				"valid_values": {
+					"description": "ValidValues is the number of valid values for this key column.",
+					"format": "uint64",
+					"type": "string"
 				}
 			},
 			"type": "object"
@@ -1196,36 +1037,12 @@
 			"description": "DeleteDatasetResponse is the response for DeleteDataset rpc.",
 			"type": "object"
 		},
-		"Datasets.ExportColumnStatsResponse": {
-			"description": "ExportColumnStatsResponse is the response to ExportColumnStats method.",
-			"properties": {
-				"valid_values": {
-					"description": "ValidValues is the number of valid values for this export column.",
-					"format": "uint64",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
 		"Datasets.GetDatasetResponse": {
 			"description": "GetDatasetResponse is the response for GetDataset rpc.",
 			"properties": {
 				"dataset": {
 					"$ref": "#/definitions/Datasets.Dataset",
 					"description": "Dataset is summary information about the requested dataset."
-				}
-			},
-			"type": "object"
-		},
-		"Datasets.KeyColumnStatsResponse": {
-			"description": "KeyColumnStatsResponse is the response returned by KeyColumnStats method.",
-			"properties": {
-				"key_id_to_stats": {
-					"additionalProperties": {
-						"$ref": "#/definitions/Datasets.v2.KeyColumnStats"
-					},
-					"description": "KeyIdToStats is a map of key column ID to its corresponding stats.",
-					"type": "object"
 				}
 			},
 			"type": "object"
@@ -1335,101 +1152,8 @@
 			],
 			"type": "string"
 		},
-		"Datasets.RepresentationStats": {
-			"description": "RepresentationStats holds stats information for a attribute column representation.",
-			"properties": {
-				"distinct_values": {
-					"description": "DistinctValues is the number of distinct values for this representation.",
-					"format": "uint64",
-					"type": "string"
-				},
-				"multi_value": {
-					"description": "MultiValue is set to true if this is a multi-value key column.",
-					"type": "boolean"
-				},
-				"representation_id": {
-					"description": "RepresentationId is the ID of the representation.",
-					"type": "string"
-				},
-				"valid_values": {
-					"description": "ValidValues is the number of valid values for this representation.",
-					"format": "uint64",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Datasets.RepresentationStatsList": {
-			"description": "RepresentationStatsList contains a list of RepresentationStats that can be used in a map field.",
-			"properties": {
-				"representations_stats": {
-					"items": {
-						"$ref": "#/definitions/Datasets.RepresentationStats",
-						"type": "object"
-					},
-					"type": "array"
-				}
-			},
-			"type": "object"
-		},
-		"Datasets.SummaryStatsResponse": {
-			"description": "SummaryStatsResponse is the response returned by SummaryStats method.",
-			"properties": {
-				"attribute_columns": {
-					"description": "AttributeColumns is the number of attributes of the dataset.",
-					"format": "uint64",
-					"type": "string"
-				},
-				"export_columns": {
-					"description": "ExportColumns is the number of export columns of the dataset.",
-					"format": "uint64",
-					"type": "string"
-				},
-				"key_columns": {
-					"description": "KeyColumns is the number of keys of the dataset.",
-					"format": "uint64",
-					"type": "string"
-				},
-				"total_rows": {
-					"description": "TotalRows is the total rows of the dataset.",
-					"format": "uint64",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
 		"Datasets.UpdateDatasetResponse": {
 			"description": "UpdateDatasetResponse is the response for UpdateDataset rpc.",
-			"type": "object"
-		},
-		"Datasets.v2.KeyColumnStats": {
-			"description": "KeyColumnStats holds stats information for a key column.",
-			"properties": {
-				"distinct_identifiers": {
-					"description": "DistinctIdentifiers is the number of distinct identifiers for this key column.",
-					"format": "uint64",
-					"type": "string"
-				},
-				"distinct_values": {
-					"description": "DistinctValues is the number of distinct values for this key column.",
-					"format": "uint64",
-					"type": "string"
-				},
-				"identifiers": {
-					"description": "Identifiers is the number of identifiers for this key column.",
-					"format": "uint64",
-					"type": "string"
-				},
-				"multi_value": {
-					"description": "MultiValue is set to true if this is a multi-value key column.",
-					"type": "boolean"
-				},
-				"valid_values": {
-					"description": "ValidValues is the number of valid values for this key column.",
-					"format": "uint64",
-					"type": "string"
-				}
-			},
 			"type": "object"
 		},
 		"Datasets.v2.UpdateDataset": {
@@ -2843,50 +2567,6 @@
 			],
 			"type": "string"
 		},
-		"Files.UpdateBulkBody": {
-			"description": "UpdateBulkRequest is the information provided when updating the metadata for multiple files",
-			"properties": {
-				"update": {
-					"$ref": "#/definitions/Files.UpdateBulkMetadataBody",
-					"description": "The content of the update specifying the files to be updated and the metadata to apply to them."
-				},
-				"update_mask": {
-					"description": "The Update Mask used to update the correct metadata fields.",
-					"readOnly": true,
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Files.UpdateBulkMetadataBody": {
-			"description": "UpdateBulkMetadataBody is the body of the UpdateBulkMetadataRequest.",
-			"properties": {
-				"filenames": {
-					"description": "A list of the files in the Cloud Vault to bulk apply metadata to.",
-					"items": {
-						"type": "string"
-					},
-					"type": "array"
-				},
-				"metadata": {
-					"$ref": "#/definitions/Files.Metadata",
-					"description": "The Metadata to apply to the listed files."
-				}
-			},
-			"type": "object"
-		},
-		"Files.UpdateBulkResponse": {
-			"description": "UpdateBulkResponse is an empty response for the UpdateBulk request.",
-			"type": "object"
-		},
-		"Files.UpdateResponse": {
-			"properties": {
-				"file": {
-					"$ref": "#/definitions/Files.File"
-				}
-			},
-			"type": "object"
-		},
 		"GetMetadataResponse": {
 			"description": "GetMetadataResponse is the details about a specific Cloud Vault.",
 			"properties": {
@@ -3903,86 +3583,6 @@
 			],
 			"type": "string"
 		},
-		"Lineage.GetPublishResponse": {
-			"description": "GetPublishResponse is the information returned when getting a published dataset lineage.",
-			"properties": {
-				"cloud_vault_id": {
-					"description": "The ID of the Cloud Vault used to the publish the dataset.",
-					"type": "string"
-				},
-				"lineage": {
-					"description": "The lineage of the published dataset.",
-					"items": {
-						"$ref": "#/definitions/Lineage.Lineage",
-						"type": "object"
-					},
-					"type": "array"
-				}
-			},
-			"type": "object"
-		},
-		"Lineage.ImportConfig": {
-			"description": "The import config.",
-			"properties": {
-				"config_id": {
-					"description": "The config ID used for the import, if one was used.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Lineage.Lineage": {
-			"description": "The lineage config.",
-			"properties": {
-				"import": {
-					"$ref": "#/definitions/Lineage.ImportConfig",
-					"description": "The import config."
-				},
-				"normalization": {
-					"$ref": "#/definitions/Lineage.NormalizationConfig",
-					"description": "The normalization config."
-				},
-				"publish": {
-					"$ref": "#/definitions/Lineage.PublishConfig",
-					"description": "The publish config."
-				},
-				"recordset_creation": {
-					"$ref": "#/definitions/Lineage.RecordsetCreationConfig",
-					"description": "The recordset creation config."
-				}
-			},
-			"type": "object"
-		},
-		"Lineage.NormalizationConfig": {
-			"description": "The normalization config.",
-			"properties": {
-				"config_id": {
-					"description": "The config ID used for the normalization, if one was used.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Lineage.PublishConfig": {
-			"description": "The publish config.",
-			"properties": {
-				"config_id": {
-					"description": "The config ID used for the publish, if one was used.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Lineage.RecordsetCreationConfig": {
-			"description": "The recordset creation config.",
-			"properties": {
-				"config_id": {
-					"description": "The config ID used for the recordset creation, if one was used.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
 		"Normalization_Config.Bounds": {
 			"description": "Bounds is a pair of int64 values to specify an individual range.",
 			"properties": {
@@ -4803,11 +4403,124 @@
 			},
 			"type": "object"
 		},
-		"Prepares.CancelPrepareResponse": {
-			"description": "CancelPrepareResponse is the empty response for the CancelPrepare rpc.",
+		"Prepare_Configs.AddConfigCategoriesBody": {
+			"properties": {
+				"categories": {
+					"items": {
+						"format": "int64",
+						"type": "string"
+					},
+					"title": "Categories is the list of category ids to be added to the config",
+					"type": "array"
+				}
+			},
+			"title": "AddConfigCategoriesRequest",
 			"type": "object"
 		},
-		"Prepares.DatasetPublishConfig": {
+		"Prepare_Configs.AddConfigCategoriesResponse": {
+			"title": "AddConfigCategoriesResponse",
+			"type": "object"
+		},
+		"Prepare_Configs.AddConfigExportColumnsBody": {
+			"properties": {
+				"export_columns": {
+					"items": {
+						"type": "string"
+					},
+					"title": "ExportColumns is the list of export column names to be added to the config",
+					"type": "array"
+				}
+			},
+			"title": "AddConfigExportColumnsRequest",
+			"type": "object"
+		},
+		"Prepare_Configs.AddConfigExportColumnsResponse": {
+			"title": "AddConfigExportColumnsResponse",
+			"type": "object"
+		},
+		"Prepare_Configs.AddConfigKeysBody": {
+			"properties": {
+				"keys": {
+					"items": {
+						"format": "int64",
+						"type": "string"
+					},
+					"title": "Keys is the list of key ids to be added to the config",
+					"type": "array"
+				}
+			},
+			"title": "AddConfigKeysRequest",
+			"type": "object"
+		},
+		"Prepare_Configs.AddConfigKeysResponse": {
+			"title": "AddConfigKeysResponse",
+			"type": "object"
+		},
+		"Prepare_Configs.Config": {
+			"description": "Config holds all the information regarding a dataset publish config.",
+			"properties": {
+				"created_date_time": {
+					"description": "CreatedDateTime is the time that this Config was created and stored.",
+					"format": "date-time",
+					"type": "string"
+				},
+				"dataset_publish_config": {
+					"$ref": "#/definitions/Prepare_Configs.DatasetPublishConfig",
+					"description": "DatasetPublishConfig is the dataset publish configuration defined by the user."
+				},
+				"description": {
+					"description": "Description is the description given to the config to help identify what exactly is being\nstored within the config.",
+					"type": "string"
+				},
+				"id": {
+					"description": "ID is the ID of the config.",
+					"type": "string"
+				},
+				"name": {
+					"description": "Name is the name given to the config.",
+					"type": "string"
+				},
+				"updated_date_time": {
+					"description": "UpdatedDateTime is the last time that this Config was updated and stored.",
+					"format": "date-time",
+					"type": "string"
+				},
+				"user_id": {
+					"description": "UserId is the ID of the user that created the config.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Prepare_Configs.CreateConfigRequest": {
+			"properties": {
+				"config": {
+					"$ref": "#/definitions/Prepare_Configs.DatasetPublishConfig",
+					"title": "Config is the dataset prepare config - can be updated after creation"
+				},
+				"description": {
+					"title": "Description is the user assigned description for the config",
+					"type": "string"
+				},
+				"name": {
+					"title": "Name is the user assigned name of the config",
+					"type": "string"
+				}
+			},
+			"title": "CreateConfigRequest creates a new config",
+			"type": "object"
+		},
+		"Prepare_Configs.CreateConfigResponse": {
+			"properties": {
+				"id": {
+					"title": "ID is the globally unique ID for the config",
+					"type": "string"
+				}
+			},
+			"title": "CreateConfigResponse is the response object for rpc CreateConfigRequest",
+			"type": "object"
+		},
+		"Prepare_Configs.DatasetPublishConfig": {
 			"description": "DatasetPublishConfig configures a prepare task.",
 			"properties": {
 				"category_selection": {
@@ -4854,260 +4567,138 @@
 			},
 			"type": "object"
 		},
-		"Prepares.GetPrepareResponse": {
-			"description": "GetPrepareResponse is the response for the GetPrepare rpc.",
+		"Prepare_Configs.DeleteConfigCategoriesResponse": {
+			"description": "DeleteConfigCategoriesResponse is the empty response for DeleteConfigCategoriesRequest rpc.",
+			"type": "object"
+		},
+		"Prepare_Configs.DeleteConfigExportColumnsResponse": {
+			"description": "DeleteConfigExportColumnsResponse is the empty response for DeleteConfigExportColumnsRequest rpc.",
+			"type": "object"
+		},
+		"Prepare_Configs.DeleteConfigKeysResponse": {
+			"description": "DeleteConfigKeysResponse is the empty response for DeleteConfigKeysRequest rpc.",
+			"type": "object"
+		},
+		"Prepare_Configs.DeleteConfigResponse": {
+			"description": "DeleteConfigResponse is the empty response of the DeleteConfig rpc.",
+			"type": "object"
+		},
+		"Prepare_Configs.GetConfigResponse": {
+			"description": "GetConfigResponse is the response of the GetConfig rpc.",
 			"properties": {
-				"prepare_details": {
-					"$ref": "#/definitions/Prepares.PrepareDetails",
-					"description": "Prepare holds all information on the prepare as well as the shards being used to process the\nprepare."
+				"config": {
+					"$ref": "#/definitions/Prepare_Configs.Config",
+					"description": "Config is the dataset prepare configuration that was requested."
 				}
 			},
 			"type": "object"
 		},
-		"Prepares.GetPrepareStatsResponse": {
-			"description": "GetPrepareStatsResponse is the response for the GetPrepareStats rpc.\n\nPrepare",
-			"type": "object"
-		},
-		"Prepares.History": {
-			"description": "History holds information about the status of a prepare publish execution\nshard.",
+		"Prepare_Configs.ListConfigCategoriesResponse": {
+			"description": "ListConfigCategoriesResponse is the response of ListConfigCategoriesRequest rpc.",
 			"properties": {
-				"date_time": {
-					"description": "DateTime is the created time of the shard.",
-					"format": "date-time",
-					"type": "string"
+				"categories": {
+					"items": {
+						"type": "string"
+					},
+					"title": "Categories are the categories in the dataset prepare config",
+					"type": "array"
 				},
-				"error": {
-					"$ref": "#/definitions/Error",
-					"description": "Error is the error encountered by the execution shard."
-				},
-				"message": {
-					"description": "Message is the reported message relating to this status change.",
-					"type": "string"
-				},
-				"prepare_status": {
-					"$ref": "#/definitions/Prepares.PrepareStatus",
-					"description": "PrepareStatus is the state of a prepare that has been published."
-				},
-				"status": {
-					"$ref": "#/definitions/Prepares.v1.Status",
-					"description": "Status is the status of the prepare publish execution shard."
-				}
-			},
-			"type": "object"
-		},
-		"Prepares.ListPreparesResponse": {
-			"description": "ListPreparesResponse is the response of the ListPrepares rpc.",
-			"properties": {
 				"pagination": {
 					"$ref": "#/definitions/PaginationResponse",
-					"description": "Pagination is the pagination details of the returned prepares."
-				},
-				"prepares": {
-					"description": "Prepares is a list of the prepare records for a particular list request.",
+					"description": "Pagination is the pagination instructions for returned dataset prepare config categories."
+				}
+			},
+			"type": "object"
+		},
+		"Prepare_Configs.ListConfigExportColumnsResponse": {
+			"description": "ListConfigExportColumnsResponse is the response of ListConfigExportColumnsRequest rpc.",
+			"properties": {
+				"export_columns": {
 					"items": {
-						"$ref": "#/definitions/Prepares.ListedPrepareExecution",
-						"type": "object"
+						"type": "string"
 					},
+					"title": "Export columns are the export columns in the dataset prepare config",
 					"type": "array"
+				},
+				"pagination": {
+					"$ref": "#/definitions/PaginationResponse",
+					"description": "Pagination is the pagination instructions for returned dataset prepare config export columns."
 				}
 			},
 			"type": "object"
 		},
-		"Prepares.ListedPrepareExecution": {
-			"description": "ListedPrepareExecution holds summary information about a prepare execution.",
+		"Prepare_Configs.ListConfigKeysResponse": {
+			"description": "ListConfigKeysResponse is the response of ListConfigKeysRequest rpc.",
 			"properties": {
-				"cloud_vault_id": {
-					"description": "CloudVaultId is the ID of cloud vault where source files are found.",
-					"type": "string"
-				},
-				"config_summary": {
-					"$ref": "#/definitions/Prepares.PublishConfigSummary",
-					"description": "ConfigSummary of the prepare."
-				},
-				"created_date_time": {
-					"description": "CreatedDateTime is the creation date and time of the prepare.",
-					"format": "date-time",
-					"type": "string"
-				},
-				"current_status": {
-					"$ref": "#/definitions/Prepares.v1.Status",
-					"description": "CurrentStatus is the latest status of the prepare aggregated from its\nconstituent shards statuses."
-				},
-				"dataset_id": {
-					"description": "DatasetId is the ID of the Dataset that will be prepared.",
-					"type": "string"
-				},
-				"expiration_date_time": {
-					"description": "ExpirationDateTime is the expiry date time of the prepare compute.",
-					"format": "date-time",
-					"type": "string"
-				},
-				"id": {
-					"description": "Id is the ID of the prepare.",
-					"type": "string"
-				},
-				"prepare_status": {
-					"$ref": "#/definitions/Prepares.PrepareStatus",
-					"description": "PrepareStatus is the state of a prepare that has been published."
-				},
-				"progress": {
-					"$ref": "#/definitions/Prepares.Progress",
-					"description": "Progress is the progress of the prepare operation."
-				},
-				"recordset_id": {
-					"description": "RecordsetId is the recordset that was used in the prepare.",
-					"type": "string"
-				},
-				"updated_date_time": {
-					"description": "UpdatedDateTime is the latest date and time any prepare shards were\nupdated.",
-					"format": "date-time",
-					"type": "string"
-				},
-				"user_id": {
-					"description": "UserId is the ID of the user who created the prepare.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Prepares.PrepareDetails": {
-			"description": "PrepareDetails returns info about a prepare execution as well as its execution history.",
-			"properties": {
-				"history": {
+				"keys": {
 					"items": {
-						"$ref": "#/definitions/Prepares.History",
+						"type": "string"
+					},
+					"title": "Keys are the keys in the dataset prepare config",
+					"type": "array"
+				},
+				"pagination": {
+					"$ref": "#/definitions/PaginationResponse",
+					"description": "Pagination is the pagination instructions for returned dataset prepare config keys."
+				}
+			},
+			"type": "object"
+		},
+		"Prepare_Configs.ListConfigsResponse": {
+			"description": "ListConfigsResponse is the response of the ListConfigs rpc.",
+			"properties": {
+				"configs": {
+					"description": "Configs is a list of dataset prepare configurations.",
+					"items": {
+						"$ref": "#/definitions/Prepare_Configs.ListedConfigDetails",
 						"type": "object"
 					},
 					"type": "array"
 				},
-				"prepare": {
-					"$ref": "#/definitions/Prepares.PrepareExecution"
+				"pagination": {
+					"$ref": "#/definitions/PaginationResponse",
+					"description": "Pagination is the pagination details of the returned dataset prepare configs."
 				}
 			},
 			"type": "object"
 		},
-		"Prepares.PrepareExecution": {
-			"description": "PrepareExecution holds global information about a prepare publish operation.",
+		"Prepare_Configs.ListedConfigDetails": {
+			"description": "ListedConfigDetails is a reduced version of Config for list endpoints.",
 			"properties": {
-				"cloud_vault_id": {
-					"description": "CloudVaultId is the ID of cloud vault where source files are found.",
-					"type": "string"
-				},
-				"config": {
-					"$ref": "#/definitions/Prepares.DatasetPublishConfig",
-					"title": "Config of the publish"
-				},
-				"config_embedded": {
-					"$ref": "#/definitions/Prepares.DatasetPublishConfig",
-					"description": "ConfigEmbedded is the config that was supplied, if an embedded config was used to create the prepare."
-				},
-				"config_id": {
-					"description": "ConfigID is the ID of the config that was supplied, if a saved config was used to create the prepare.",
-					"type": "string"
-				},
 				"created_date_time": {
-					"description": "CreatedDateTime is the creation date and time of the prepare publish.",
+					"description": "CreatedDateTime is the time that this Config was created and stored.",
 					"format": "date-time",
 					"type": "string"
 				},
-				"current_status": {
-					"$ref": "#/definitions/Prepares.v1.Status",
-					"description": "CurrentStatus is the latest status of the prepare publish aggregated from its\nconstituent shards statuses."
+				"dataset_publish_config_summary": {
+					"$ref": "#/definitions/Prepare_Configs.PublishConfigSummary",
+					"description": "PrepareConfigSummary is the dataset prepare configuration defined by the user."
 				},
-				"dataset_id": {
-					"description": "DatasetId is the ID of the Dataset that the data will be published to.",
-					"type": "string"
-				},
-				"expiration_date_time": {
-					"description": "ExpirationDateTime is the expiry date time of the prepare compute.",
-					"format": "date-time",
+				"description": {
+					"description": "Description is the description given to the config to help identify what exactly is being\nstored within the config.",
 					"type": "string"
 				},
 				"id": {
-					"description": "Id is the ID of the prepare publish.",
+					"description": "ID is the ID of the config.",
 					"type": "string"
 				},
-				"prepare_status": {
-					"$ref": "#/definitions/Prepares.PrepareStatus",
-					"description": "PrepareStatus is the state of a prepare that has been published."
-				},
-				"progress": {
-					"$ref": "#/definitions/Prepares.Progress",
-					"description": "Progress is the progress of the prepare operation."
-				},
-				"recordset_id": {
-					"description": "RecordsetId is the recordset that was used in the prepare.",
+				"name": {
+					"description": "Name is the name given to the config.",
 					"type": "string"
 				},
 				"updated_date_time": {
-					"description": "UpdatedDateTime is the latest date and time any prepare publish shards were\nupdated.",
+					"description": "UpdatedDateTime is the last time that this Config was updated and stored.",
 					"format": "date-time",
 					"type": "string"
 				},
 				"user_id": {
-					"description": "UserId is the ID of the user who created the prepare publish.",
+					"description": "UserId is the ID of the user that created the config.",
 					"type": "string"
 				}
 			},
 			"type": "object"
 		},
-		"Prepares.PrepareRequest": {
-			"description": "PrepareRequest is used to prepare a dataset.",
-			"properties": {
-				"cloud_vault_id": {
-					"description": "CloudVaultId is the ID of cloud vault where source files are found.",
-					"type": "string"
-				},
-				"config_embedded": {
-					"$ref": "#/definitions/Prepares.DatasetPublishConfig"
-				},
-				"config_id": {
-					"type": "string"
-				},
-				"dataset_id": {
-					"description": "DatasetId is the ID of the Dataset to prepare.",
-					"type": "string"
-				},
-				"recordset_id": {
-					"description": "RecordsetId determines the set of files to normalise. All files in the cloud vault with the specific prefix will be considered.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Prepares.PrepareResponse": {
-			"description": "PrepareResponse is the empty response for Prepare rpc.",
-			"properties": {
-				"execution_id": {
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Prepares.PrepareStatus": {
-			"default": "NO_STATUS",
-			"description": "PrepareStatus holds info about a prepare once published.",
-			"enum": [
-				"NO_STATUS",
-				"PUBLISHED",
-				"EXPIRED",
-				"DELETED",
-				"PUBLISHING"
-			],
-			"type": "string"
-		},
-		"Prepares.Progress": {
-			"description": "Progress holds the information of the progress of the prepare execution as a whole.",
-			"properties": {
-				"completion_percentage": {
-					"description": "CompletionPercentage is the current amount of data processed as a percentage.",
-					"format": "float",
-					"type": "number"
-				}
-			},
-			"type": "object"
-		},
-		"Prepares.PublishConfigSummary": {
+		"Prepare_Configs.PublishConfigSummary": {
 			"description": "PublishConfigSummary is a Config without the full column selection due to message size limits.",
 			"properties": {
 				"category_column_count": {
@@ -5146,7 +4737,372 @@
 			},
 			"type": "object"
 		},
-		"Prepares.PublishResponse": {
+		"Prepare_Configs.UpdateConfigBody": {
+			"description": "UpdateConfigRequest is used to update name and description.",
+			"properties": {
+				"config": {
+					"$ref": "#/definitions/Prepare_Configs.DatasetPublishConfig",
+					"title": "Config is the dataset prepare config - can be updated after creation"
+				},
+				"description": {
+					"description": "Description is a description of the dataset prepare config.",
+					"type": "string"
+				},
+				"name": {
+					"description": "Name is the name assigned to the dataset prepare config.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Prepare_Configs.UpdateConfigResponse": {
+			"description": "UpdateConfigResponse is the empty response of the UpdateConfig rpc.",
+			"type": "object"
+		},
+		"Publishing.CancelPrepareResponse": {
+			"description": "CancelPrepareResponse is the empty response for the CancelPrepare rpc.",
+			"type": "object"
+		},
+		"Publishing.DatasetPublishConfig": {
+			"description": "DatasetPublishConfig configures a prepare task.",
+			"properties": {
+				"category_selection": {
+					"description": "CategorySelection defines a subset of Categories IDs to prepare. If this is not set then all Categories are prepared (up to a predefined limit).",
+					"items": {
+						"format": "int64",
+						"type": "string"
+					},
+					"type": "array"
+				},
+				"export_column_selection": {
+					"description": "ExportColumnSelection defines a subset of Export Column names to prepare. If this is not set then all Export Columns are prepared (up to a predefined limit).",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				},
+				"incremental_full_refresh": {
+					"description": "IncrementalFullRefresh is a flag indicating that the data from the previous incremental run should not be carried\nforward. It is only valid when supports_incremental flag is set to true.",
+					"type": "boolean"
+				},
+				"key_selection": {
+					"description": "KeySelection defines a subset of Key IDs to prepare. If this is not set then all Keys are prepared (up to a predefined limit).",
+					"items": {
+						"format": "int64",
+						"type": "string"
+					},
+					"type": "array"
+				},
+				"purge_expired_rows_only": {
+					"description": "PurgeExpiredRowsOnly is a flag indicating that this is an expire only incremental run. InsightWriter should not\nexpect any subsequent Write calls with a Body, only a single call with the Header. All necessary stats\nwill be populated in the response to the Write call to the Header. This property is only valid if the\nsupports_incremental flag is set to true. All other properties in the Header will be ignored and will not be\nvalidated.",
+					"type": "boolean"
+				},
+				"redaction_threshold": {
+					"description": "RedactionThreshold corresponds to the minimum number of results required\nfor a bin to be included in the results returned.\nDefault value is 100, minimum value is 25.",
+					"format": "int64",
+					"type": "integer"
+				},
+				"rounding_threshold": {
+					"description": "RoundingThreshold is the number that bin counts will be rounded down by.\nDefault value is 100, minimum value is 25.",
+					"format": "int64",
+					"type": "integer"
+				}
+			},
+			"type": "object"
+		},
+		"Publishing.GetPrepareResponse": {
+			"description": "GetPrepareResponse is the response for the GetPrepare rpc.",
+			"properties": {
+				"prepare_details": {
+					"$ref": "#/definitions/Publishing.PrepareDetails",
+					"description": "Prepare holds all information on the prepare as well as the shards being used to process the\nprepare."
+				}
+			},
+			"type": "object"
+		},
+		"Publishing.GetPrepareStatsResponse": {
+			"description": "GetPrepareStatsResponse is the response for the GetPrepareStats rpc.\n\nPrepare",
+			"type": "object"
+		},
+		"Publishing.History": {
+			"description": "History holds information about the status of a prepare publish execution\nshard.",
+			"properties": {
+				"date_time": {
+					"description": "DateTime is the created time of the shard.",
+					"format": "date-time",
+					"type": "string"
+				},
+				"error": {
+					"$ref": "#/definitions/Error",
+					"description": "Error is the error encountered by the execution shard."
+				},
+				"message": {
+					"description": "Message is the reported message relating to this status change.",
+					"type": "string"
+				},
+				"prepare_status": {
+					"$ref": "#/definitions/Publishing.PrepareStatus",
+					"description": "PrepareStatus is the state of a prepare that has been published."
+				},
+				"status": {
+					"$ref": "#/definitions/Publishing.v1.Status",
+					"description": "Status is the status of the prepare publish execution shard."
+				}
+			},
+			"type": "object"
+		},
+		"Publishing.ListPreparesResponse": {
+			"description": "ListPreparesResponse is the response of the ListPrepares rpc.",
+			"properties": {
+				"pagination": {
+					"$ref": "#/definitions/PaginationResponse",
+					"description": "Pagination is the pagination details of the returned prepares."
+				},
+				"prepares": {
+					"description": "Prepares is a list of the prepare records for a particular list request.",
+					"items": {
+						"$ref": "#/definitions/Publishing.ListedPrepareExecution",
+						"type": "object"
+					},
+					"type": "array"
+				}
+			},
+			"type": "object"
+		},
+		"Publishing.ListedPrepareExecution": {
+			"description": "ListedPrepareExecution holds summary information about a prepare execution.",
+			"properties": {
+				"cloud_vault_id": {
+					"description": "CloudVaultId is the ID of cloud vault where source files are found.",
+					"type": "string"
+				},
+				"config_summary": {
+					"$ref": "#/definitions/Publishing.PublishConfigSummary",
+					"description": "ConfigSummary of the prepare."
+				},
+				"created_date_time": {
+					"description": "CreatedDateTime is the creation date and time of the prepare.",
+					"format": "date-time",
+					"type": "string"
+				},
+				"current_status": {
+					"$ref": "#/definitions/Publishing.v1.Status",
+					"description": "CurrentStatus is the latest status of the prepare aggregated from its\nconstituent shards statuses."
+				},
+				"dataset_id": {
+					"description": "DatasetId is the ID of the Dataset that will be prepared.",
+					"type": "string"
+				},
+				"expiration_date_time": {
+					"description": "ExpirationDateTime is the expiry date time of the prepare compute.",
+					"format": "date-time",
+					"type": "string"
+				},
+				"id": {
+					"description": "Id is the ID of the prepare.",
+					"type": "string"
+				},
+				"prepare_status": {
+					"$ref": "#/definitions/Publishing.PrepareStatus",
+					"description": "PrepareStatus is the state of a prepare that has been published."
+				},
+				"progress": {
+					"$ref": "#/definitions/Publishing.Progress",
+					"description": "Progress is the progress of the prepare operation."
+				},
+				"recordset_id": {
+					"description": "RecordsetId is the recordset that was used in the prepare.",
+					"type": "string"
+				},
+				"updated_date_time": {
+					"description": "UpdatedDateTime is the latest date and time any prepare shards were\nupdated.",
+					"format": "date-time",
+					"type": "string"
+				},
+				"user_id": {
+					"description": "UserId is the ID of the user who created the prepare.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Publishing.PrepareDetails": {
+			"description": "PrepareDetails returns info about a prepare execution as well as its execution history.",
+			"properties": {
+				"history": {
+					"items": {
+						"$ref": "#/definitions/Publishing.History",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"prepare": {
+					"$ref": "#/definitions/Publishing.PrepareExecution"
+				}
+			},
+			"type": "object"
+		},
+		"Publishing.PrepareExecution": {
+			"description": "PrepareExecution holds global information about a prepare publish operation.",
+			"properties": {
+				"cloud_vault_id": {
+					"description": "CloudVaultId is the ID of cloud vault where source files are found.",
+					"type": "string"
+				},
+				"config": {
+					"$ref": "#/definitions/Publishing.DatasetPublishConfig",
+					"title": "Config of the publish"
+				},
+				"config_embedded": {
+					"$ref": "#/definitions/Publishing.DatasetPublishConfig",
+					"description": "ConfigEmbedded is the config that was supplied, if an embedded config was used to create the prepare."
+				},
+				"config_id": {
+					"description": "ConfigID is the ID of the config that was supplied, if a saved config was used to create the prepare.",
+					"type": "string"
+				},
+				"created_date_time": {
+					"description": "CreatedDateTime is the creation date and time of the prepare publish.",
+					"format": "date-time",
+					"type": "string"
+				},
+				"current_status": {
+					"$ref": "#/definitions/Publishing.v1.Status",
+					"description": "CurrentStatus is the latest status of the prepare publish aggregated from its\nconstituent shards statuses."
+				},
+				"dataset_id": {
+					"description": "DatasetId is the ID of the Dataset that the data will be published to.",
+					"type": "string"
+				},
+				"expiration_date_time": {
+					"description": "ExpirationDateTime is the expiry date time of the prepare compute.",
+					"format": "date-time",
+					"type": "string"
+				},
+				"id": {
+					"description": "Id is the ID of the prepare publish.",
+					"type": "string"
+				},
+				"prepare_status": {
+					"$ref": "#/definitions/Publishing.PrepareStatus",
+					"description": "PrepareStatus is the state of a prepare that has been published."
+				},
+				"progress": {
+					"$ref": "#/definitions/Publishing.Progress",
+					"description": "Progress is the progress of the prepare operation."
+				},
+				"recordset_id": {
+					"description": "RecordsetId is the recordset that was used in the prepare.",
+					"type": "string"
+				},
+				"updated_date_time": {
+					"description": "UpdatedDateTime is the latest date and time any prepare publish shards were\nupdated.",
+					"format": "date-time",
+					"type": "string"
+				},
+				"user_id": {
+					"description": "UserId is the ID of the user who created the prepare publish.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Publishing.PrepareRequest": {
+			"description": "PrepareRequest is used to prepare a dataset.",
+			"properties": {
+				"cloud_vault_id": {
+					"description": "CloudVaultId is the ID of cloud vault where source files are found.",
+					"type": "string"
+				},
+				"config_embedded": {
+					"$ref": "#/definitions/Publishing.DatasetPublishConfig"
+				},
+				"config_id": {
+					"type": "string"
+				},
+				"dataset_id": {
+					"description": "DatasetId is the ID of the Dataset to prepare.",
+					"type": "string"
+				},
+				"recordset_id": {
+					"description": "RecordsetId determines the set of files to normalise. All files in the cloud vault with the specific prefix will be considered.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Publishing.PrepareResponse": {
+			"description": "PrepareResponse is the empty response for Prepare rpc.",
+			"properties": {
+				"execution_id": {
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Publishing.PrepareStatus": {
+			"default": "NO_STATUS",
+			"description": "PrepareStatus holds info about a prepare once published.",
+			"enum": [
+				"NO_STATUS",
+				"PUBLISHED",
+				"EXPIRED",
+				"DELETED",
+				"PUBLISHING"
+			],
+			"type": "string"
+		},
+		"Publishing.Progress": {
+			"description": "Progress holds the information of the progress of the prepare execution as a whole.",
+			"properties": {
+				"completion_percentage": {
+					"description": "CompletionPercentage is the current amount of data processed as a percentage.",
+					"format": "float",
+					"type": "number"
+				}
+			},
+			"type": "object"
+		},
+		"Publishing.PublishConfigSummary": {
+			"description": "PublishConfigSummary is a Config without the full column selection due to message size limits.",
+			"properties": {
+				"category_column_count": {
+					"description": "CategoryColumnCount is the number of category columns in the config.",
+					"format": "int64",
+					"type": "integer"
+				},
+				"export_column_count": {
+					"description": "ExportColumnCount is the number of export columns in the config.",
+					"format": "int64",
+					"type": "integer"
+				},
+				"incremental_full_refresh": {
+					"description": "IncrementalFullRefresh is a flag indicating that the data from the previous incremental run should not be carried\nforward. It is only valid when supports_incremental flag is set to true.",
+					"type": "boolean"
+				},
+				"key_column_count": {
+					"description": "KeyColumnCount is the number of key columns in the config.",
+					"format": "int64",
+					"type": "integer"
+				},
+				"purge_expired_rows_only": {
+					"description": "PurgeExpiredRowsOnly is a flag indicating that this is an expire only incremental run. InsightWriter should not\nexpect any subsequent Write calls with a Body, only a single call with the Header. All necessary stats\nwill be populated in the response to the Write call to the Header. This property is only valid if the\nsupports_incremental flag is set to true. All other properties in the Header will be ignored and will not be\nvalidated.",
+					"type": "boolean"
+				},
+				"redaction_threshold": {
+					"description": "RedactionThreshold corresponds to the minimum number of results required\nfor a bin to be included in the results returned.",
+					"format": "int64",
+					"type": "integer"
+				},
+				"rounding_threshold": {
+					"description": "RoundingThreshold is the number that bin counts will be rounded down by.",
+					"format": "int64",
+					"type": "integer"
+				}
+			},
+			"type": "object"
+		},
+		"Publishing.PublishResponse": {
 			"description": "PublishResponse is the empty response for the Publish rpc.",
 			"properties": {
 				"execution_id": {
@@ -5156,7 +5112,7 @@
 			},
 			"type": "object"
 		},
-		"Prepares.v1.Status": {
+		"Publishing.v1.Status": {
 			"default": "NO_STATUS",
 			"description": "Status is an enum of the different states that an async task can be in.",
 			"enum": [
@@ -7628,7 +7584,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Dataset_Prepare_Configs.ListConfigsResponse"
+							"$ref": "#/definitions/Prepare_Configs.ListConfigsResponse"
 						}
 					},
 					"400": {
@@ -7664,7 +7620,7 @@
 				},
 				"summary": "List company Dataset Prepare Configurations.",
 				"tags": [
-					"Dataset Prepare Configs"
+					"Prepare Configs"
 				]
 			},
 			"post": {
@@ -7676,7 +7632,7 @@
 						"name": "body",
 						"required": true,
 						"schema": {
-							"$ref": "#/definitions/Dataset_Prepare_Configs.CreateConfigRequest"
+							"$ref": "#/definitions/Prepare_Configs.CreateConfigRequest"
 						}
 					}
 				],
@@ -7684,7 +7640,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Dataset_Prepare_Configs.CreateConfigResponse"
+							"$ref": "#/definitions/Prepare_Configs.CreateConfigResponse"
 						}
 					},
 					"400": {
@@ -7720,7 +7676,7 @@
 				},
 				"summary": "Creates a reusable dataset prepare config.",
 				"tags": [
-					"Dataset Prepare Configs"
+					"Prepare Configs"
 				]
 			}
 		},
@@ -7741,7 +7697,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Dataset_Prepare_Configs.DeleteConfigResponse"
+							"$ref": "#/definitions/Prepare_Configs.DeleteConfigResponse"
 						}
 					},
 					"400": {
@@ -7777,7 +7733,7 @@
 				},
 				"summary": "Delete a Dataset Prepare Config.",
 				"tags": [
-					"Dataset Prepare Configs"
+					"Prepare Configs"
 				]
 			},
 			"get": {
@@ -7796,7 +7752,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Dataset_Prepare_Configs.GetConfigResponse"
+							"$ref": "#/definitions/Prepare_Configs.GetConfigResponse"
 						}
 					},
 					"400": {
@@ -7838,7 +7794,7 @@
 				},
 				"summary": "Get a Dataset Prepare Configuration.",
 				"tags": [
-					"Dataset Prepare Configs"
+					"Prepare Configs"
 				]
 			},
 			"put": {
@@ -7857,7 +7813,7 @@
 						"name": "body",
 						"required": true,
 						"schema": {
-							"$ref": "#/definitions/Dataset_Prepare_Configs.UpdateConfigBody"
+							"$ref": "#/definitions/Prepare_Configs.UpdateConfigBody"
 						}
 					}
 				],
@@ -7865,7 +7821,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Dataset_Prepare_Configs.UpdateConfigResponse"
+							"$ref": "#/definitions/Prepare_Configs.UpdateConfigResponse"
 						}
 					},
 					"400": {
@@ -7907,7 +7863,7 @@
 				},
 				"summary": "Update a Dataset Prepare Configuration.",
 				"tags": [
-					"Dataset Prepare Configs"
+					"Prepare Configs"
 				]
 			}
 		},
@@ -7935,7 +7891,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Dataset_Prepare_Configs.DeleteConfigCategoriesResponse"
+							"$ref": "#/definitions/Prepare_Configs.DeleteConfigCategoriesResponse"
 						}
 					},
 					"400": {
@@ -7971,7 +7927,7 @@
 				},
 				"summary": "Delete categories with a filter from a Dataset Prepare Config.",
 				"tags": [
-					"Dataset Prepare Configs"
+					"Prepare Configs"
 				]
 			},
 			"get": {
@@ -8022,7 +7978,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Dataset_Prepare_Configs.ListConfigCategoriesResponse"
+							"$ref": "#/definitions/Prepare_Configs.ListConfigCategoriesResponse"
 						}
 					},
 					"400": {
@@ -8064,7 +8020,7 @@
 				},
 				"summary": "List the categories for a Dataset Prepare Configuration.",
 				"tags": [
-					"Dataset Prepare Configs"
+					"Prepare Configs"
 				]
 			},
 			"post": {
@@ -8083,7 +8039,7 @@
 						"name": "body",
 						"required": true,
 						"schema": {
-							"$ref": "#/definitions/Dataset_Prepare_Configs.AddConfigCategoriesBody"
+							"$ref": "#/definitions/Prepare_Configs.AddConfigCategoriesBody"
 						}
 					}
 				],
@@ -8091,7 +8047,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Dataset_Prepare_Configs.AddConfigCategoriesResponse"
+							"$ref": "#/definitions/Prepare_Configs.AddConfigCategoriesResponse"
 						}
 					},
 					"400": {
@@ -8133,7 +8089,7 @@
 				},
 				"summary": "Add a category to a Dataset Prepare Configuration.",
 				"tags": [
-					"Dataset Prepare Configs"
+					"Prepare Configs"
 				]
 			}
 		},
@@ -8161,7 +8117,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Dataset_Prepare_Configs.DeleteConfigExportColumnsResponse"
+							"$ref": "#/definitions/Prepare_Configs.DeleteConfigExportColumnsResponse"
 						}
 					},
 					"400": {
@@ -8197,7 +8153,7 @@
 				},
 				"summary": "Delete export columns with a filter from a Dataset Prepare Config.",
 				"tags": [
-					"Dataset Prepare Configs"
+					"Prepare Configs"
 				]
 			},
 			"get": {
@@ -8248,7 +8204,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Dataset_Prepare_Configs.ListConfigExportColumnsResponse"
+							"$ref": "#/definitions/Prepare_Configs.ListConfigExportColumnsResponse"
 						}
 					},
 					"400": {
@@ -8290,7 +8246,7 @@
 				},
 				"summary": "List the export columns for a Dataset Prepare Configuration.",
 				"tags": [
-					"Dataset Prepare Configs"
+					"Prepare Configs"
 				]
 			},
 			"post": {
@@ -8309,7 +8265,7 @@
 						"name": "body",
 						"required": true,
 						"schema": {
-							"$ref": "#/definitions/Dataset_Prepare_Configs.AddConfigExportColumnsBody"
+							"$ref": "#/definitions/Prepare_Configs.AddConfigExportColumnsBody"
 						}
 					}
 				],
@@ -8317,7 +8273,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Dataset_Prepare_Configs.AddConfigExportColumnsResponse"
+							"$ref": "#/definitions/Prepare_Configs.AddConfigExportColumnsResponse"
 						}
 					},
 					"400": {
@@ -8359,7 +8315,7 @@
 				},
 				"summary": "Add an export column to a Dataset Prepare Configuration.",
 				"tags": [
-					"Dataset Prepare Configs"
+					"Prepare Configs"
 				]
 			}
 		},
@@ -8387,7 +8343,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Dataset_Prepare_Configs.DeleteConfigKeysResponse"
+							"$ref": "#/definitions/Prepare_Configs.DeleteConfigKeysResponse"
 						}
 					},
 					"400": {
@@ -8423,7 +8379,7 @@
 				},
 				"summary": "Delete a key from a Dataset Prepare Config.",
 				"tags": [
-					"Dataset Prepare Configs"
+					"Prepare Configs"
 				]
 			},
 			"get": {
@@ -8474,7 +8430,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Dataset_Prepare_Configs.ListConfigKeysResponse"
+							"$ref": "#/definitions/Prepare_Configs.ListConfigKeysResponse"
 						}
 					},
 					"400": {
@@ -8516,7 +8472,7 @@
 				},
 				"summary": "List the keys for a Dataset Prepare Configuration.",
 				"tags": [
-					"Dataset Prepare Configs"
+					"Prepare Configs"
 				]
 			},
 			"post": {
@@ -8535,7 +8491,7 @@
 						"name": "body",
 						"required": true,
 						"schema": {
-							"$ref": "#/definitions/Dataset_Prepare_Configs.AddConfigKeysBody"
+							"$ref": "#/definitions/Prepare_Configs.AddConfigKeysBody"
 						}
 					}
 				],
@@ -8543,7 +8499,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Dataset_Prepare_Configs.AddConfigKeysResponse"
+							"$ref": "#/definitions/Prepare_Configs.AddConfigKeysResponse"
 						}
 					},
 					"400": {
@@ -8585,7 +8541,7 @@
 				},
 				"summary": "Add a key to a Dataset Prepare Configuration.",
 				"tags": [
-					"Dataset Prepare Configs"
+					"Prepare Configs"
 				]
 			}
 		},
@@ -8744,7 +8700,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Datasets.AttributeColumnStatsResponse"
+							"$ref": "#/definitions/Dataset_Stats.AttributeColumnStatsResponse"
 						}
 					},
 					"400": {
@@ -8786,7 +8742,7 @@
 				},
 				"summary": "Get stats for all the attribute columns of a dataset.",
 				"tags": [
-					"Datasets"
+					"Dataset Stats"
 				]
 			}
 		},
@@ -8806,7 +8762,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Datasets.ExportColumnStatsResponse"
+							"$ref": "#/definitions/Dataset_Stats.ExportColumnStatsResponse"
 						}
 					},
 					"400": {
@@ -8848,7 +8804,7 @@
 				},
 				"summary": "Get stats for all the export columns of a dataset.",
 				"tags": [
-					"Datasets"
+					"Dataset Stats"
 				]
 			}
 		},
@@ -8868,7 +8824,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Datasets.KeyColumnStatsResponse"
+							"$ref": "#/definitions/Dataset_Stats.KeyColumnStatsResponse"
 						}
 					},
 					"400": {
@@ -8910,7 +8866,7 @@
 				},
 				"summary": "Get stats for all the key columns of a dataset.",
 				"tags": [
-					"Datasets"
+					"Dataset Stats"
 				]
 			}
 		},
@@ -8930,7 +8886,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Datasets.SummaryStatsResponse"
+							"$ref": "#/definitions/Dataset_Stats.SummaryStatsResponse"
 						}
 					},
 					"400": {
@@ -8972,7 +8928,7 @@
 				},
 				"summary": "Get summary stats for a dataset.",
 				"tags": [
-					"Datasets"
+					"Dataset Stats"
 				]
 			}
 		},
@@ -9658,65 +9614,6 @@
 				]
 			}
 		},
-		"/api/v2/files/{cloud_vault_id}": {
-			"patch": {
-				"description": "Update or add metadata to multiple files in a Cloud Vault.",
-				"operationId": "updateBulkFileMetadata",
-				"parameters": [
-					{
-						"description": "The globally unique identifier for the Cloud Vault where the files to bulk apply metadata to are.",
-						"in": "path",
-						"name": "cloud_vault_id",
-						"required": true,
-						"type": "string"
-					},
-					{
-						"in": "body",
-						"name": "body",
-						"required": true,
-						"schema": {
-							"$ref": "#/definitions/Files.UpdateBulkBody"
-						}
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Returned when the request is accepted",
-						"schema": {
-							"$ref": "#/definitions/Files.UpdateBulkResponse"
-						}
-					},
-					"401": {
-						"description": "Returned when the user could not be authorized.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"403": {
-						"description": "Returned when the user does not have the required permission.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"500": {
-						"description": "Internal Server Error",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"default": {
-						"description": "An unexpected error response.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					}
-				},
-				"summary": "Update or add metadata to multiple files in a Cloud Vault.",
-				"tags": [
-					"Files"
-				]
-			}
-		},
 		"/api/v2/files/{cloud_vault_id}/{name}": {
 			"delete": {
 				"description": "Delete the specified file",
@@ -9771,84 +9668,6 @@
 					}
 				},
 				"summary": "Delete file",
-				"tags": [
-					"Files"
-				]
-			},
-			"patch": {
-				"description": "Updates the metadata for a file on a specific Cloud Vault.",
-				"operationId": "updateFileMetadata",
-				"parameters": [
-					{
-						"description": "The globally unique identifier for the Cloud Vault where the file to delete is.",
-						"in": "path",
-						"name": "cloud_vault_id",
-						"required": true,
-						"type": "string"
-					},
-					{
-						"description": "The path of the file to be deleted. If the path ends in '/*' then delete everthing with that path prefix.",
-						"in": "path",
-						"name": "name",
-						"pattern": ".+",
-						"required": true,
-						"type": "string"
-					},
-					{
-						"in": "body",
-						"name": "metadata",
-						"required": true,
-						"schema": {
-							"$ref": "#/definitions/Files.Metadata",
-							"description": "The Metadata to apply to the file."
-						}
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "A successful response.",
-						"schema": {
-							"$ref": "#/definitions/Files.UpdateResponse"
-						}
-					},
-					"400": {
-						"description": "Returned when the request was not valid.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"401": {
-						"description": "Returned when the user could not be authorized.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"403": {
-						"description": "Returned when the user does not have the required permission.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"404": {
-						"description": "Returned when the Cloud Vault could not be found.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"500": {
-						"description": "Internal Server Error",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"default": {
-						"description": "An unexpected error response.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					}
-				},
-				"summary": "Updates metadata for a file.",
 				"tags": [
 					"Files"
 				]
@@ -11244,7 +11063,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Lineage.GetPublishResponse"
+							"$ref": "#/definitions/Dataset_Lineage.GetPublishResponse"
 						}
 					},
 					"400": {
@@ -11286,7 +11105,7 @@
 				},
 				"summary": "Get the lineage of a published dataset",
 				"tags": [
-					"Lineage"
+					"Dataset Lineage"
 				]
 			}
 		},
@@ -12117,7 +11936,7 @@
 						"name": "body",
 						"required": true,
 						"schema": {
-							"$ref": "#/definitions/Prepares.PrepareRequest"
+							"$ref": "#/definitions/Publishing.PrepareRequest"
 						}
 					}
 				],
@@ -12125,7 +11944,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Prepares.PrepareResponse"
+							"$ref": "#/definitions/Publishing.PrepareResponse"
 						}
 					},
 					"400": {
@@ -12167,7 +11986,7 @@
 				},
 				"summary": "Start a Prepare on normalized data.",
 				"tags": [
-					"Prepares"
+					"Publishing"
 				]
 			}
 		},
@@ -12213,7 +12032,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Prepares.ListPreparesResponse"
+							"$ref": "#/definitions/Publishing.ListPreparesResponse"
 						}
 					},
 					"400": {
@@ -12249,7 +12068,7 @@
 				},
 				"summary": "List company Prepares.",
 				"tags": [
-					"Prepares"
+					"Publishing"
 				]
 			}
 		},
@@ -12270,7 +12089,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Prepares.GetPrepareResponse"
+							"$ref": "#/definitions/Publishing.GetPrepareResponse"
 						}
 					},
 					"400": {
@@ -12312,7 +12131,7 @@
 				},
 				"summary": "Get details on a Prepare operation.",
 				"tags": [
-					"Prepares"
+					"Publishing"
 				]
 			}
 		},
@@ -12333,7 +12152,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Prepares.CancelPrepareResponse"
+							"$ref": "#/definitions/Publishing.CancelPrepareResponse"
 						}
 					},
 					"400": {
@@ -12375,7 +12194,7 @@
 				},
 				"summary": "Cancel a Prepare operation.",
 				"tags": [
-					"Prepares"
+					"Publishing"
 				]
 			}
 		},
@@ -12396,7 +12215,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Prepares.GetPrepareStatsResponse"
+							"$ref": "#/definitions/Publishing.GetPrepareStatsResponse"
 						}
 					},
 					"400": {
@@ -12438,7 +12257,7 @@
 				},
 				"summary": "Get stats about a specific prepare operation.",
 				"tags": [
-					"Prepares"
+					"Publishing"
 				]
 			}
 		},
@@ -12459,7 +12278,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Prepares.PublishResponse"
+							"$ref": "#/definitions/Publishing.PublishResponse"
 						}
 					},
 					"400": {
@@ -12495,7 +12314,7 @@
 				},
 				"summary": "Publishes prepared data to a dataset.",
 				"tags": [
-					"Prepares"
+					"Publishing"
 				]
 			}
 		},
@@ -14346,6 +14165,152 @@
 		}
 	},
 	"swagger": "2.0",
+	"tags": [
+		{
+			"description": "Service for mapping users to their display name and companies.",
+			"name": "Accounts"
+		},
+		{
+			"description": "Service for estimating intersections between datasets to establish if they are connected by common keys.",
+			"name": "Connections"
+		},
+		{
+			"description": "Service for executing queries against datasets in the InfoSum platform.",
+			"externalDocs": {
+				"description": "InfoSum Support Portal Article",
+				"url": "https://support.infosum.com/hc/en-us/articles/360018948258-Queries-overview"
+			},
+			"name": "Queries"
+		},
+		{
+			"description": "Service for generating and managing data insight reports.",
+			"name": "Reports"
+		},
+		{
+			"description": "Service for managing configurations for scheduling and automating actions in the InfoSum platform.",
+			"name": "Automation Configs"
+		},
+		{
+			"description": "Service for managing datasets in the InfoSum platform.",
+			"name": "Datasets"
+		},
+		{
+			"description": "Service for inspecting the key and category statistics of published datasets.",
+			"name": "Dataset Stats"
+		},
+		{
+			"description": "Service for establishing the provenance of published datasets.",
+			"name": "Dataset Lineage"
+		},
+		{
+			"description": "Service for managing re-usable destination configurations for exporting data from the InfoSum platform.",
+			"externalDocs": {
+				"description": "InfoSum Support Portal Article",
+				"url": "https://support.infosum.com/hc/en-us/articles/9775893457297-Destination-management"
+			},
+			"name": "Destinations"
+		},
+		{
+			"description": "Service for triggering the export of an activation query to a pre-configured destination.",
+			"externalDocs": {
+				"description": "InfoSum Support Portal Article",
+				"url": "https://support.infosum.com/hc/en-us/articles/12128356485778-Activation-integrations-overview"
+			},
+			"name": "Exports"
+		},
+		{
+			"description": "Service for managing Cloud Vault data staging areas within the InfoSum platform.",
+			"externalDocs": {
+				"description": "InfoSum Support Portal Article",
+				"url": "https://support.infosum.com/hc/en-us/articles/9867422712977-Cloud-Vault"
+			},
+			"name": "Cloud Vaults"
+		},
+		{
+			"description": "Service for managing files within a Cloud Vault.",
+			"name": "Files"
+		},
+		{
+			"description": "Service for managing import connector configurations to connect to a remote data source.",
+			"externalDocs": {
+				"description": "InfoSum Support Portal Article",
+				"url": "https://support.infosum.com/hc/en-us/articles/17034029721618-Importing-into-your-Cloud-Vault-via-the-Import-Flow"
+			},
+			"name": "Import Connectors"
+		},
+		{
+			"description": "Service for managing importers, which combine an import connector configuration with file patterns to allow for easy re-importing of data.",
+			"externalDocs": {
+				"description": "InfoSum Support Portal Article",
+				"url": "https://support.infosum.com/hc/en-us/articles/16335527583506-Create-a-Recordset"
+			},
+			"name": "Importers"
+		},
+		{
+			"description": "Service presenting the global schema keys and categories that columns can be mapped to during normalization.",
+			"externalDocs": {
+				"description": "InfoSum Support Portal Article",
+				"url": "https://support.infosum.com/hc/en-us/articles/360018963897-Global-Schema"
+			},
+			"name": "Global Schema"
+		},
+		{
+			"description": "Service for managing configurations for normalizing data.",
+			"externalDocs": {
+				"description": "InfoSum Support Portal Article",
+				"url": "https://support.infosum.com/hc/en-us/articles/16863062437266-Sigma-Normalisation"
+			},
+			"name": "Normalization Config"
+		},
+		{
+			"description": "Service for normalizing data using a normalization configuration ready for publishing to a dataset.",
+			"externalDocs": {
+				"description": "InfoSum Support Portal Article",
+				"url": "https://support.infosum.com/hc/en-us/articles/16863062437266-Sigma-Normalisation"
+			},
+			"name": "Normalizations"
+		},
+		{
+			"description": "Service for managing configurations to prepare a normalised recordset for publishing.",
+			"externalDocs": {
+				"description": "InfoSum Support Portal Article",
+				"url": "https://support.infosum.com/hc/en-us/articles/16910773273106-Preparing-publishing-data-to-a-Bunker"
+			},
+			"name": "Dataset Prepare Configs"
+		},
+		{
+			"description": "Service for preparing data using configurations, and publishing the prepared data to a dataset.",
+			"externalDocs": {
+				"description": "InfoSum Support Portal Article",
+				"url": "https://support.infosum.com/hc/en-us/articles/16910773273106-Preparing-publishing-data-to-a-Bunker"
+			},
+			"name": "Publishing"
+		},
+		{
+			"description": "Service for managing recordsets created as a result of normalisation or a recordset task executed using imported files.",
+			"externalDocs": {
+				"description": "InfoSum Support Portal Article",
+				"url": "https://support.infosum.com/hc/en-us/articles/16335527583506-Create-a-Recordset"
+			},
+			"name": "Recordsets"
+		},
+		{
+			"description": "Service for managing configurations for creating recordsets from imported files.",
+			"externalDocs": {
+				"description": "InfoSum Support Portal Article",
+				"url": "https://support.infosum.com/hc/en-us/articles/16335527583506-Create-a-Recordset"
+			},
+			"name": "Recordset Configs"
+		},
+		{
+			"description": "Service for creating recordsets using a stored configuration from imported files.",
+			"externalDocs": {
+				"description": "InfoSum Support Portal Article",
+				"url": "https://support.infosum.com/hc/en-us/articles/16335527583506-Create-a-Recordset"
+			},
+			"name": "Recordset Creation"
+		}
+	],
 	"x-tagGroups": [
 		{
 			"name": "Accounts",
@@ -14372,8 +14337,8 @@
 			"name": "Datasets",
 			"tags": [
 				"Datasets",
-				"Lineage",
-				"Schema"
+				"Dataset Stats",
+				"Dataset Lineage"
 			]
 		},
 		{
@@ -14408,8 +14373,8 @@
 		{
 			"name": "Publishing",
 			"tags": [
-				"Dataset Prepare Configs",
-				"Prepares"
+				"Prepare Configs",
+				"Publishing"
 			]
 		},
 		{
