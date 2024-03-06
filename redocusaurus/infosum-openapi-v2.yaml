@@ -11826,6 +11826,10 @@ tags:
       Service for managing configurations for scheduling and automating actions
       in the InfoSum platform.
     name: Automation Configs
+  - description: >-
+      Service for fetching previous automation runs and triggering a manual run
+      of an automation configuration.
+    name: Automation Execution
   - description: Service for managing datasets in the InfoSum platform.
     name: Datasets
   - description: >-
@@ -11903,7 +11907,7 @@ tags:
       description: InfoSum Support Portal Article
       url: >-
         https://support.infosum.com/hc/en-us/articles/16910773273106-Preparing-publishing-data-to-a-Bunker
-    name: Dataset Prepare Configs
+    name: Prepare Configs
   - description: >-
       Service for preparing data using configurations, and publishing the
       prepared data to a dataset.
