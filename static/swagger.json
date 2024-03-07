@@ -1925,6 +1925,17 @@
 			},
 			"type": "object"
 		},
+		"Exports.ConsentStatus": {
+			"default": "CONSENT_STATUS_INVALID",
+			"enum": [
+				"CONSENT_STATUS_INVALID",
+				"UNSPECIFIED",
+				"GRANTED",
+				"DENIED"
+			],
+			"title": "- UNSPECIFIED: UNSPECIFIED indicates that no specific consent status is applicable\n - GRANTED: GRANTED indicates that consent has been granted\n - DENIED: DENIED indicates that consent has been denied",
+			"type": "string"
+		},
 		"Exports.ContactInfoMapping": {
 			"description": "ContactInfoMapping contains information's mapping column names to DV360 accepted column names.",
 			"properties": {
@@ -1998,6 +2009,14 @@
 		"Exports.DV360CustomerMatchPush": {
 			"description": "DV360CustomerMatchPush are the push time variables for when pushing to DV360 using PAIR encryption.",
 			"properties": {
+				"ad_personalization": {
+					"$ref": "#/definitions/Exports.ConsentStatus",
+					"description": "AdPersonalization specifies the consent status of the users' data for use in ad personalization.\nData for which consent is explicitly denied will not be accepted by Google and will cause an error."
+				},
+				"ad_user_data": {
+					"$ref": "#/definitions/Exports.ConsentStatus",
+					"description": "AdUserData specifies the consent status for sending the users' data to Google.\nData for which consent is explicitly denied will not be accepted by Google and will cause an error."
+				},
 				"append": {
 					"$ref": "#/definitions/Exports.DV360Append"
 				},
@@ -2024,6 +2043,14 @@
 		"Exports.DV360PAIRPush": {
 			"description": "DV360PAIRPush are the push time variables for when pushing to DV360 using PAIR encryption.",
 			"properties": {
+				"ad_personalization": {
+					"$ref": "#/definitions/Exports.ConsentStatus",
+					"description": "AdPersonalization specifies the consent status of the users' data for use in ad personalization.\nData for which consent is explicitly denied will not be accepted by Google and will cause an error."
+				},
+				"ad_user_data": {
+					"$ref": "#/definitions/Exports.ConsentStatus",
+					"description": "AdUserData specifies the consent status for sending the users' data to Google.\nData for which consent is explicitly denied will not be accepted by Google and will cause an error."
+				},
 				"create": {
 					"$ref": "#/definitions/Exports.DV360Create"
 				},
