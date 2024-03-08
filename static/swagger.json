@@ -7,7 +7,11 @@
 			"description": "GetDisplayNameResponse is the response for the GetDisplayName rpc.",
 			"properties": {
 				"pagination": {
-					"$ref": "#/definitions/PaginationResponse",
+					"allOf": [
+						{
+							"$ref": "#/definitions/PaginationResponse"
+						}
+					],
 					"description": "The pagination response."
 				},
 				"users": {
@@ -46,19 +50,35 @@
 			"description": "The information required to define an Automation Step. Provide only one config per Automation Step.",
 			"properties": {
 				"import": {
-					"$ref": "#/definitions/Automation_Configs.ImportConfig",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Automation_Configs.ImportConfig"
+						}
+					],
 					"description": "The Import Config to execute for this Automation Step."
 				},
 				"normalization": {
-					"$ref": "#/definitions/Automation_Configs.NormalizationConfig",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Automation_Configs.NormalizationConfig"
+						}
+					],
 					"description": "The Normalization Config to execute for this Automation Step."
 				},
 				"publish": {
-					"$ref": "#/definitions/Automation_Configs.PublishConfig",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Automation_Configs.PublishConfig"
+						}
+					],
 					"description": "The Publish Config to execute for this Automation Step."
 				},
 				"recordset_creation": {
-					"$ref": "#/definitions/Automation_Configs.RecordsetCreationConfig",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Automation_Configs.RecordsetCreationConfig"
+						}
+					],
 					"description": "The Recordset Creation Config to execute for this Automation Step."
 				}
 			},
@@ -190,7 +210,11 @@
 			"description": "CreateConfigResponse is the response from creating an Automation Config.",
 			"properties": {
 				"config": {
-					"$ref": "#/definitions/Automation_Configs.Config",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Automation_Configs.Config"
+						}
+					],
 					"description": "The new Automation Config.",
 					"title": "The returned automation config"
 				}
@@ -205,7 +229,11 @@
 			"description": "GetConfigResponse returns the requested Automation Config.",
 			"properties": {
 				"config": {
-					"$ref": "#/definitions/Automation_Configs.Config",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Automation_Configs.Config"
+						}
+					],
 					"description": "Details of the requested Automation Config."
 				},
 				"last_execution_id": {
@@ -237,7 +265,11 @@
 					"type": "array"
 				},
 				"pagination": {
-					"$ref": "#/definitions/PaginationResponse",
+					"allOf": [
+						{
+							"$ref": "#/definitions/PaginationResponse"
+						}
+					],
 					"description": "Pagination information for returned Configs."
 				}
 			},
@@ -281,7 +313,11 @@
 			"description": "UpdateConfigResponse is the response from updating an Automation.",
 			"properties": {
 				"config": {
-					"$ref": "#/definitions/Automation_Configs.Config",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Automation_Configs.Config"
+						}
+					],
 					"description": "The updated Automation Config."
 				}
 			},
@@ -349,15 +385,27 @@
 					"type": "string"
 				},
 				"current_automation_step": {
-					"$ref": "#/definitions/Automation_Execution.TaskType",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Automation_Execution.TaskType"
+						}
+					],
 					"description": "The current Step of the Execution."
 				},
 				"current_step_status": {
-					"$ref": "#/definitions/Automation_Execution.v1.Status",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Automation_Execution.v1.Status"
+						}
+					],
 					"description": "The status of the current Execution Step."
 				},
 				"error": {
-					"$ref": "#/definitions/Error",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Error"
+						}
+					],
 					"description": "The error encountered by the Execution if it failed."
 				},
 				"executed_by": {
@@ -390,11 +438,19 @@
 					"type": "string"
 				},
 				"current_task_status": {
-					"$ref": "#/definitions/Automation_Execution.v1.Status",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Automation_Execution.v1.Status"
+						}
+					],
 					"description": "The status of this Step."
 				},
 				"error": {
-					"$ref": "#/definitions/Error",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Error"
+						}
+					],
 					"description": "The error encountered by this Step if it failed"
 				},
 				"started_date_time": {
@@ -411,7 +467,11 @@
 					"type": "string"
 				},
 				"task_type": {
-					"$ref": "#/definitions/Automation_Execution.TaskType",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Automation_Execution.TaskType"
+						}
+					],
 					"description": "The type of task that was executed for this Step."
 				},
 				"updated_date_time": {
@@ -426,7 +486,11 @@
 			"description": "GetExecutionResponse returns the requested Automation Execution.",
 			"properties": {
 				"execution": {
-					"$ref": "#/definitions/Automation_Execution.Execution",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Automation_Execution.Execution"
+						}
+					],
 					"description": "Details of the requested Automation Execution."
 				},
 				"execution_steps": {
@@ -452,7 +516,11 @@
 					"type": "array"
 				},
 				"pagination": {
-					"$ref": "#/definitions/PaginationResponse",
+					"allOf": [
+						{
+							"$ref": "#/definitions/PaginationResponse"
+						}
+					],
 					"description": "Details of the pagination of this response."
 				}
 			},
@@ -569,7 +637,11 @@
 					"type": "string"
 				},
 				"region": {
-					"$ref": "#/definitions/Cloud_Vaults.Region",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Cloud_Vaults.Region"
+						}
+					],
 					"description": "Output only. Region identifies the region that this Cloud Vault is located\nin.",
 					"readOnly": true
 				},
@@ -593,7 +665,11 @@
 					"type": "string"
 				},
 				"region": {
-					"$ref": "#/definitions/Cloud_Vaults.Region",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Cloud_Vaults.Region"
+						}
+					],
 					"description": "Region identifies the region that this Cloud Vault is located in.\nExpected format: cloudprovider + region e.g. aws-eu-west-2\nNote: ibm-eu-central-1 is a deprecated value."
 				}
 			},
@@ -632,7 +708,11 @@
 					"type": "array"
 				},
 				"pagination": {
-					"$ref": "#/definitions/PaginationResponse",
+					"allOf": [
+						{
+							"$ref": "#/definitions/PaginationResponse"
+						}
+					],
 					"description": "Pagination is the information on how the results were paginated."
 				}
 			},
@@ -735,19 +815,35 @@
 			"description": "The lineage config.",
 			"properties": {
 				"import": {
-					"$ref": "#/definitions/Dataset_Lineage.ImportConfig",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Dataset_Lineage.ImportConfig"
+						}
+					],
 					"description": "The import config."
 				},
 				"normalization": {
-					"$ref": "#/definitions/Dataset_Lineage.NormalizationConfig",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Dataset_Lineage.NormalizationConfig"
+						}
+					],
 					"description": "The normalization config."
 				},
 				"publish": {
-					"$ref": "#/definitions/Dataset_Lineage.PublishConfig",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Dataset_Lineage.PublishConfig"
+						}
+					],
 					"description": "The publish config."
 				},
 				"recordset_creation": {
-					"$ref": "#/definitions/Dataset_Lineage.RecordsetCreationConfig",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Dataset_Lineage.RecordsetCreationConfig"
+						}
+					],
 					"description": "The recordset creation config."
 				}
 			},
@@ -917,7 +1013,11 @@
 			"description": "CreateDatasetRequest is the input used by the CreateDataset rpc.",
 			"properties": {
 				"dataset_type": {
-					"$ref": "#/definitions/Datasets.DatasetType",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Datasets.DatasetType"
+						}
+					],
 					"description": "DatasetType denotes whether the dataset is insight or activation."
 				},
 				"description": {
@@ -925,7 +1025,11 @@
 					"type": "string"
 				},
 				"expiration": {
-					"$ref": "#/definitions/Datasets.DatasetExpiration",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Datasets.DatasetExpiration"
+						}
+					],
 					"description": "Expiration specifies information about how the dataset should expire."
 				},
 				"private_id": {
@@ -937,7 +1041,11 @@
 					"type": "string"
 				},
 				"region": {
-					"$ref": "#/definitions/Datasets.Region",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Datasets.Region"
+						}
+					],
 					"description": "Region is the cloud vault region the dataset can accept input data from."
 				}
 			},
@@ -970,7 +1078,11 @@
 					"type": "string"
 				},
 				"dataset_type": {
-					"$ref": "#/definitions/Datasets.DatasetType",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Datasets.DatasetType"
+						}
+					],
 					"title": "DatasetType is the dataset type, insight or activation"
 				},
 				"description": {
@@ -978,7 +1090,11 @@
 					"type": "string"
 				},
 				"expiration": {
-					"$ref": "#/definitions/Datasets.DatasetExpiration",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Datasets.DatasetExpiration"
+						}
+					],
 					"description": "Expiration specifies information about how the dataset should expire."
 				},
 				"owner_id": {
@@ -994,7 +1110,11 @@
 					"type": "string"
 				},
 				"publish_details": {
-					"$ref": "#/definitions/Datasets.ListedPublishDetails",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Datasets.ListedPublishDetails"
+						}
+					],
 					"description": "ListedPublishDetails is the summary info for the published slot."
 				},
 				"published_by": {
@@ -1002,7 +1122,11 @@
 					"type": "string"
 				},
 				"region": {
-					"$ref": "#/definitions/Datasets.Region",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Datasets.Region"
+						}
+					],
 					"description": "Region is the cloud vault region the dataset can accept input data from."
 				}
 			},
@@ -1041,7 +1165,11 @@
 			"description": "GetDatasetResponse is the response for GetDataset rpc.",
 			"properties": {
 				"dataset": {
-					"$ref": "#/definitions/Datasets.Dataset",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Datasets.Dataset"
+						}
+					],
 					"description": "Dataset is summary information about the requested dataset."
 				}
 			},
@@ -1059,7 +1187,11 @@
 					"type": "array"
 				},
 				"pagination": {
-					"$ref": "#/definitions/PaginationResponse",
+					"allOf": [
+						{
+							"$ref": "#/definitions/PaginationResponse"
+						}
+					],
 					"description": "Pagination is the information on how the results were paginated."
 				}
 			},
@@ -1082,7 +1214,11 @@
 					"type": "string"
 				},
 				"dataset_type": {
-					"$ref": "#/definitions/Datasets.DatasetType",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Datasets.DatasetType"
+						}
+					],
 					"title": "DatasetType is the dataset type, insight or activation"
 				},
 				"description": {
@@ -1090,7 +1226,11 @@
 					"type": "string"
 				},
 				"expiration": {
-					"$ref": "#/definitions/Datasets.DatasetExpiration",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Datasets.DatasetExpiration"
+						}
+					],
 					"description": "Expiration specifies information about how the dataset should expire."
 				},
 				"owner_id": {
@@ -1106,7 +1246,11 @@
 					"type": "string"
 				},
 				"publish_details": {
-					"$ref": "#/definitions/Datasets.ListedPublishDetails",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Datasets.ListedPublishDetails"
+						}
+					],
 					"description": "ListedPublishDetails is the summary info for the published slot."
 				},
 				"published_by": {
@@ -1114,7 +1258,11 @@
 					"type": "string"
 				},
 				"region": {
-					"$ref": "#/definitions/Datasets.Region",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Datasets.Region"
+						}
+					],
 					"description": "Region is the cloud vault region the dataset can accept input data from."
 				}
 			},
@@ -1164,7 +1312,11 @@
 					"type": "string"
 				},
 				"expiration": {
-					"$ref": "#/definitions/Datasets.DatasetExpiration",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Datasets.DatasetExpiration"
+						}
+					],
 					"description": "Expiration specifies information about how the dataset should expire."
 				},
 				"private_id": {
@@ -1262,7 +1414,11 @@
 			"description": "Destination is the information required to define destinations.",
 			"properties": {
 				"connector_type": {
-					"$ref": "#/definitions/Destinations.ConnectorType",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Destinations.ConnectorType"
+						}
+					],
 					"description": "ConnectorType states the type of connector used by the destination. Output only.",
 					"readOnly": true
 				},
@@ -1338,7 +1494,11 @@
 			"description": "DestinationOverview contains information about a destinations.",
 			"properties": {
 				"connector_type": {
-					"$ref": "#/definitions/Destinations.ConnectorType",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Destinations.ConnectorType"
+						}
+					],
 					"description": "ConnectorType states the type of connector used by the destination."
 				},
 				"created_time": {
@@ -1378,7 +1538,11 @@
 			"description": "DestinationWithConnectorOverview contains information about a destinations and its connector.",
 			"properties": {
 				"connector_type": {
-					"$ref": "#/definitions/Destinations.ConnectorType",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Destinations.ConnectorType"
+						}
+					],
 					"description": "ConnectorType states the type of connector used by the destination."
 				},
 				"created_time": {
@@ -1485,7 +1649,11 @@
 					"type": "string"
 				},
 				"default_push_overrides": {
-					"$ref": "#/definitions/Destinations.GCSOverrides",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Destinations.GCSOverrides"
+						}
+					],
 					"description": "DefaultPushOverrides contain the default push time values. Optional."
 				},
 				"service_account_config_json": {
@@ -1502,7 +1670,11 @@
 					"type": "string"
 				},
 				"default_push_overrides": {
-					"$ref": "#/definitions/Destinations.GCSOverrides",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Destinations.GCSOverrides"
+						}
+					],
 					"description": "DefaultPushOverrides contain the default push time values. Optional."
 				}
 			},
@@ -1619,11 +1791,19 @@
 					"$ref": "#/definitions/Destinations.S3CrossAccount"
 				},
 				"default_push_overrides": {
-					"$ref": "#/definitions/Destinations.S3Overrides",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Destinations.S3Overrides"
+						}
+					],
 					"title": "DefaultPushOverrides"
 				},
 				"region": {
-					"$ref": "#/definitions/Destinations.AwsRegion",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Destinations.AwsRegion"
+						}
+					],
 					"description": "Region is the region of the S3 Bucket."
 				}
 			},
@@ -1633,7 +1813,11 @@
 			"description": "S3ConnectorOverview contains information about a S3 connector.",
 			"properties": {
 				"access_key_details": {
-					"$ref": "#/definitions/Destinations.S3AccessKeyDetails",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Destinations.S3AccessKeyDetails"
+						}
+					],
 					"description": "AccessKeyDetails is for access key destinations."
 				},
 				"bucket_name": {
@@ -1641,15 +1825,27 @@
 					"type": "string"
 				},
 				"cross_account_details": {
-					"$ref": "#/definitions/Destinations.S3CrossAccountDetails",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Destinations.S3CrossAccountDetails"
+						}
+					],
 					"description": "CrossAccountDetails contains the details to set up S3 Cross Account access."
 				},
 				"default_push_overrides": {
-					"$ref": "#/definitions/Destinations.S3Overrides",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Destinations.S3Overrides"
+						}
+					],
 					"title": "DefaultPushOverrides"
 				},
 				"region": {
-					"$ref": "#/definitions/Destinations.AwsRegion",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Destinations.AwsRegion"
+						}
+					],
 					"description": "Region is the region of the S3 Bucket."
 				}
 			},
@@ -1707,7 +1903,11 @@
 			"description": "SftpConnector is the information required to define a destination pushing to a sftp server.",
 			"properties": {
 				"default_push_overrides": {
-					"$ref": "#/definitions/Destinations.SftpOverrides",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Destinations.SftpOverrides"
+						}
+					],
 					"description": "DefaultPushOverrides contain the default push time values. Optional."
 				},
 				"gpg_public_key": {
@@ -1747,7 +1947,11 @@
 			"description": "SftpConnectorOverview contains information about a SFTP connector.",
 			"properties": {
 				"default_push_overrides": {
-					"$ref": "#/definitions/Destinations.SftpOverrides",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Destinations.SftpOverrides"
+						}
+					],
 					"description": "DefaultPushOverrides contain the default push time values. Optional."
 				},
 				"gpg_public_key": {
@@ -1837,11 +2041,19 @@
 					"type": "string"
 				},
 				"default_values": {
-					"$ref": "#/definitions/Destinations.TradeDeskOverrides",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Destinations.TradeDeskOverrides"
+						}
+					],
 					"title": "DefaultValues is a list of default values that may be overridden at push time"
 				},
 				"location": {
-					"$ref": "#/definitions/Destinations.TDLocation",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Destinations.TDLocation"
+						}
+					],
 					"description": "Location asks for the base url for the trade desk. This field is mandatory."
 				},
 				"secret_key": {
@@ -1859,7 +2071,11 @@
 					"type": "string"
 				},
 				"location": {
-					"$ref": "#/definitions/Destinations.TDLocation",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Destinations.TDLocation"
+						}
+					],
 					"description": "Location asks for the base url for the trade desk."
 				}
 			},
@@ -1888,11 +2104,19 @@
 			"description": "Error is used to define an error from an InfoSum API.",
 			"properties": {
 				"details": {
-					"$ref": "#/definitions/ErrorMessage",
+					"allOf": [
+						{
+							"$ref": "#/definitions/ErrorMessage"
+						}
+					],
 					"description": "Details is an optional low level error which caused the request to fail.\nThis may provide the detailed information on the action or resource which caused the error."
 				},
 				"error": {
-					"$ref": "#/definitions/ErrorMessage",
+					"allOf": [
+						{
+							"$ref": "#/definitions/ErrorMessage"
+						}
+					],
 					"description": "Error is the high level error which occurred when the service tried to action the request."
 				},
 				"help_url": {
@@ -1927,13 +2151,8 @@
 		},
 		"Exports.ConsentStatus": {
 			"default": "CONSENT_STATUS_INVALID",
-			"enum": [
-				"CONSENT_STATUS_INVALID",
-				"UNSPECIFIED",
-				"GRANTED",
-				"DENIED"
-			],
-			"title": "- UNSPECIFIED: UNSPECIFIED indicates that no specific consent status is applicable\n - GRANTED: GRANTED indicates that consent has been granted\n - DENIED: DENIED indicates that consent has been denied",
+			"description": "- UNSPECIFIED: Indicates that no specific consent status is applicable\n - GRANTED: Indicates that consent has been granted\n - DENIED: Indicates that consent has been denied",
+			"title": "ConsentStatus enumerates the allowable user consent signals for exporting data to DV360",
 			"type": "string"
 		},
 		"Exports.ContactInfoMapping": {
@@ -1964,7 +2183,11 @@
 			"description": "DV360ColumnMap is used to map column names to a DV360 accepted column name.",
 			"properties": {
 				"dv360_column_name": {
-					"$ref": "#/definitions/Exports.Dv360Schema",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Exports.Dv360Schema"
+						}
+					],
 					"description": "DV360ColumnName is the mapping to the DV360 accepted column name."
 				},
 				"platform_column_name": {
@@ -2010,12 +2233,20 @@
 			"description": "DV360CustomerMatchPush are the push time variables for when pushing to DV360 using PAIR encryption.",
 			"properties": {
 				"ad_personalization": {
-					"$ref": "#/definitions/Exports.ConsentStatus",
-					"description": "AdPersonalization specifies the consent status of the users' data for use in ad personalization.\nData for which consent is explicitly denied will not be accepted by Google and will cause an error."
+					"allOf": [
+						{
+							"$ref": "#/definitions/Exports.ConsentStatus"
+						}
+					],
+					"description": "AdPersonalization specifies the consent status of the users' data for use in ad personalization. Data for which consent is explicitly denied will not be accepted by Google and will cause an error. [Google FAQs Here](https://support.google.com/google-ads/answer/14310715)"
 				},
 				"ad_user_data": {
-					"$ref": "#/definitions/Exports.ConsentStatus",
-					"description": "AdUserData specifies the consent status for sending the users' data to Google.\nData for which consent is explicitly denied will not be accepted by Google and will cause an error."
+					"allOf": [
+						{
+							"$ref": "#/definitions/Exports.ConsentStatus"
+						}
+					],
+					"description": "AdUserData specifies the consent status for sending the users' data to Google. Data for which consent is explicitly denied will not be accepted by Google and will cause an error. [Google FAQs Here](https://support.google.com/google-ads/answer/14310715)"
 				},
 				"append": {
 					"$ref": "#/definitions/Exports.DV360Append"
@@ -2044,12 +2275,20 @@
 			"description": "DV360PAIRPush are the push time variables for when pushing to DV360 using PAIR encryption.",
 			"properties": {
 				"ad_personalization": {
-					"$ref": "#/definitions/Exports.ConsentStatus",
-					"description": "AdPersonalization specifies the consent status of the users' data for use in ad personalization.\nData for which consent is explicitly denied will not be accepted by Google and will cause an error."
+					"allOf": [
+						{
+							"$ref": "#/definitions/Exports.ConsentStatus"
+						}
+					],
+					"description": "AdPersonalization specifies the consent status of the users' data for use in ad personalization. Data for which consent is explicitly denied will not be accepted by Google and will cause an error. [Google FAQs Here](https://support.google.com/google-ads/answer/14310715)"
 				},
 				"ad_user_data": {
-					"$ref": "#/definitions/Exports.ConsentStatus",
-					"description": "AdUserData specifies the consent status for sending the users' data to Google.\nData for which consent is explicitly denied will not be accepted by Google and will cause an error."
+					"allOf": [
+						{
+							"$ref": "#/definitions/Exports.ConsentStatus"
+						}
+					],
+					"description": "AdUserData specifies the consent status for sending the users' data to Google. Data for which consent is explicitly denied will not be accepted by Google and will cause an error. [Google FAQs Here](https://support.google.com/google-ads/answer/14310715)"
 				},
 				"create": {
 					"$ref": "#/definitions/Exports.DV360Create"
@@ -2102,39 +2341,75 @@
 					"type": "string"
 				},
 				"dv360_customer_match": {
-					"$ref": "#/definitions/Exports.DV360CustomerMatchPush",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Exports.DV360CustomerMatchPush"
+						}
+					],
 					"description": "DV360 Customer Match are the overrides for the DV360 connector type."
 				},
 				"dv360_pair": {
-					"$ref": "#/definitions/Exports.DV360PAIRPush",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Exports.DV360PAIRPush"
+						}
+					],
 					"description": "DV360 PAIR are the overrides for the DV360 connector type."
 				},
 				"facebook": {
-					"$ref": "#/definitions/Exports.FacebookPush",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Exports.FacebookPush"
+						}
+					],
 					"description": "Facebook are the overrides for the Facebook connector type."
 				},
 				"gcs": {
-					"$ref": "#/definitions/Exports.GCSPush",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Exports.GCSPush"
+						}
+					],
 					"description": "gcs are the overrides for the gcs connector type."
 				},
 				"pubmatic": {
-					"$ref": "#/definitions/Exports.PubmaticPush",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Exports.PubmaticPush"
+						}
+					],
 					"description": "Pubmatic are the overrides for the PubMatic connector type."
 				},
 				"s3": {
-					"$ref": "#/definitions/Exports.S3Push",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Exports.S3Push"
+						}
+					],
 					"description": "S3 are the overrides for the s3 connector type."
 				},
 				"s3_pair": {
-					"$ref": "#/definitions/Exports.S3PAIRPush",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Exports.S3PAIRPush"
+						}
+					],
 					"description": "S3Pair are the overrides for the s3 PAIR connector type."
 				},
 				"sftp": {
-					"$ref": "#/definitions/Exports.SftpPush",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Exports.SftpPush"
+						}
+					],
 					"description": "Sftp are the overrides for the sftp connector type."
 				},
 				"sftp_pair": {
-					"$ref": "#/definitions/Exports.SftpPAIRPush",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Exports.SftpPAIRPush"
+						}
+					],
 					"description": "SftpPair are the overrides for the sftp PAIR connector type."
 				}
 			},
@@ -2164,7 +2439,11 @@
 			"description": "FacebookColumnMap is used to map column names to a facebook accepted column name.",
 			"properties": {
 				"facebook_column_name": {
-					"$ref": "#/definitions/Exports.FacebookSchema",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Exports.FacebookSchema"
+						}
+					],
 					"description": "FacebookColumnName is the mapping to the facebook accepted column name."
 				},
 				"platform_column_name": {
@@ -2182,7 +2461,11 @@
 					"type": "string"
 				},
 				"file_source": {
-					"$ref": "#/definitions/Exports.FacebookFileSource",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Exports.FacebookFileSource"
+						}
+					],
 					"description": "FileSource of the audience (enum)."
 				},
 				"name": {
@@ -2295,11 +2578,19 @@
 					"type": "string"
 				},
 				"gcs_sharding": {
-					"$ref": "#/definitions/Exports.GCSSharding",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Exports.GCSSharding"
+						}
+					],
 					"description": "GCS Sharding conatins file sharding configurations. Optional."
 				},
 				"overrides": {
-					"$ref": "#/definitions/Exports.GCSOverrides",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Exports.GCSOverrides"
+						}
+					],
 					"description": "Overrides contains the fields that can be overridden when pushing to a sftp server."
 				}
 			},
@@ -2371,11 +2662,19 @@
 					"type": "array"
 				},
 				"country_code": {
-					"$ref": "#/definitions/Exports.PubmaticCountryCode",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Exports.PubmaticCountryCode"
+						}
+					],
 					"description": "CountryCode is the country code that the users belong to."
 				},
 				"uid_type": {
-					"$ref": "#/definitions/Exports.UIDType",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Exports.UIDType"
+						}
+					],
 					"description": "UIDType is a value that determines what the identity partner's PubMatic user ID represents."
 				},
 				"user_id_column": {
@@ -2403,7 +2702,11 @@
 					"type": "string"
 				},
 				"overrides": {
-					"$ref": "#/definitions/Exports.S3Overrides",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Exports.S3Overrides"
+						}
+					],
 					"description": "Overrides contains the fields that can be overridden when pushing to s3."
 				}
 			},
@@ -2417,7 +2720,11 @@
 					"type": "string"
 				},
 				"overrides": {
-					"$ref": "#/definitions/Exports.S3Overrides",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Exports.S3Overrides"
+						}
+					],
 					"description": "Overrides contains the fields that can be overridden when pushing to s3."
 				}
 			},
@@ -2441,7 +2748,11 @@
 					"type": "string"
 				},
 				"overrides": {
-					"$ref": "#/definitions/Exports.SftpOverrides",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Exports.SftpOverrides"
+						}
+					],
 					"description": "Overrides contains the fields that can be overridden when pushing to sftp."
 				}
 			},
@@ -2455,7 +2766,11 @@
 					"type": "string"
 				},
 				"overrides": {
-					"$ref": "#/definitions/Exports.SftpOverrides",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Exports.SftpOverrides"
+						}
+					],
 					"description": "Overrides contains the fields that can be overridden when pushing to a sftp server."
 				}
 			},
@@ -2506,7 +2821,11 @@
 					"type": "string"
 				},
 				"metadata": {
-					"$ref": "#/definitions/Files.Metadata",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Files.Metadata"
+						}
+					],
 					"description": "The metadata associated with this file.",
 					"readOnly": true
 				},
@@ -2536,7 +2855,11 @@
 					"type": "array"
 				},
 				"pagination": {
-					"$ref": "#/definitions/PaginationResponse",
+					"allOf": [
+						{
+							"$ref": "#/definitions/PaginationResponse"
+						}
+					],
 					"description": "Pagination is the information on how the results were paginated."
 				}
 			},
@@ -2545,17 +2868,21 @@
 		"Files.Metadata": {
 			"description": "Metadata is the entity that contains the metadata associated with a file.",
 			"properties": {
-				"hidden": {
-					"description": "A flag to indicate that this file is not shown by default.",
-					"type": "boolean"
-				},
 				"origin": {
-					"$ref": "#/definitions/Files.Origin",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Files.Origin"
+						}
+					],
 					"description": "The details of the origin of the file.",
 					"readOnly": true
 				},
 				"resource_type": {
-					"$ref": "#/definitions/Files.ResourceType",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Files.ResourceType"
+						}
+					],
 					"description": "The type of resource; e.g folder, recordset or file. OUTPUT_ONLY.",
 					"readOnly": true
 				},
@@ -2637,7 +2964,11 @@
 					"type": "array"
 				},
 				"pagination": {
-					"$ref": "#/definitions/PaginationResponse",
+					"allOf": [
+						{
+							"$ref": "#/definitions/PaginationResponse"
+						}
+					],
 					"description": "Pagination is the pagination details of the returned categories."
 				}
 			},
@@ -2717,7 +3048,11 @@
 					"type": "array"
 				},
 				"pagination": {
-					"$ref": "#/definitions/PaginationResponse",
+					"allOf": [
+						{
+							"$ref": "#/definitions/PaginationResponse"
+						}
+					],
 					"description": "Pagination is the pagination details of the returned categories."
 				}
 			},
@@ -2749,7 +3084,11 @@
 					"type": "array"
 				},
 				"pagination": {
-					"$ref": "#/definitions/PaginationResponse",
+					"allOf": [
+						{
+							"$ref": "#/definitions/PaginationResponse"
+						}
+					],
 					"description": "Pagination is the pagination details of the returned keys."
 				}
 			},
@@ -2792,11 +3131,19 @@
 					"type": "boolean"
 				},
 				"possible_values": {
-					"$ref": "#/definitions/Global_Schema.PossibleValues",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Global_Schema.PossibleValues"
+						}
+					],
 					"description": "PossibleValues is the list of values the Property can have. It only applies if the Property\nis not a column, i.e. IsColumn is false."
 				},
 				"type": {
-					"$ref": "#/definitions/Global_Schema.v2.Type",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Global_Schema.v2.Type"
+						}
+					],
 					"description": "Type is the type of this Property."
 				},
 				"user_input": {
@@ -2838,7 +3185,11 @@
 			"description": "The input to the CreateImportConnector method.",
 			"properties": {
 				"config": {
-					"$ref": "#/definitions/Import_Connectors.UpsertImportConnector",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Import_Connectors.UpsertImportConnector"
+						}
+					],
 					"description": "The configuration to create a new Import Connector with.",
 					"readOnly": true
 				}
@@ -2879,7 +3230,11 @@
 					"type": "string"
 				},
 				"secret_auth": {
-					"$ref": "#/definitions/Import_Connectors.GCSSecretAuth",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Import_Connectors.GCSSecretAuth"
+						}
+					],
 					"description": "SecretAuth is the auth details for GCS"
 				}
 			},
@@ -2920,7 +3275,11 @@
 			"description": "The response from the GetImportConnector method.",
 			"properties": {
 				"config": {
-					"$ref": "#/definitions/Import_Connectors.ImportConnector",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Import_Connectors.ImportConnector"
+						}
+					],
 					"description": "The configuration of the Import Connector that was requested.",
 					"readOnly": true
 				}
@@ -2931,7 +3290,11 @@
 			"description": "ImportConnector is the information that can be retrieved about an import connector config.",
 			"properties": {
 				"connector_type": {
-					"$ref": "#/definitions/Import_Connectors.ConnectorType",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Import_Connectors.ConnectorType"
+						}
+					],
 					"description": "ConnectorType identifies the connector type.",
 					"readOnly": true
 				},
@@ -2947,7 +3310,11 @@
 					"type": "string"
 				},
 				"gcs_connector": {
-					"$ref": "#/definitions/Import_Connectors.GCSProvider",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Import_Connectors.GCSProvider"
+						}
+					],
 					"description": "S3Connector is the S3 specific information.",
 					"readOnly": true
 				},
@@ -2965,7 +3332,11 @@
 					"type": "string"
 				},
 				"s3_connector": {
-					"$ref": "#/definitions/Import_Connectors.S3Provider",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Import_Connectors.S3Provider"
+						}
+					],
 					"description": "S3Connector is the S3 specific information.",
 					"readOnly": true
 				},
@@ -2996,7 +3367,11 @@
 					"type": "array"
 				},
 				"pagination": {
-					"$ref": "#/definitions/PaginationResponse",
+					"allOf": [
+						{
+							"$ref": "#/definitions/PaginationResponse"
+						}
+					],
 					"description": "Pagination information for the returned list.",
 					"readOnly": true
 				}
@@ -3025,7 +3400,11 @@
 			"description": "S3Connector is the information required to define an S3 Connector.",
 			"properties": {
 				"access_keys": {
-					"$ref": "#/definitions/Import_Connectors.S3AccessKeysAuth",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Import_Connectors.S3AccessKeysAuth"
+						}
+					],
 					"description": "S3AccessKeysAuth is auth for S3 using access keys"
 				},
 				"bucket": {
@@ -3033,7 +3412,11 @@
 					"type": "string"
 				},
 				"cross_account": {
-					"$ref": "#/definitions/Import_Connectors.S3CrossAccountAuth",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Import_Connectors.S3CrossAccountAuth"
+						}
+					],
 					"description": "S3CrossAccountAuth is auth for S3 cross account"
 				},
 				"filenames": {
@@ -3078,7 +3461,11 @@
 			"description": "S3Provider is the information about the connector that can be returned.",
 			"properties": {
 				"access_keys": {
-					"$ref": "#/definitions/Import_Connectors.S3AccessKeysAuthDetail",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Import_Connectors.S3AccessKeysAuthDetail"
+						}
+					],
 					"description": "S3AccessKeysAuth is auth for S3 using access keys"
 				},
 				"bucket": {
@@ -3086,7 +3473,11 @@
 					"type": "string"
 				},
 				"cross_account": {
-					"$ref": "#/definitions/Import_Connectors.S3CrossAccountAuth",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Import_Connectors.S3CrossAccountAuth"
+						}
+					],
 					"description": "S3CrossAccountAuth is auth for S3 cross account"
 				},
 				"filenames": {
@@ -3107,7 +3498,11 @@
 			"description": "The response from the UpdateImportConnector method.",
 			"properties": {
 				"config": {
-					"$ref": "#/definitions/Import_Connectors.ImportConnector",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Import_Connectors.ImportConnector"
+						}
+					],
 					"description": "The configuration of the Import Connector that was updated.",
 					"readOnly": true
 				}
@@ -3122,7 +3517,11 @@
 					"type": "string"
 				},
 				"gcs_connector": {
-					"$ref": "#/definitions/Import_Connectors.GCSConnector",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Import_Connectors.GCSConnector"
+						}
+					],
 					"description": "GCSConnector is the GCS specific information."
 				},
 				"id": {
@@ -3135,7 +3534,11 @@
 					"type": "string"
 				},
 				"s3_connector": {
-					"$ref": "#/definitions/Import_Connectors.S3Connector",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Import_Connectors.S3Connector"
+						}
+					],
 					"description": "S3Connector is the S3 specific information."
 				}
 			},
@@ -3159,7 +3562,11 @@
 			"description": "The response from the GetExecution method.",
 			"properties": {
 				"execution_details": {
-					"$ref": "#/definitions/Importers.ImportExecutionDetails",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Importers.ImportExecutionDetails"
+						}
+					],
 					"description": "Details of the requested Import execution task."
 				}
 			},
@@ -3178,7 +3585,11 @@
 					"type": "string"
 				},
 				"error": {
-					"$ref": "#/definitions/Error",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Error"
+						}
+					],
 					"description": "The error produced by this entry entry."
 				},
 				"message": {
@@ -3186,7 +3597,11 @@
 					"type": "string"
 				},
 				"status": {
-					"$ref": "#/definitions/Importers.v1.Status",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Importers.v1.Status"
+						}
+					],
 					"description": "The status of the task for this entry."
 				}
 			},
@@ -3205,7 +3620,11 @@
 					"type": "string"
 				},
 				"current_status": {
-					"$ref": "#/definitions/Importers.v1.Status",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Importers.v1.Status"
+						}
+					],
 					"description": "The status of the current execution."
 				},
 				"id": {
@@ -3217,7 +3636,11 @@
 					"type": "string"
 				},
 				"progress": {
-					"$ref": "#/definitions/Importers.Progress",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Importers.Progress"
+						}
+					],
 					"description": "The information of the progress of the import as whole."
 				},
 				"updated_date_time": {
@@ -3236,7 +3659,11 @@
 			"description": "Detailed information about an execution and their history.",
 			"properties": {
 				"execution": {
-					"$ref": "#/definitions/Importers.ImportExecution",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Importers.ImportExecution"
+						}
+					],
 					"description": "Global information about a execution."
 				},
 				"history": {
@@ -3262,7 +3689,11 @@
 					"type": "array"
 				},
 				"pagination": {
-					"$ref": "#/definitions/PaginationResponse",
+					"allOf": [
+						{
+							"$ref": "#/definitions/PaginationResponse"
+						}
+					],
 					"description": "Pagination information for the returned list."
 				}
 			},
@@ -3321,7 +3752,11 @@
 			"description": "The input to the CreateImport method.",
 			"properties": {
 				"import": {
-					"$ref": "#/definitions/Imports.Import",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Imports.Import"
+						}
+					],
 					"description": "The configuration to create a new Import with."
 				}
 			},
@@ -3407,7 +3842,11 @@
 			"description": "The response from the GetImport method.",
 			"properties": {
 				"import": {
-					"$ref": "#/definitions/Imports.Import",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Imports.Import"
+						}
+					],
 					"description": "The configuration of the Import that was requested."
 				}
 			},
@@ -3417,7 +3856,11 @@
 			"description": "The response from the Get method.",
 			"properties": {
 				"local_file_upload_details": {
-					"$ref": "#/definitions/Imports.LocalFileUploadDetails",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Imports.LocalFileUploadDetails"
+						}
+					],
 					"description": "Details of the requested local file upload task."
 				}
 			},
@@ -3436,11 +3879,19 @@
 					"type": "string"
 				},
 				"error": {
-					"$ref": "#/definitions/Error",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Error"
+						}
+					],
 					"description": "The error produced by this entry entry."
 				},
 				"status": {
-					"$ref": "#/definitions/Imports.v1.Status",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Imports.v1.Status"
+						}
+					],
 					"description": "The status of the local file upload task for this entry."
 				}
 			},
@@ -3460,7 +3911,11 @@
 					"type": "string"
 				},
 				"data_filter": {
-					"$ref": "#/definitions/Imports.DataFilter",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Imports.DataFilter"
+						}
+					],
 					"description": "The filtered data to import from the import connector."
 				},
 				"description": {
@@ -3513,7 +3968,11 @@
 					"type": "array"
 				},
 				"pagination": {
-					"$ref": "#/definitions/PaginationResponse",
+					"allOf": [
+						{
+							"$ref": "#/definitions/PaginationResponse"
+						}
+					],
 					"description": "Pagination information for the returned list."
 				}
 			},
@@ -3531,7 +3990,11 @@
 					"type": "array"
 				},
 				"pagination": {
-					"$ref": "#/definitions/PaginationResponse",
+					"allOf": [
+						{
+							"$ref": "#/definitions/PaginationResponse"
+						}
+					],
 					"description": "Pagination information for the returned list."
 				}
 			},
@@ -3550,7 +4013,11 @@
 					"type": "string"
 				},
 				"current_status": {
-					"$ref": "#/definitions/Imports.v1.Status",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Imports.v1.Status"
+						}
+					],
 					"description": "The status of the local file upload."
 				},
 				"id": {
@@ -3585,7 +4052,11 @@
 					"type": "array"
 				},
 				"local_file_upload": {
-					"$ref": "#/definitions/Imports.LocalFileUpload",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Imports.LocalFileUpload"
+						}
+					],
 					"description": "Information about the local file upload."
 				}
 			},
@@ -3595,7 +4066,11 @@
 			"description": "The response from the UpdateImport method.",
 			"properties": {
 				"import": {
-					"$ref": "#/definitions/Imports.Import",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Imports.Import"
+						}
+					],
 					"description": "he configuration of the Import that was updated."
 				}
 			},
@@ -3667,7 +4142,11 @@
 					"type": "boolean"
 				},
 				"custom_category_def": {
-					"$ref": "#/definitions/Normalization_Config.CustomCategory",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Normalization_Config.CustomCategory"
+						}
+					],
 					"description": "CustomCategoryDef is a custom category creation request to make a custom\ncategory."
 				},
 				"ignore_warnings": {
@@ -3700,15 +4179,27 @@
 			"description": "CategoryType describes the types supported by custom categories and their\nrepresentation.",
 			"properties": {
 				"int_set": {
-					"$ref": "#/definitions/Normalization_Config.IntSet",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Normalization_Config.IntSet"
+						}
+					],
 					"description": "IntSet contains a list of integer values that make up a representation."
 				},
 				"integer_lists": {
-					"$ref": "#/definitions/Normalization_Config.IntegerList",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Normalization_Config.IntegerList"
+						}
+					],
 					"description": "IntegerLists contains a list of integer values that make up a\nrepresentation."
 				},
 				"integer_ranges": {
-					"$ref": "#/definitions/Normalization_Config.IntegerRange",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Normalization_Config.IntegerRange"
+						}
+					],
 					"description": "IntegerRanges contains a list of ranges that make up the overall range\nof a representation."
 				},
 				"integer_values": {
@@ -3717,15 +4208,27 @@
 					"type": "object"
 				},
 				"string_lists": {
-					"$ref": "#/definitions/Normalization_Config.StringList",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Normalization_Config.StringList"
+						}
+					],
 					"description": "StringLists contains a list of string values that make up a\nrepresentation."
 				},
 				"string_set": {
-					"$ref": "#/definitions/Normalization_Config.StringSet",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Normalization_Config.StringSet"
+						}
+					],
 					"description": "StringSet contains a set of string values that make up a\nrepresentation."
 				},
 				"string_values": {
-					"$ref": "#/definitions/Normalization_Config.StringValue",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Normalization_Config.StringValue"
+						}
+					],
 					"description": "StringValues allows representations to indicate that they support any\nunique string value."
 				}
 			},
@@ -3757,7 +4260,11 @@
 					"type": "array"
 				},
 				"incremental": {
-					"$ref": "#/definitions/Normalization_Config.IncrementalInstruction",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Normalization_Config.IncrementalInstruction"
+						}
+					],
 					"description": "Incremental describes whether this request is for an incremental import and\nspecifies the column names used for extracting incremental configuration\nfields per row.\n\n(armory.RunConfig.incremental)"
 				},
 				"redaction_threshold": {
@@ -3802,7 +4309,11 @@
 					"type": "string"
 				},
 				"normalization_config": {
-					"$ref": "#/definitions/Normalization_Config.Config",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Normalization_Config.Config"
+						}
+					],
 					"description": "Config is the normalization configuration defined by the user."
 				},
 				"updated_date_time": {
@@ -3856,7 +4367,11 @@
 					"type": "string"
 				},
 				"normalization_config": {
-					"$ref": "#/definitions/Normalization_Config.Config",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Normalization_Config.Config"
+						}
+					],
 					"description": "Config is the normalization configuration defined by the user."
 				}
 			},
@@ -3885,7 +4400,11 @@
 					"type": "string"
 				},
 				"type": {
-					"$ref": "#/definitions/Normalization_Config.CategoryType",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Normalization_Config.CategoryType"
+						}
+					],
 					"description": "Type describes the types supported by this Category."
 				}
 			},
@@ -3899,7 +4418,11 @@
 			"description": "GetConfigResponse is the response of the GetConfig rpc.",
 			"properties": {
 				"config": {
-					"$ref": "#/definitions/Normalization_Config.ConfigEntity",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Normalization_Config.ConfigEntity"
+						}
+					],
 					"description": "Config is the normalisation configuration that was requested."
 				}
 			},
@@ -4010,7 +4533,11 @@
 					"type": "array"
 				},
 				"pagination": {
-					"$ref": "#/definitions/PaginationResponse",
+					"allOf": [
+						{
+							"$ref": "#/definitions/PaginationResponse"
+						}
+					],
 					"description": "Pagination is the pagination details of the returned transforms."
 				}
 			},
@@ -4042,11 +4569,19 @@
 			"description": "Pair is a key-value pair describing a single element of a mapping.",
 			"properties": {
 				"key": {
-					"$ref": "#/definitions/Normalization_Config.v2.Value",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Normalization_Config.v2.Value"
+						}
+					],
 					"description": "Key is the key of the Pair."
 				},
 				"value": {
-					"$ref": "#/definitions/Normalization_Config.v2.Value",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Normalization_Config.v2.Value"
+						}
+					],
 					"description": "Value is the value of the Pair."
 				}
 			},
@@ -4069,7 +4604,11 @@
 			"description": "StringSet contains a set of string values that make up a representation.",
 			"properties": {
 				"validator": {
-					"$ref": "#/definitions/Normalization_Config.StringSet.Validator",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Normalization_Config.StringSet.Validator"
+						}
+					],
 					"description": "Validator is an optional regex to give structured format to an\notherwise free datatype. Examples include email formats, credit card\nnumbers or phone numbers."
 				},
 				"values": {
@@ -4100,7 +4639,11 @@
 			"description": "StringValue allows representations to indicate that they support any\nunique string value. Validation can be given in the form of a regex and\nto make sure unique strings adhere to a particular format. An example\nwould be email address or credit card numbers.",
 			"properties": {
 				"validator": {
-					"$ref": "#/definitions/Normalization_Config.StringValue.Validator",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Normalization_Config.StringValue.Validator"
+						}
+					],
 					"description": "Validator is an optional regex to give structured format to an\notherwise free datatype. Examples include email formats, credit card\nnumbers or phone numbers."
 				}
 			},
@@ -4173,15 +4716,27 @@
 					"type": "string"
 				},
 				"int64array": {
-					"$ref": "#/definitions/Normalization_Config.Int64Array",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Normalization_Config.Int64Array"
+						}
+					],
 					"description": "Represents an array of int64 values."
 				},
 				"int64range": {
-					"$ref": "#/definitions/Normalization_Config.Int64Range",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Normalization_Config.Int64Range"
+						}
+					],
 					"description": "Represents a range of int64 values."
 				},
 				"null": {
-					"$ref": "#/definitions/Normalization_Config.Null",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Normalization_Config.Null"
+						}
+					],
 					"description": "Represents a null value."
 				},
 				"text": {
@@ -4189,7 +4744,11 @@
 					"type": "string"
 				},
 				"textarray": {
-					"$ref": "#/definitions/Normalization_Config.TextArray",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Normalization_Config.TextArray"
+						}
+					],
 					"description": "Represents an array of string values."
 				},
 				"uint64": {
@@ -4208,7 +4767,11 @@
 			"description": "GetNormalizationResponse is the response for the GetNormalization rpc.",
 			"properties": {
 				"normalization_details": {
-					"$ref": "#/definitions/Normalizations.NormalizationDetails",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Normalizations.NormalizationDetails"
+						}
+					],
 					"description": "NormalizationDetails holds all information on the normalization as well as the shards being used to process the\nnormalization."
 				}
 			},
@@ -4223,7 +4786,11 @@
 					"type": "string"
 				},
 				"error": {
-					"$ref": "#/definitions/Error",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Error"
+						}
+					],
 					"description": "Error is the error encountered by the execution shard."
 				},
 				"message": {
@@ -4231,7 +4798,11 @@
 					"type": "string"
 				},
 				"status": {
-					"$ref": "#/definitions/Normalizations.v1.Status",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Normalizations.v1.Status"
+						}
+					],
 					"description": "Status is the status of the normalization execution shard."
 				}
 			},
@@ -4249,7 +4820,11 @@
 					"type": "array"
 				},
 				"pagination": {
-					"$ref": "#/definitions/PaginationResponse",
+					"allOf": [
+						{
+							"$ref": "#/definitions/PaginationResponse"
+						}
+					],
 					"description": "Pagination is the pagination details of the returned transforms."
 				}
 			},
@@ -4272,7 +4847,11 @@
 					"type": "string"
 				},
 				"current_status": {
-					"$ref": "#/definitions/Normalizations.v1.Status",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Normalizations.v1.Status"
+						}
+					],
 					"description": "CurrentStatus is the latest status of the normalization aggregated from its\nconstituent shards statuses."
 				},
 				"id": {
@@ -4297,7 +4876,11 @@
 					"type": "integer"
 				},
 				"progress": {
-					"$ref": "#/definitions/Normalizations.Progress",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Normalizations.Progress"
+						}
+					],
 					"description": "reserved 13;",
 					"title": "Progress holds information on the overall progress of a normalize"
 				},
@@ -4325,7 +4908,11 @@
 					"type": "array"
 				},
 				"normalization": {
-					"$ref": "#/definitions/Normalizations.Normalization",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Normalizations.Normalization"
+						}
+					],
 					"description": "Normalization holds the information on a normalization."
 				}
 			},
@@ -4502,7 +5089,11 @@
 					"type": "string"
 				},
 				"dataset_publish_config": {
-					"$ref": "#/definitions/Prepare_Configs.DatasetPublishConfig",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Prepare_Configs.DatasetPublishConfig"
+						}
+					],
 					"description": "DatasetPublishConfig is the dataset publish configuration defined by the user."
 				},
 				"description": {
@@ -4532,7 +5123,11 @@
 		"Prepare_Configs.CreateConfigRequest": {
 			"properties": {
 				"config": {
-					"$ref": "#/definitions/Prepare_Configs.DatasetPublishConfig",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Prepare_Configs.DatasetPublishConfig"
+						}
+					],
 					"title": "Config is the dataset prepare config - can be updated after creation"
 				},
 				"description": {
@@ -4624,7 +5219,11 @@
 			"description": "GetConfigResponse is the response of the GetConfig rpc.",
 			"properties": {
 				"config": {
-					"$ref": "#/definitions/Prepare_Configs.Config",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Prepare_Configs.Config"
+						}
+					],
 					"description": "Config is the dataset prepare configuration that was requested."
 				}
 			},
@@ -4641,7 +5240,11 @@
 					"type": "array"
 				},
 				"pagination": {
-					"$ref": "#/definitions/PaginationResponse",
+					"allOf": [
+						{
+							"$ref": "#/definitions/PaginationResponse"
+						}
+					],
 					"description": "Pagination is the pagination instructions for returned dataset prepare config categories."
 				}
 			},
@@ -4658,7 +5261,11 @@
 					"type": "array"
 				},
 				"pagination": {
-					"$ref": "#/definitions/PaginationResponse",
+					"allOf": [
+						{
+							"$ref": "#/definitions/PaginationResponse"
+						}
+					],
 					"description": "Pagination is the pagination instructions for returned dataset prepare config export columns."
 				}
 			},
@@ -4675,7 +5282,11 @@
 					"type": "array"
 				},
 				"pagination": {
-					"$ref": "#/definitions/PaginationResponse",
+					"allOf": [
+						{
+							"$ref": "#/definitions/PaginationResponse"
+						}
+					],
 					"description": "Pagination is the pagination instructions for returned dataset prepare config keys."
 				}
 			},
@@ -4693,7 +5304,11 @@
 					"type": "array"
 				},
 				"pagination": {
-					"$ref": "#/definitions/PaginationResponse",
+					"allOf": [
+						{
+							"$ref": "#/definitions/PaginationResponse"
+						}
+					],
 					"description": "Pagination is the pagination details of the returned dataset prepare configs."
 				}
 			},
@@ -4708,7 +5323,11 @@
 					"type": "string"
 				},
 				"dataset_publish_config_summary": {
-					"$ref": "#/definitions/Prepare_Configs.PublishConfigSummary",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Prepare_Configs.PublishConfigSummary"
+						}
+					],
 					"description": "PrepareConfigSummary is the dataset prepare configuration defined by the user."
 				},
 				"description": {
@@ -4778,7 +5397,11 @@
 			"description": "UpdateConfigRequest is used to update name and description.",
 			"properties": {
 				"config": {
-					"$ref": "#/definitions/Prepare_Configs.DatasetPublishConfig",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Prepare_Configs.DatasetPublishConfig"
+						}
+					],
 					"title": "Config is the dataset prepare config - can be updated after creation"
 				},
 				"description": {
@@ -4851,7 +5474,11 @@
 			"description": "GetPrepareResponse is the response for the GetPrepare rpc.",
 			"properties": {
 				"prepare_details": {
-					"$ref": "#/definitions/Publishing.PrepareDetails",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Publishing.PrepareDetails"
+						}
+					],
 					"description": "Prepare holds all information on the prepare as well as the shards being used to process the\nprepare."
 				}
 			},
@@ -4870,7 +5497,11 @@
 					"type": "string"
 				},
 				"error": {
-					"$ref": "#/definitions/Error",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Error"
+						}
+					],
 					"description": "Error is the error encountered by the execution shard."
 				},
 				"message": {
@@ -4878,11 +5509,19 @@
 					"type": "string"
 				},
 				"prepare_status": {
-					"$ref": "#/definitions/Publishing.PrepareStatus",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Publishing.PrepareStatus"
+						}
+					],
 					"description": "PrepareStatus is the state of a prepare that has been published."
 				},
 				"status": {
-					"$ref": "#/definitions/Publishing.v1.Status",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Publishing.v1.Status"
+						}
+					],
 					"description": "Status is the status of the prepare publish execution shard."
 				}
 			},
@@ -4892,7 +5531,11 @@
 			"description": "ListPreparesResponse is the response of the ListPrepares rpc.",
 			"properties": {
 				"pagination": {
-					"$ref": "#/definitions/PaginationResponse",
+					"allOf": [
+						{
+							"$ref": "#/definitions/PaginationResponse"
+						}
+					],
 					"description": "Pagination is the pagination details of the returned prepares."
 				},
 				"prepares": {
@@ -4914,7 +5557,11 @@
 					"type": "string"
 				},
 				"config_summary": {
-					"$ref": "#/definitions/Publishing.PublishConfigSummary",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Publishing.PublishConfigSummary"
+						}
+					],
 					"description": "ConfigSummary of the prepare."
 				},
 				"created_date_time": {
@@ -4923,7 +5570,11 @@
 					"type": "string"
 				},
 				"current_status": {
-					"$ref": "#/definitions/Publishing.v1.Status",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Publishing.v1.Status"
+						}
+					],
 					"description": "CurrentStatus is the latest status of the prepare aggregated from its\nconstituent shards statuses."
 				},
 				"dataset_id": {
@@ -4940,11 +5591,19 @@
 					"type": "string"
 				},
 				"prepare_status": {
-					"$ref": "#/definitions/Publishing.PrepareStatus",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Publishing.PrepareStatus"
+						}
+					],
 					"description": "PrepareStatus is the state of a prepare that has been published."
 				},
 				"progress": {
-					"$ref": "#/definitions/Publishing.Progress",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Publishing.Progress"
+						}
+					],
 					"description": "Progress is the progress of the prepare operation."
 				},
 				"recordset_id": {
@@ -4987,11 +5646,19 @@
 					"type": "string"
 				},
 				"config": {
-					"$ref": "#/definitions/Publishing.DatasetPublishConfig",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Publishing.DatasetPublishConfig"
+						}
+					],
 					"title": "Config of the publish"
 				},
 				"config_embedded": {
-					"$ref": "#/definitions/Publishing.DatasetPublishConfig",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Publishing.DatasetPublishConfig"
+						}
+					],
 					"description": "ConfigEmbedded is the config that was supplied, if an embedded config was used to create the prepare."
 				},
 				"config_id": {
@@ -5004,7 +5671,11 @@
 					"type": "string"
 				},
 				"current_status": {
-					"$ref": "#/definitions/Publishing.v1.Status",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Publishing.v1.Status"
+						}
+					],
 					"description": "CurrentStatus is the latest status of the prepare publish aggregated from its\nconstituent shards statuses."
 				},
 				"dataset_id": {
@@ -5021,11 +5692,19 @@
 					"type": "string"
 				},
 				"prepare_status": {
-					"$ref": "#/definitions/Publishing.PrepareStatus",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Publishing.PrepareStatus"
+						}
+					],
 					"description": "PrepareStatus is the state of a prepare that has been published."
 				},
 				"progress": {
-					"$ref": "#/definitions/Publishing.Progress",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Publishing.Progress"
+						}
+					],
 					"description": "Progress is the progress of the prepare operation."
 				},
 				"recordset_id": {
@@ -5176,7 +5855,11 @@
 					"type": "string"
 				},
 				"column_identifier": {
-					"$ref": "#/definitions/Queries.PairColumnIdentifier",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Queries.PairColumnIdentifier"
+						}
+					],
 					"description": "ColumnIdentifier contains details of the column to be used as the identifier."
 				},
 				"dataset_id": {
@@ -5245,7 +5928,11 @@
 					"type": "string"
 				},
 				"column_type": {
-					"$ref": "#/definitions/Queries.PairColumnType",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Queries.PairColumnType"
+						}
+					],
 					"description": "ColumnType is the data type of the column."
 				}
 			},
@@ -5386,7 +6073,11 @@
 			"description": "GetConfigResponse contains the requested config.",
 			"properties": {
 				"config": {
-					"$ref": "#/definitions/Recordset_Configs.Config",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Recordset_Configs.Config"
+						}
+					],
 					"description": "The details of the requested config."
 				}
 			},
@@ -5404,7 +6095,11 @@
 					"type": "array"
 				},
 				"pagination": {
-					"$ref": "#/definitions/PaginationResponse",
+					"allOf": [
+						{
+							"$ref": "#/definitions/PaginationResponse"
+						}
+					],
 					"description": "Details of the pagination of this response."
 				}
 			},
@@ -5435,7 +6130,11 @@
 					"type": "string"
 				},
 				"execution_config": {
-					"$ref": "#/definitions/Recordset_Creation.ExecutionConfig",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Recordset_Creation.ExecutionConfig"
+						}
+					],
 					"description": "The required information needed to execute the creation of a recordset."
 				},
 				"filepaths": {
@@ -5479,7 +6178,11 @@
 					"type": "string"
 				},
 				"current_status": {
-					"$ref": "#/definitions/Recordset_Creation.v1.Status",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Recordset_Creation.v1.Status"
+						}
+					],
 					"description": "CurrentStatus is the status of the current execution."
 				},
 				"id": {
@@ -5487,7 +6190,11 @@
 					"type": "string"
 				},
 				"progress": {
-					"$ref": "#/definitions/Recordset_Creation.Progress",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Recordset_Creation.Progress"
+						}
+					],
 					"description": "Progress has the information of the progress of the recordset."
 				},
 				"recordset_id": {
@@ -5552,11 +6259,19 @@
 					"type": "string"
 				},
 				"current_status": {
-					"$ref": "#/definitions/Recordset_Creation.v1.Status",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Recordset_Creation.v1.Status"
+						}
+					],
 					"description": "CurrentStatus is the status of the current execution."
 				},
 				"execution_config": {
-					"$ref": "#/definitions/Recordset_Creation.ExecutionConfig",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Recordset_Creation.ExecutionConfig"
+						}
+					],
 					"description": "ExecutionConfig contains supplied config used to execute the request."
 				},
 				"filepaths": {
@@ -5579,7 +6294,11 @@
 					"type": "string"
 				},
 				"progress": {
-					"$ref": "#/definitions/Recordset_Creation.ExecutionProgress",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Recordset_Creation.ExecutionProgress"
+						}
+					],
 					"description": "Progress has the information of the progress of the recordset."
 				},
 				"recordset_id": {
@@ -5632,7 +6351,11 @@
 			"description": "GetExecutionResponse contains the requested execution.",
 			"properties": {
 				"execution_details": {
-					"$ref": "#/definitions/Recordset_Creation.ExecutionDetails",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Recordset_Creation.ExecutionDetails"
+						}
+					],
 					"description": "The details of the requested execution."
 				}
 			},
@@ -5669,7 +6392,11 @@
 					"type": "array"
 				},
 				"pagination": {
-					"$ref": "#/definitions/PaginationResponse",
+					"allOf": [
+						{
+							"$ref": "#/definitions/PaginationResponse"
+						}
+					],
 					"description": "Details of the pagination of this response."
 				}
 			},
@@ -5733,7 +6460,11 @@
 					"type": "string"
 				},
 				"data_type": {
-					"$ref": "#/definitions/Recordsets.DataType",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Recordsets.DataType"
+						}
+					],
 					"description": "DataType is how the data should be semantically treated when querying: Continuous or Categorical."
 				},
 				"is_custom": {
@@ -5772,11 +6503,19 @@
 					"$ref": "#/definitions/Recordsets.RawColumn"
 				},
 				"statistics": {
-					"$ref": "#/definitions/Recordsets.ColumnStats",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Recordsets.ColumnStats"
+						}
+					],
 					"title": "statistics is the stats for a column"
 				},
 				"value_type": {
-					"$ref": "#/definitions/Recordsets.ValueType",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Recordsets.ValueType"
+						}
+					],
 					"title": "value_type is the type of values stored in this column"
 				}
 			},
@@ -5817,7 +6556,11 @@
 			"description": "GetResponse returns the requested recordset.",
 			"properties": {
 				"recordset": {
-					"$ref": "#/definitions/Recordsets.Recordset",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Recordsets.Recordset"
+						}
+					],
 					"description": "The details of the requested recordset."
 				}
 			},
@@ -5868,7 +6611,11 @@
 					"type": "array"
 				},
 				"pagination": {
-					"$ref": "#/definitions/PaginationResponse",
+					"allOf": [
+						{
+							"$ref": "#/definitions/PaginationResponse"
+						}
+					],
 					"description": "Details of the pagination of this response."
 				}
 			},
@@ -5878,7 +6625,11 @@
 			"description": "ListResponse returns the matching recordsets.",
 			"properties": {
 				"pagination": {
-					"$ref": "#/definitions/PaginationResponse",
+					"allOf": [
+						{
+							"$ref": "#/definitions/PaginationResponse"
+						}
+					],
 					"description": "Details of the pagination of this response."
 				},
 				"recordsets": {
@@ -6013,11 +6764,19 @@
 					"type": "string"
 				},
 				"normalization_details": {
-					"$ref": "#/definitions/Recordsets.Normalization",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Recordsets.Normalization"
+						}
+					],
 					"description": "Normalization details contains metadata about the normalized recordset."
 				},
 				"origin": {
-					"$ref": "#/definitions/Recordsets.Origin",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Recordsets.Origin"
+						}
+					],
 					"description": "origin is details of the job that created the recordset."
 				},
 				"raw_column_count": {
@@ -6092,7 +6851,11 @@
 					"type": "string"
 				},
 				"origin": {
-					"$ref": "#/definitions/Recordsets.Origin",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Recordsets.Origin"
+						}
+					],
 					"description": "Origin is details of the job that created the recordset."
 				},
 				"raw_column_count": {
@@ -6137,7 +6900,11 @@
 			"description": "RenameResponse returns the renamed recordset.",
 			"properties": {
 				"recordset": {
-					"$ref": "#/definitions/Recordsets.Recordset",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Recordsets.Recordset"
+						}
+					],
 					"description": "The Recordset overview, presenting an overview of the Recordset data."
 				}
 			},
@@ -6151,7 +6918,11 @@
 					"type": "string"
 				},
 				"recordset": {
-					"$ref": "#/definitions/Recordsets.Recordset",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Recordsets.Recordset"
+						}
+					],
 					"description": "The details of the requested recordset."
 				},
 				"valid": {
@@ -6197,7 +6968,11 @@
 			"description": "CreateRequest is the Create rpc input.",
 			"properties": {
 				"baseline": {
-					"$ref": "#/definitions/Reports.DatasetOrAudienceID",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Reports.DatasetOrAudienceID"
+						}
+					],
 					"description": "Baseline defines the dataset/audience to be used as the baseline data."
 				},
 				"baseline_filter": {
@@ -6216,7 +6991,11 @@
 					"type": "string"
 				},
 				"seed": {
-					"$ref": "#/definitions/Reports.DatasetOrAudienceID",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Reports.DatasetOrAudienceID"
+						}
+					],
 					"description": "Seed defines the dataset/audience to be used as the seed data."
 				},
 				"seed_filter": {
@@ -6311,7 +7090,11 @@
 		"Reports.GetCrossCategoryResultResponse": {
 			"properties": {
 				"result": {
-					"$ref": "#/definitions/Reports.DoubleCategoryResult",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Reports.DoubleCategoryResult"
+						}
+					],
 					"description": "The results for the possible combinations for the specified categories."
 				}
 			},
@@ -6321,7 +7104,11 @@
 			"description": "GetDefinitionResponse is the rpc response for Get.",
 			"properties": {
 				"baseline": {
-					"$ref": "#/definitions/Reports.DatasetOrAudienceID",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Reports.DatasetOrAudienceID"
+						}
+					],
 					"description": "The source of the baseline data."
 				},
 				"baseline_filter": {
@@ -6345,7 +7132,11 @@
 					"type": "string"
 				},
 				"error": {
-					"$ref": "#/definitions/Error",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Error"
+						}
+					],
 					"description": "The error that caused a report to fail. Empty if report has not failed."
 				},
 				"owner_id": {
@@ -6361,7 +7152,11 @@
 					"type": "string"
 				},
 				"seed": {
-					"$ref": "#/definitions/Reports.DatasetOrAudienceID",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Reports.DatasetOrAudienceID"
+						}
+					],
 					"description": "The source of the seed data."
 				},
 				"seed_filter": {
@@ -6369,7 +7164,11 @@
 					"type": "string"
 				},
 				"status": {
-					"$ref": "#/definitions/Reports.v1.Status",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Reports.v1.Status"
+						}
+					],
 					"description": "The status of report generation."
 				}
 			},
@@ -6379,15 +7178,27 @@
 			"description": "GetStatusResponse is the GetStatus rpc response.",
 			"properties": {
 				"error": {
-					"$ref": "#/definitions/Error",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Error"
+						}
+					],
 					"description": "The error that caused a report to fail. Empty if report has not failed."
 				},
 				"progress": {
-					"$ref": "#/definitions/Reports.Progress",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Reports.Progress"
+						}
+					],
 					"description": "The progress of the queries required to generate the report."
 				},
 				"status": {
-					"$ref": "#/definitions/Reports.v1.Status",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Reports.v1.Status"
+						}
+					],
 					"description": "The status of report generation."
 				}
 			},
@@ -6410,7 +7221,11 @@
 					"type": "string"
 				},
 				"progress": {
-					"$ref": "#/definitions/Reports.Progress",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Reports.Progress"
+						}
+					],
 					"description": "The progress of the queries required to generate the report."
 				},
 				"report_id": {
@@ -6426,7 +7241,11 @@
 					"type": "string"
 				},
 				"status": {
-					"$ref": "#/definitions/Reports.v1.Status",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Reports.v1.Status"
+						}
+					],
 					"description": "The status of report generation."
 				}
 			},
@@ -6436,7 +7255,11 @@
 			"description": "ListResponse is the response for the List rpc.",
 			"properties": {
 				"pagination": {
-					"$ref": "#/definitions/PaginationResponse",
+					"allOf": [
+						{
+							"$ref": "#/definitions/PaginationResponse"
+						}
+					],
 					"description": "The pagination details of the returned insight reports."
 				},
 				"reports": {
@@ -6454,7 +7277,11 @@
 			"description": "ListSinglesResultsResponse is the ListResults rpc response.",
 			"properties": {
 				"pagination": {
-					"$ref": "#/definitions/PaginationResponse",
+					"allOf": [
+						{
+							"$ref": "#/definitions/PaginationResponse"
+						}
+					],
 					"description": "The pagination details of the returned insight report results."
 				},
 				"results": {
@@ -9351,7 +10178,11 @@
 							"description": "Destination is the information required to define destinations.",
 							"properties": {
 								"connector_type": {
-									"$ref": "#/definitions/Destinations.ConnectorType",
+									"allOf": [
+										{
+											"$ref": "#/definitions/Destinations.ConnectorType"
+										}
+									],
 									"description": "ConnectorType states the type of connector used by the destination. Output only.",
 									"readOnly": true
 								},
@@ -9818,7 +10649,7 @@
 						"type": "string"
 					},
 					{
-						"description": "Filter is a string containing logic that can specify a restricted set of\nFiles to be returned. e.g. `name co 'Test' or name co 'Acme'`. These are\nthe supported fields for filtering:\n\nname\n  size\n  created_date_time                           (in RFC3339 format)\n  metadata.origin.task_type\n  metadata.origin.task_id\n  metadata.updated_date_time                  (in RFC3339 format)\n  metadata.hidden\n  metadata.resource_type\n  metadata.origin.properties.{property_name}  (dynamic filtering based on the properties)",
+						"description": "Filter is a string containing logic that can specify a restricted set of\nFiles to be returned. e.g. `name co 'Test' or name co 'Acme'`. These are\nthe supported fields for filtering:\n\nname\n  size\n  created_date_time                           (in RFC3339 format)\n  metadata.origin.task_type\n  metadata.origin.task_id\n  metadata.updated_date_time                  (in RFC3339 format)\n  metadata.resource_type\n  metadata.origin.properties.{property_name}  (dynamic filtering based on the properties)",
 						"in": "query",
 						"name": "filter",
 						"required": false,
@@ -10038,7 +10869,11 @@
 									"type": "string"
 								},
 								"gcs_connector": {
-									"$ref": "#/definitions/Import_Connectors.GCSConnector",
+									"allOf": [
+										{
+											"$ref": "#/definitions/Import_Connectors.GCSConnector"
+										}
+									],
 									"description": "GCSConnector is the GCS specific information."
 								},
 								"name": {
@@ -10046,7 +10881,11 @@
 									"type": "string"
 								},
 								"s3_connector": {
-									"$ref": "#/definitions/Import_Connectors.S3Connector",
+									"allOf": [
+										{
+											"$ref": "#/definitions/Import_Connectors.S3Connector"
+										}
+									],
 									"description": "S3Connector is the S3 specific information."
 								}
 							},
@@ -10605,7 +11444,11 @@
 									"type": "string"
 								},
 								"data_filter": {
-									"$ref": "#/definitions/Imports.DataFilter",
+									"allOf": [
+										{
+											"$ref": "#/definitions/Imports.DataFilter"
+										}
+									],
 									"description": "The filtered data to import from the import connector."
 								},
 								"description": {
