@@ -2152,12 +2152,6 @@
 		"Exports.ConsentStatus": {
 			"default": "CONSENT_STATUS_INVALID",
 			"description": "- UNSPECIFIED: Indicates that no specific consent status is applicable\n - GRANTED: Indicates that consent has been granted\n - DENIED: Indicates that consent has been denied",
-			"enum": [
-				"CONSENT_STATUS_INVALID",
-				"UNSPECIFIED",
-				"GRANTED",
-				"DENIED"
-			],
 			"title": "ConsentStatus enumerates the allowable user consent signals for exporting data to DV360",
 			"type": "string"
 		},
