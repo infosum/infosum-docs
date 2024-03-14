@@ -109,7 +109,7 @@
 					"type": "string"
 				},
 				"cron_timer": {
-					"description": "The execution schedule of the Automation in UNIX CRON format as described in https://man7.org/linux/man-pages/man5/crontab.5.html.",
+					"description": "The execution schedule of the Automation in UNIX CRON format as described in https://man7.org/linux/man-pages/man5/crontab.5.html. The schedule is executed relative to the supplied `timezone_identifier` for the Automation.",
 					"example": "0 */3 * * *",
 					"type": "string"
 				},
@@ -122,8 +122,8 @@
 					"type": "boolean"
 				},
 				"end_date_time": {
-					"description": "Optional date-time to cease triggering Automation Executions. Format is RFC3339. An empty value indicates that the schedule should never cease.",
-					"example": "2019-11-23T18:30:00Z",
+					"description": "Optional date-time to cease triggering Automation Executions. Format is RFC3339 which defaults to UTC. This parameter is unaffected by `timezone_identifier`. An empty value indicates that the schedule should never cease.",
+					"example": "2019-11-22T22:30:00Z",
 					"format": "date-time",
 					"type": "string"
 				},
@@ -136,13 +136,13 @@
 					"type": "string"
 				},
 				"start_date_time": {
-					"description": "Optional date-time to begin triggering Automation Executions based on the CRON schedule. Format is RFC3339. An empty value indicates that the schedule should begin as soon as possible.",
-					"example": "2019-11-22T18:30:00Z",
+					"description": "Optional date-time to begin triggering Automation Executions based on the CRON schedule. Format is RFC3339 which defaults to UTC. This parameter is unaffected by `timezone_identifier`. An empty value indicates that the schedule should begin as soon as possible.",
+					"example": "2019-11-22T22:30:00Z",
 					"format": "date-time",
 					"type": "string"
 				},
 				"timezone_identifier": {
-					"description": "The Timezone Identifier to schedule Automation Executions relative to. The format is form the IANA TZ database: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones. Be aware that scheduling near the lost or gained hour in a timezone which implements daylight savings time (DST) can lead to schedule disruption during transitions.",
+					"description": "The Timezone Identifier to schedule Automation Executions relative to using the `cron_timer`. This parameter does not affect the start or end times for scheduling. The format is from the IANA TZ database: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones. Be aware that scheduling near the lost or gained hour in a timezone which implements daylight savings time (DST) can lead to schedule disruption during transitions.",
 					"example": "Europe/London",
 					"type": "string"
 				},
@@ -162,7 +162,7 @@
 					"type": "string"
 				},
 				"cron_timer": {
-					"description": "The execution schedule of the Automation in UNIX CRON format as described in https://man7.org/linux/man-pages/man5/crontab.5.html.",
+					"description": "The execution schedule of the Automation in UNIX CRON format as described in https://man7.org/linux/man-pages/man5/crontab.5.html. The schedule is executed relative to the supplied `timezone_identifier` for the Automation.",
 					"example": "0 */3 * * *",
 					"type": "string"
 				},
@@ -175,8 +175,8 @@
 					"type": "boolean"
 				},
 				"end_date_time": {
-					"description": "Optional date-time to cease triggering Automation Executions. Format is RFC3339. An empty value indicates that the schedule should never cease.",
-					"example": "2019-11-23T18:30:00Z",
+					"description": "Optional date-time to cease triggering Automation Executions. Format is RFC3339 which defaults to UTC. Offsets relative to Zulu time must be provided to convey local times. This parameter is unaffected by `timezone_identifier`. An empty value indicates that the schedule should never cease.",
+					"example": "2019-11-23T18:30:00-04:00",
 					"format": "date-time",
 					"type": "string"
 				},
@@ -185,8 +185,8 @@
 					"type": "string"
 				},
 				"start_date_time": {
-					"description": "Optional date-time to begin triggering Automation Executions based on the CRON schedule. Format is RFC3339. An empty value indicates that the schedule should begin as soon as possible.",
-					"example": "2019-11-22T18:30:00Z",
+					"description": "Optional date-time to begin triggering Automation Executions based on the CRON schedule. Format is RFC3339 which defaults to UTC. Offsets relative to Zulu time must be provided to convey local times. This parameter is unaffected by `timezone_identifier`. An empty value indicates that the schedule should begin as soon as possible.",
+					"example": "2019-11-22T18:30:00-04:00",
 					"format": "date-time",
 					"type": "string"
 				},
@@ -199,7 +199,7 @@
 					"type": "array"
 				},
 				"timezone_identifier": {
-					"description": "The Timezone Identifier to schedule Automation Executions relative to. The format is form the IANA TZ database: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones. Be aware that scheduling near the lost or gained hour in a timezone which implements daylight savings time (DST) can lead to schedule disruption during transitions.",
+					"description": "The Timezone Identifier to schedule Automation Executions relative to using the `cron_timer`. This parameter does not affect the start or end times for scheduling. The format is from the IANA TZ database: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones. Be aware that scheduling near the lost or gained hour in a timezone which implements daylight savings time (DST) can lead to schedule disruption during transitions.",
 					"example": "Europe/London",
 					"type": "string"
 				}
@@ -327,7 +327,7 @@
 			"description": "The mutable fields of an Automation.",
 			"properties": {
 				"cron_timer": {
-					"description": "The execution schedule of the Automation in UNIX CRON format as described in https://man7.org/linux/man-pages/man5/crontab.5.html.",
+					"description": "The execution schedule of the Automation in UNIX CRON format as described in https://man7.org/linux/man-pages/man5/crontab.5.html. The schedule is executed relative to the supplied `timezone_identifier` for the Automation.",
 					"example": "0 */3 * * *",
 					"type": "string"
 				},
@@ -340,8 +340,8 @@
 					"type": "boolean"
 				},
 				"end_date_time": {
-					"description": "Optional date-time to cease triggering Automation Executions. Format is RFC3339. An empty value indicates that the schedule should never cease.",
-					"example": "2019-11-23T18:30:00Z",
+					"description": "Optional date-time to cease triggering Automation Executions. Format is RFC3339 which defaults to UTC. Offsets relative to Zulu time must be provided to convey local times. This parameter is unaffected by `timezone_identifier`. An empty value indicates that the schedule should never cease.",
+					"example": "2019-11-22T18:30:00-04:00",
 					"format": "date-time",
 					"type": "string"
 				},
@@ -350,13 +350,13 @@
 					"type": "string"
 				},
 				"start_date_time": {
-					"description": "Optional date-time to begin triggering Automation Executions based on the CRON schedule. Format is RFC3339. An empty value indicates that the schedule should begin as soon as possible.",
-					"example": "2019-11-22T18:30:00Z",
+					"description": "Optional date-time to begin triggering Automation Executions based on the CRON schedule. Format is RFC3339 which defaults to UTC. Offsets relative to Zulu time must be provided to convey local times. This parameter is unaffected by `timezone_identifier`. An empty value indicates that the schedule should begin as soon as possible.",
+					"example": "2019-11-22T18:30:00-04:00",
 					"format": "date-time",
 					"type": "string"
 				},
 				"timezone_identifier": {
-					"description": "The Timezone Identifier to schedule Automation Executions relative to. The format is form the IANA TZ database: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones. Be aware that scheduling near the lost or gained hour in a timezone which implements daylight savings time (DST) can lead to schedule disruption during transitions.",
+					"description": "The Timezone Identifier to schedule Automation Executions relative to using the `cron_timer`. This parameter does not affect the start or end times for scheduling. The format is from the IANA TZ database: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones. Be aware that scheduling near the lost or gained hour in a timezone which implements daylight savings time (DST) can lead to schedule disruption during transitions.",
 					"example": "Europe/London",
 					"type": "string"
 				}
