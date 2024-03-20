@@ -5984,6 +5984,14 @@
 					"description": "Description is an optional description given to this config.",
 					"type": "string"
 				},
+				"file_type": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Recordset_Configs.FileType"
+						}
+					],
+					"description": "FileType allows control over the file type used by the recordset creation."
+				},
 				"header_names": {
 					"description": "HeaderNames is a list of the header/column names. To be provided if the files do not contain a header row.\nMust be in the same order as the columns in the files.",
 					"items": {
@@ -6027,6 +6035,14 @@
 				"description": {
 					"description": "An optional description given to the config.",
 					"type": "string"
+				},
+				"file_type": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Recordset_Configs.FileType"
+						}
+					],
+					"description": "The type of files to process. Optionally override the default automatic by file type behaviour by telling the configuration what type the files are."
 				},
 				"header_names": {
 					"description": "The names of the headers/columns. Must be provided if the input files do not have a header row, and in the same order as the columns in the input files.",
@@ -6072,6 +6088,17 @@
 		"Recordset_Configs.DeleteConfigResponse": {
 			"description": "DeleteConfigResponse is the output from the DeleteConfig method.",
 			"type": "object"
+		},
+		"Recordset_Configs.FileType": {
+			"default": "AUTO",
+			"description": "- AUTO: Auto, default, detects the file type based on file extension.\n - CSV: CSV specifies that all files for this recordset creation are CSV, regardless of file extension.\n - PARQUET: Parquet specifies that all files for this recordset creation are Parquet, regardless of file extension.",
+			"enum": [
+				"AUTO",
+				"CSV",
+				"PARQUET"
+			],
+			"title": "RecordsetFileType controls the file type detection behaviour when creating a recordset",
+			"type": "string"
 		},
 		"Recordset_Configs.GetConfigResponse": {
 			"description": "GetConfigResponse contains the requested config.",
@@ -6224,6 +6251,14 @@
 		"Recordset_Creation.ExecutionConfig": {
 			"description": "ExecutionConfig contains the needed information to create an recordset execution.",
 			"properties": {
+				"file_type": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Recordset_Creation.FileType"
+						}
+					],
+					"description": "FileType allows control over the file type used by the recordset creation."
+				},
 				"header_names": {
 					"description": "HeaderNames is a list of the header/column names. To be provided if the files do not contain a header row.\nMust be in the same order as the columns in the files.",
 					"items": {
@@ -6350,6 +6385,17 @@
 				}
 			},
 			"type": "object"
+		},
+		"Recordset_Creation.FileType": {
+			"default": "AUTO",
+			"description": "- AUTO: Auto, default, detects the file type based on file extension.\n - CSV: CSV specifies that all files for this recordset creation are CSV, regardless of file extension.\n - PARQUET: Parquet specifies that all files for this recordset creation are Parquet, regardless of file extension.",
+			"enum": [
+				"AUTO",
+				"CSV",
+				"PARQUET"
+			],
+			"title": "RecordsetFileType controls the file type detection behaviour when creating a recordset",
+			"type": "string"
 		},
 		"Recordset_Creation.GetExecutionResponse": {
 			"description": "GetExecutionResponse contains the requested execution.",
@@ -13585,6 +13631,14 @@
 								"description": {
 									"description": "Description is an optional description given to this config.",
 									"type": "string"
+								},
+								"file_type": {
+									"allOf": [
+										{
+											"$ref": "#/definitions/Recordset_Configs.FileType"
+										}
+									],
+									"description": "FileType allows control over the file type used by the recordset creation."
 								},
 								"header_names": {
 									"description": "HeaderNames is a list of the header/column names. To be provided if the files do not contain a header row.\nMust be in the same order as the columns in the files.",
