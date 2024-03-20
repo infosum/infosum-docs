@@ -3196,8 +3196,7 @@
 							"$ref": "#/definitions/Import_Connectors.UpsertImportConnector"
 						}
 					],
-					"description": "The configuration to create a new Import Connector with.",
-					"readOnly": true
+					"description": "The configuration to create a new Import Connector with."
 				}
 			},
 			"type": "object"
@@ -3207,7 +3206,6 @@
 			"properties": {
 				"config_id": {
 					"description": "The id of the Import Connector that has been created.",
-					"readOnly": true,
 					"type": "string"
 				}
 			},
@@ -3286,8 +3284,7 @@
 							"$ref": "#/definitions/Import_Connectors.ImportConnector"
 						}
 					],
-					"description": "The configuration of the Import Connector that was requested.",
-					"readOnly": true
+					"description": "The configuration of the Import Connector that was requested."
 				}
 			},
 			"type": "object"
@@ -3367,7 +3364,6 @@
 					"description": "A list of configurations of Import Connectors.",
 					"items": {
 						"$ref": "#/definitions/Import_Connectors.ImportConnector",
-						"readOnly": true,
 						"type": "object"
 					},
 					"type": "array"
@@ -3378,8 +3374,7 @@
 							"$ref": "#/definitions/PaginationResponse"
 						}
 					],
-					"description": "Pagination information for the returned list.",
-					"readOnly": true
+					"description": "Pagination information for the returned list."
 				}
 			},
 			"type": "object"
@@ -3509,8 +3504,7 @@
 							"$ref": "#/definitions/Import_Connectors.ImportConnector"
 						}
 					],
-					"description": "The configuration of the Import Connector that was updated.",
-					"readOnly": true
+					"description": "The configuration of the Import Connector that was updated."
 				}
 			},
 			"type": "object"
