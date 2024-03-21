@@ -3196,8 +3196,7 @@
 							"$ref": "#/definitions/Import_Connectors.UpsertImportConnector"
 						}
 					],
-					"description": "The configuration to create a new Import Connector with.",
-					"readOnly": true
+					"description": "The configuration to create a new Import Connector with."
 				}
 			},
 			"type": "object"
@@ -3207,7 +3206,6 @@
 			"properties": {
 				"config_id": {
 					"description": "The id of the Import Connector that has been created.",
-					"readOnly": true,
 					"type": "string"
 				}
 			},
@@ -3286,8 +3284,7 @@
 							"$ref": "#/definitions/Import_Connectors.ImportConnector"
 						}
 					],
-					"description": "The configuration of the Import Connector that was requested.",
-					"readOnly": true
+					"description": "The configuration of the Import Connector that was requested."
 				}
 			},
 			"type": "object"
@@ -3367,7 +3364,6 @@
 					"description": "A list of configurations of Import Connectors.",
 					"items": {
 						"$ref": "#/definitions/Import_Connectors.ImportConnector",
-						"readOnly": true,
 						"type": "object"
 					},
 					"type": "array"
@@ -3378,8 +3374,7 @@
 							"$ref": "#/definitions/PaginationResponse"
 						}
 					],
-					"description": "Pagination information for the returned list.",
-					"readOnly": true
+					"description": "Pagination information for the returned list."
 				}
 			},
 			"type": "object"
@@ -3509,8 +3504,7 @@
 							"$ref": "#/definitions/Import_Connectors.ImportConnector"
 						}
 					],
-					"description": "The configuration of the Import Connector that was updated.",
-					"readOnly": true
+					"description": "The configuration of the Import Connector that was updated."
 				}
 			},
 			"type": "object"
@@ -4995,15 +4989,13 @@
 			"description": "Details to configure paginated record responses.",
 			"properties": {
 				"page": {
-					"default": "1",
-					"description": "The requested page of records.",
+					"description": "The requested page of records. Default is 1.",
 					"format": "int32",
 					"minimum": 1,
 					"type": "integer"
 				},
 				"per_page": {
-					"default": "100",
-					"description": "The number of records to return per page. Maximum is 500.",
+					"description": "The number of records to return per page. Maximum is 500. Default is 100.",
 					"format": "int32",
 					"maximum": 500,
 					"minimum": 1,
@@ -5986,6 +5978,14 @@
 					"description": "Description is an optional description given to this config.",
 					"type": "string"
 				},
+				"file_type": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Recordset_Configs.FileType"
+						}
+					],
+					"description": "FileType allows the user to dictate the file format used by the recordset creation task to read the input files, disregarding any file extensions."
+				},
 				"header_names": {
 					"description": "HeaderNames is a list of the header/column names. To be provided if the files do not contain a header row.\nMust be in the same order as the columns in the files.",
 					"items": {
@@ -6029,6 +6029,14 @@
 				"description": {
 					"description": "An optional description given to the config.",
 					"type": "string"
+				},
+				"file_type": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Recordset_Configs.FileType"
+						}
+					],
+					"description": "The type of files to process. Optionally override the default automatic by file type behaviour by telling the configuration what type the files are."
 				},
 				"header_names": {
 					"description": "The names of the headers/columns. Must be provided if the input files do not have a header row, and in the same order as the columns in the input files.",
@@ -6074,6 +6082,17 @@
 		"Recordset_Configs.DeleteConfigResponse": {
 			"description": "DeleteConfigResponse is the output from the DeleteConfig method.",
 			"type": "object"
+		},
+		"Recordset_Configs.FileType": {
+			"default": "AUTO",
+			"description": "- AUTO: Auto, default, detects the file type based on file extension.\n - CSV: CSV specifies that all files for this recordset creation are CSV, regardless of file extension.\n - PARQUET: Parquet specifies that all files for this recordset creation are Parquet, regardless of file extension.",
+			"enum": [
+				"AUTO",
+				"CSV",
+				"PARQUET"
+			],
+			"title": "RecordsetFileType controls the file type detection behaviour when creating a recordset",
+			"type": "string"
 		},
 		"Recordset_Configs.GetConfigResponse": {
 			"description": "GetConfigResponse contains the requested config.",
@@ -6226,6 +6245,14 @@
 		"Recordset_Creation.ExecutionConfig": {
 			"description": "ExecutionConfig contains the needed information to create an recordset execution.",
 			"properties": {
+				"file_type": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Recordset_Creation.FileType"
+						}
+					],
+					"description": "FileType allows the user to dictate the file format used by the recordset creation task to read the input files, disregarding any file extensions."
+				},
 				"header_names": {
 					"description": "HeaderNames is a list of the header/column names. To be provided if the files do not contain a header row.\nMust be in the same order as the columns in the files.",
 					"items": {
@@ -6352,6 +6379,17 @@
 				}
 			},
 			"type": "object"
+		},
+		"Recordset_Creation.FileType": {
+			"default": "AUTO",
+			"description": "- AUTO: Auto, default, detects the file type based on file extension.\n - CSV: CSV specifies that all files for this recordset creation are CSV, regardless of file extension.\n - PARQUET: Parquet specifies that all files for this recordset creation are Parquet, regardless of file extension.",
+			"enum": [
+				"AUTO",
+				"CSV",
+				"PARQUET"
+			],
+			"title": "RecordsetFileType controls the file type detection behaviour when creating a recordset",
+			"type": "string"
 		},
 		"Recordset_Creation.GetExecutionResponse": {
 			"description": "GetExecutionResponse contains the requested execution.",
@@ -7404,8 +7442,7 @@
 				"operationId": "ListDisplayNames",
 				"parameters": [
 					{
-						"default": "1",
-						"description": "The requested page of records.",
+						"description": "The requested page of records. Default is 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -7413,8 +7450,7 @@
 						"type": "integer"
 					},
 					{
-						"default": "100",
-						"description": "The number of records to return per page. Maximum is 500.",
+						"description": "The number of records to return per page. Maximum is 500. Default is 100.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.per_page",
@@ -7479,8 +7515,7 @@
 				"operationId": "ListConfigs",
 				"parameters": [
 					{
-						"default": "1",
-						"description": "The requested page of records.",
+						"description": "The requested page of records. Default is 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -7488,8 +7523,7 @@
 						"type": "integer"
 					},
 					{
-						"default": "100",
-						"description": "The number of records to return per page. Maximum is 500.",
+						"description": "The number of records to return per page. Maximum is 500. Default is 100.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.per_page",
@@ -7871,8 +7905,7 @@
 				"operationId": "ListExecution",
 				"parameters": [
 					{
-						"default": "1",
-						"description": "The requested page of records.",
+						"description": "The requested page of records. Default is 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -7880,8 +7913,7 @@
 						"type": "integer"
 					},
 					{
-						"default": "100",
-						"description": "The number of records to return per page. Maximum is 500.",
+						"description": "The number of records to return per page. Maximum is 500. Default is 100.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.per_page",
@@ -8016,8 +8048,7 @@
 				"operationId": "List",
 				"parameters": [
 					{
-						"default": "1",
-						"description": "The requested page of records.",
+						"description": "The requested page of records. Default is 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -8025,8 +8056,7 @@
 						"type": "integer"
 					},
 					{
-						"default": "100",
-						"description": "The number of records to return per page. Maximum is 500.",
+						"description": "The number of records to return per page. Maximum is 500. Default is 100.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.per_page",
@@ -8418,8 +8448,7 @@
 				"operationId": "ListConfigs",
 				"parameters": [
 					{
-						"default": "1",
-						"description": "The requested page of records.",
+						"description": "The requested page of records. Default is 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -8427,8 +8456,7 @@
 						"type": "integer"
 					},
 					{
-						"default": "100",
-						"description": "The number of records to return per page. Maximum is 500.",
+						"description": "The number of records to return per page. Maximum is 500. Default is 100.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.per_page",
@@ -8812,8 +8840,7 @@
 						"type": "string"
 					},
 					{
-						"default": "1",
-						"description": "The requested page of records.",
+						"description": "The requested page of records. Default is 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -8821,8 +8848,7 @@
 						"type": "integer"
 					},
 					{
-						"default": "100",
-						"description": "The number of records to return per page. Maximum is 500.",
+						"description": "The number of records to return per page. Maximum is 500. Default is 100.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.per_page",
@@ -9038,8 +9064,7 @@
 						"type": "string"
 					},
 					{
-						"default": "1",
-						"description": "The requested page of records.",
+						"description": "The requested page of records. Default is 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -9047,8 +9072,7 @@
 						"type": "integer"
 					},
 					{
-						"default": "100",
-						"description": "The number of records to return per page. Maximum is 500.",
+						"description": "The number of records to return per page. Maximum is 500. Default is 100.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.per_page",
@@ -9264,8 +9288,7 @@
 						"type": "string"
 					},
 					{
-						"default": "1",
-						"description": "The requested page of records.",
+						"description": "The requested page of records. Default is 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -9273,8 +9296,7 @@
 						"type": "integer"
 					},
 					{
-						"default": "100",
-						"description": "The number of records to return per page. Maximum is 500.",
+						"description": "The number of records to return per page. Maximum is 500. Default is 100.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.per_page",
@@ -9421,8 +9443,7 @@
 				"operationId": "ListDatasets",
 				"parameters": [
 					{
-						"default": "1",
-						"description": "The requested page of records.",
+						"description": "The requested page of records. Default is 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -9430,8 +9451,7 @@
 						"type": "integer"
 					},
 					{
-						"default": "100",
-						"description": "The number of records to return per page. Maximum is 500.",
+						"description": "The number of records to return per page. Maximum is 500. Default is 100.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.per_page",
@@ -9990,8 +10010,7 @@
 				"operationId": "ListDestinations",
 				"parameters": [
 					{
-						"default": "1",
-						"description": "The requested page of records.",
+						"description": "The requested page of records. Default is 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -9999,8 +10018,7 @@
 						"type": "integer"
 					},
 					{
-						"default": "100",
-						"description": "The number of records to return per page. Maximum is 500.",
+						"description": "The number of records to return per page. Maximum is 500. Default is 100.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.per_page",
@@ -10630,8 +10648,7 @@
 						"type": "string"
 					},
 					{
-						"default": "1",
-						"description": "The requested page of records.",
+						"description": "The requested page of records. Default is 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -10639,8 +10656,7 @@
 						"type": "integer"
 					},
 					{
-						"default": "100",
-						"description": "The number of records to return per page. Maximum is 500.",
+						"description": "The number of records to return per page. Maximum is 500. Default is 100.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.per_page",
@@ -10712,8 +10728,7 @@
 				"operationId": "ListImportConnectors",
 				"parameters": [
 					{
-						"default": "1",
-						"description": "The requested page of records.",
+						"description": "The requested page of records. Default is 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -10721,8 +10736,7 @@
 						"type": "integer"
 					},
 					{
-						"default": "100",
-						"description": "The number of records to return per page. Maximum is 500.",
+						"description": "The number of records to return per page. Maximum is 500. Default is 100.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.per_page",
@@ -11073,8 +11087,7 @@
 				"operationId": "ListImportExecutions",
 				"parameters": [
 					{
-						"default": "1",
-						"description": "The requested page of records.",
+						"description": "The requested page of records. Default is 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -11082,8 +11095,7 @@
 						"type": "integer"
 					},
 					{
-						"default": "100",
-						"description": "The number of records to return per page. Maximum is 500.",
+						"description": "The number of records to return per page. Maximum is 500. Default is 100.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.per_page",
@@ -11281,8 +11293,7 @@
 				"operationId": "ListImports",
 				"parameters": [
 					{
-						"default": "1",
-						"description": "The requested page of records.",
+						"description": "The requested page of records. Default is 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -11290,8 +11301,7 @@
 						"type": "integer"
 					},
 					{
-						"default": "100",
-						"description": "The number of records to return per page. Maximum is 500.",
+						"description": "The number of records to return per page. Maximum is 500. Default is 100.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.per_page",
@@ -11729,8 +11739,7 @@
 				"operationId": "List",
 				"parameters": [
 					{
-						"default": "1",
-						"description": "The requested page of records.",
+						"description": "The requested page of records. Default is 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -11738,8 +11747,7 @@
 						"type": "integer"
 					},
 					{
-						"default": "100",
-						"description": "The number of records to return per page. Maximum is 500.",
+						"description": "The number of records to return per page. Maximum is 500. Default is 100.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.per_page",
@@ -12063,8 +12071,7 @@
 				"operationId": "ListConfigs",
 				"parameters": [
 					{
-						"default": "1",
-						"description": "The requested page of records.",
+						"description": "The requested page of records. Default is 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -12072,8 +12079,7 @@
 						"type": "integer"
 					},
 					{
-						"default": "100",
-						"description": "The number of records to return per page. Maximum is 500.",
+						"description": "The number of records to return per page. Maximum is 500. Default is 100.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.per_page",
@@ -12384,8 +12390,7 @@
 				"operationId": "ListNormalizations",
 				"parameters": [
 					{
-						"default": "1",
-						"description": "The requested page of records.",
+						"description": "The requested page of records. Default is 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -12393,8 +12398,7 @@
 						"type": "integer"
 					},
 					{
-						"default": "100",
-						"description": "The number of records to return per page. Maximum is 500.",
+						"description": "The number of records to return per page. Maximum is 500. Default is 100.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.per_page",
@@ -12592,8 +12596,7 @@
 				"operationId": "Categories",
 				"parameters": [
 					{
-						"default": "1",
-						"description": "The requested page of records.",
+						"description": "The requested page of records. Default is 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -12601,8 +12604,7 @@
 						"type": "integer"
 					},
 					{
-						"default": "100",
-						"description": "The number of records to return per page. Maximum is 500.",
+						"description": "The number of records to return per page. Maximum is 500. Default is 100.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.per_page",
@@ -12674,8 +12676,7 @@
 				"operationId": "Keys",
 				"parameters": [
 					{
-						"default": "1",
-						"description": "The requested page of records.",
+						"description": "The requested page of records. Default is 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -12683,8 +12684,7 @@
 						"type": "integer"
 					},
 					{
-						"default": "100",
-						"description": "The number of records to return per page. Maximum is 500.",
+						"description": "The number of records to return per page. Maximum is 500. Default is 100.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.per_page",
@@ -12797,8 +12797,7 @@
 				"operationId": "KeyCategories",
 				"parameters": [
 					{
-						"default": "1",
-						"description": "The requested page of records.",
+						"description": "The requested page of records. Default is 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -12806,8 +12805,7 @@
 						"type": "integer"
 					},
 					{
-						"default": "100",
-						"description": "The number of records to return per page. Maximum is 500.",
+						"description": "The number of records to return per page. Maximum is 500. Default is 100.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.per_page",
@@ -12944,8 +12942,7 @@
 				"operationId": "ListPrepares",
 				"parameters": [
 					{
-						"default": "1",
-						"description": "The requested page of records.",
+						"description": "The requested page of records. Default is 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -12953,8 +12950,7 @@
 						"type": "integer"
 					},
 					{
-						"default": "100",
-						"description": "The number of records to return per page. Maximum is 500.",
+						"description": "The number of records to return per page. Maximum is 500. Default is 100.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.per_page",
@@ -13447,8 +13443,7 @@
 				"operationId": "ListConfigs",
 				"parameters": [
 					{
-						"default": "1",
-						"description": "The requested page of records.",
+						"description": "The requested page of records. Default is 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -13456,8 +13451,7 @@
 						"type": "integer"
 					},
 					{
-						"default": "100",
-						"description": "The number of records to return per page. Maximum is 500.",
+						"description": "The number of records to return per page. Maximum is 500. Default is 100.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.per_page",
@@ -13631,6 +13625,14 @@
 								"description": {
 									"description": "Description is an optional description given to this config.",
 									"type": "string"
+								},
+								"file_type": {
+									"allOf": [
+										{
+											"$ref": "#/definitions/Recordset_Configs.FileType"
+										}
+									],
+									"description": "FileType allows the user to dictate the file format used by the recordset creation task to read the input files, disregarding any file extensions."
 								},
 								"header_names": {
 									"description": "HeaderNames is a list of the header/column names. To be provided if the files do not contain a header row.\nMust be in the same order as the columns in the files.",
@@ -13922,8 +13924,7 @@
 				"operationId": "ListExecutions",
 				"parameters": [
 					{
-						"default": "1",
-						"description": "The requested page of records.",
+						"description": "The requested page of records. Default is 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -13931,8 +13932,7 @@
 						"type": "integer"
 					},
 					{
-						"default": "100",
-						"description": "The number of records to return per page. Maximum is 500.",
+						"description": "The number of records to return per page. Maximum is 500. Default is 100.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.per_page",
@@ -14143,8 +14143,7 @@
 						"type": "string"
 					},
 					{
-						"default": "1",
-						"description": "The requested page of records.",
+						"description": "The requested page of records. Default is 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -14152,8 +14151,7 @@
 						"type": "integer"
 					},
 					{
-						"default": "100",
-						"description": "The number of records to return per page. Maximum is 500.",
+						"description": "The number of records to return per page. Maximum is 500. Default is 100.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.per_page",
@@ -14446,8 +14444,7 @@
 						"type": "string"
 					},
 					{
-						"default": "1",
-						"description": "The requested page of records.",
+						"description": "The requested page of records. Default is 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -14455,8 +14452,7 @@
 						"type": "integer"
 					},
 					{
-						"default": "100",
-						"description": "The number of records to return per page. Maximum is 500.",
+						"description": "The number of records to return per page. Maximum is 500. Default is 100.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.per_page",
@@ -14604,8 +14600,7 @@
 				"operationId": "List",
 				"parameters": [
 					{
-						"default": "1",
-						"description": "The requested page of records.",
+						"description": "The requested page of records. Default is 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -14613,8 +14608,7 @@
 						"type": "integer"
 					},
 					{
-						"default": "100",
-						"description": "The number of records to return per page. Maximum is 500.",
+						"description": "The number of records to return per page. Maximum is 500. Default is 100.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.per_page",
@@ -14947,8 +14941,7 @@
 						"type": "string"
 					},
 					{
-						"default": "1",
-						"description": "The requested page of records.",
+						"description": "The requested page of records. Default is 1.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.page",
@@ -14956,8 +14949,7 @@
 						"type": "integer"
 					},
 					{
-						"default": "100",
-						"description": "The number of records to return per page. Maximum is 500.",
+						"description": "The number of records to return per page. Maximum is 500. Default is 100.",
 						"format": "int32",
 						"in": "query",
 						"name": "pagination.per_page",
