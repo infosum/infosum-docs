@@ -5213,8 +5213,8 @@ definitions:
         allOf:
           - $ref: '#/definitions/Recordset_Configs.FileType'
         description: >-
-          FileType allows the user to dictate the file format used by the
-          recordset creation task to read the input files, disregarding any file
+          Allows the user to dictate the file format used by the recordset
+          creation task to read the input files, disregarding any file
           extensions.
       header_names:
         description: >-
@@ -5263,9 +5263,9 @@ definitions:
         allOf:
           - $ref: '#/definitions/Recordset_Configs.FileType'
         description: >-
-          The type of files to process. Optionally override the default
-          automatic by file type behaviour by telling the configuration what
-          type the files are.
+          Allows the user to dictate the file format used by the recordset
+          creation task to read the input files, disregarding any file
+          extensions.
       header_names:
         description: >-
           The names of the headers/columns. Must be provided if the input files
@@ -5312,8 +5312,8 @@ definitions:
       - CSV
       - PARQUET
     title: >-
-      RecordsetFileType controls the file type detection behaviour when creating
-      a recordset
+      FileType enumerates the file type detection behaviour when creating a
+      recordset
     type: string
   Recordset_Configs.GetConfigResponse:
     description: GetConfigResponse contains the requested config.
@@ -5435,8 +5435,8 @@ definitions:
         allOf:
           - $ref: '#/definitions/Recordset_Creation.FileType'
         description: >-
-          FileType allows the user to dictate the file format used by the
-          recordset creation task to read the input files, disregarding any file
+          Allows the user to dictate the file format used by the recordset
+          creation task to read the input files, disregarding any file
           extensions.
       header_names:
         description: >-
@@ -5557,8 +5557,8 @@ definitions:
       - CSV
       - PARQUET
     title: >-
-      RecordsetFileType controls the file type detection behaviour when creating
-      a recordset
+      FileType enumerates the file type detection behaviour when creating a
+      recordset
     type: string
   Recordset_Creation.GetExecutionResponse:
     description: GetExecutionResponse contains the requested execution.
@@ -11034,9 +11034,9 @@ paths:
                 allOf:
                   - $ref: '#/definitions/Recordset_Configs.FileType'
                 description: >-
-                  FileType allows the user to dictate the file format used by
-                  the recordset creation task to read the input files,
-                  disregarding any file extensions.
+                  Allows the user to dictate the file format used by the
+                  recordset creation task to read the input files, disregarding
+                  any file extensions.
               header_names:
                 description: >-
                   HeaderNames is a list of the header/column names. To be

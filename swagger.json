@@ -5984,7 +5984,7 @@
 							"$ref": "#/definitions/Recordset_Configs.FileType"
 						}
 					],
-					"description": "FileType allows the user to dictate the file format used by the recordset creation task to read the input files, disregarding any file extensions."
+					"description": "Allows the user to dictate the file format used by the recordset creation task to read the input files, disregarding any file extensions."
 				},
 				"header_names": {
 					"description": "HeaderNames is a list of the header/column names. To be provided if the files do not contain a header row.\nMust be in the same order as the columns in the files.",
@@ -6036,7 +6036,7 @@
 							"$ref": "#/definitions/Recordset_Configs.FileType"
 						}
 					],
-					"description": "The type of files to process. Optionally override the default automatic by file type behaviour by telling the configuration what type the files are."
+					"description": "Allows the user to dictate the file format used by the recordset creation task to read the input files, disregarding any file extensions."
 				},
 				"header_names": {
 					"description": "The names of the headers/columns. Must be provided if the input files do not have a header row, and in the same order as the columns in the input files.",
@@ -6091,7 +6091,7 @@
 				"CSV",
 				"PARQUET"
 			],
-			"title": "RecordsetFileType controls the file type detection behaviour when creating a recordset",
+			"title": "FileType enumerates the file type detection behaviour when creating a recordset",
 			"type": "string"
 		},
 		"Recordset_Configs.GetConfigResponse": {
@@ -6251,7 +6251,7 @@
 							"$ref": "#/definitions/Recordset_Creation.FileType"
 						}
 					],
-					"description": "FileType allows the user to dictate the file format used by the recordset creation task to read the input files, disregarding any file extensions."
+					"description": "Allows the user to dictate the file format used by the recordset creation task to read the input files, disregarding any file extensions."
 				},
 				"header_names": {
 					"description": "HeaderNames is a list of the header/column names. To be provided if the files do not contain a header row.\nMust be in the same order as the columns in the files.",
@@ -6388,7 +6388,7 @@
 				"CSV",
 				"PARQUET"
 			],
-			"title": "RecordsetFileType controls the file type detection behaviour when creating a recordset",
+			"title": "FileType enumerates the file type detection behaviour when creating a recordset",
 			"type": "string"
 		},
 		"Recordset_Creation.GetExecutionResponse": {
@@ -13632,7 +13632,7 @@
 											"$ref": "#/definitions/Recordset_Configs.FileType"
 										}
 									],
-									"description": "FileType allows the user to dictate the file format used by the recordset creation task to read the input files, disregarding any file extensions."
+									"description": "Allows the user to dictate the file format used by the recordset creation task to read the input files, disregarding any file extensions."
 								},
 								"header_names": {
 									"description": "HeaderNames is a list of the header/column names. To be provided if the files do not contain a header row.\nMust be in the same order as the columns in the files.",
