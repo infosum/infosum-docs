@@ -5984,7 +5984,7 @@
 							"$ref": "#/definitions/Recordset_Configs.FileType"
 						}
 					],
-					"description": "FileType allows control over the file type used by the recordset creation."
+					"description": "FileType allows the user to dictate the file format used by the recordset creation task to read the input files, disregarding any file extensions."
 				},
 				"header_names": {
 					"description": "HeaderNames is a list of the header/column names. To be provided if the files do not contain a header row.\nMust be in the same order as the columns in the files.",
@@ -6251,7 +6251,7 @@
 							"$ref": "#/definitions/Recordset_Creation.FileType"
 						}
 					],
-					"description": "FileType allows control over the file type used by the recordset creation."
+					"description": "FileType allows the user to dictate the file format used by the recordset creation task to read the input files, disregarding any file extensions."
 				},
 				"header_names": {
 					"description": "HeaderNames is a list of the header/column names. To be provided if the files do not contain a header row.\nMust be in the same order as the columns in the files.",
@@ -13632,7 +13632,7 @@
 											"$ref": "#/definitions/Recordset_Configs.FileType"
 										}
 									],
-									"description": "FileType allows control over the file type used by the recordset creation."
+									"description": "FileType allows the user to dictate the file format used by the recordset creation task to read the input files, disregarding any file extensions."
 								},
 								"header_names": {
 									"description": "HeaderNames is a list of the header/column names. To be provided if the files do not contain a header row.\nMust be in the same order as the columns in the files.",
