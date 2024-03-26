@@ -110,7 +110,7 @@
 				},
 				"cron_timer": {
 					"description": "The execution schedule of the Automation in UNIX CRON format as described in https://man7.org/linux/man-pages/man5/crontab.5.html. The schedule is executed relative to the supplied `timezone_identifier` for the Automation.",
-					"example": "0 */3 * * *",
+					"example": "0 12 * * *",
 					"type": "string"
 				},
 				"description": {
@@ -163,7 +163,7 @@
 				},
 				"cron_timer": {
 					"description": "The execution schedule of the Automation in UNIX CRON format as described in https://man7.org/linux/man-pages/man5/crontab.5.html. The schedule is executed relative to the supplied `timezone_identifier` for the Automation.",
-					"example": "0 */3 * * *",
+					"example": "0 12 * * *",
 					"type": "string"
 				},
 				"description": {
@@ -328,7 +328,7 @@
 			"properties": {
 				"cron_timer": {
 					"description": "The execution schedule of the Automation in UNIX CRON format as described in https://man7.org/linux/man-pages/man5/crontab.5.html. The schedule is executed relative to the supplied `timezone_identifier` for the Automation.",
-					"example": "0 */3 * * *",
+					"example": "0 12 * * *",
 					"type": "string"
 				},
 				"description": {
@@ -3388,6 +3388,10 @@
 				},
 				"secret_access_key": {
 					"description": "SecretAccessKey is the S3 secret access key.",
+					"type": "string"
+				},
+				"session_token": {
+					"description": "Optional token used by AWS to validate temporary security credentials.",
 					"type": "string"
 				}
 			},
@@ -10447,9 +10451,17 @@
 				"operationId": "GetDestinationPushSchema",
 				"parameters": [
 					{
+						"description": "DestinationID is the ID of an Airbyte destination to return its push-time schema.",
 						"in": "path",
 						"name": "destination_id",
 						"required": true,
+						"type": "string"
+					},
+					{
+						"description": "QueryID specifies the ID of an Activation Query. When provided, it enables automatic population of the mappable schema properties with the output columns from the specified query, facilitating data mapping.",
+						"in": "query",
+						"name": "query_id",
+						"required": false,
 						"type": "string"
 					}
 				],
@@ -10744,7 +10756,7 @@
 						"type": "integer"
 					},
 					{
-						"description": "OrderBy is a comma seperated value to define sorting.\ne.g 'name,createImportConnectord_time DESC'\nThe values are seperated by space, '{column} {ASC/DESC}'\n\nA comma seperated value to define sorting, e.g 'name,createImportConnectord_time DESC' The values are seperated by space, '{column} {ASC/DESC}'",
+						"description": "OrderBy is a comma separated value to define sorting.\ne.g 'name,createImportConnectord_time DESC'\nThe values are separated by space, '{column} {ASC/DESC}'\n\nA comma separated value to define sorting, e.g 'name,createImportConnectord_time DESC' The values are separated by space, '{column} {ASC/DESC}'",
 						"in": "query",
 						"name": "order_by",
 						"required": false,
