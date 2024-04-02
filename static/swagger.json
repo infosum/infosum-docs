@@ -3584,10 +3584,6 @@
 					"format": "date-time",
 					"type": "string"
 				},
-				"details": {
-					"description": "The details of this entry. Deprecated please use the 'message' field",
-					"type": "string"
-				},
 				"error": {
 					"allOf": [
 						{
