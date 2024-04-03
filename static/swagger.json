@@ -3183,7 +3183,8 @@
 				"CONNECTOR_TYPE_INVALID",
 				"S3_CROSS_ACCOUNT",
 				"S3_ACCESS_KEYS",
-				"GCS_SECRET_AUTH"
+				"GCS_SECRET_AUTH",
+				"SFTP"
 			],
 			"type": "string"
 		},
@@ -3196,7 +3197,7 @@
 							"$ref": "#/definitions/Import_Connectors.UpsertImportConnector"
 						}
 					],
-					"description": "The configuration to create a new Import Connector with."
+					"description": "The details used to create a new Import Connector Config."
 				}
 			},
 			"type": "object"
@@ -3205,7 +3206,7 @@
 			"description": "The response from the CreateImportConnector method.",
 			"properties": {
 				"config_id": {
-					"description": "The id of the Import Connector that has been created.",
+					"description": "The ID of the Import Connector Config that has been created.",
 					"type": "string"
 				}
 			},
@@ -3219,18 +3220,18 @@
 			"description": "GCSConnector is the information required to define an GCS Connector.",
 			"properties": {
 				"bucket": {
-					"description": "Bucket is the name of the GCS Bucket.",
+					"description": "The name of the GCS Bucket.",
 					"type": "string"
 				},
 				"filenames": {
-					"description": "Filenames can be a pattern or an exact file to allow multiple files to be specified.",
+					"description": "A pattern or a list of exact files, relative to the prefix, that are allowed to be imported using this Import Connector Config. For example `*.csv` will allow any file suffixed with `.csv` to be imported.",
 					"items": {
 						"type": "string"
 					},
 					"type": "array"
 				},
 				"prefix": {
-					"description": "Prefix is the prefix of files.",
+					"description": "The prefix within the specified bucket.",
 					"type": "string"
 				},
 				"secret_auth": {
@@ -3239,7 +3240,7 @@
 							"$ref": "#/definitions/Import_Connectors.GCSSecretAuth"
 						}
 					],
-					"description": "SecretAuth is the auth details for GCS"
+					"description": "Authenticate to the provided GCS bucket using GCS Secret Auth."
 				}
 			},
 			"type": "object"
@@ -3248,18 +3249,18 @@
 			"description": "GCSProvider is the information about the connector that can be returned.",
 			"properties": {
 				"bucket": {
-					"description": "Bucket is the name of the GCS Bucket.",
+					"description": "The name of the GCS Bucket.",
 					"type": "string"
 				},
 				"filenames": {
-					"description": "Filenames can be a pattern or an exact file to allow multiple files to be specified.",
+					"description": "A pattern or a list of exact files, relative to the prefix, that are allowed to be imported using this Import Connector Config. For example `*.csv` will allow any file suffixed with `.csv` to be imported.",
 					"items": {
 						"type": "string"
 					},
 					"type": "array"
 				},
 				"prefix": {
-					"description": "Prefix is the prefix of files.",
+					"description": "The prefix within the specified bucket.",
 					"type": "string"
 				}
 			},
@@ -3269,7 +3270,7 @@
 			"description": "GCSSecretAuth holds the GCS Credentials JSON as a string.",
 			"properties": {
 				"credentials_json": {
-					"description": "CredentialsJSON is a string of the credentials for GCS as JSON.",
+					"description": "The credentials for GCS as JSON.",
 					"type": "string"
 				}
 			},
@@ -3284,13 +3285,13 @@
 							"$ref": "#/definitions/Import_Connectors.ImportConnector"
 						}
 					],
-					"description": "The configuration of the Import Connector that was requested."
+					"description": "Details of the requested Import Connector Config."
 				}
 			},
 			"type": "object"
 		},
 		"Import_Connectors.ImportConnector": {
-			"description": "ImportConnector is the information that can be retrieved about an import connector config.",
+			"description": "ImportConnector is the information that can be retrieved about an Import Connector Config.",
 			"properties": {
 				"connector_type": {
 					"allOf": [
@@ -3298,17 +3299,17 @@
 							"$ref": "#/definitions/Import_Connectors.ConnectorType"
 						}
 					],
-					"description": "ConnectorType identifies the connector type.",
+					"description": "The type of the Import Connector Config.",
 					"readOnly": true
 				},
 				"created_date_time": {
-					"description": "The date and time the import connector config was created.",
+					"description": "The date and time the Import Connector Config was created.",
 					"format": "date-time",
 					"readOnly": true,
 					"type": "string"
 				},
 				"description": {
-					"description": "Description is an optional description given to this import connector config.",
+					"description": "An optional description given to this Import Connector Config.",
 					"readOnly": true,
 					"type": "string"
 				},
@@ -3318,16 +3319,16 @@
 							"$ref": "#/definitions/Import_Connectors.GCSProvider"
 						}
 					],
-					"description": "S3Connector is the S3 specific information.",
+					"description": "Google Cloud Storage specific information.",
 					"readOnly": true
 				},
 				"id": {
-					"description": "ID is the globally unique ID of the import connector config.",
+					"description": "The unique ID of the Import Connector Config.",
 					"readOnly": true,
 					"type": "string"
 				},
 				"name": {
-					"description": "Name is the display name given to this import connector config.",
+					"description": "The display name given to this Import Connector Config.",
 					"readOnly": true,
 					"type": "string"
 				},
@@ -3340,17 +3341,26 @@
 							"$ref": "#/definitions/Import_Connectors.S3Provider"
 						}
 					],
-					"description": "S3Connector is the S3 specific information.",
+					"description": "AWS S3 specific information.",
+					"readOnly": true
+				},
+				"sftp_connector": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Import_Connectors.SFTPProvider"
+						}
+					],
+					"description": "SFTP server specific information.",
 					"readOnly": true
 				},
 				"updated_date_time": {
-					"description": "The date and time the import connector config was last updated.",
+					"description": "The date and time the Import Connector Config was last updated.",
 					"format": "date-time",
 					"readOnly": true,
 					"type": "string"
 				},
 				"user_id": {
-					"description": "UserId is the ID of the user who created the import connector config.",
+					"description": "The ID of the user who created the Import Connector Config.",
 					"readOnly": true,
 					"type": "string"
 				}
@@ -3361,7 +3371,7 @@
 			"description": "The response from the ListImportConnectors method.",
 			"properties": {
 				"configs": {
-					"description": "A list of configurations of Import Connectors.",
+					"description": "Array of Import Connector Configs based on the request filters and sorting.",
 					"items": {
 						"$ref": "#/definitions/Import_Connectors.ImportConnector",
 						"type": "object"
@@ -3383,11 +3393,11 @@
 			"description": "S3AccessKeysAuth holds the details needed for authentication using access keys.",
 			"properties": {
 				"access_key_id": {
-					"description": "AccessKey is the S3 access key ID.",
+					"description": "The access key ID of the user to authenticate as.",
 					"type": "string"
 				},
 				"secret_access_key": {
-					"description": "SecretAccessKey is the S3 secret access key.",
+					"description": "The secret access key of the user to authenticate as.",
 					"type": "string"
 				},
 				"session_token": {
@@ -3410,10 +3420,10 @@
 							"$ref": "#/definitions/Import_Connectors.S3AccessKeysAuth"
 						}
 					],
-					"description": "S3AccessKeysAuth is auth for S3 using access keys"
+					"description": "Authenticate to the provided S3 bucket using Access Keys."
 				},
 				"bucket": {
-					"description": "Bucket is the name of the S3 Bucket.",
+					"description": "The name of the S3 bucket.",
 					"type": "string"
 				},
 				"cross_account": {
@@ -3422,17 +3432,17 @@
 							"$ref": "#/definitions/Import_Connectors.S3CrossAccountAuth"
 						}
 					],
-					"description": "S3CrossAccountAuth is auth for S3 cross account"
+					"description": "Authenticate to the provided S3 bucket using Cross Account."
 				},
 				"filenames": {
-					"description": "Filenames can be a pattern or an exact file to allow multiple files to be specified.",
+					"description": "A pattern or a list of exact files, relative to the prefix, that are allowed to be imported using this Import Connector Config. For example `*.csv` will allow any file suffixed with `.csv` to be imported.",
 					"items": {
 						"type": "string"
 					},
 					"type": "array"
 				},
 				"prefix": {
-					"description": "Prefix is the prefix of the files.",
+					"description": "The prefix within the specified bucket.",
 					"type": "string"
 				}
 			},
@@ -3452,11 +3462,11 @@
 					"type": "string"
 				},
 				"session_name": {
-					"description": "Session name is the identifier of the session.",
+					"description": "The identifier of the session.",
 					"type": "string"
 				},
 				"user_arn": {
-					"description": "UserArn is the Amazon Resource Name (ARN) of the role to assume.",
+					"description": "The Amazon Resource Name (ARN) of the role to assume.",
 					"type": "string"
 				}
 			},
@@ -3471,10 +3481,10 @@
 							"$ref": "#/definitions/Import_Connectors.S3AccessKeysAuthDetail"
 						}
 					],
-					"description": "S3AccessKeysAuth is auth for S3 using access keys"
+					"description": "Authenticate to the provided S3 bucket using Access Keys."
 				},
 				"bucket": {
-					"description": "Bucket is the name of the S3 Bucket.",
+					"description": "The name of the S3 Bucket.",
 					"type": "string"
 				},
 				"cross_account": {
@@ -3483,17 +3493,93 @@
 							"$ref": "#/definitions/Import_Connectors.S3CrossAccountAuth"
 						}
 					],
-					"description": "S3CrossAccountAuth is auth for S3 cross account"
+					"description": "Authenticate to the provided S3 bucket using Cross Account."
 				},
 				"filenames": {
-					"description": "Filenames can be a pattern or an exact file to allow multiple files to be specified.",
+					"description": "A pattern or a list of exact files, relative to the prefix, that are allowed to be imported using this Import Connector Config. For example `*.csv` will allow any file suffixed with `.csv` to be imported.",
 					"items": {
 						"type": "string"
 					},
 					"type": "array"
 				},
 				"prefix": {
-					"description": "Prefix is the prefix of files.",
+					"description": "The prefix within the specified bucket.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Import_Connectors.SFTPConnector": {
+			"description": "SFTPConnector is the information required to define an SFTP Connector.",
+			"properties": {
+				"filenames": {
+					"description": "A pattern or a list of exact files, relative to the root directory, that are allowed to be imported using this Import Connector Config. For example `*.csv` will allow any file suffixed with `.csv` to be imported.",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				},
+				"host": {
+					"description": "The hostname or IP address of the server.",
+					"type": "string"
+				},
+				"host_keys": {
+					"description": "The public host keys of the server. Multiple keys can be supplied using new line separators.",
+					"type": "string"
+				},
+				"password": {
+					"description": "The password of the user to authenticate as. At least one of password and private_key must be supplied.",
+					"type": "string"
+				},
+				"port": {
+					"description": "The port to acess the server on. For example 22.",
+					"format": "int32",
+					"type": "integer"
+				},
+				"private_key": {
+					"description": "The private ssh key of the user to authenticate as. At least one of password and private_key must be supplied. Can be provided encrypted.",
+					"type": "string"
+				},
+				"private_key_passphrase": {
+					"description": "The passphrase to decrypt the private_key if it is provided encrypted.",
+					"type": "string"
+				},
+				"root_directory": {
+					"description": "The optional directory on the server to retrieve files from.",
+					"type": "string"
+				},
+				"username": {
+					"description": "The username of the user to authenticate as.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Import_Connectors.SFTPProvider": {
+			"description": "SFTPProvider is the information about the SFTP Connector that can be returned.",
+			"properties": {
+				"filenames": {
+					"description": "A pattern or a list of exact files, relative to the root directory, that are allowed to be imported using this Import Connector Config. For example `*.csv` will allow any file suffixed with `.csv` to be imported.",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				},
+				"host": {
+					"description": "The hostname or IP address of the server.",
+					"type": "string"
+				},
+				"port": {
+					"description": "The port to acess the server on. For example 22.",
+					"format": "int32",
+					"type": "integer"
+				},
+				"root_directory": {
+					"description": "The optional directory on the server to retrieve files from.",
+					"type": "string"
+				},
+				"username": {
+					"description": "The username of the user to authenticate as.",
 					"type": "string"
 				}
 			},
@@ -3508,7 +3594,7 @@
 							"$ref": "#/definitions/Import_Connectors.ImportConnector"
 						}
 					],
-					"description": "The configuration of the Import Connector that was updated."
+					"description": "The updated Import Connector Config."
 				}
 			},
 			"type": "object"
@@ -3517,7 +3603,7 @@
 			"description": "UpsertImportConnector is the entity that contains the information to define an Import Connector Config.",
 			"properties": {
 				"description": {
-					"description": "Description is an optional description given to this import connector config.",
+					"description": "An optional description given to this Import Connector Config.",
 					"type": "string"
 				},
 				"gcs_connector": {
@@ -3526,15 +3612,15 @@
 							"$ref": "#/definitions/Import_Connectors.GCSConnector"
 						}
 					],
-					"description": "GCSConnector is the GCS specific information."
+					"description": "Google Cloud Storage specific information."
 				},
 				"id": {
-					"description": "ID is the globally unique ID of the import connector config.",
+					"description": "The unique ID of the Import Connector Config.",
 					"readOnly": true,
 					"type": "string"
 				},
 				"name": {
-					"description": "Name is the display name given to this import connector config.",
+					"description": "The display name given to the Import Connector Config.",
 					"type": "string"
 				},
 				"s3_connector": {
@@ -3543,7 +3629,15 @@
 							"$ref": "#/definitions/Import_Connectors.S3Connector"
 						}
 					],
-					"description": "S3Connector is the S3 specific information."
+					"description": "AWS S3 specific information."
+				},
+				"sftp_connector": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Import_Connectors.SFTPConnector"
+						}
+					],
+					"description": "SFTP server specific information."
 				}
 			},
 			"type": "object"
@@ -10732,7 +10826,7 @@
 		},
 		"/api/v2/imports/connector-configs": {
 			"get": {
-				"description": "List available Import Connector Configs.",
+				"description": "List Import Connector Configs belonging to your company subject to the provided filter.",
 				"operationId": "ListImportConnectors",
 				"parameters": [
 					{
@@ -10752,14 +10846,15 @@
 						"type": "integer"
 					},
 					{
-						"description": "OrderBy is a comma separated value to define sorting.\ne.g 'name,createImportConnectord_time DESC'\nThe values are separated by space, '{column} {ASC/DESC}'\n\nA comma separated value to define sorting, e.g 'name,createImportConnectord_time DESC' The values are separated by space, '{column} {ASC/DESC}'",
+						"default": "created_date_time DESC",
+						"description": "Comma separated list of sorting parameters and ordering in the form of `{sort_column} {ASC/DESC}`. Supported sort fields are: `name`, `connector_type`, `created_date_time`, `updated_date_time`",
 						"in": "query",
 						"name": "order_by",
 						"required": false,
 						"type": "string"
 					},
 					{
-						"description": "Filter is a string containing logic that can specify a restricted set of ImportConnectors to be returned.\ne.g. `name co 'Test' or name co 'Acme'`\n\nA string containing logic that can specify a restricted set of ImportConnectors to be returned. e.g. `name co 'Test' or name co 'Acme'`",
+						"description": "Filter string as per the [docs](https://infosum.github.io/infosum-docs/docs/v2%20API/filtering). Supported filter fields are: `id`, `name`, `description`, `connector_type`, `created_date_time`, `updated_date_time`.",
 						"in": "query",
 						"name": "filter",
 						"required": false,
@@ -10804,13 +10899,13 @@
 						}
 					}
 				},
-				"summary": "List Import Connector Config.",
+				"summary": "List Import Connector Configs",
 				"tags": [
 					"Import Connectors"
 				]
 			},
 			"post": {
-				"description": "Creates a configuration for importing data from a connector.",
+				"description": "Creates and validates an Import Connector Config based on the provided connector details.",
 				"operationId": "CreateImportConnector",
 				"parameters": [
 					{
@@ -10867,7 +10962,7 @@
 						}
 					}
 				},
-				"summary": "Creates an Import Connector Config.",
+				"summary": "Create Import Connector Config",
 				"tags": [
 					"Import Connectors"
 				]
@@ -10875,11 +10970,11 @@
 		},
 		"/api/v2/imports/connector-configs/{config.id}": {
 			"patch": {
-				"description": "Updates the provided fields in a specific Import Connector Config.",
+				"description": "Updates the specified Import Connector Config, overriding any old fields with new ones provided on the request.",
 				"operationId": "UpdateImportConnector",
 				"parameters": [
 					{
-						"description": "ID is the globally unique ID of the import connector config.",
+						"description": "The unique ID of the Import Connector Config.",
 						"in": "path",
 						"name": "config.id",
 						"required": true,
@@ -10893,7 +10988,7 @@
 							"description": "UpsertImportConnector is the entity that contains the information to define an Import Connector Config.",
 							"properties": {
 								"description": {
-									"description": "Description is an optional description given to this import connector config.",
+									"description": "An optional description given to this Import Connector Config.",
 									"type": "string"
 								},
 								"gcs_connector": {
@@ -10902,10 +10997,10 @@
 											"$ref": "#/definitions/Import_Connectors.GCSConnector"
 										}
 									],
-									"description": "GCSConnector is the GCS specific information."
+									"description": "Google Cloud Storage specific information."
 								},
 								"name": {
-									"description": "Name is the display name given to this import connector config.",
+									"description": "The display name given to the Import Connector Config.",
 									"type": "string"
 								},
 								"s3_connector": {
@@ -10914,7 +11009,15 @@
 											"$ref": "#/definitions/Import_Connectors.S3Connector"
 										}
 									],
-									"description": "S3Connector is the S3 specific information."
+									"description": "AWS S3 specific information."
+								},
+								"sftp_connector": {
+									"allOf": [
+										{
+											"$ref": "#/definitions/Import_Connectors.SFTPConnector"
+										}
+									],
+									"description": "SFTP server specific information."
 								}
 							},
 							"type": "object"
@@ -10965,7 +11068,7 @@
 						}
 					}
 				},
-				"summary": "Update an Import Connector Config",
+				"summary": "Update Import Connector Config",
 				"tags": [
 					"Import Connectors"
 				]
@@ -10973,11 +11076,11 @@
 		},
 		"/api/v2/imports/connector-configs/{config_id}": {
 			"delete": {
-				"description": "Deletes a specific Import Connector Config.",
+				"description": "Remove the specified Import Connector Config. Import Connector Configs can only be removed if they are not in use by an Importer.",
 				"operationId": "DeleteImportConnector",
 				"parameters": [
 					{
-						"description": "The id of the Import Connector to delete.",
+						"description": "The ID of the Import Connector Config to be deleted.",
 						"in": "path",
 						"name": "config_id",
 						"required": true,
@@ -11022,17 +11125,17 @@
 						}
 					}
 				},
-				"summary": "Delete an Import Connector Config.",
+				"summary": "Delete Import Connector Config",
 				"tags": [
 					"Import Connectors"
 				]
 			},
 			"get": {
-				"description": "Get the details of a specific Import Connector Config.",
+				"description": "Fetches an Import Connector Config by its Config ID.",
 				"operationId": "GetImportConnector",
 				"parameters": [
 					{
-						"description": "The id of the Import Connector to retrieve.",
+						"description": "The ID of the Import Connector Config to retrieve.",
 						"in": "path",
 						"name": "config_id",
 						"required": true,
@@ -11083,7 +11186,7 @@
 						}
 					}
 				},
-				"summary": "Get an Import Connector Config.",
+				"summary": "Get Import Connector Config",
 				"tags": [
 					"Import Connectors"
 				]
