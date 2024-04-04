@@ -3569,6 +3569,10 @@
 					"description": "The hostname or IP address of the server.",
 					"type": "string"
 				},
+				"host_keys": {
+					"description": "The validated and parsed public host keys.",
+					"type": "string"
+				},
 				"port": {
 					"description": "The port to acess the server on. For example 22.",
 					"format": "int32",
