@@ -3276,6 +3276,16 @@
 			},
 			"type": "object"
 		},
+		"Import_Connectors.GetHostKeysResponse": {
+			"description": "The response from the GetHostKeys method.",
+			"properties": {
+				"host_keys": {
+					"description": "A newline delimited list of valid public host keys retrieved from the specified server.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
 		"Import_Connectors.GetImportConnectorResponse": {
 			"description": "The response from the GetImportConnector method.",
 			"properties": {
@@ -10967,6 +10977,71 @@
 					}
 				},
 				"summary": "Create Import Connector Config",
+				"tags": [
+					"Import Connectors"
+				]
+			}
+		},
+		"/api/v2/imports/connector-configs/host-keys/{host}/{port}": {
+			"get": {
+				"description": "Returns a newline delimited list of host keys for the given sFTP server and port.",
+				"operationId": "GetHostKeys",
+				"parameters": [
+					{
+						"description": "The hostname or IP address of the server to get public keys from.",
+						"in": "path",
+						"name": "host",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"description": "The port to acess the server on. For example 22.",
+						"format": "int32",
+						"in": "path",
+						"name": "port",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Import_Connectors.GetHostKeysResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the required permission.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Get sFTP server host key(s)",
 				"tags": [
 					"Import Connectors"
 				]
