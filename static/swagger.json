@@ -10982,9 +10982,9 @@
 				]
 			}
 		},
-		"/api/v2/imports/connector-configs/host-keys/{host}/{port}": {
+		"/api/v2/imports/connector-configs/host-key/{host}/{port}": {
 			"get": {
-				"description": "Returns a newline delimited list of host keys for the given sFTP server and port.",
+				"description": "Returns the first valid public sFTP server host key found. Supported key algorithms are ECDSA, RSA and ED25519.",
 				"operationId": "GetHostKey",
 				"parameters": [
 					{
@@ -11041,7 +11041,7 @@
 						}
 					}
 				},
-				"summary": "Get sFTP server host key(s)",
+				"summary": "Get server host key.",
 				"tags": [
 					"Import Connectors"
 				]
