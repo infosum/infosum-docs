@@ -3276,11 +3276,11 @@
 			},
 			"type": "object"
 		},
-		"Import_Connectors.GetHostKeysResponse": {
-			"description": "The response from the GetHostKeys method.",
+		"Import_Connectors.GetHostKeyResponse": {
+			"description": "The response from the GetHostKey method.",
 			"properties": {
-				"host_keys": {
-					"description": "A newline delimited list of valid public host keys retrieved from the specified server.",
+				"host_key": {
+					"description": "Returns the first valid public host key found from the specified sFTP server. Only supported key algorithms are returned. Supported algorithms are RSA, ED25519 and ECDSA.",
 					"type": "string"
 				}
 			},
@@ -10985,7 +10985,7 @@
 		"/api/v2/imports/connector-configs/host-keys/{host}/{port}": {
 			"get": {
 				"description": "Returns a newline delimited list of host keys for the given sFTP server and port.",
-				"operationId": "GetHostKeys",
+				"operationId": "GetHostKey",
 				"parameters": [
 					{
 						"description": "The hostname or IP address of the server to get public keys from.",
@@ -11007,7 +11007,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Import_Connectors.GetHostKeysResponse"
+							"$ref": "#/definitions/Import_Connectors.GetHostKeyResponse"
 						}
 					},
 					"400": {
