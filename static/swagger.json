@@ -3520,7 +3520,7 @@
 			"type": "object"
 		},
 		"Import_Connectors.SFTPConnector": {
-			"description": "SFTPConnector is the information required to define an SFTP Connector.",
+			"description": "SFTPConnector is the information required to define an sFTP Connector.",
 			"properties": {
 				"filenames": {
 					"description": "A pattern or a list of exact files, relative to the root directory, that are allowed to be imported using this Import Connector Config. For example `*.csv` will allow any file suffixed with `.csv` to be imported.",
@@ -3542,7 +3542,7 @@
 					"type": "string"
 				},
 				"port": {
-					"description": "The port to acess the server on. For example 22.",
+					"description": "The port to access the server on. For example 22.",
 					"format": "int32",
 					"type": "integer"
 				},
@@ -3555,7 +3555,7 @@
 					"type": "string"
 				},
 				"root_directory": {
-					"description": "The optional directory on the server to retrieve files from.",
+					"description": "The optional directory on the server to retrieve files from. If left blank this is relative to the users default directory on the sFTP server.",
 					"type": "string"
 				},
 				"username": {
@@ -3584,7 +3584,7 @@
 					"type": "string"
 				},
 				"port": {
-					"description": "The port to acess the server on. For example 22.",
+					"description": "The port to access the server on. For example 22.",
 					"format": "int32",
 					"type": "integer"
 				},
