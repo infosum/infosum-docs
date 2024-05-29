@@ -2937,6 +2937,15 @@
 			],
 			"type": "string"
 		},
+		"GetCloudVaultResponse": {
+			"properties": {
+				"cloud_vault": {
+					"$ref": "#/definitions/v2.CloudVault"
+				}
+			},
+			"title": "GetCloudVaultResponse",
+			"type": "object"
+		},
 		"GetMetadataResponse": {
 			"description": "GetMetadataResponse is the details about a specific Cloud Vault.",
 			"properties": {
@@ -7526,6 +7535,56 @@
 				"PARTIALLY_COMPLETED"
 			],
 			"type": "string"
+		},
+		"v2.CloudVault": {
+			"description": "CloudVault is the details about a specific Cloud Vault.",
+			"properties": {
+				"created_by": {
+					"description": "Output only. CreatedBy is the id of the user that created this Cloud Vault.",
+					"readOnly": true,
+					"type": "string"
+				},
+				"created_date_time": {
+					"description": "Output only. CreatedDateTime is the date and time that this Cloud Vault was\ncreated.",
+					"format": "date-time",
+					"readOnly": true,
+					"type": "string"
+				},
+				"description": {
+					"description": "Description is an optional description given to this Cloud Vault.",
+					"type": "string"
+				},
+				"id": {
+					"description": "Output only. ID is the unique identifier of the Cloud Vault.",
+					"readOnly": true,
+					"type": "string"
+				},
+				"name": {
+					"description": "Name is the display name given to this Cloud Vault.",
+					"type": "string"
+				},
+				"owner_id": {
+					"description": "Output only. OwnerId is the id of the owner of this Cloud Vault.",
+					"readOnly": true,
+					"type": "string"
+				},
+				"region": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Region"
+						}
+					],
+					"description": "Output only. Region identifies the region that this Cloud Vault is located\nin.",
+					"readOnly": true
+				},
+				"updated_date_time": {
+					"format": "date-time",
+					"readOnly": true,
+					"title": "Output only. UpdatedDateTime is the date and time that the Cloud Vault was\nupdated",
+					"type": "string"
+				}
+			},
+			"type": "object"
 		}
 	},
 	"externalDocs": {
