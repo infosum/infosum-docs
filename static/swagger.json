@@ -3,6 +3,16 @@
 		"application/json"
 	],
 	"definitions": {
+		"Accounts.GetCompanyDisplayNameResponse": {
+			"description": "GetDisplayNameResponse is the response for the GetCompanyDisplayName rpc.",
+			"properties": {
+				"company_display_name": {
+					"description": "The display name of the company ID that was requested.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
 		"Accounts.ListDisplayNamesResponse": {
 			"description": "GetDisplayNameResponse is the response for the GetDisplayName rpc.",
 			"properties": {
@@ -7603,6 +7613,63 @@
 		"version": "2.0"
 	},
 	"paths": {
+		"/api/v2/accounts/companies/display_name": {
+			"get": {
+				"description": "Get a company's display name.",
+				"operationId": "GetCompanyDisplayName",
+				"parameters": [
+					{
+						"description": "The ID of the company to look up the display name for.",
+						"in": "query",
+						"name": "company_id",
+						"required": false,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Accounts.GetCompanyDisplayNameResponse"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the required permission.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"404": {
+						"description": "Returned when the Company ID could not be found.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Get a company's display name.",
+				"tags": [
+					"Accounts"
+				]
+			}
+		},
 		"/api/v2/accounts/users/display_name": {
 			"get": {
 				"description": "List users' display name and company name.",
