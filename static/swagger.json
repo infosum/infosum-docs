@@ -3599,6 +3599,9 @@
 					"type": "string"
 				},
 				"host_keys": {
+					"type": "string"
+				},
+				"parsed_host_keys": {
 					"description": "The validated and parsed public host keys.",
 					"type": "string"
 				},
