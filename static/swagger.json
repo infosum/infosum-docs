@@ -7121,7 +7121,10 @@
 				"INTEGER_RANGE",
 				"INTEGER_SET",
 				"STRING_ARRAY",
-				"STRING_SET"
+				"STRING_SET",
+				"FLOAT_ARRAY",
+				"TIMESTAMP",
+				"TIMESTAMP_ARRAY"
 			],
 			"type": "string"
 		},
