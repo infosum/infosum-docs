@@ -56,6 +56,236 @@
 			},
 			"type": "object"
 		},
+		"Activation_Destinations.ActivationDestinationOverview": {
+			"description": "ActivationDestinationInstanceOverview provides an overview of a Destination instance for pushing activation queries.",
+			"properties": {
+				"created_time": {
+					"description": "CreatedTime is the date and time the destination was created.",
+					"format": "date-time",
+					"type": "string"
+				},
+				"description": {
+					"description": "Description is an optional description given to this destination.",
+					"type": "string"
+				},
+				"destination_type_id": {
+					"description": "DestinationTypeId is the InfoSum type ID of this destination.",
+					"type": "string"
+				},
+				"id": {
+					"description": "ID is the globally unique ID of the destination.",
+					"type": "string"
+				},
+				"name": {
+					"description": "Name is the display name given to this destination.",
+					"type": "string"
+				},
+				"owner_id": {
+					"description": "OwnerId is the company ID of the owner of the destination.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Activation_Destinations.GetActivationDestinationPushSchemaResponse": {
+			"description": "GetActivationDestinationPushSchemaResponse is the output of the GetActivationDestinationPushSchema method.",
+			"properties": {
+				"push_schema": {
+					"description": "The push time schema for the requested destination instance. The `push_config` on push requests to this destination must satisfy this schema.",
+					"type": "object"
+				}
+			},
+			"type": "object"
+		},
+		"Activation_Destinations.ListActivationDestinationsResponse": {
+			"description": "ListActivationDestinationsResponse is the output of the ListActivationDestinations method.",
+			"properties": {
+				"destinations": {
+					"description": "Activation Destination overviews.",
+					"items": {
+						"$ref": "#/definitions/Activation_Destinations.ActivationDestinationOverview",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"pagination": {
+					"$ref": "#/definitions/PaginationResponse"
+				}
+			},
+			"type": "object"
+		},
+		"Activation_Destinations.NullValue": {
+			"default": "NULL_VALUE",
+			"description": "`NullValue` is a singleton enumeration to represent the null value for the\n`Value` type union.\n\nThe JSON representation for `NullValue` is JSON `null`.\n\n - NULL_VALUE: Null value.",
+			"enum": [
+				"NULL_VALUE"
+			],
+			"type": "string"
+		},
+		"Activation_Destinations.PushActivationResultsBody": {
+			"description": "PushActivationResultsRequest is input to the ExportResult request.",
+			"properties": {
+				"push_config": {
+					"description": "Configuration following the push time schema for the destination instance. Default values from the underlying instance can be found in the push schema `default` annotations. Defaults will not be used unless they are re-submitted as part of this config. Submit the `X-INFOSUM-REDACTED` keyword for `x-infosum-secret` properties to retain their default value from the underlying destination instance.",
+					"type": "object"
+				}
+			},
+			"type": "object"
+		},
+		"Activation_Destinations.PushActivationResultsResponse": {
+			"description": "PushActivationResultsResponse is the output of the PushActivationResults request.",
+			"properties": {
+				"push_id": {
+					"description": "ID for the requested push.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Activation_Pushes.ActivationPushDetails": {
+			"description": "ActivationPushDetails is the details of a specific activation push.",
+			"properties": {
+				"completed_at_date_time": {
+					"description": "The date and time when this activation push was completed, either successfully or not.",
+					"format": "date-time",
+					"type": "string"
+				},
+				"destination_id": {
+					"description": "The Destination ID used for the activation push.",
+					"type": "string"
+				},
+				"destination_type_id": {
+					"description": "The ID of the Destination type used for the activation push.",
+					"type": "string"
+				},
+				"push_config": {
+					"description": "The redacted push time config. It is the full redacted config if the user owns the destination.",
+					"type": "object"
+				},
+				"push_error": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Error"
+						}
+					],
+					"description": "The activation push error in case of failures."
+				},
+				"push_id": {
+					"description": "The ID of the activation push.",
+					"type": "string"
+				},
+				"push_successful": {
+					"description": "Indicates whether this activation query completed successfully or not.",
+					"type": "boolean"
+				},
+				"query_id": {
+					"description": "The ID of the query that has been pushed.",
+					"type": "string"
+				},
+				"started_at_date_time": {
+					"description": "The date and time when this activation push was started.",
+					"format": "date-time",
+					"type": "string"
+				},
+				"status": {
+					"description": "The status of the activation push",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Activation_Pushes.ActivationPushOverview": {
+			"description": "ActivationPushOverview is the overview of a specific activation push.",
+			"properties": {
+				"completed_at_date_time": {
+					"description": "The date and time when this activation push was completed, either successfully or not.",
+					"format": "date-time",
+					"type": "string"
+				},
+				"destination_id": {
+					"description": "The Destination ID used for the activation push.",
+					"type": "string"
+				},
+				"destination_type_id": {
+					"description": "The ID of the Destination type used for the activation push.",
+					"type": "string"
+				},
+				"push_error": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Error"
+						}
+					],
+					"description": "The activation push error in case of failures."
+				},
+				"push_id": {
+					"description": "The ID of the activation push.",
+					"type": "string"
+				},
+				"push_successful": {
+					"description": "Indicates whether this activation query completed successfully or not.",
+					"type": "boolean"
+				},
+				"query_id": {
+					"description": "The ID of the query that has been pushed.",
+					"type": "string"
+				},
+				"started_at_date_time": {
+					"description": "The date and time when this activation push was started.",
+					"format": "date-time",
+					"type": "string"
+				},
+				"status": {
+					"description": "The status of the activation push",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Activation_Pushes.GetActivationPushResponse": {
+			"description": "GetActivationPushResponse is the output of the GetActivationPush method.",
+			"properties": {
+				"push_details": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Activation_Pushes.ActivationPushDetails"
+						}
+					],
+					"description": "Details of the requested activation push."
+				}
+			},
+			"type": "object"
+		},
+		"Activation_Pushes.ListActivationPushesResponse": {
+			"description": "ListActivationPushesResponse is the response of the ListActivationPushes method.",
+			"properties": {
+				"activation_pushes": {
+					"description": "A list of activation push overviews.",
+					"items": {
+						"$ref": "#/definitions/Activation_Pushes.ActivationPushOverview",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"pagination_response": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/PaginationResponse"
+						}
+					],
+					"description": "The pagination response which can tell whether more results are available or not."
+				}
+			},
+			"type": "object"
+		},
+		"Activation_Pushes.NullValue": {
+			"default": "NULL_VALUE",
+			"description": "`NullValue` is a singleton enumeration to represent the null value for the\n`Value` type union.\n\nThe JSON representation for `NullValue` is JSON `null`.\n\n - NULL_VALUE: Null value.",
+			"enum": [
+				"NULL_VALUE"
+			],
+			"type": "string"
+		},
 		"Automation_Configs.AutomationStep": {
 			"description": "The information required to define an Automation Step. Provide only one config per Automation Step.",
 			"properties": {
@@ -1340,98 +1570,146 @@
 			},
 			"type": "object"
 		},
-		"Destinations.AwsRegion": {
-			"default": "UNKNOWN_REGION",
-			"description": "AwsRegion are the supported AWS regions.\n\n - UNKNOWN_REGION: UNKNOWN_REGION is used when the region is not known.\n - US_EAST_1: US_EAST_1 is N. Virginia (us-east-1).\n - US_EAST_2: US_EAST_2 is Ohio (us-east-2).\n - US_WEST_1: US_WEST_1 is N. California (us-west-1).\n - US_WEST_2: US_WEST_2 is Oregon (us-west-2).\n - CA_CENTRAL_1: CA_CENTRAL_1 is Montreal (ca-central-1).\n - EU_WEST_1: EU_WEST_1 is Ireland (eu-west-1).\n - EU_WEST_2: EU_WEST_2 is London (eu-west-2).\n - EU_CENTRAL_1: EU_CENTRAL_1 is Frankfurt (eu-central-1).\n - AP_SOUTHEAST_1: AP_SOUTHEAST_1 is Singapore (ap-southeast-1).\n - AP_SOUTHEAST_2: AP_SOUTHEAST_2 is Sydney (ap-southeast-2).\n - AP_SOUTH_1: AP_SOUTH_1 is Mumbai (ap-south-1).\n - AP_NORTHEAST_1: AP_NORTHEAST_1 is Tokyo (ap-northeast-1).\n - AP_NORTHEAST_2: AP_NORTHEAST_2 is Seoul (ap-northeast-2).\n - SA_EAST_1: SA_EAST_1 is Saõ Paulo (sa-east-1).\n - CN_NORTH_1: CN_NORTH_1 is Beijing (cn-north-1).",
-			"enum": [
-				"UNKNOWN_REGION",
-				"US_EAST_1",
-				"US_EAST_2",
-				"US_WEST_1",
-				"US_WEST_2",
-				"CA_CENTRAL_1",
-				"EU_WEST_1",
-				"EU_WEST_2",
-				"EU_CENTRAL_1",
-				"AP_SOUTHEAST_1",
-				"AP_SOUTHEAST_2",
-				"AP_SOUTH_1",
-				"AP_NORTHEAST_1",
-				"AP_NORTHEAST_2",
-				"SA_EAST_1",
-				"CN_NORTH_1"
-			],
-			"type": "string"
-		},
-		"Destinations.ConnectorType": {
-			"default": "CONNECTOR_TYPE_INVALID",
-			"description": "ConnectorType is the types of authentication used by a destination.\n\n - S3_ACCESS_KEYS: S3_ACCESS_KEYS indicates the destination is targeting S3 and using access/secret keys for authentication.\n - PUBMATIC: PUBMATIC  indicates the destination is targeting PubMatic.\n - S3_CROSS_ACCOUNT: S3_CROSS_ACCOUNT indicates the destination is targeting S3 and assuming an iam role for authentication.\n - SFTP: SFTP indicates the destination is targeting a sftp server.\n - GCS: GCS indicates indicates the destination is targeting Google Cloud Platform for authentication.\n - FACEBOOK: FACEBOOK indicates the destination is targeting Facebook.\n - DV360_PAIR: DV360_PAIR indicates the destination is targeting DV360 using PAIR encryption.\n - S3_ACCESS_KEYS_PAIR: S3_ACCESS_KEYS_PAIR indicates the destination is targeting S3 using access/secret keys for authentication and using PAIR encryption.\n - S3_CROSS_ACCOUNT_PAIR: S3_CROSS_ACCOUNT_PAIR indicates the destination is targeting S3 assuming an iam role for authentication and using PAIR encryption.\n - SFTP_PAIR: SFTP_PAIR indicates the destination is targeting a SFTP server for authentication and using PAIR encryption.\n - DV360_CUSTOMER_MATCH: DV360_CUSTOMER_MATCH indicates the destination is targeting DV360 Customer Match.\n - TRADEDESK: TRADEDESK indicates the destination is targeting trade desk\n - TRADEDESK_CRM: TRADEDESK_CRM indicates the destination is targeting trade desk crm",
-			"enum": [
-				"CONNECTOR_TYPE_INVALID",
-				"S3_ACCESS_KEYS",
-				"PUBMATIC",
-				"S3_CROSS_ACCOUNT",
-				"SFTP",
-				"GCS",
-				"FACEBOOK",
-				"DV360_PAIR",
-				"S3_ACCESS_KEYS_PAIR",
-				"S3_CROSS_ACCOUNT_PAIR",
-				"SFTP_PAIR",
-				"DV360_CUSTOMER_MATCH",
-				"TRADEDESK",
-				"TRADEDESK_CRM"
-			],
-			"type": "string"
-		},
-		"Destinations.CreateDestinationRequest": {
-			"description": "CreateDestinationRequest is the input to the CreateDestination method.",
+		"Destination_Instances.AttachToPermissionBody": {
 			"properties": {
-				"destination": {
-					"$ref": "#/definitions/Destinations.Destination"
+				"permission_id": {
+					"description": "Permission ID to attach to.",
+					"type": "string"
 				}
 			},
 			"type": "object"
 		},
-		"Destinations.CreateDestinationResponse": {
-			"description": "CreateDestinationResponse is the output of the CreateDestination method.",
+		"Destination_Instances.AttachToPermissionResponse": {
+			"properties": {
+				"permission_ids": {
+					"description": "Modified list of Permissions the Destination Instance is attached to.",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				}
+			},
+			"type": "object"
+		},
+		"Destination_Instances.CreateDestinationInstanceRequest": {
+			"description": "CreateDestinationInstanceRequest contains all parameters required to create a Destination instance.",
+			"properties": {
+				"config": {
+					"description": "Config is the config for the destination.",
+					"type": "object"
+				},
+				"description": {
+					"description": "Description is an optional description given to this destination.",
+					"type": "string"
+				},
+				"destination_type_id": {
+					"description": "DestinationTypeId is the InfoSum type ID of this destination.",
+					"type": "string"
+				},
+				"editable_paths": {
+					"description": "EditablePaths is the list of schema paths that can be edited at push time.",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				},
+				"name": {
+					"description": "Name is the display name given to this destination.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Destination_Instances.CreateDestinationInstanceResponse": {
+			"description": "CreateDestinationInstanceResponse contains the Destination instance ID.",
 			"properties": {
 				"destination_id": {
+					"description": "Destination instance ID.",
 					"type": "string"
 				}
 			},
 			"type": "object"
 		},
-		"Destinations.DV360Connector": {
-			"description": "Dv360Connector is the information required to define a destination pushing to DV360.",
+		"Destination_Instances.DeleteDestinationInstanceResponse": {
+			"description": "DeleteDestinationInstanceResponse is currently empty.",
+			"type": "object"
+		},
+		"Destination_Instances.DestinationInstance": {
+			"description": "DestinationInstance is the information required to define a destination instance.",
 			"properties": {
-				"customer_id": {
-					"description": "CustomerID is the ID for the customer's account (no hyphens).",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Destinations.DV360ConnectorOverview": {
-			"description": "DV360ConnectorOverview contains information about a DV360 connector.",
-			"type": "object"
-		},
-		"Destinations.DeleteDestinationResponse": {
-			"description": "DeleteDestinationResponse is an empty response for the Delete destination request.",
-			"type": "object"
-		},
-		"Destinations.Destination": {
-			"description": "Destination is the information required to define destinations.",
-			"properties": {
-				"connector_type": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Destinations.ConnectorType"
-						}
-					],
-					"description": "ConnectorType states the type of connector used by the destination. Output only.",
-					"readOnly": true
+				"config": {
+					"description": "Config is the config for the destination.",
+					"type": "object"
 				},
+				"created_time": {
+					"description": "CreatedTime is the date and time the destination was created.",
+					"format": "date-time",
+					"type": "string"
+				},
+				"creator_id": {
+					"description": "CreatorId is the ID of the user who created the destination.",
+					"type": "string"
+				},
+				"description": {
+					"description": "Description is an optional description given to this destination.",
+					"type": "string"
+				},
+				"destination_type_id": {
+					"description": "DestinationTypeId is the InfoSum type ID of this destination.",
+					"type": "string"
+				},
+				"editable_paths": {
+					"description": "EditablePaths is the list of schema paths that can be edited at push time.",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				},
+				"id": {
+					"description": "ID is the globally unique ID of the destination.",
+					"type": "string"
+				},
+				"incoming_share_id": {
+					"description": "IncomingShareID is the share ID granting you visibility of this destination if the destination is not owned by you.",
+					"type": "string"
+				},
+				"name": {
+					"description": "Name is the display name given to this destination.",
+					"type": "string"
+				},
+				"outgoing_share_ids": {
+					"description": "OutgoingShareIDs are the IDs of destination shares you have created to share an owned destination with others.",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				},
+				"owner_id": {
+					"description": "OwnerId is the user or company ID of the owner of the destination.",
+					"type": "string"
+				},
+				"permission_ids": {
+					"description": "PermissionIDs is the list of permissions this destination instance has been attached to.",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				},
+				"permissioned_to_permitted_company": {
+					"description": "PermissionedToPermittedCompany indicates that the destination has been attached to a permission to a company that was permitted by the destination share.",
+					"type": "boolean"
+				},
+				"updated_time": {
+					"description": "UpdatedTime is the date and time the destination was last updated.",
+					"format": "date-time",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Destination_Instances.DestinationInstanceOverview": {
+			"description": "DestinationInstanceOverview provides an overview of a Destination instance.",
+			"properties": {
 				"created_time": {
 					"description": "CreatedTime is the date and time the destination was created. Output only.",
 					"format": "date-time",
@@ -1447,49 +1725,45 @@
 					"description": "Description is an optional description given to this destination.",
 					"type": "string"
 				},
-				"dv360_customer_match": {
-					"$ref": "#/definitions/Destinations.DV360Connector"
-				},
-				"dv360_pair": {
-					"$ref": "#/definitions/Destinations.DV360Connector"
-				},
-				"facebook": {
-					"$ref": "#/definitions/Destinations.FacebookConnector"
-				},
-				"gcs": {
-					"$ref": "#/definitions/Destinations.GCSConnector"
+				"destination_type_id": {
+					"description": "DestinationTypeId is the InfoSum type ID of this destination.",
+					"type": "string"
 				},
 				"id": {
 					"description": "ID is the globally unique ID of the destination. Output only.",
 					"readOnly": true,
 					"type": "string"
 				},
+				"incoming_share_id": {
+					"description": "IncomingShareID is the share ID granting you visibility of this destination if the destination is not owned by you.",
+					"type": "string"
+				},
 				"name": {
 					"description": "Name is the display name given to this destination.",
 					"type": "string"
+				},
+				"outgoing_share_ids": {
+					"description": "OutgoingShareIDs are the IDs of destination shares you have created to share an owned destination with others.",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
 				},
 				"owner_id": {
 					"description": "OwnerId is the user or company ID of the owner of the destination. Output only.",
 					"readOnly": true,
 					"type": "string"
 				},
-				"pubmatic": {
-					"$ref": "#/definitions/Destinations.PubmaticConnector"
+				"permission_ids": {
+					"description": "PermissionIDs is the list of permissions this destination instance has been attached to.",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
 				},
-				"s3": {
-					"$ref": "#/definitions/Destinations.S3Connector"
-				},
-				"s3_pair": {
-					"$ref": "#/definitions/Destinations.S3Connector"
-				},
-				"sftp": {
-					"$ref": "#/definitions/Destinations.SftpConnector"
-				},
-				"sftp_pair": {
-					"$ref": "#/definitions/Destinations.SftpConnector"
-				},
-				"trade_desk_connector": {
-					"$ref": "#/definitions/Destinations.TradeDeskConnector"
+				"permissioned_to_permitted_company": {
+					"description": "PermissionedToPermittedCompany indicates that the destination has been attached to a permission to a company that was permitted by the destination share.",
+					"type": "boolean"
 				},
 				"updated_time": {
 					"description": "UpdatedTime is the date and time the destination was last updated. Output only.",
@@ -1500,246 +1774,127 @@
 			},
 			"type": "object"
 		},
-		"Destinations.DestinationOverview": {
-			"description": "DestinationOverview contains information about a destinations.",
+		"Destination_Instances.DestinationInstanceUpdate": {
 			"properties": {
-				"connector_type": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Destinations.ConnectorType"
-						}
-					],
-					"description": "ConnectorType states the type of connector used by the destination."
-				},
-				"created_time": {
-					"description": "CreatedTime is the date and time the destination was created.",
-					"format": "date-time",
-					"type": "string"
-				},
-				"creator_id": {
-					"description": "CreatorId is the ID of the user who created the destination.",
-					"type": "string"
+				"config": {
+					"description": "Complete destination config. If set, this field acts as a PUT on the underlying config. All fields must be provided even if they are unchanged in the update. The values for previously set `x-infosum-secret` properties can be retained by re-submitting the `X-INFOSUM-REDACTED` value.",
+					"type": "object"
 				},
 				"description": {
 					"description": "Description is an optional description given to this destination.",
 					"type": "string"
 				},
-				"id": {
-					"description": "ID is the globally unique ID of the destination.",
-					"type": "string"
-				},
-				"name": {
-					"description": "Name is the display name given to this destination.",
-					"type": "string"
-				},
-				"owner_id": {
-					"description": "OwnerId is the user or company ID of the owner of the destination.",
-					"type": "string"
-				},
-				"updated_time": {
-					"description": "UpdatedTime is the date and time the destination was last updated.",
-					"format": "date-time",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Destinations.DestinationWithConnectorOverview": {
-			"description": "DestinationWithConnectorOverview contains information about a destinations and its connector.",
-			"properties": {
-				"connector_type": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Destinations.ConnectorType"
-						}
-					],
-					"description": "ConnectorType states the type of connector used by the destination."
-				},
-				"created_time": {
-					"description": "CreatedTime is the date and time the destination was created.",
-					"format": "date-time",
-					"type": "string"
-				},
-				"creator_id": {
-					"description": "CreatorId is the ID of the user who created the destination.",
-					"type": "string"
-				},
-				"description": {
-					"description": "Description is an optional description given to this destination.",
-					"type": "string"
-				},
-				"dv360_customer_match": {
-					"$ref": "#/definitions/Destinations.DV360ConnectorOverview"
-				},
-				"dv360_pair": {
-					"$ref": "#/definitions/Destinations.DV360ConnectorOverview"
-				},
-				"facebook": {
-					"$ref": "#/definitions/Destinations.FacebookConnectorOverview"
-				},
-				"gcs": {
-					"$ref": "#/definitions/Destinations.GCSConnectorOverview"
-				},
-				"id": {
-					"description": "ID is the globally unique ID of the destination.",
-					"type": "string"
-				},
-				"name": {
-					"description": "Name is the display name given to this destination.",
-					"type": "string"
-				},
-				"owner_id": {
-					"description": "OwnerId is the user or company ID of the owner of the destination.",
-					"type": "string"
-				},
-				"pubmatic": {
-					"$ref": "#/definitions/Destinations.PubmaticConnectorOverview"
-				},
-				"s3": {
-					"$ref": "#/definitions/Destinations.S3ConnectorOverview"
-				},
-				"s3_pair": {
-					"$ref": "#/definitions/Destinations.S3ConnectorOverview"
-				},
-				"sftp": {
-					"$ref": "#/definitions/Destinations.SftpConnectorOverview"
-				},
-				"sftp_pair": {
-					"$ref": "#/definitions/Destinations.SftpConnectorOverview"
-				},
-				"trade_desk_connector": {
-					"$ref": "#/definitions/Destinations.TradeDeskConnectorOverview"
-				},
-				"updated_time": {
-					"description": "UpdatedTime is the date and time the destination was last updated.",
-					"format": "date-time",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Destinations.FacebookAccessKey": {
-			"description": "FacebookAccessKey contains the access key used for authentication.",
-			"properties": {
-				"access_key": {
-					"description": "AccessKey is a secret and should be transit encrypted. WriteOnly.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Destinations.FacebookConnector": {
-			"description": "FacebookConnector is the information required to define a destination pushing to Facebook.",
-			"properties": {
-				"ad_account_id": {
-					"description": "AdAccountId is the ID for the user's ad account that we're going to be adding audiences in.",
-					"type": "string"
-				},
-				"facebook_access_key": {
-					"$ref": "#/definitions/Destinations.FacebookAccessKey"
-				}
-			},
-			"type": "object"
-		},
-		"Destinations.FacebookConnectorOverview": {
-			"description": "FacebookConnectorOverview contains information about a Facebook connector.",
-			"properties": {
-				"ad_account_id": {
-					"description": "AdAccountId is the ID for the user's ad account that we're going to be adding audiences in.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Destinations.GCSConnector": {
-			"description": "GCSConnector is the information required to define a destination pushing to a sftp server.",
-			"properties": {
-				"bucket_name": {
-					"description": "Bucket Name is the name of the GCS bucket.",
-					"type": "string"
-				},
-				"default_push_overrides": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Destinations.GCSOverrides"
-						}
-					],
-					"description": "DefaultPushOverrides contain the default push time values. Optional."
-				},
-				"service_account_config_json": {
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Destinations.GCSConnectorOverview": {
-			"description": "GCSConnectorOverview contains information about a GCS connector.",
-			"properties": {
-				"bucket_name": {
-					"description": "Bucket Name is the name of the GCS bucket.",
-					"type": "string"
-				},
-				"default_push_overrides": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Destinations.GCSOverrides"
-						}
-					],
-					"description": "DefaultPushOverrides contain the default push time values. Optional."
-				}
-			},
-			"type": "object"
-		},
-		"Destinations.GCSOverrides": {
-			"description": "GCSOverrides are the values that can be overridden when pushing to a sftp server.",
-			"properties": {
-				"path": {
-					"description": "Path is the path in the sftp server to export data to.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Destinations.GetDestinationPushSchemaResponse": {
-			"description": "GetDestinationPushSchemaResponse is the output of the GetDestinationPushSchema method.",
-			"properties": {
-				"push_schema": {
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Destinations.GetDestinationResponse": {
-			"description": "GetDestinationResponse is the output of the GetDestination method.",
-			"properties": {
-				"destination": {
-					"$ref": "#/definitions/Destinations.DestinationWithConnectorOverview"
-				}
-			},
-			"type": "object"
-		},
-		"Destinations.GetS3CrossAccountDetailsResponse": {
-			"description": "GetS3CrossAccountDetailsResponse is the output of the GetS3CrossAccountDetails method.",
-			"properties": {
-				"details": {
-					"$ref": "#/definitions/Destinations.S3CrossAccountDetails"
-				}
-			},
-			"type": "object"
-		},
-		"Destinations.ListDestinationsResponse": {
-			"description": "ListDestinationsResponse is the output of the ListDestination method.",
-			"properties": {
-				"destination_overviews": {
+				"editable_paths": {
+					"description": "EditablePaths is the list of schema paths that can be edited at push time.",
 					"items": {
-						"$ref": "#/definitions/Destinations.DestinationWithConnectorOverview",
-						"type": "object"
+						"type": "string"
+					},
+					"type": "array",
+					"x-go-type": {
+						"hints": {
+							"noValidation": true,
+							"nullable": true
+						},
+						"type": "[]string"
+					},
+					"x-omitempty": true
+				},
+				"name": {
+					"description": "Name is the display name given to this destination.",
+					"type": "string"
+				}
+			},
+			"title": "UpdateDestinationInstance is the input to UpdateDestination",
+			"type": "object"
+		},
+		"Destination_Instances.DestinationTypeOverview": {
+			"description": "DestinationTypeOverview contains the identifier of the type and a human readable name.",
+			"properties": {
+				"id": {
+					"description": "Destination type identifier.",
+					"type": "string"
+				},
+				"name": {
+					"description": "Human friendly name of the Destination type.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Destination_Instances.DetachFromPermissionBody": {
+			"properties": {
+				"permission_id": {
+					"description": "Permission ID to detach from.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Destination_Instances.DetachFromPermissionResponse": {
+			"properties": {
+				"permission_ids": {
+					"description": "Modified list of Permissions the Destination Instance is attached to.",
+					"items": {
+						"type": "string"
 					},
 					"type": "array"
-				},
+				}
+			},
+			"type": "object"
+		},
+		"Destination_Instances.DuplicateDestinationInstanceBody": {
+			"type": "object"
+		},
+		"Destination_Instances.DuplicateDestinationInstanceResponse": {
+			"properties": {
+				"destination_id": {
+					"description": "ID of the newly duplicated Destination Instance.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Destination_Instances.GetDestinationInstanceResponse": {
+			"description": "GetDestinationInstanceResponse the Destination instance details.",
+			"properties": {
+				"destination": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Destination_Instances.DestinationInstance"
+						}
+					],
+					"description": "Destination instance details."
+				}
+			},
+			"type": "object"
+		},
+		"Destination_Instances.GetDestinationTypeExternalConfigResponse": {
+			"description": "GetDestinationTypeExternalConfigRequest contains a JSON-object with external-config details.",
+			"properties": {
+				"external_config": {
+					"description": "External configuration details.",
+					"type": "object"
+				}
+			},
+			"type": "object"
+		},
+		"Destination_Instances.GetDestinationTypeSchemaResponse": {
+			"description": "GetDestinationTypeSchemaResponse is the output of the GetDestinationSchema method.",
+			"properties": {
+				"connection_specification": {
+					"description": "JSON-Schema of the configuration required to create an instance of the requested Destination type.",
+					"type": "object"
+				}
+			},
+			"type": "object"
+		},
+		"Destination_Instances.ListDestinationInstancesResponse": {
+			"description": "ListDestinationInstancesResponse returns a list of Destination instances overviews.",
+			"properties": {
 				"destinations": {
+					"description": "Destinations instances overviews.",
 					"items": {
-						"$ref": "#/definitions/Destinations.DestinationOverview",
+						"$ref": "#/definitions/Destination_Instances.DestinationInstanceOverview",
 						"type": "object"
 					},
 					"type": "array"
@@ -1750,364 +1905,143 @@
 			},
 			"type": "object"
 		},
-		"Destinations.PubmaticConnector": {
-			"description": "PubmaticConnector is the information required to define a destination pushing to PubMatic.",
+		"Destination_Instances.ListDestinationTypesResponse": {
+			"description": "ListDestinationTypesResponse contains a list of supported Destination type names.",
 			"properties": {
-				"dpid": {
-					"description": "DPID is your PubMatic data partner ID. WriteOnly.",
-					"format": "int32",
-					"type": "integer"
-				}
-			},
-			"type": "object"
-		},
-		"Destinations.PubmaticConnectorOverview": {
-			"description": "PubmaticConnectorOverview contains information about a Pubmatic connector.",
-			"type": "object"
-		},
-		"Destinations.S3AccessKeyAuth": {
-			"description": "S3AccessKeyAuth holds the details needed for access key / secret authentication.",
-			"properties": {
-				"access_key_id": {
-					"description": "AccessKeyId is the id of the access key to authenticate with AWS. WriteOnly.",
-					"type": "string"
-				},
-				"secret": {
-					"description": "Secret is the access key secret for authentication. WriteOnly.",
-					"type": "string"
-				},
-				"session_token": {
-					"description": "SessionToken is an optional STS session token. WriteOnly.\nLeave blank if using an IAM User access key.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Destinations.S3AccessKeyDetails": {
-			"description": "S3AccessKeyDetails is the corresponding field to S3CrossAccountDetails for\naccess keys. It is empty as no extra information is required for the setup.",
-			"type": "object"
-		},
-		"Destinations.S3Connector": {
-			"description": "S3Connector is the information required to define a destination using an S3 bucket.",
-			"properties": {
-				"access_key": {
-					"$ref": "#/definitions/Destinations.S3AccessKeyAuth"
-				},
-				"bucket_name": {
-					"description": "BucketName is the name of the S3 Bucket.",
-					"type": "string"
-				},
-				"cross_account": {
-					"$ref": "#/definitions/Destinations.S3CrossAccount"
-				},
-				"default_push_overrides": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Destinations.S3Overrides"
-						}
-					],
-					"title": "DefaultPushOverrides"
-				},
-				"region": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Destinations.AwsRegion"
-						}
-					],
-					"description": "Region is the region of the S3 Bucket."
-				}
-			},
-			"type": "object"
-		},
-		"Destinations.S3ConnectorOverview": {
-			"description": "S3ConnectorOverview contains information about a S3 connector.",
-			"properties": {
-				"access_key_details": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Destinations.S3AccessKeyDetails"
-						}
-					],
-					"description": "AccessKeyDetails is for access key destinations."
-				},
-				"bucket_name": {
-					"description": "BucketName is the name of the S3 Bucket.",
-					"type": "string"
-				},
-				"cross_account_details": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Destinations.S3CrossAccountDetails"
-						}
-					],
-					"description": "CrossAccountDetails contains the details to set up S3 Cross Account access."
-				},
-				"default_push_overrides": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Destinations.S3Overrides"
-						}
-					],
-					"title": "DefaultPushOverrides"
-				},
-				"region": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Destinations.AwsRegion"
-						}
-					],
-					"description": "Region is the region of the S3 Bucket."
-				}
-			},
-			"type": "object"
-		},
-		"Destinations.S3CrossAccount": {
-			"description": "S3CrossAccount holds the details needed for cross account authentication.",
-			"properties": {
-				"external_id": {
-					"description": "Output only.\nExternalId is the aws ExternalId that must be set in your role's trust policy to enable cross account access. Output only.",
-					"readOnly": true,
-					"type": "string"
-				},
-				"infosum_principal": {
-					"description": "Output only.\nInfosumPrincipal is the Infosum principal used when writing data to an S3 bucket.",
-					"readOnly": true,
-					"type": "string"
-				},
-				"push_role_arn": {
-					"description": "PushRoleArn is the AWS IAM role ARN to assume when writing data to an S3 bucket.",
-					"type": "string"
-				},
-				"session_name": {
-					"description": "SessionName is the name of the IAM role session.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Destinations.S3CrossAccountDetails": {
-			"description": "S3CrossAccountDetails contains the information required to set up S3 Cross Account access.",
-			"properties": {
-				"external_id": {
-					"description": "ExternalId is a required field when setting up the S3 Cross Account trust relationship.",
-					"type": "string"
-				},
-				"principal": {
-					"description": "Principal is a required field when setting up the S3 Cross Account trust relationship.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Destinations.S3Overrides": {
-			"description": "S3Overrides are the values that can be overridden when pushing to s3.",
-			"properties": {
-				"path": {
-					"description": "Path is the path in the s3 bucket to export data to.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Destinations.SftpConnector": {
-			"description": "SftpConnector is the information required to define a destination pushing to a sftp server.",
-			"properties": {
-				"default_push_overrides": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Destinations.SftpOverrides"
-						}
-					],
-					"description": "DefaultPushOverrides contain the default push time values. Optional."
-				},
-				"gpg_public_key": {
-					"description": "GpgPublicKey is the GPG public key to use in encrypting the data. Optional.",
-					"type": "string"
-				},
-				"host": {
-					"description": "Host is the host address of the sftp server.",
-					"type": "string"
-				},
-				"host_keys": {
-					"description": "HostKeys contains options for providing a public key to verify the host.\nHostKeys can be public keys in OpenSSH authorized_keys/known_hosts format.",
+				"destination_types": {
+					"description": "List of Destination types.",
 					"items": {
-						"type": "string"
+						"$ref": "#/definitions/Destination_Instances.DestinationTypeOverview",
+						"type": "object"
 					},
 					"type": "array"
-				},
-				"password_config": {
-					"$ref": "#/definitions/Destinations.SftpPasswordAuthentication"
-				},
-				"port": {
-					"description": "port is the port number that gets used when connecting to the sftp server.",
-					"format": "int32",
-					"type": "integer"
-				},
-				"public_key_pem": {
-					"description": "PublicKeyPem is the servers public PEM key that can be used to verify the host.",
-					"type": "string"
-				},
-				"ssh_config": {
-					"$ref": "#/definitions/Destinations.SftpSshAuthentication"
 				}
 			},
 			"type": "object"
 		},
-		"Destinations.SftpConnectorOverview": {
-			"description": "SftpConnectorOverview contains information about a SFTP connector.",
-			"properties": {
-				"default_push_overrides": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Destinations.SftpOverrides"
-						}
-					],
-					"description": "DefaultPushOverrides contain the default push time values. Optional."
-				},
-				"gpg_public_key": {
-					"description": "GpgPublicKey is the GPG public key to use in encrypting the data. Optional.",
-					"type": "string"
-				},
-				"host": {
-					"description": "Host is the host address of the sftp server.",
-					"type": "string"
-				},
-				"host_keys": {
-					"description": "HostKeys contains options for providing a public key to verify the host.\nHostKeys can be public keys in OpenSSH authorized_keys/known_hosts format.",
-					"items": {
-						"type": "string"
-					},
-					"type": "array"
-				},
-				"port": {
-					"description": "port is the port number that gets used when connecting to the sftp server.",
-					"format": "int32",
-					"type": "integer"
-				},
-				"public_key_pem": {
-					"description": "PublicKeyPem is the servers public PEM key that can be used to verify the host.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Destinations.SftpOverrides": {
-			"description": "SftpOverrides are the values that can be overridden when pushing to a sftp server.",
-			"properties": {
-				"path": {
-					"description": "Path is the path in the sftp server to export data to.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Destinations.SftpPasswordAuthentication": {
-			"description": "SftpPasswordAuthentication contains details to authenticate to a sftp server using a username and password.",
-			"properties": {
-				"password": {
-					"description": "Password is the password of the user. WriteOnly.",
-					"type": "string"
-				},
-				"username": {
-					"description": "Username is the username of then user trying to connect to the sftp server. WriteOnly.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Destinations.SftpSshAuthentication": {
-			"description": "SftpSshAuthentication contains details to authenticate to a sftp server using a username and ssh key.",
-			"properties": {
-				"ssh_key": {
-					"description": "SshKey is the ssh key of the user. WriteOnly.",
-					"type": "string"
-				},
-				"username": {
-					"description": "Username is the username of then user trying to connect to the sftp server. WriteOnly.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Destinations.TDLocation": {
-			"default": "TD_INVALID",
+		"Destination_Instances.NullValue": {
+			"default": "NULL_VALUE",
+			"description": "`NullValue` is a singleton enumeration to represent the null value for the\n`Value` type union.\n\nThe JSON representation for `NullValue` is JSON `null`.\n\n - NULL_VALUE: Null value.",
 			"enum": [
-				"TD_INVALID",
-				"TD_EU",
-				"TD_US_EC",
-				"TD_US_WC",
-				"TD_AP",
-				"TD_JP",
-				"TD_CN"
+				"NULL_VALUE"
 			],
-			"title": "- TD_EU: TD_EU is the location code for the EU base URL\n - TD_US_EC: TD_EU is the location code for the US East Coast base URL\n - TD_US_WC: TD_EU is the location code for the US West Coast base URL\n - TD_AP: TD_EU is the location code for the Asia Pacific base URL\n - TD_JP: TD_EU is the location code for the Japan base URL\n - TD_CN: TD_EU is the location code for the China base URL",
 			"type": "string"
 		},
-		"Destinations.TradeDeskConnector": {
-			"description": "TradeDeskConnector is the information required to define a destination pushing to TradeDesk.",
-			"properties": {
-				"advertiser_id": {
-					"description": "AdvertiserID asks for the ID of the advertiser. This field is mandatory.",
-					"type": "string"
-				},
-				"default_values": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Destinations.TradeDeskOverrides"
-						}
-					],
-					"title": "DefaultValues is a list of default values that may be overridden at push time"
-				},
-				"location": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Destinations.TDLocation"
-						}
-					],
-					"description": "Location asks for the base url for the trade desk. This field is mandatory."
-				},
-				"secret_key": {
-					"description": "SecretKey asks for the user secret key to create the signature header. This field is mandatory.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Destinations.TradeDeskConnectorOverview": {
-			"description": "TradeDeskConnectorOverview contains information about a TradeDesk connector.",
-			"properties": {
-				"advertiser_id": {
-					"description": "AdvertiserIDValue asks for the ID of the advertiser.",
-					"type": "string"
-				},
-				"location": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Destinations.TDLocation"
-						}
-					],
-					"description": "Location asks for the base url for the trade desk."
-				}
-			},
-			"type": "object"
-		},
-		"Destinations.TradeDeskOverrides": {
-			"description": "TradeDeskOverrides are the values that can be overridden when pushing to a sftp server.",
-			"properties": {
-				"segment_name": {
-					"description": "SegmentName asks for the segment name to add IDs too. This field is mandatory.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Destinations.UpdateDestinationResponse": {
-			"description": "UpdateDestinationResponse is the output of the UpdateDestination method.",
+		"Destination_Instances.UpdateDestinationInstanceResponse": {
+			"description": "UpdateDestinationInstanceResponse is the output of the UpdateDestinationInstance method.",
 			"properties": {
 				"destination": {
-					"$ref": "#/definitions/Destinations.DestinationWithConnectorOverview"
+					"allOf": [
+						{
+							"$ref": "#/definitions/Destination_Instances.DestinationInstance"
+						}
+					],
+					"description": "Destination instance details."
 				}
 			},
+			"type": "object"
+		},
+		"Destinations.CreateDestinationShareRequest": {
+			"properties": {
+				"comment": {
+					"description": "An optional comment explaining why sharing this destination.",
+					"type": "string"
+				},
+				"destination_id": {
+					"description": "ID of the Destination Instance to be shared.",
+					"type": "string"
+				},
+				"other_permitted_companies": {
+					"description": "The ID of other companies that the sender of this share allows the recipient to send permissions to, with the shared destination associated. Currently these must be InfoSum company IDs. Using this field is currently only available where the sender and recipient of the destination share are managed service customers.",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				},
+				"recipient_email_address": {
+					"description": "Recipient email address to be used to find company to share Destination Instance to.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Destinations.CreateDestinationShareResponse": {
+			"properties": {
+				"share_id": {
+					"description": "ID of the created Destination Share entity.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Destinations.DestinationShare": {
+			"properties": {
+				"comment": {
+					"description": "A comment describing the purpose of this Share by the Destination owner.",
+					"type": "string"
+				},
+				"destination_id": {
+					"description": "The destination ID of the shared instance.",
+					"type": "string"
+				},
+				"other_permitted_companies": {
+					"description": "The ID of other companies that the sender of this share allows the recipient to send permissions to, with the shared destination associated.",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				},
+				"recipient_email_address": {
+					"description": "The email address of the user that was used to locate the recipient company.",
+					"type": "string"
+				},
+				"sender_company_id": {
+					"description": "The owner of the destination and granter of the share.",
+					"type": "string"
+				},
+				"share_id": {
+					"description": "The Share ID.",
+					"type": "string"
+				},
+				"shared_at_date_time": {
+					"description": "The date and time that the Destination Instance was shared.",
+					"format": "date-time",
+					"type": "string"
+				}
+			},
+			"title": "DestinationShare contains details of a destination share",
+			"type": "object"
+		},
+		"Destinations.GetDestinationShareResponse": {
+			"properties": {
+				"destination_share": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Destinations.DestinationShare"
+						}
+					],
+					"description": "Details of the requested Destination Share."
+				}
+			},
+			"type": "object"
+		},
+		"Destinations.ListDestinationSharesResponse": {
+			"properties": {
+				"destination_shares": {
+					"description": "List of all Destination Shares both sent or received by the company of the requesting user subject to the supplied filters.",
+					"items": {
+						"$ref": "#/definitions/Destinations.DestinationShare",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"pagination": {
+					"$ref": "#/definitions/PaginationResponse"
+				}
+			},
+			"type": "object"
+		},
+		"Destinations.RemoveDestinationShareResponse": {
 			"type": "object"
 		},
 		"Error": {
@@ -2158,670 +2092,6 @@
 				}
 			},
 			"type": "object"
-		},
-		"Exports.ConsentStatus": {
-			"default": "CONSENT_STATUS_INVALID",
-			"description": "- UNSPECIFIED: Indicates that no specific consent status is applicable\n - GRANTED: Indicates that consent has been granted\n - DENIED: Indicates that consent has been denied",
-			"enum": [
-				"CONSENT_STATUS_INVALID",
-				"UNSPECIFIED",
-				"GRANTED",
-				"DENIED"
-			],
-			"title": "ConsentStatus enumerates the allowable user consent signals for exporting data to DV360",
-			"type": "string"
-		},
-		"Exports.ContactInfoMapping": {
-			"description": "ContactInfoMapping contains information's mapping column names to DV360 accepted column names.",
-			"properties": {
-				"column_map": {
-					"description": "ColumnMap is an array of maps between the output columns and DV360 accepted column names.",
-					"items": {
-						"$ref": "#/definitions/Exports.DV360ColumnMap",
-						"type": "object"
-					},
-					"type": "array"
-				}
-			},
-			"type": "object"
-		},
-		"Exports.DV360Append": {
-			"description": "DV360Append adds customers to an existing audience list.",
-			"properties": {
-				"audience_id": {
-					"description": "AudienceID is the id for the audience list.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Exports.DV360ColumnMap": {
-			"description": "DV360ColumnMap is used to map column names to a DV360 accepted column name.",
-			"properties": {
-				"dv360_column_name": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Exports.Dv360Schema"
-						}
-					],
-					"description": "DV360ColumnName is the mapping to the DV360 accepted column name."
-				},
-				"platform_column_name": {
-					"description": "PlatformColumnName is the name of the column that is outputted from the\nplatform.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Exports.DV360Create": {
-			"description": "DV360Create makes a new audience.",
-			"properties": {
-				"description": {
-					"description": "Description of the audience to create.",
-					"type": "string"
-				},
-				"name": {
-					"description": "Name of the audience to create.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Exports.DV360CustomerMatchCreate": {
-			"description": "DV360CustomerMatchCreate makes a new audience.",
-			"properties": {
-				"app_id": {
-					"description": "AppID is a string that uniquely identifies a mobile application from which\nthe data was collected. For iOS, the ID string is the 9 digit string that\nappears at the end of an App Store URL (for example, \"476943146\" for\n\"Flood-It! 2\" whose App Store link is\nhttp://itunes.apple.com/us/app/flood-it!-2/id476943146). For Android, the\nID string is the application's package name (for example,\n\"com.labpixies.colordrips\" for \"Color Drips\" given Google Play link\nhttps://play.google.com/store/apps/details?id=com.labpixies.colordrips).\nRequired when uploading mobile advertising IDs.",
-					"type": "string"
-				},
-				"description": {
-					"description": "Description of the audience to create.",
-					"type": "string"
-				},
-				"name": {
-					"description": "Name of the audience to create.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Exports.DV360CustomerMatchPush": {
-			"description": "DV360CustomerMatchPush are the push time variables for when pushing to DV360 using PAIR encryption.",
-			"properties": {
-				"ad_personalization": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Exports.ConsentStatus"
-						}
-					],
-					"description": "AdPersonalization specifies the consent status of the users' data for use in ad personalization. Data for which consent is explicitly denied will not be accepted by Google and will cause an error. [Google FAQs Here](https://support.google.com/google-ads/answer/14310715)"
-				},
-				"ad_user_data": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Exports.ConsentStatus"
-						}
-					],
-					"description": "AdUserData specifies the consent status for sending the users' data to Google. Data for which consent is explicitly denied will not be accepted by Google and will cause an error. [Google FAQs Here](https://support.google.com/google-ads/answer/14310715)"
-				},
-				"append": {
-					"$ref": "#/definitions/Exports.DV360Append"
-				},
-				"contact_info_mapping": {
-					"$ref": "#/definitions/Exports.ContactInfoMapping"
-				},
-				"create": {
-					"$ref": "#/definitions/Exports.DV360CustomerMatchCreate"
-				},
-				"mobile_advertising_id_column_name": {
-					"type": "string"
-				},
-				"remove": {
-					"$ref": "#/definitions/Exports.DV360Remove"
-				},
-				"time_to_live_days": {
-					"description": "TimeToLive is the number of days for the data to live. Must be between 0 and 540 (inclusive).\nSet to 10000 for no expiration for CRM based user lists.",
-					"format": "int64",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Exports.DV360PAIRPush": {
-			"description": "DV360PAIRPush are the push time variables for when pushing to DV360 using PAIR encryption.",
-			"properties": {
-				"ad_personalization": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Exports.ConsentStatus"
-						}
-					],
-					"description": "AdPersonalization specifies the consent status of the users' data for use in ad personalization. Data for which consent is explicitly denied will not be accepted by Google and will cause an error. [Google FAQs Here](https://support.google.com/google-ads/answer/14310715)"
-				},
-				"ad_user_data": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Exports.ConsentStatus"
-						}
-					],
-					"description": "AdUserData specifies the consent status for sending the users' data to Google. Data for which consent is explicitly denied will not be accepted by Google and will cause an error. [Google FAQs Here](https://support.google.com/google-ads/answer/14310715)"
-				},
-				"create": {
-					"$ref": "#/definitions/Exports.DV360Create"
-				},
-				"time_to_live_days": {
-					"description": "TimeToLive is the number of days for the data to live. Must be between 0 and 180 (inclusive).",
-					"format": "int64",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Exports.DV360Remove": {
-			"description": "DV360Remove removes customers from an existing audience list.",
-			"properties": {
-				"audience_id": {
-					"description": "AudienceID is the id for the audience list.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Exports.Dv360Schema": {
-			"default": "DV360_SCHEMA_INVALID",
-			"description": "Dv360Schema is the enum of accepted column names.\n\n - DV360_SCHEMA_EMAIL: DV360SchemaEmail is an email address. Will be hashed when sent.\n - DV360_SCHEMA_PHONE: DV360SchemaPhone is a telephone number. Will be hashed when sent.\nE164 standard.\n - DV360_SCHEMA_LAST_NAME: DV360SchemaLastName is a last name. Will be hashed when sent.  Lower case\nonly and no punctuation, remove any extra spaces before, after, and in\nbetween.\n - DV360_SCHEMA_FIRST_NAME: DV360SchemaFirstName is a first name. Will be hashed when sent.  Lower\ncase only and no punctuation, remove any extra spaces before, after, and\nin between.\n - DV360_SCHEMA_POSTAL_CODE: DV360SchemaPostalCode is a zip code or a postcode.\nPostal code of the user's address.\n - DV360_SCHEMA_COUNTRY_CODE: DV360SchemaCountryCode is a country code.\n2-letter country code in ISO-3166-1 alpha-2 of the user's address.",
-			"enum": [
-				"DV360_SCHEMA_INVALID",
-				"DV360_SCHEMA_EMAIL",
-				"DV360_SCHEMA_PHONE",
-				"DV360_SCHEMA_LAST_NAME",
-				"DV360_SCHEMA_FIRST_NAME",
-				"DV360_SCHEMA_POSTAL_CODE",
-				"DV360_SCHEMA_COUNTRY_CODE"
-			],
-			"type": "string"
-		},
-		"Exports.ExportResultsRequest": {
-			"description": "ExportResultsRequest is input to the ExportResult request.",
-			"properties": {
-				"activation_query_id": {
-					"description": "ActivationQueryId is the id of the activation query.",
-					"type": "string"
-				},
-				"cohort_version": {
-					"description": "CohortVersion is the version of the cohort to push.",
-					"type": "string"
-				},
-				"destination_id": {
-					"description": "DestinationID is the unique identifier for destination.",
-					"type": "string"
-				},
-				"dv360_customer_match": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Exports.DV360CustomerMatchPush"
-						}
-					],
-					"description": "DV360 Customer Match are the overrides for the DV360 connector type."
-				},
-				"dv360_pair": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Exports.DV360PAIRPush"
-						}
-					],
-					"description": "DV360 PAIR are the overrides for the DV360 connector type."
-				},
-				"facebook": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Exports.FacebookPush"
-						}
-					],
-					"description": "Facebook are the overrides for the Facebook connector type."
-				},
-				"gcs": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Exports.GCSPush"
-						}
-					],
-					"description": "gcs are the overrides for the gcs connector type."
-				},
-				"pubmatic": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Exports.PubmaticPush"
-						}
-					],
-					"description": "Pubmatic are the overrides for the PubMatic connector type."
-				},
-				"s3": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Exports.S3Push"
-						}
-					],
-					"description": "S3 are the overrides for the s3 connector type."
-				},
-				"s3_pair": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Exports.S3PAIRPush"
-						}
-					],
-					"description": "S3Pair are the overrides for the s3 PAIR connector type."
-				},
-				"sftp": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Exports.SftpPush"
-						}
-					],
-					"description": "Sftp are the overrides for the sftp connector type."
-				},
-				"sftp_pair": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Exports.SftpPAIRPush"
-						}
-					],
-					"description": "SftpPair are the overrides for the sftp PAIR connector type."
-				}
-			},
-			"type": "object"
-		},
-		"Exports.ExportResultsResponse": {
-			"description": "ExportResultsResponse is the output of the ExportResults request.",
-			"properties": {
-				"push_id": {
-					"description": "PushId is the unique identifier for the requested push.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Exports.FacebookAdd": {
-			"description": "FacebookAdd appends records to an existing audience ID.",
-			"properties": {
-				"audience_id": {
-					"description": "AudienceID is the ID of the existing audience.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Exports.FacebookColumnMap": {
-			"description": "FacebookColumnMap is used to map column names to a facebook accepted column name.",
-			"properties": {
-				"facebook_column_name": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Exports.FacebookSchema"
-						}
-					],
-					"description": "FacebookColumnName is the mapping to the facebook accepted column name."
-				},
-				"platform_column_name": {
-					"description": "PlatformColumnName is the name of the column that is outputted from the platform.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Exports.FacebookCreate": {
-			"description": "FacebookCreate makes a new audience.",
-			"properties": {
-				"description": {
-					"description": "Description of the audience to create.",
-					"type": "string"
-				},
-				"file_source": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Exports.FacebookFileSource"
-						}
-					],
-					"description": "FileSource of the audience (enum)."
-				},
-				"name": {
-					"description": "Name of the audience to create.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Exports.FacebookFileSource": {
-			"default": "FACEBOOK_FILE_SOURCE_INVALID",
-			"description": "FacebookFileSource tells facebook where the customer got this data from.\n\n - FACEBOOK_FILE_SOURCE_USER_PROVIDED_ONLY: FacebookFileSourceUserProvidedOnly: collected information directly from customers.\n - FACEBOOK_FILE_SOURCE_PARTNER_PROVIDED_ONLY: FacebookFileSourcePartnerProvidedOnly: sourced information directly from partners (e.g., agencies or data providers).\n - FACEBOOK_FILE_SOURCE_BOTH_USER_AND_PARTNER_PROVIDED: FacebookFileSourceBothUserAndPartnerProvided: collected information directly from customers and it was also sourced from partners (e.g., agencies).",
-			"enum": [
-				"FACEBOOK_FILE_SOURCE_INVALID",
-				"FACEBOOK_FILE_SOURCE_USER_PROVIDED_ONLY",
-				"FACEBOOK_FILE_SOURCE_PARTNER_PROVIDED_ONLY",
-				"FACEBOOK_FILE_SOURCE_BOTH_USER_AND_PARTNER_PROVIDED"
-			],
-			"type": "string"
-		},
-		"Exports.FacebookPush": {
-			"description": "FacebookPush are the push time variables for when pushing to Facebook.",
-			"properties": {
-				"add": {
-					"$ref": "#/definitions/Exports.FacebookAdd"
-				},
-				"column_map": {
-					"description": "ColumnMap is an array of maps between the output columns and facebook accepted column names.",
-					"items": {
-						"$ref": "#/definitions/Exports.FacebookColumnMap",
-						"type": "object"
-					},
-					"type": "array"
-				},
-				"create": {
-					"$ref": "#/definitions/Exports.FacebookCreate"
-				},
-				"page_id": {
-					"description": "PageID is required when PageUIDs are being sent, otherwise it is ignored.",
-					"type": "string"
-				},
-				"remove": {
-					"$ref": "#/definitions/Exports.FacebookRemove"
-				},
-				"replace": {
-					"$ref": "#/definitions/Exports.FacebookReplace"
-				}
-			},
-			"type": "object"
-		},
-		"Exports.FacebookRemove": {
-			"description": "FacebookRemove deletes all records that match the provided records.",
-			"properties": {
-				"audience_id": {
-					"description": "AudienceID is the ID of the existing audience.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Exports.FacebookReplace": {
-			"description": "FacebookReplace deletes all rows (can only be used in audiences with up to a maximum of 100 million rows) and adds the supplied rows to an existing audience.",
-			"properties": {
-				"audience_id": {
-					"description": "AudienceID is the ID of the existing audience.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Exports.FacebookSchema": {
-			"default": "FACEBOOK_SCHEMA_INVALID",
-			"description": "FacebookSchema is the enum of accepted column names.\n\n - FACEBOOK_SCHEMA_EMAIL: FacebookSchemaEmail is an email address. Will be hashed when sent.\nTrim leading and trailing white space, and convert all characters to lowercase.\n - FACEBOOK_SCHEMA_PHONE: FacebookSchemaPhone is a telephone number. Will be hashed when sent.\nRemove symbols, letters, and any leading zeroes. You should prefix the country code if the COUNTRY field is not specified.\n - FACEBOOK_SCHEMA_GEN: FacebookSchemaGen is a gender. Will be hashed when sent.\nUse these values: m for male, f for female.\n - FACEBOOK_SCHEMA_DOBY: FacebookSchemaDOBY is a birth year. Will be hashed when sent.\nUse the YYYY format: 1900 to the current year.\n - FACEBOOK_SCHEMA_DOBM: FacebookSchemaDOBM is a birth month. Will be hashed when sent.\nUse the MM format: 01 to 12.\n - FACEBOOK_SCHEMA_DOBD: FacebookSchemaDOBD is a birth day of the month. Will be hashed when sent.\nUse the DD format: 01 to 31.\n - FACEBOOK_SCHEMA_LN: FacebookSchemaLN is a last name. Will be hashed when sent.\nUse a-z only. Lowercase only, no punctuation. Special characters in UTF-8 format.\n - FACEBOOK_SCHEMA_FN: FacebookSchemaFN is a first name. Will be hashed when sent.\nUse a-z only. Lowercase only, no punctuation. Special characters in UTF-8 format.\n - FACEBOOK_SCHEMA_FI: FacebookSchemaFI is a first name initial. Will be hashed when sent.\nUse a-z only. Lowercase only. Special characters in UTF-8 format.\n - FACEBOOK_SCHEMA_ST: FacebookSchemaST is a USA state code. Will be hashed when sent.\nUse the 2-character ANSI abbreviation code, lowercase. Normalize states outside the US in lowercase, with no punctuation, no special characters, and no white space.\n - FACEBOOK_SCHEMA_CT: FacebookSchemaCT is a city. Will be hashed when sent.\nUse a-z only. Lowercase only, with no punctuation, no special characters, and no white space.\n - FACEBOOK_SCHEMA_ZIP: FacebookSchemaZIP is a zip code or a postcode. Will be hashed when sent.\nUse lowercase, and no white space. For the US, use only the first 5 digits. For the UK, use the Area/District/Sector format.\n - FACEBOOK_SCHEMA_COUNTRY: FacebookSchemaCountry is a country code. Will be hashed when sent.\nUse lowercase, 2-letter country codes in ISO 3166-1 alpha-2.\n - FACEBOOK_SCHEMA_EXTERN_ID: FacebookSchemaExternID is an external ID. Will be hashed when sent.\nThe data retention period for EXTERN_ID is 90 days.\n - FACEBOOK_SCHEMA_MADID: FacebookSchemaMADID is a mobile advertiser ID. Will not be hashed when sent.\nUse all lowercase, and keep hyphens.\n - FACEBOOK_SCHEMA_PAGEUID: FacebookSchemaPageUID is a page scoped user ID. Will not be hashed when sent.\nIf you use the PAGEUID key, you must also include a list of page IDs in the push.",
-			"enum": [
-				"FACEBOOK_SCHEMA_INVALID",
-				"FACEBOOK_SCHEMA_EMAIL",
-				"FACEBOOK_SCHEMA_PHONE",
-				"FACEBOOK_SCHEMA_GEN",
-				"FACEBOOK_SCHEMA_DOBY",
-				"FACEBOOK_SCHEMA_DOBM",
-				"FACEBOOK_SCHEMA_DOBD",
-				"FACEBOOK_SCHEMA_LN",
-				"FACEBOOK_SCHEMA_FN",
-				"FACEBOOK_SCHEMA_FI",
-				"FACEBOOK_SCHEMA_ST",
-				"FACEBOOK_SCHEMA_CT",
-				"FACEBOOK_SCHEMA_ZIP",
-				"FACEBOOK_SCHEMA_COUNTRY",
-				"FACEBOOK_SCHEMA_EXTERN_ID",
-				"FACEBOOK_SCHEMA_MADID",
-				"FACEBOOK_SCHEMA_PAGEUID"
-			],
-			"type": "string"
-		},
-		"Exports.GCSOverrides": {
-			"description": "GCSOverrides are the values that can be overridden when pushing to a sftp server.",
-			"properties": {
-				"path": {
-					"description": "Path is the path in the sftp server to export data to.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Exports.GCSPush": {
-			"description": "GCSPush contain all the fields that need to be defined at push time when pushing to a Google Cloud Bucket.",
-			"properties": {
-				"filename": {
-					"description": "Filename is the name used for file when pushing the results to a destination.",
-					"type": "string"
-				},
-				"gcs_sharding": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Exports.GCSSharding"
-						}
-					],
-					"description": "GCS Sharding conatins file sharding configurations. Optional."
-				},
-				"overrides": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Exports.GCSOverrides"
-						}
-					],
-					"description": "Overrides contains the fields that can be overridden when pushing to a sftp server."
-				}
-			},
-			"type": "object"
-		},
-		"Exports.GCSSharding": {
-			"description": "GCSSharding optional overridable values for specifying sharding options.",
-			"properties": {
-				"sharding_size": {
-					"description": "Sharding Size allows the user to select a Max file size in MB (if splitting large files). Optional - 1024 mb should be the default.",
-					"format": "int64",
-					"type": "string"
-				},
-				"suffix": {
-					"description": "Suffix used when splitting large files (will be followed by the number of the file). Optional.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Exports.PubmaticCountryCode": {
-			"default": "PUBMATIC_COUNTRY_CODE_INVALID",
-			"description": "PubmaticCountryCode is the list country's we support push for PubMatic.\n\n - US: US is the 2 letter country code for United States of America\n - AT: AT is the 2 letter country code for Austria\n - BE: BE is the 2 letter country code for Belgium\n - CA: CA is the 2 letter country code for Canada\n - CN: CN is the 2 letter country code for China\n - CY: CY is the 2 letter country code for Cyprus\n - DK: DK is the 2 letter country code for Denmark\n - EG: EG is the 2 letter country code for Egypt\n - FJ: FJ is the 2 letter country code for Fiji\n - FI: FI is the 2 letter country code for Finland\n - FR: FR is the 2 letter country code for France\n - DE: DE is the 2 letter country code for Germany\n - GR: GR is the 2 letter country code for Greece\n - HK: HK is the 2 letter country code for Hong Kong\n - HU: HU is the 2 letter country code for Hungary\n - IS: IS is the 2 letter country code for Iceland\n - IN: IN is the 2 letter country code for India\n - IE: IE is the 2 letter country code for Ireland\n - IT: IT is the 2 letter country code for Italy\n - JP: JP is the 2 letter country code for Japan\n - LU: LU is the 2 letter country code for Luxembourg\n - NL: NL is the 2 letter country code for Netherlands\n - NZ: NZ is the 2 letter country code for New Zealand\n - NO: NO is the 2 letter country code for Norway\n - PL: PL is the 2 letter country code for Poland\n - PT: PT is the 2 letter country code for Portugal\n - SG: SG is the 2 letter country code for Singapore\n - ES: ES is the 2 letter country code for Spain\n - SE: SE is the 2 letter country code for Sweden\n - CH: CH is the 2 letter country code for Switzerland\n - GB: GB is the 2 letter country code for United Kingdom of Great Britain and Northern Ireland\n - AU: AU is the 2 letter country code for Australia",
-			"enum": [
-				"PUBMATIC_COUNTRY_CODE_INVALID",
-				"US",
-				"AT",
-				"BE",
-				"CA",
-				"CN",
-				"CY",
-				"DK",
-				"EG",
-				"FJ",
-				"FI",
-				"FR",
-				"DE",
-				"GR",
-				"HK",
-				"HU",
-				"IS",
-				"IN",
-				"IE",
-				"IT",
-				"JP",
-				"LU",
-				"NL",
-				"NZ",
-				"NO",
-				"PL",
-				"PT",
-				"SG",
-				"ES",
-				"SE",
-				"CH",
-				"GB",
-				"AU"
-			],
-			"type": "string"
-		},
-		"Exports.PubmaticPush": {
-			"description": "PubmaticPush are the push time variables for when pushing to PubMatic.",
-			"properties": {
-				"addseg": {
-					"description": "Addseg is a  list of audiences to add users to.",
-					"items": {
-						"type": "string"
-					},
-					"type": "array"
-				},
-				"country_code": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Exports.PubmaticCountryCode"
-						}
-					],
-					"description": "CountryCode is the country code that the users belong to."
-				},
-				"uid_type": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Exports.UIDType"
-						}
-					],
-					"description": "UIDType is a value that determines what the identity partner's PubMatic user ID represents."
-				},
-				"user_id_column": {
-					"description": "UserIDColumn is the name of the output column you want mapping to PubMatic userid field.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Exports.S3Overrides": {
-			"description": "S3Overrides are the values that can be overridden when pushing to s3.",
-			"properties": {
-				"path": {
-					"description": "Path is the path in the s3 bucket to export data to.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Exports.S3PAIRPush": {
-			"description": "S3PAIRPush contain all the fields that need to be defined at push time when pushing to s3.",
-			"properties": {
-				"filename": {
-					"description": "Filename is the name used for file when pushing the results to a destination.",
-					"type": "string"
-				},
-				"overrides": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Exports.S3Overrides"
-						}
-					],
-					"description": "Overrides contains the fields that can be overridden when pushing to s3."
-				}
-			},
-			"type": "object"
-		},
-		"Exports.S3Push": {
-			"description": "S3Push contain all the fields that need to be defined at push time when pushing to s3.",
-			"properties": {
-				"filename": {
-					"description": "Filename is the name used for file when pushing the results to a destination.",
-					"type": "string"
-				},
-				"overrides": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Exports.S3Overrides"
-						}
-					],
-					"description": "Overrides contains the fields that can be overridden when pushing to s3."
-				}
-			},
-			"type": "object"
-		},
-		"Exports.SftpOverrides": {
-			"description": "SftpOverrides are the values that can be overridden when pushing to a sftp server.",
-			"properties": {
-				"path": {
-					"description": "Path is the path in the sftp server to export data to.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Exports.SftpPAIRPush": {
-			"description": "SftpPAIRPush contain all the fields that need to be defined at push time when pushing to sftp.",
-			"properties": {
-				"filename": {
-					"description": "Filename is the name used for file when pushing the results to a destination.",
-					"type": "string"
-				},
-				"overrides": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Exports.SftpOverrides"
-						}
-					],
-					"description": "Overrides contains the fields that can be overridden when pushing to sftp."
-				}
-			},
-			"type": "object"
-		},
-		"Exports.SftpPush": {
-			"description": "SftpPush contain all the fields that need to be defined at push time when pushing to a sftp server.",
-			"properties": {
-				"filename": {
-					"description": "Filename is the name used for file when pushing the results to a destination.",
-					"type": "string"
-				},
-				"overrides": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Exports.SftpOverrides"
-						}
-					],
-					"description": "Overrides contains the fields that can be overridden when pushing to a sftp server."
-				}
-			},
-			"type": "object"
-		},
-		"Exports.UIDType": {
-			"default": "UID_TYPE_INVALID",
-			"description": "UIDType determines what the identity partner's PubMatic user ID represents.",
-			"enum": [
-				"UID_TYPE_INVALID",
-				"COOKIE_ID",
-				"DEVICE_ID",
-				"BOUNCE_X",
-				"TTD",
-				"ID5",
-				"CRITEO_RTUS",
-				"IDENTITY_LINK",
-				"PUB_COMMON_ID",
-				"FIRST_PARTY_ID",
-				"LIVE_INTENT",
-				"BRITEPOOL",
-				"PARRABLE",
-				"CRITEO_ID",
-				"MERKLE_M1",
-				"TTD_UID",
-				"LOTAME_PANORAMA",
-				"QUANTCAST_ID",
-				"FABRICK_ID",
-				"NET_ID",
-				"ZEOTAP",
-				"SHARED_ID",
-				"NUID",
-				"IMUID"
-			],
-			"type": "string"
 		},
 		"Files.DeleteResponse": {
 			"description": "DeleteResponse is an empty response for the Delete file request.",
@@ -3678,11 +2948,11 @@
 			},
 			"type": "object"
 		},
-		"Importers.CancelImportExecutionResponse": {
+		"Import_Executions.CancelImportExecutionResponse": {
 			"description": "CancelImportExecutionResponse is the output from the CancelExecution method.",
 			"type": "object"
 		},
-		"Importers.ExecuteImportResponse": {
+		"Import_Executions.ExecuteImportResponse": {
 			"description": "the response from the ExecuteImport method.",
 			"properties": {
 				"execution_id": {
@@ -3692,13 +2962,13 @@
 			},
 			"type": "object"
 		},
-		"Importers.GetImportExecutionResponse": {
+		"Import_Executions.GetImportExecutionResponse": {
 			"description": "The response from the GetExecution method.",
 			"properties": {
 				"execution_details": {
 					"allOf": [
 						{
-							"$ref": "#/definitions/Importers.ImportExecutionDetails"
+							"$ref": "#/definitions/Import_Executions.ImportExecutionDetails"
 						}
 					],
 					"description": "Details of the requested Import execution task."
@@ -3706,7 +2976,7 @@
 			},
 			"type": "object"
 		},
-		"Importers.History": {
+		"Import_Executions.History": {
 			"description": "Information about the status of the task.",
 			"properties": {
 				"date_time": {
@@ -3729,7 +2999,7 @@
 				"status": {
 					"allOf": [
 						{
-							"$ref": "#/definitions/Importers.v1.Status"
+							"$ref": "#/definitions/Import_Executions.v1.Status"
 						}
 					],
 					"description": "The status of the task for this entry."
@@ -3737,7 +3007,7 @@
 			},
 			"type": "object"
 		},
-		"Importers.ImportExecution": {
+		"Import_Executions.ImportExecution": {
 			"description": "Detailed information about an execution and their history.",
 			"properties": {
 				"cloud_vault_id": {
@@ -3752,7 +3022,7 @@
 				"current_status": {
 					"allOf": [
 						{
-							"$ref": "#/definitions/Importers.v1.Status"
+							"$ref": "#/definitions/Import_Executions.v1.Status"
 						}
 					],
 					"description": "The status of the current execution."
@@ -3768,7 +3038,7 @@
 				"progress": {
 					"allOf": [
 						{
-							"$ref": "#/definitions/Importers.Progress"
+							"$ref": "#/definitions/Import_Executions.Progress"
 						}
 					],
 					"description": "The information of the progress of the import as whole."
@@ -3785,13 +3055,13 @@
 			},
 			"type": "object"
 		},
-		"Importers.ImportExecutionDetails": {
+		"Import_Executions.ImportExecutionDetails": {
 			"description": "Detailed information about an execution and their history.",
 			"properties": {
 				"execution": {
 					"allOf": [
 						{
-							"$ref": "#/definitions/Importers.ImportExecution"
+							"$ref": "#/definitions/Import_Executions.ImportExecution"
 						}
 					],
 					"description": "Global information about a execution."
@@ -3799,7 +3069,7 @@
 				"history": {
 					"description": "The status history of the execution execution.",
 					"items": {
-						"$ref": "#/definitions/Importers.History",
+						"$ref": "#/definitions/Import_Executions.History",
 						"type": "object"
 					},
 					"type": "array"
@@ -3807,13 +3077,13 @@
 			},
 			"type": "object"
 		},
-		"Importers.ListImportExecutionsResponse": {
+		"Import_Executions.ListImportExecutionsResponse": {
 			"description": "The response from the ListExecutions method.",
 			"properties": {
 				"executions": {
 					"description": "A list of Import execution tasks.",
 					"items": {
-						"$ref": "#/definitions/Importers.ImportExecution",
+						"$ref": "#/definitions/Import_Executions.ImportExecution",
 						"type": "object"
 					},
 					"type": "array"
@@ -3829,7 +3099,7 @@
 			},
 			"type": "object"
 		},
-		"Importers.Progress": {
+		"Import_Executions.Progress": {
 			"description": "The information of the progress of the import execution as a whole.",
 			"properties": {
 				"completion_percentage": {
@@ -3855,7 +3125,7 @@
 			},
 			"type": "object"
 		},
-		"Importers.v1.Status": {
+		"Import_Executions.v1.Status": {
 			"default": "NO_STATUS",
 			"description": "Status is an enum of the different states that an async task can be in.",
 			"enum": [
@@ -3874,17 +3144,13 @@
 			],
 			"type": "string"
 		},
-		"Imports.CancelResponse": {
-			"description": "CancelResponse is the output from the Cancel method.",
-			"type": "object"
-		},
-		"Imports.CreateImportRequest": {
+		"Importers.CreateImportRequest": {
 			"description": "The input to the CreateImport method.",
 			"properties": {
 				"import": {
 					"allOf": [
 						{
-							"$ref": "#/definitions/Imports.Import"
+							"$ref": "#/definitions/Importers.Import"
 						}
 					],
 					"description": "The configuration to create a new Import with."
@@ -3892,7 +3158,7 @@
 			},
 			"type": "object"
 		},
-		"Imports.CreateImportResponse": {
+		"Importers.CreateImportResponse": {
 			"description": "The response from the CreateImport method.",
 			"properties": {
 				"import_id": {
@@ -3900,6 +3166,136 @@
 					"type": "string"
 				}
 			},
+			"type": "object"
+		},
+		"Importers.DataFilter": {
+			"description": "The information about the filter for data from an import connector.",
+			"properties": {
+				"filter": {
+					"description": "An array of strings used to filter the data from the import connector. No filter == *",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				}
+			},
+			"type": "object"
+		},
+		"Importers.DeleteImportResponse": {
+			"description": "DeleteImportResponse is the output from the Delete method.",
+			"type": "object"
+		},
+		"Importers.GetImportResponse": {
+			"description": "The response from the GetImport method.",
+			"properties": {
+				"import": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Importers.Import"
+						}
+					],
+					"description": "The configuration of the Import that was requested."
+				}
+			},
+			"type": "object"
+		},
+		"Importers.Import": {
+			"description": "The information required to define an import.",
+			"properties": {
+				"cloud_vault_id": {
+					"description": "The identifier for the Cloud Vault to where the files will be imported.",
+					"type": "string"
+				},
+				"created_date_time": {
+					"description": "The date and time the import was created.",
+					"format": "date-time",
+					"readOnly": true,
+					"type": "string"
+				},
+				"data_filter": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Importers.DataFilter"
+						}
+					],
+					"description": "The filtered data to import from the import connector."
+				},
+				"description": {
+					"description": "A description for the import.",
+					"type": "string"
+				},
+				"icc_id": {
+					"description": "The id of the import connector config used by the import.",
+					"type": "string"
+				},
+				"id": {
+					"description": "The globally unique ID of the import.",
+					"readOnly": true,
+					"type": "string"
+				},
+				"name": {
+					"description": "The name given to the import.",
+					"type": "string"
+				},
+				"owner_id": {
+					"type": "string"
+				},
+				"target_folder": {
+					"description": "The target folder for the import. This field can be a path containing subfolders. Valid characters are alphanumeric, '_', '-', '.', '/'. This field cannot start or end with a '/'. The 'Recordsets' folder cannot be imported into. This field will be mandatory in the near future.",
+					"type": "string"
+				},
+				"updated_date_time": {
+					"description": "The date and time the import was last updated.",
+					"format": "date-time",
+					"readOnly": true,
+					"type": "string"
+				},
+				"user_id": {
+					"description": "The id of the user who created the import.",
+					"readOnly": true,
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Importers.ListImportsResponse": {
+			"description": "The response from the ListImports method.",
+			"properties": {
+				"imports": {
+					"description": "A list of configurations of Imports.",
+					"items": {
+						"$ref": "#/definitions/Importers.Import",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"pagination": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/PaginationResponse"
+						}
+					],
+					"description": "Pagination information for the returned list."
+				}
+			},
+			"type": "object"
+		},
+		"Importers.UpdateImportResponse": {
+			"description": "The response from the UpdateImport method.",
+			"properties": {
+				"import": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Importers.Import"
+						}
+					],
+					"description": "he configuration of the Import that was updated."
+				}
+			},
+			"type": "object"
+		},
+		"Imports.CancelResponse": {
+			"description": "CancelResponse is the output from the Cancel method.",
 			"type": "object"
 		},
 		"Imports.CreateRequest": {
@@ -3951,37 +3347,6 @@
 			},
 			"type": "object"
 		},
-		"Imports.DataFilter": {
-			"description": "The information about the filter for data from an import connector.",
-			"properties": {
-				"filter": {
-					"description": "An array of strings used to filter the data from the import connector. No filter == *",
-					"items": {
-						"type": "string"
-					},
-					"type": "array"
-				}
-			},
-			"type": "object"
-		},
-		"Imports.DeleteImportResponse": {
-			"description": "DeleteImportResponse is the output from the Delete method.",
-			"type": "object"
-		},
-		"Imports.GetImportResponse": {
-			"description": "The response from the GetImport method.",
-			"properties": {
-				"import": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Imports.Import"
-						}
-					],
-					"description": "The configuration of the Import that was requested."
-				}
-			},
-			"type": "object"
-		},
 		"Imports.GetResponse": {
 			"description": "The response from the Get method.",
 			"properties": {
@@ -4023,87 +3388,6 @@
 						}
 					],
 					"description": "The status of the local file upload task for this entry."
-				}
-			},
-			"type": "object"
-		},
-		"Imports.Import": {
-			"description": "The information required to define an import.",
-			"properties": {
-				"cloud_vault_id": {
-					"description": "The identifier for the Cloud Vault to where the files will be imported.",
-					"type": "string"
-				},
-				"created_date_time": {
-					"description": "The date and time the import was created.",
-					"format": "date-time",
-					"readOnly": true,
-					"type": "string"
-				},
-				"data_filter": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Imports.DataFilter"
-						}
-					],
-					"description": "The filtered data to import from the import connector."
-				},
-				"description": {
-					"description": "A description for the import.",
-					"type": "string"
-				},
-				"icc_id": {
-					"description": "The id of the import connector config used by the import.",
-					"type": "string"
-				},
-				"id": {
-					"description": "The globally unique ID of the import.",
-					"readOnly": true,
-					"type": "string"
-				},
-				"name": {
-					"description": "The name given to the import.",
-					"type": "string"
-				},
-				"owner_id": {
-					"type": "string"
-				},
-				"target_folder": {
-					"description": "The target folder for the import. This field can be a path containing subfolders. Valid characters are alphanumeric, '_', '-', '.', '/'. This field cannot start or end with a '/'. The 'Recordsets' folder cannot be imported into. This field will be mandatory in the near future.",
-					"type": "string"
-				},
-				"updated_date_time": {
-					"description": "The date and time the import was last updated.",
-					"format": "date-time",
-					"readOnly": true,
-					"type": "string"
-				},
-				"user_id": {
-					"description": "The id of the user who created the import.",
-					"readOnly": true,
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Imports.ListImportsResponse": {
-			"description": "The response from the ListImports method.",
-			"properties": {
-				"imports": {
-					"description": "A list of configurations of Imports.",
-					"items": {
-						"$ref": "#/definitions/Imports.Import",
-						"type": "object"
-					},
-					"type": "array"
-				},
-				"pagination": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/PaginationResponse"
-						}
-					],
-					"description": "Pagination information for the returned list."
 				}
 			},
 			"type": "object"
@@ -4188,20 +3472,6 @@
 						}
 					],
 					"description": "Information about the local file upload."
-				}
-			},
-			"type": "object"
-		},
-		"Imports.UpdateImportResponse": {
-			"description": "The response from the UpdateImport method.",
-			"properties": {
-				"import": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Imports.Import"
-						}
-					],
-					"description": "he configuration of the Import that was updated."
 				}
 			},
 			"type": "object"
@@ -7749,6 +7019,404 @@
 				]
 			}
 		},
+		"/api/v2/activations/queries/{query_id}/destinations": {
+			"get": {
+				"description": "List the destinations which can be used for the provided activation query.",
+				"operationId": "ListActivationDestinations",
+				"parameters": [
+					{
+						"description": "QueryID is the activation query ID to get valid destination targets for.",
+						"in": "path",
+						"name": "query_id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"description": "The requested page of records. Default is 1.",
+						"format": "int32",
+						"in": "query",
+						"name": "pagination.page",
+						"required": false,
+						"type": "integer"
+					},
+					{
+						"description": "The number of records to return per page. Maximum is 500. Default is 100.",
+						"format": "int32",
+						"in": "query",
+						"name": "pagination.per_page",
+						"required": false,
+						"type": "integer"
+					},
+					{
+						"description": "OrderBy specifies ordering parameters. Valid parameters are: name, created_time, destination_type_id. Default: created_time DESC",
+						"in": "query",
+						"name": "order_by",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"description": "Supported filters are `owner_id`, `recipient_company_id`, `destination_id`",
+						"in": "query",
+						"name": "filter",
+						"required": false,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Activation_Destinations.ListActivationDestinationsResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the required permission.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "List Activation Destinations",
+				"tags": [
+					"Activation Destinations"
+				]
+			}
+		},
+		"/api/v2/activations/queries/{query_id}/destinations/{destination_id}/push": {
+			"post": {
+				"description": "Pushes results of a query to a specific destination instance.",
+				"operationId": "PushActivationResults",
+				"parameters": [
+					{
+						"description": "ID of the activation query.",
+						"in": "path",
+						"name": "query_id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"description": "Destination instance ID.",
+						"in": "path",
+						"name": "destination_id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"in": "body",
+						"name": "body",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Activation_Destinations.PushActivationResultsBody"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Activation_Destinations.PushActivationResultsResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the request is invalid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the right to push to the destination instance.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"404": {
+						"description": "Returned when the destination instance, query or the dataset does not exist.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Push Activation Result to Destination",
+				"tags": [
+					"Activation Destinations"
+				]
+			}
+		},
+		"/api/v2/activations/queries/{query_id}/destinations/{destination_id}/push-schema": {
+			"get": {
+				"description": "Returns the push time schema for a specific destination instance subject to constraints (like query ID).",
+				"operationId": "GetActivationDestinationPushSchema",
+				"parameters": [
+					{
+						"description": "ID of the Activation Query to be pushed.",
+						"in": "path",
+						"name": "query_id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"description": "Destination instance ID.",
+						"in": "path",
+						"name": "destination_id",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Activation_Destinations.GetActivationDestinationPushSchemaResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the right to view Destinations.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"404": {
+						"description": "Returned when the Destination instance or query could not be found.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Get Activation Destination Push Schema",
+				"tags": [
+					"Activation Destinations"
+				]
+			}
+		},
+		"/api/v2/activations/queries/{query_id}/pushes": {
+			"get": {
+				"description": "Returns a list of pushes for the specified activation query.",
+				"operationId": "ListActivationPushes",
+				"parameters": [
+					{
+						"description": "The activation query ID.",
+						"in": "path",
+						"name": "query_id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"description": "OrderBy is a comma seperated value to define sorting.\ne.g 'destination_type,started_at_date_time DESC'\nThe values are seperated by space, '{column} {ASC/DESC}'",
+						"in": "query",
+						"name": "order_by",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"description": "Filter is a string containing logic that can specify a restricted set of Pushes to be returned.\ne.g. 'destination_id eq a_specific_destination_id' or 'push_successful eq true'",
+						"in": "query",
+						"name": "filter",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"description": "The requested page of records. Default is 1.",
+						"format": "int32",
+						"in": "query",
+						"name": "pagination.page",
+						"required": false,
+						"type": "integer"
+					},
+					{
+						"description": "The number of records to return per page. Maximum is 500. Default is 100.",
+						"format": "int32",
+						"in": "query",
+						"name": "pagination.per_page",
+						"required": false,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Activation_Pushes.ListActivationPushesResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the right to view Activations.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"404": {
+						"description": "Returned when the activation query is not found.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "List Activation Query Pushes",
+				"tags": [
+					"Activation Pushes"
+				]
+			}
+		},
+		"/api/v2/activations/queries/{query_id}/pushes/{push_id}": {
+			"get": {
+				"description": "Returns the details for a specific activation push subject to constraints (like query ID).",
+				"operationId": "GetActivationPush",
+				"parameters": [
+					{
+						"description": "The ID of the query that has been pushed.",
+						"in": "path",
+						"name": "query_id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"description": "The ID of the activation push.",
+						"in": "path",
+						"name": "push_id",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Activation_Pushes.GetActivationPushResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the right to view Activations.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"404": {
+						"description": "Returned when either the query or the activation push cannot be found.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Get Activation Query Push",
+				"tags": [
+					"Activation Pushes"
+				]
+			}
+		},
 		"/api/v2/automations/configs": {
 			"get": {
 				"description": "Lists configs belonging to your company subject to the provided filter.",
@@ -10244,10 +9912,544 @@
 				]
 			}
 		},
-		"/api/v2/exports/destinations": {
+		"/api/v2/destinations/instances": {
 			"get": {
-				"description": "Lists available Destinations.",
-				"operationId": "ListDestinations",
+				"description": "Returns a list of Destinations owned by the caller.",
+				"operationId": "ListDestinationInstances",
+				"parameters": [
+					{
+						"description": "The requested page of records. Default is 1.",
+						"format": "int32",
+						"in": "query",
+						"name": "pagination.page",
+						"required": false,
+						"type": "integer"
+					},
+					{
+						"description": "The number of records to return per page. Maximum is 500. Default is 100.",
+						"format": "int32",
+						"in": "query",
+						"name": "pagination.per_page",
+						"required": false,
+						"type": "integer"
+					},
+					{
+						"description": "Supported order_by fields are id, created_time, name, updated_time, destination_type_id, creator_id",
+						"in": "query",
+						"name": "order_by",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"description": "Supported filters are name, owner_id, destination_type_id, outgoing_permission_id, creator_id",
+						"in": "query",
+						"name": "filter",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"description": "PermissionableTo is an optional company ID which if set, filters the returned destinations based on the ability\nto attach the instance to a permission sent to that recipient company.",
+						"in": "query",
+						"name": "permissionable_to",
+						"required": false,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Destination_Instances.ListDestinationInstancesResponse"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the right to list Destinations.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "List Destination Instances",
+				"tags": [
+					"Destination Instances"
+				]
+			},
+			"post": {
+				"description": "Accepts a configuration conforming to the JSON-Schema of the Destination type to be created. Returns Destination ID.",
+				"operationId": "CreateDestinationInstance",
+				"parameters": [
+					{
+						"description": "CreateDestinationInstanceRequest contains all parameters required to create a Destination instance.",
+						"in": "body",
+						"name": "body",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Destination_Instances.CreateDestinationInstanceRequest"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Destination_Instances.CreateDestinationInstanceResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the right to create a Destination instance.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Create Destination Instance",
+				"tags": [
+					"Destination Instances"
+				]
+			}
+		},
+		"/api/v2/destinations/instances/{destination_id}": {
+			"delete": {
+				"description": "Deletes an owned destination instance.",
+				"operationId": "DeleteDestinationInstance",
+				"parameters": [
+					{
+						"description": "Destination instance ID.",
+						"in": "path",
+						"name": "destination_id",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Destination_Instances.DeleteDestinationInstanceResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the right to view the Destination instance.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Delete Destination Instance",
+				"tags": [
+					"Destination Instances"
+				]
+			},
+			"get": {
+				"description": "Returns details about an owned Destination Instance.",
+				"operationId": "GetDestinationInstance",
+				"parameters": [
+					{
+						"description": "Destination instance ID.",
+						"in": "path",
+						"name": "destination_id",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Destination_Instances.GetDestinationInstanceResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the right to view the Destination instance.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"404": {
+						"description": "Returned when the Destination instance could not be found.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Get Destination Instance",
+				"tags": [
+					"Destination Instances"
+				]
+			},
+			"patch": {
+				"description": "Update an owned destination instance.",
+				"operationId": "UpdateDestinationInstance",
+				"parameters": [
+					{
+						"description": "destination_id is the ID of the Destination instance.",
+						"in": "path",
+						"name": "destination_id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"description": "DestinationInstanceUpdate is the update to the Destination instance configuration.",
+						"in": "body",
+						"name": "destination",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Destination_Instances.DestinationInstanceUpdate",
+							"description": "Destination instance details."
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Destination_Instances.UpdateDestinationInstanceResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the right to update the Destination instance.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"404": {
+						"description": "Returned when the Destination instance could not be found.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Update Destination Instance",
+				"tags": [
+					"Destination Instances"
+				]
+			}
+		},
+		"/api/v2/destinations/instances/{destination_id}/attach": {
+			"post": {
+				"description": "Attach the specified Destination Instance to the given Permission. The destination must be either owned by, or shared with your company.",
+				"operationId": "AttachToPermission",
+				"parameters": [
+					{
+						"description": "Destination Instance ID to attach.",
+						"in": "path",
+						"name": "destination_id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"in": "body",
+						"name": "body",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Destination_Instances.AttachToPermissionBody"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Destination_Instances.AttachToPermissionResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the right to attach a Destination Instance",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"404": {
+						"description": "Returned when the Permission ID cannot be found.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Attach Destination Instance to Permission",
+				"tags": [
+					"Destination Instances"
+				]
+			}
+		},
+		"/api/v2/destinations/instances/{destination_id}/detach": {
+			"post": {
+				"description": "Removes the link between the specified Destination Instance and the given Permission. The destination must be either owned by, or shared with your company.",
+				"operationId": "DetachFromPermission",
+				"parameters": [
+					{
+						"description": "Destination Instance ID to detach.",
+						"in": "path",
+						"name": "destination_id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"in": "body",
+						"name": "body",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Destination_Instances.DetachFromPermissionBody"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Destination_Instances.DetachFromPermissionResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the right to detach the Destination Instance from a Permission.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Detach Destination Instance from Permission",
+				"tags": [
+					"Destination Instances"
+				]
+			}
+		},
+		"/api/v2/destinations/instances/{destination_id}/duplicate": {
+			"post": {
+				"description": "Creates a new copy of the specified, owned destination instance.Returns Destination ID.",
+				"operationId": "DuplicateDestinationInstance",
+				"parameters": [
+					{
+						"description": "Destination Instance ID to duplicate.",
+						"in": "path",
+						"name": "destination_id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"in": "body",
+						"name": "body",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Destination_Instances.DuplicateDestinationInstanceBody"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Destination_Instances.DuplicateDestinationInstanceResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the right to create a Destination instance.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"404": {
+						"description": "Returned when the Destination instance could not be found.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Duplicate Destination Instance",
+				"tags": [
+					"Destination Instances"
+				]
+			}
+		},
+		"/api/v2/destinations/shares": {
+			"get": {
+				"description": "Returns a list of Destinations shared by or with the company of the user.",
+				"operationId": "ListDestinationShares",
 				"parameters": [
 					{
 						"description": "The requested page of records. Default is 1.",
@@ -10273,6 +10475,7 @@
 						"type": "string"
 					},
 					{
+						"description": "Supported filters are `owner_id`, `recipient_company_id`, `destination_id`",
 						"in": "query",
 						"name": "filter",
 						"required": false,
@@ -10283,13 +10486,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Destinations.ListDestinationsResponse"
-						}
-					},
-					"400": {
-						"description": "Returned when the request was not valid.",
-						"schema": {
-							"$ref": "#/definitions/Error"
+							"$ref": "#/definitions/Destinations.ListDestinationSharesResponse"
 						}
 					},
 					"401": {
@@ -10299,7 +10496,7 @@
 						}
 					},
 					"403": {
-						"description": "Returned when the user does not have the right to view Destinations.",
+						"description": "Returned when the user does not have the right to list Shared Destinations.",
 						"schema": {
 							"$ref": "#/definitions/Error"
 						}
@@ -10317,22 +10514,21 @@
 						}
 					}
 				},
-				"summary": "List Destinations",
+				"summary": "List Destination Shares",
 				"tags": [
 					"Destinations"
 				]
 			},
 			"post": {
-				"description": "Creates a Destination.",
-				"operationId": "CreateDestination",
+				"description": "Accepts a Destination Instance ID and email to share the Destination Instance with. Returns a Share ID.",
+				"operationId": "CreateDestinationShare",
 				"parameters": [
 					{
-						"description": "CreateDestinationRequest is the input to the CreateDestination method.",
 						"in": "body",
 						"name": "body",
 						"required": true,
 						"schema": {
-							"$ref": "#/definitions/Destinations.CreateDestinationRequest"
+							"$ref": "#/definitions/Destinations.CreateDestinationShareRequest"
 						}
 					}
 				],
@@ -10340,7 +10536,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Destinations.CreateDestinationResponse"
+							"$ref": "#/definitions/Destinations.CreateDestinationShareResponse"
 						}
 					},
 					"400": {
@@ -10356,192 +10552,13 @@
 						}
 					},
 					"403": {
-						"description": "Returned when the user does not have the right to create Destinations.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"500": {
-						"description": "Internal Server Error",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"default": {
-						"description": "An unexpected error response.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					}
-				},
-				"summary": "Create Destination",
-				"tags": [
-					"Destinations"
-				]
-			}
-		},
-		"/api/v2/exports/destinations/s3-cross-account/details": {
-			"get": {
-				"description": "Gets the details required for users to configure their account to allow for S3 Cross Account access.",
-				"operationId": "GetS3CrossAccountDetails",
-				"responses": {
-					"200": {
-						"description": "A successful response.",
-						"schema": {
-							"$ref": "#/definitions/Destinations.GetS3CrossAccountDetailsResponse"
-						}
-					},
-					"401": {
-						"description": "Returned when the user could not be authorized.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"403": {
-						"description": "Returned when the user does not have the right to view S3 Cross Account details.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"500": {
-						"description": "Internal Server Error",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"default": {
-						"description": "An unexpected error response.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					}
-				},
-				"summary": "Get S3 Cross Account details",
-				"tags": [
-					"Destinations"
-				]
-			}
-		},
-		"/api/v2/exports/destinations/{destination.id}": {
-			"patch": {
-				"description": "Updates the provided fields in a specific Destination.",
-				"operationId": "UpdateDestination",
-				"parameters": [
-					{
-						"description": "ID is the globally unique ID of the destination. Output only.",
-						"in": "path",
-						"name": "destination.id",
-						"required": true,
-						"type": "string"
-					},
-					{
-						"in": "body",
-						"name": "destination",
-						"required": true,
-						"schema": {
-							"description": "Destination is the information required to define destinations.",
-							"properties": {
-								"connector_type": {
-									"allOf": [
-										{
-											"$ref": "#/definitions/Destinations.ConnectorType"
-										}
-									],
-									"description": "ConnectorType states the type of connector used by the destination. Output only.",
-									"readOnly": true
-								},
-								"created_time": {
-									"description": "CreatedTime is the date and time the destination was created. Output only.",
-									"format": "date-time",
-									"readOnly": true,
-									"type": "string"
-								},
-								"creator_id": {
-									"description": "CreatorId is the ID of the user who created the destination. Output only.",
-									"readOnly": true,
-									"type": "string"
-								},
-								"description": {
-									"description": "Description is an optional description given to this destination.",
-									"type": "string"
-								},
-								"dv360_customer_match": {
-									"$ref": "#/definitions/Destinations.DV360Connector"
-								},
-								"dv360_pair": {
-									"$ref": "#/definitions/Destinations.DV360Connector"
-								},
-								"facebook": {
-									"$ref": "#/definitions/Destinations.FacebookConnector"
-								},
-								"gcs": {
-									"$ref": "#/definitions/Destinations.GCSConnector"
-								},
-								"name": {
-									"description": "Name is the display name given to this destination.",
-									"type": "string"
-								},
-								"owner_id": {
-									"description": "OwnerId is the user or company ID of the owner of the destination. Output only.",
-									"readOnly": true,
-									"type": "string"
-								},
-								"pubmatic": {
-									"$ref": "#/definitions/Destinations.PubmaticConnector"
-								},
-								"s3": {
-									"$ref": "#/definitions/Destinations.S3Connector"
-								},
-								"s3_pair": {
-									"$ref": "#/definitions/Destinations.S3Connector"
-								},
-								"sftp": {
-									"$ref": "#/definitions/Destinations.SftpConnector"
-								},
-								"sftp_pair": {
-									"$ref": "#/definitions/Destinations.SftpConnector"
-								},
-								"trade_desk_connector": {
-									"$ref": "#/definitions/Destinations.TradeDeskConnector"
-								},
-								"updated_time": {
-									"description": "UpdatedTime is the date and time the destination was last updated. Output only.",
-									"format": "date-time",
-									"readOnly": true,
-									"type": "string"
-								}
-							},
-							"type": "object"
-						}
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "A successful response.",
-						"schema": {
-							"$ref": "#/definitions/Destinations.UpdateDestinationResponse"
-						}
-					},
-					"400": {
-						"description": "Returned when the request was not valid.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"401": {
-						"description": "Returned when the user could not be authorized.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"403": {
-						"description": "Returned when the user does not have the right to update the Destination.",
+						"description": "Returned when the user does not have the right to share a Destination Instance",
 						"schema": {
 							"$ref": "#/definitions/Error"
 						}
 					},
 					"404": {
-						"description": "Returned when the Destination could not be found.",
+						"description": "Returned when the Destination Instance ID cannot be found.",
 						"schema": {
 							"$ref": "#/definitions/Error"
 						}
@@ -10559,20 +10576,21 @@
 						}
 					}
 				},
-				"summary": "Update a Destination",
+				"summary": "Create Destination Share",
 				"tags": [
 					"Destinations"
 				]
 			}
 		},
-		"/api/v2/exports/destinations/{destination_id}": {
+		"/api/v2/destinations/shares/{share_id}": {
 			"delete": {
-				"description": "Deletes a specific Destination.",
-				"operationId": "DeleteDestination",
+				"description": "Stops sharing a Destination to a single company.",
+				"operationId": "RemoveDestinationShare",
 				"parameters": [
 					{
+						"description": "ID of the Share that should be removed.",
 						"in": "path",
-						"name": "destination_id",
+						"name": "share_id",
 						"required": true,
 						"type": "string"
 					}
@@ -10581,7 +10599,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Destinations.DeleteDestinationResponse"
+							"$ref": "#/definitions/Destinations.RemoveDestinationShareResponse"
 						}
 					},
 					"400": {
@@ -10597,7 +10615,7 @@
 						}
 					},
 					"403": {
-						"description": "Returned when the user does not have the right to delete the Destination.",
+						"description": "Returned when the user does not have the right to stop sharing a Destination.",
 						"schema": {
 							"$ref": "#/definitions/Error"
 						}
@@ -10615,18 +10633,19 @@
 						}
 					}
 				},
-				"summary": "Delete a Destination",
+				"summary": "Remove Destination Share",
 				"tags": [
 					"Destinations"
 				]
 			},
 			"get": {
-				"description": "Gets a specific Destination.",
-				"operationId": "GetDestination",
+				"description": "Returns the shared destination for a specific share ID.",
+				"operationId": "GetDestinationShare",
 				"parameters": [
 					{
+						"description": "The ID of the Destination Share to get details about.",
 						"in": "path",
-						"name": "destination_id",
+						"name": "share_id",
 						"required": true,
 						"type": "string"
 					}
@@ -10635,7 +10654,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Destinations.GetDestinationResponse"
+							"$ref": "#/definitions/Destinations.GetDestinationShareResponse"
 						}
 					},
 					"400": {
@@ -10651,13 +10670,13 @@
 						}
 					},
 					"403": {
-						"description": "Returned when the user does not have the right to view Destinations.",
+						"description": "Returned when the user does not have the right to view details of the sharing of a Destination Instance.",
 						"schema": {
 							"$ref": "#/definitions/Error"
 						}
 					},
 					"404": {
-						"description": "Returned when the Destination could not be found.",
+						"description": "Returned when the Destination Instance Share could not be found.",
 						"schema": {
 							"$ref": "#/definitions/Error"
 						}
@@ -10675,37 +10694,21 @@
 						}
 					}
 				},
-				"summary": "Get a Destination",
+				"summary": "Get Destination Share",
 				"tags": [
 					"Destinations"
 				]
 			}
 		},
-		"/api/v2/exports/destinations/{destination_id}/push-schema": {
+		"/api/v2/destinations/types": {
 			"get": {
-				"description": "Returns the push time schema for a specific destination.",
-				"operationId": "GetDestinationPushSchema",
-				"parameters": [
-					{
-						"description": "DestinationID is the ID of an Airbyte destination to return its push-time schema.",
-						"in": "path",
-						"name": "destination_id",
-						"required": true,
-						"type": "string"
-					},
-					{
-						"description": "QueryID specifies the ID of an Activation Query. When provided, it enables automatic population of the mappable schema properties with the output columns from the specified query, facilitating data mapping.",
-						"in": "query",
-						"name": "query_id",
-						"required": false,
-						"type": "string"
-					}
-				],
+				"description": "Returns a list of supported Destination types available to the user. Returned Destination type IDs can be used to fetch the schema and create a destination.",
+				"operationId": "ListDestinationTypes",
 				"responses": {
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Destinations.GetDestinationPushSchemaResponse"
+							"$ref": "#/definitions/Destination_Instances.ListDestinationTypesResponse"
 						}
 					},
 					"400": {
@@ -10721,13 +10724,7 @@
 						}
 					},
 					"403": {
-						"description": "Returned when the user does not have the right to view Destinations.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"404": {
-						"description": "Returned when the Destination could not be found.",
+						"description": "Returned when the user does not have the right to access this endpoint.",
 						"schema": {
 							"$ref": "#/definitions/Error"
 						}
@@ -10745,36 +10742,34 @@
 						}
 					}
 				},
-				"summary": "Get Destination Push Schema",
+				"summary": "List Destination types",
 				"tags": [
-					"Destinations"
+					"Destination Instances"
 				]
 			}
 		},
-		"/api/v2/exports/execute": {
-			"post": {
-				"description": "Pushes a result into a destination.",
-				"operationId": "ExportResults",
+		"/api/v2/destinations/types/{destination_type_id}/external-config": {
+			"get": {
+				"description": "Returns details required when configuring the third-party service to receive data for this Destination type. Returns empty if the Destination type doesn't require any configuration related to the InfoSum user.",
+				"operationId": "GetDestinationTypeExternalConfig",
 				"parameters": [
 					{
-						"description": "ExportResultsRequest is input to the ExportResult request.",
-						"in": "body",
-						"name": "body",
+						"description": "Destination type identifier.",
+						"in": "path",
+						"name": "destination_type_id",
 						"required": true,
-						"schema": {
-							"$ref": "#/definitions/Exports.ExportResultsRequest"
-						}
+						"type": "string"
 					}
 				],
 				"responses": {
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Exports.ExportResultsResponse"
+							"$ref": "#/definitions/Destination_Instances.GetDestinationTypeExternalConfigResponse"
 						}
 					},
 					"400": {
-						"description": "Returned when the request is invalid.",
+						"description": "Returned when the request was not valid.",
 						"schema": {
 							"$ref": "#/definitions/Error"
 						}
@@ -10786,13 +10781,13 @@
 						}
 					},
 					"403": {
-						"description": "Returned when the user does not have the right to push to the Destinations.",
+						"description": "Returned when the user does not have the right to access the endpoint.",
 						"schema": {
 							"$ref": "#/definitions/Error"
 						}
 					},
 					"404": {
-						"description": "Returned when the destination, query or the dataset does not exist.",
+						"description": "Returned when the Destination type could not be found.",
 						"schema": {
 							"$ref": "#/definitions/Error"
 						}
@@ -10810,9 +10805,72 @@
 						}
 					}
 				},
-				"summary": "Export to a destination",
+				"summary": "Get Destination Type External Config",
 				"tags": [
-					"Exports"
+					"Destination Instances"
+				]
+			}
+		},
+		"/api/v2/destinations/types/{destination_type_id}/schema": {
+			"get": {
+				"description": "Returns the configuration [JSON-Schema](https://json-schema.org) for the requested Destination type ID. The JSON-Schema can be used to define a configuration for creating a Destination.",
+				"operationId": "GetDestinationTypeSchema",
+				"parameters": [
+					{
+						"description": "Destination type identifier.",
+						"in": "path",
+						"name": "destination_type_id",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Destination_Instances.GetDestinationTypeSchemaResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the right to access the endpoint.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"404": {
+						"description": "Returned when the Destination type could not be found.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Get Destination Type Schema",
+				"tags": [
+					"Destination Instances"
 				]
 			}
 		},
@@ -11443,7 +11501,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Importers.ListImportExecutionsResponse"
+							"$ref": "#/definitions/Import_Executions.ListImportExecutionsResponse"
 						}
 					},
 					"400": {
@@ -11477,9 +11535,9 @@
 						}
 					}
 				},
-				"summary": "List Executions.",
+				"summary": "List Import Executions",
 				"tags": [
-					"Importers"
+					"Import Executions"
 				]
 			}
 		},
@@ -11500,7 +11558,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Importers.GetImportExecutionResponse"
+							"$ref": "#/definitions/Import_Executions.GetImportExecutionResponse"
 						}
 					},
 					"400": {
@@ -11540,9 +11598,9 @@
 						}
 					}
 				},
-				"summary": "Gets an Execution",
+				"summary": "Gets Import Execution",
 				"tags": [
-					"Importers"
+					"Import Executions"
 				]
 			}
 		},
@@ -11563,7 +11621,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Importers.CancelImportExecutionResponse"
+							"$ref": "#/definitions/Import_Executions.CancelImportExecutionResponse"
 						}
 					},
 					"400": {
@@ -11603,9 +11661,9 @@
 						}
 					}
 				},
-				"summary": "Cancel an Execution",
+				"summary": "Cancel Import Execution",
 				"tags": [
-					"Importers"
+					"Import Executions"
 				]
 			}
 		},
@@ -11649,7 +11707,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Imports.ListImportsResponse"
+							"$ref": "#/definitions/Importers.ListImportsResponse"
 						}
 					},
 					"400": {
@@ -11683,9 +11741,9 @@
 						}
 					}
 				},
-				"summary": "List Import.",
+				"summary": "List Importers",
 				"tags": [
-					"Imports"
+					"Importers"
 				]
 			},
 			"post": {
@@ -11698,7 +11756,7 @@
 						"name": "body",
 						"required": true,
 						"schema": {
-							"$ref": "#/definitions/Imports.CreateImportRequest"
+							"$ref": "#/definitions/Importers.CreateImportRequest"
 						}
 					}
 				],
@@ -11706,7 +11764,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Imports.CreateImportResponse"
+							"$ref": "#/definitions/Importers.CreateImportResponse"
 						}
 					},
 					"400": {
@@ -11746,9 +11804,9 @@
 						}
 					}
 				},
-				"summary": "Create an Import.",
+				"summary": "Create Importer",
 				"tags": [
-					"Imports"
+					"Importers"
 				]
 			}
 		},
@@ -11784,7 +11842,7 @@
 								"data_filter": {
 									"allOf": [
 										{
-											"$ref": "#/definitions/Imports.DataFilter"
+											"$ref": "#/definitions/Importers.DataFilter"
 										}
 									],
 									"description": "The filtered data to import from the import connector."
@@ -11828,7 +11886,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Imports.UpdateImportResponse"
+							"$ref": "#/definitions/Importers.UpdateImportResponse"
 						}
 					},
 					"400": {
@@ -11868,9 +11926,9 @@
 						}
 					}
 				},
-				"summary": "Update an Import",
+				"summary": "Update Importer",
 				"tags": [
-					"Imports"
+					"Importers"
 				]
 			}
 		},
@@ -11891,7 +11949,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Imports.DeleteImportResponse"
+							"$ref": "#/definitions/Importers.DeleteImportResponse"
 						}
 					},
 					"400": {
@@ -11925,9 +11983,9 @@
 						}
 					}
 				},
-				"summary": "Delete an Import.",
+				"summary": "Delete Importer",
 				"tags": [
-					"Imports"
+					"Importers"
 				]
 			},
 			"get": {
@@ -11946,7 +12004,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Imports.GetImportResponse"
+							"$ref": "#/definitions/Importers.GetImportResponse"
 						}
 					},
 					"400": {
@@ -11986,9 +12044,9 @@
 						}
 					}
 				},
-				"summary": "Get an Import.",
+				"summary": "Get Importer",
 				"tags": [
-					"Imports"
+					"Importers"
 				]
 			}
 		},
@@ -12009,7 +12067,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Importers.ExecuteImportResponse"
+							"$ref": "#/definitions/Import_Executions.ExecuteImportResponse"
 						}
 					},
 					"400": {
@@ -12049,9 +12107,9 @@
 						}
 					}
 				},
-				"summary": "Executes an Import",
+				"summary": "Execute Import",
 				"tags": [
-					"Importers"
+					"Import Executions"
 				]
 			}
 		},
