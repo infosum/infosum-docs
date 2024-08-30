@@ -1941,7 +1941,7 @@
 			},
 			"type": "object"
 		},
-		"Destinations.CreateDestinationShareRequest": {
+		"Destination_Shares.CreateDestinationShareRequest": {
 			"properties": {
 				"comment": {
 					"description": "An optional comment explaining why sharing this destination.",
@@ -1965,7 +1965,7 @@
 			},
 			"type": "object"
 		},
-		"Destinations.CreateDestinationShareResponse": {
+		"Destination_Shares.CreateDestinationShareResponse": {
 			"properties": {
 				"share_id": {
 					"description": "ID of the created Destination Share entity.",
@@ -1974,7 +1974,7 @@
 			},
 			"type": "object"
 		},
-		"Destinations.DestinationShare": {
+		"Destination_Shares.DestinationShare": {
 			"properties": {
 				"comment": {
 					"description": "A comment describing the purpose of this Share by the Destination owner.",
@@ -2012,12 +2012,12 @@
 			"title": "DestinationShare contains details of a destination share",
 			"type": "object"
 		},
-		"Destinations.GetDestinationShareResponse": {
+		"Destination_Shares.GetDestinationShareResponse": {
 			"properties": {
 				"destination_share": {
 					"allOf": [
 						{
-							"$ref": "#/definitions/Destinations.DestinationShare"
+							"$ref": "#/definitions/Destination_Shares.DestinationShare"
 						}
 					],
 					"description": "Details of the requested Destination Share."
@@ -2025,12 +2025,12 @@
 			},
 			"type": "object"
 		},
-		"Destinations.ListDestinationSharesResponse": {
+		"Destination_Shares.ListDestinationSharesResponse": {
 			"properties": {
 				"destination_shares": {
 					"description": "List of all Destination Shares both sent or received by the company of the requesting user subject to the supplied filters.",
 					"items": {
-						"$ref": "#/definitions/Destinations.DestinationShare",
+						"$ref": "#/definitions/Destination_Shares.DestinationShare",
 						"type": "object"
 					},
 					"type": "array"
@@ -2041,7 +2041,7 @@
 			},
 			"type": "object"
 		},
-		"Destinations.RemoveDestinationShareResponse": {
+		"Destination_Shares.RemoveDestinationShareResponse": {
 			"type": "object"
 		},
 		"Error": {
@@ -10486,7 +10486,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Destinations.ListDestinationSharesResponse"
+							"$ref": "#/definitions/Destination_Shares.ListDestinationSharesResponse"
 						}
 					},
 					"401": {
@@ -10516,11 +10516,11 @@
 				},
 				"summary": "List Destination Shares",
 				"tags": [
-					"Destinations"
+					"Destination Shares"
 				]
 			},
 			"post": {
-				"description": "Accepts a Destination Instance ID and email to share the Destination Instance with. Returns a Share ID.",
+				"description": "Accepts a Destination Instance ID and email to share the Destination Instance with. Sharing a Destination allows the recipient to attach it on a dataset permission back to you.",
 				"operationId": "CreateDestinationShare",
 				"parameters": [
 					{
@@ -10528,7 +10528,7 @@
 						"name": "body",
 						"required": true,
 						"schema": {
-							"$ref": "#/definitions/Destinations.CreateDestinationShareRequest"
+							"$ref": "#/definitions/Destination_Shares.CreateDestinationShareRequest"
 						}
 					}
 				],
@@ -10536,7 +10536,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Destinations.CreateDestinationShareResponse"
+							"$ref": "#/definitions/Destination_Shares.CreateDestinationShareResponse"
 						}
 					},
 					"400": {
@@ -10578,7 +10578,7 @@
 				},
 				"summary": "Create Destination Share",
 				"tags": [
-					"Destinations"
+					"Destination Shares"
 				]
 			}
 		},
@@ -10599,7 +10599,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Destinations.RemoveDestinationShareResponse"
+							"$ref": "#/definitions/Destination_Shares.RemoveDestinationShareResponse"
 						}
 					},
 					"400": {
@@ -10635,7 +10635,7 @@
 				},
 				"summary": "Remove Destination Share",
 				"tags": [
-					"Destinations"
+					"Destination Shares"
 				]
 			},
 			"get": {
@@ -10654,7 +10654,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Destinations.GetDestinationShareResponse"
+							"$ref": "#/definitions/Destination_Shares.GetDestinationShareResponse"
 						}
 					},
 					"400": {
@@ -10696,7 +10696,7 @@
 				},
 				"summary": "Get Destination Share",
 				"tags": [
-					"Destinations"
+					"Destination Shares"
 				]
 			}
 		},
@@ -15668,8 +15668,10 @@
 		{
 			"name": "Export",
 			"tags": [
-				"Destinations",
-				"Exports"
+				"Destination Instances",
+				"Destination Shares",
+				"Activation Destinations",
+				"Activation Pushes"
 			]
 		},
 		{
@@ -15683,7 +15685,8 @@
 			"name": "Import",
 			"tags": [
 				"Import Connectors",
-				"Importers"
+				"Importers",
+				"Import Executions"
 			]
 		},
 		{
