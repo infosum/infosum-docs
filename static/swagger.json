@@ -2688,16 +2688,6 @@
 			},
 			"type": "object"
 		},
-		"Import_Connectors.RefreshGPGKeysResponse": {
-			"description": "The output to the RefreshGPGKeys method.",
-			"properties": {
-				"public_key": {
-					"description": "The new GPG public key attached to the Import Connector Config. Use this new public key to GPG encrypt your file(s).",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
 		"Import_Connectors.S3AccessKeysAuth": {
 			"description": "S3AccessKeysAuth holds the details needed for authentication using access keys.",
 			"properties": {
@@ -11177,63 +11167,6 @@
 					}
 				},
 				"summary": "Create Import Connector Config",
-				"tags": [
-					"Import Connectors"
-				]
-			}
-		},
-		"/api/v2/imports/connector-configs/gpg-keys/{config_id}/refresh": {
-			"post": {
-				"description": "Refresh ICC GPG Key pair. Users will have to re-encrypt their files with the new public GPG Key.",
-				"operationId": "RefreshGPGKeys",
-				"parameters": [
-					{
-						"description": "The ID of the Import Connector Config that you wish to refresh the GPG keys for.",
-						"in": "path",
-						"name": "config_id",
-						"required": true,
-						"type": "string"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "A successful response.",
-						"schema": {
-							"$ref": "#/definitions/Import_Connectors.RefreshGPGKeysResponse"
-						}
-					},
-					"400": {
-						"description": "Returned when the request was not valid.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"401": {
-						"description": "Returned when the user could not be authorized.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"403": {
-						"description": "Returned when the user does not have the required permission.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"500": {
-						"description": "Internal Server Error",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"default": {
-						"description": "An unexpected error response.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					}
-				},
-				"summary": "Refresh the ICC GPG Keys",
 				"tags": [
 					"Import Connectors"
 				]
