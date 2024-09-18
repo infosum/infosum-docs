@@ -3715,12 +3715,7 @@
 					"type": "string"
 				},
 				"normalization_config": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Normalization_Config.Config"
-						}
-					],
-					"description": "Config is the normalization configuration defined by the user."
+					"$ref": "#/definitions/Normalization_Config.Config"
 				},
 				"updated_date_time": {
 					"description": "UpdatedDateTime is the last time that this Config was updated and stored.",
