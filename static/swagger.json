@@ -2571,6 +2571,39 @@
 			},
 			"type": "object"
 		},
+		"Import_Connectors.GPGDetails": {
+			"description": "GPGDetails contains the details about the GPG key associated with an ICC.",
+			"properties": {
+				"do_not_expire": {
+					"description": "Denotes if the GPG key has no expiry.",
+					"type": "boolean"
+				},
+				"expiration_datetime": {
+					"description": "The UTC time when the GPG key will expire.",
+					"format": "date-time",
+					"type": "string"
+				},
+				"public_key": {
+					"description": "The public key to be used to encrypt files to be imported using this Import Connector Config.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Import_Connectors.GPGExpiration": {
+			"properties": {
+				"do_not_expire": {
+					"description": "Set the GPG key to never expire. This will override any datetime provided.",
+					"type": "boolean"
+				},
+				"expiration_datetime": {
+					"description": "The UTC datetime when the GPG key will expire.",
+					"format": "date-time",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
 		"Import_Connectors.GetHostKeyResponse": {
 			"description": "The response from the GetHostKey method.",
 			"properties": {
@@ -2627,10 +2660,22 @@
 					"description": "Google Cloud Storage specific information.",
 					"readOnly": true
 				},
+				"gpg": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Import_Connectors.GPGDetails"
+						}
+					],
+					"description": "Details about the GPG key associated with the Import Connector Config."
+				},
 				"id": {
 					"description": "The unique ID of the Import Connector Config.",
 					"readOnly": true,
 					"type": "string"
+				},
+				"is_gpg": {
+					"description": "Shows if the Import Connector Config allows import of GPG encrypted files.",
+					"type": "boolean"
 				},
 				"name": {
 					"description": "The display name given to this Import Connector Config.",
@@ -2690,6 +2735,30 @@
 						}
 					],
 					"description": "Pagination information for the returned list."
+				}
+			},
+			"type": "object"
+		},
+		"Import_Connectors.RefreshGPGKeysBody": {
+			"description": "The input to the RefreshGPGKeys method.",
+			"properties": {
+				"gpg_key_expiration": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Import_Connectors.GPGExpiration"
+						}
+					],
+					"description": "Details about the expiration for the GPG key associated with the Import Connector Config."
+				}
+			},
+			"type": "object"
+		},
+		"Import_Connectors.RefreshGPGKeysResponse": {
+			"description": "The output to the RefreshGPGKeys method.",
+			"properties": {
+				"public_key": {
+					"description": "The new GPG public key attached to the Import Connector Config. Use this new public key to GPG encrypt your file(s).",
+					"type": "string"
 				}
 			},
 			"type": "object"
@@ -2926,10 +2995,22 @@
 					],
 					"description": "Google Cloud Storage specific information."
 				},
+				"gpg_key_expiration": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Import_Connectors.GPGExpiration"
+						}
+					],
+					"description": "Details about the expiration for the GPG key associated with the Import Connector Config."
+				},
 				"id": {
 					"description": "The unique ID of the Import Connector Config.",
 					"readOnly": true,
 					"type": "string"
+				},
+				"is_gpg": {
+					"description": "Enables importing of GPG encrypted files.",
+					"type": "boolean"
 				},
 				"name": {
 					"description": "The display name given to the Import Connector Config.",
@@ -11173,6 +11254,71 @@
 				]
 			}
 		},
+		"/api/v2/imports/connector-configs/gpg-keys/{config_id}/refresh": {
+			"post": {
+				"description": "Refresh ICC GPG Key pair. Users will have to re-encrypt their files with the new public GPG Key.",
+				"operationId": "RefreshGPGKeys",
+				"parameters": [
+					{
+						"description": "The ID of the Import Connector Config that you wish to refresh the GPG keys for.",
+						"in": "path",
+						"name": "config_id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"in": "body",
+						"name": "body",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Import_Connectors.RefreshGPGKeysBody"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Import_Connectors.RefreshGPGKeysResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the required permission.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Refresh the ICC GPG Keys",
+				"tags": [
+					"Import Connectors"
+				]
+			}
+		},
 		"/api/v2/imports/connector-configs/host-key/{host}/{port}": {
 			"get": {
 				"description": "Returns the first valid public sFTP server host key found. Supported key algorithms are ECDSA, RSA and ED25519.",
@@ -11268,6 +11414,18 @@
 										}
 									],
 									"description": "Google Cloud Storage specific information."
+								},
+								"gpg_key_expiration": {
+									"allOf": [
+										{
+											"$ref": "#/definitions/Import_Connectors.GPGExpiration"
+										}
+									],
+									"description": "Details about the expiration for the GPG key associated with the Import Connector Config."
+								},
+								"is_gpg": {
+									"description": "Enables importing of GPG encrypted files.",
+									"type": "boolean"
 								},
 								"name": {
 									"description": "The display name given to the Import Connector Config.",
