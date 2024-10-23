@@ -6052,7 +6052,17 @@
 			"description": "ColumnStats is the statistics of a column.",
 			"properties": {
 				"cell_count": {
-					"description": "CellCount of non-null cells in the column.\n\nNullCellCount will be \"total_rows - cell_count\".",
+					"description": "CellCount of non-null cells in the column.",
+					"format": "int64",
+					"type": "string"
+				},
+				"invalid_count": {
+					"description": "InvalidCount is the count of invalid values inside the cells in the column that could not be processed.",
+					"format": "int64",
+					"type": "string"
+				},
+				"null_count": {
+					"description": "NullCount is the count of null values inside the cells in the column.",
 					"format": "int64",
 					"type": "string"
 				},
