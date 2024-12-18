@@ -10,6 +10,8 @@ info:
   contact:
     name: InfoSum Support
     email: support@infosum.com
+tags:
+  - name: Tyrael
 schemes:
   - https
 consumes:
@@ -44,48 +46,55 @@ paths:
       parameters:
         - name: filter.campaign_name
           description: >-
-            Campaign Name. The filter to be applied to the campaign name. Case
-            insensitive. Supports partial names.
+            Campaign Name
+
+
+            The filter to be applied to the campaign name. Case insensitive.
+            Supports partial names.
           in: query
           required: false
           type: string
         - name: filter.submitted_at_filter.start_time
-          description: >-
-            Start. Defines the earliest time the filter is applied from. The
-            filter
+          description: |-
+            Start
 
+            Defines the earliest time the filter is applied from. The filter
             matches all dates after this point in time, inclusive.
           in: query
           required: false
           type: string
           format: date-time
         - name: filter.submitted_at_filter.end_time
-          description: >-
-            End. Defines the time the filter is applied until. The filter
-            matches all
+          description: |-
+            End
 
+            Defines the time the filter is applied until. The filter matches all
             dates before this point in time, inclusive.
           in: query
           required: false
           type: string
           format: date-time
         - name: filter.query_successful
-          description: >-
-            Query Successful. Filters activations that were successfully
-            completed or not.
+          description: |-
+            Query Successful
+
+            Filters activations that were successfully completed or not.
           in: query
           required: false
           type: boolean
         - name: filter.results_expired
-          description: Results Expired. Filters activations that have expired or not.
+          description: |-
+            Results Expired
+
+            Filters activations that have expired or not.
           in: query
           required: false
           type: boolean
         - name: filter.push_destinations
-          description: >-
-            Push Destinations. Filters queries that have been pushed to the
-            specified
+          description: |-
+            Push Destinations
 
+            Filters queries that have been pushed to the specified
             destinations.
           in: query
           required: false
@@ -95,9 +104,12 @@ paths:
           collectionFormat: multi
         - name: filter.output_columns
           description: >-
-            Output Columns. Filters activations by the selected output columns.
-            Activations which contain any of the specified output columns are
-            included in the result
+            Output Columns
+
+
+            Filters activations by the selected output columns. Activations
+            which contain any of the specified output columns are included in
+            the result
           in: query
           required: false
           type: array
@@ -106,8 +118,10 @@ paths:
           collectionFormat: multi
         - name: filter.activation_dataset_private_ids
           description: >-
-            Activation Dataset Private IDs. Filters queries by the activation
-            dataset private ID used in
+            Activation Dataset Private IDs
+
+
+            Filters queries by the activation dataset private ID used in
 
             the query. Activations for any of the dataset private IDs specified
             are included in the result.
@@ -119,8 +133,10 @@ paths:
           collectionFormat: multi
         - name: filter.project_ids
           description: >-
-            Project IDs. Filters queries by the projects that the activation
-            dataset
+            Project IDs
+
+
+            Filters queries by the projects that the activation dataset
 
             belongs to. Activations whose dataset belongs to any of the
             specified projects are included in the result.
@@ -188,6 +204,9 @@ paths:
             $ref: '#/definitions/rpcStatus'
       parameters:
         - name: body
+          description: >-
+            Used to queue an Activation Query with the CreateActivationQuery
+            endpoint.
           in: body
           required: true
           schema:
@@ -224,6 +243,9 @@ paths:
             $ref: '#/definitions/rpcStatus'
       parameters:
         - name: body
+          description: >-
+            ValidateActivationQueryRequest is the output of the
+            ValidateActivationQuery endpoint.
           in: body
           required: true
           schema:
@@ -271,136 +293,6 @@ paths:
           type: string
       tags:
         - Activations
-  /api/v1/activations/{activation_id}/push:
-    post:
-      summary: Pushes the activation query results to the specified push connector
-      description: Pushes the result of an activation query to the specified push connector
-      operationId: PushActivationResult
-      responses:
-        '200':
-          description: A successful response.
-          schema:
-            $ref: '#/definitions/tyraelPushActivationResultResponse'
-        '400':
-          description: Returned when the Activation Query results could not be pushed.
-          schema:
-            $ref: '#/definitions/tyraelError'
-        '401':
-          description: Returned when the user could not be authorized.
-          schema:
-            $ref: '#/definitions/tyraelError'
-        '403':
-          description: >-
-            Returned when the user does not have access to activations via the
-            InfoSum API.
-          schema:
-            $ref: '#/definitions/tyraelError'
-        '404':
-          description: Returned when the Activation Query can not be found.
-          schema:
-            $ref: '#/definitions/tyraelError'
-        default:
-          description: An unexpected error response.
-          schema:
-            $ref: '#/definitions/rpcStatus'
-      parameters:
-        - name: activation_id
-          description: |-
-            Activation ID
-
-            The ID of the activation to push the results of.
-          in: path
-          required: true
-          type: string
-        - name: body
-          in: body
-          required: true
-          schema:
-            type: object
-            properties:
-              push_connector_id:
-                type: string
-                description: Is the ID of the Push Connector to push the results to.
-                title: Push Connector ID
-              push_connector_config:
-                type: object
-                additionalProperties:
-                  type: string
-                description: >-
-                  The push connector map of Configuration Form field IDs to
-                  their values for configuring the push connector.
-                title: PushConnectorConfig
-            description: >-
-              PushActivationResultRequest is the input for the
-              PushActivationResult endpoints.
-            title: Push activation query results request
-      tags:
-        - Activations
-  /api/v1/activations/{activation_id}/push_connectors:
-    get:
-      summary: List the permitted Push Connectors for an Activation Query
-      description: >-
-        Returns a list of all the Push Connectors that can be used with the
-        specified Activation Query.
-      operationId: ListActivationPushConnectors
-      responses:
-        '200':
-          description: A successful response.
-          schema:
-            $ref: '#/definitions/tyraelListActivationPushConnectorsResponse'
-        '401':
-          description: Returned when the user could not be authorized.
-          schema:
-            $ref: '#/definitions/tyraelError'
-        '403':
-          description: >-
-            Returned when the user does not have access to activations via the
-            InfoSum API.
-          schema:
-            $ref: '#/definitions/tyraelError'
-        '404':
-          description: Returned when the Activation Query can not be found.
-          schema:
-            $ref: '#/definitions/tyraelError'
-        default:
-          description: An unexpected error response.
-          schema:
-            $ref: '#/definitions/rpcStatus'
-      parameters:
-        - name: activation_id
-          description: >-
-            Activation ID
-
-
-            Is the ID of the activation to list the permitted push connectors
-            for.
-          in: path
-          required: true
-          type: string
-      tags:
-        - Activations
-  /api/v1/base_push_connectors:
-    get:
-      summary: List all base Push Connectors
-      description: >-
-        List all Push Connectors that can be used to create a new Push
-        Connector.
-      operationId: ListBasePushConnectors
-      responses:
-        '200':
-          description: A successful response.
-          schema:
-            $ref: '#/definitions/tyraelListBasePushConnectorsResponse'
-        '401':
-          description: Returned when the user could not be authorized.
-          schema:
-            $ref: '#/definitions/tyraelError'
-        default:
-          description: An unexpected error response.
-          schema:
-            $ref: '#/definitions/rpcStatus'
-      tags:
-        - Push Connectors
   /api/v1/connections:
     get:
       summary: List all available Connections
@@ -427,9 +319,10 @@ paths:
             $ref: '#/definitions/rpcStatus'
       parameters:
         - name: filter.origin_private_ids
-          description: >-
-            Origin Private Dataset IDs. The private IDs of the Datasets to
-            display all connections from.
+          description: |-
+            Origin Private Dataset IDs
+
+            The private IDs of the Datasets to display all connections from.
           in: query
           required: false
           type: array
@@ -438,8 +331,10 @@ paths:
           collectionFormat: multi
         - name: filter.connected_datasets.private_ids
           description: >-
-            PrivateIds. The filter to be applied to the private IDs of the
-            returned
+            PrivateIds
+
+
+            The filter to be applied to the private IDs of the returned
 
             Datasets. Only Datasets with private IDs containing one of the
             strings
@@ -453,7 +348,10 @@ paths:
           collectionFormat: multi
         - name: filter.connected_datasets.public_names
           description: >-
-            PublicNames. The filter to be applied to the public names of the
+            PublicNames
+
+
+            The filter to be applied to the public names of the
 
             returned Datasets. Only Datasets with public names containing one of
             the
@@ -467,8 +365,10 @@ paths:
           collectionFormat: multi
         - name: filter.connected_datasets.public_description
           description: >-
-            PublicDescription. The filter to be applied to the public
-            descriptions
+            PublicDescription
+
+
+            The filter to be applied to the public descriptions
 
             of the returned Datasets. Only Datasets with public descriptions
 
@@ -480,27 +380,30 @@ paths:
           required: false
           type: string
         - name: filter.connected_datasets.create_time_filter.start_time
-          description: >-
-            Start. Defines the earliest time the filter is applied from. The
-            filter
+          description: |-
+            Start
 
+            Defines the earliest time the filter is applied from. The filter
             matches all dates after this point in time, inclusive.
           in: query
           required: false
           type: string
           format: date-time
         - name: filter.connected_datasets.create_time_filter.end_time
-          description: >-
-            End. Defines the time the filter is applied until. The filter
-            matches all
+          description: |-
+            End
 
+            Defines the time the filter is applied until. The filter matches all
             dates before this point in time, inclusive.
           in: query
           required: false
           type: string
           format: date-time
         - name: filter.connected_datasets.owner_ids
-          description: Owner User IDs. Filters Datasets on the specified owner user IDs.
+          description: |-
+            Owner User IDs
+
+            Filters Datasets on the specified owner user IDs.
           in: query
           required: false
           type: array
@@ -508,7 +411,10 @@ paths:
             type: string
           collectionFormat: multi
         - name: filter.connected_datasets.categories.ids
-          description: Ids. The IDs of the Categories that must be present in the Dataset.
+          description: |-
+            Ids
+
+            The IDs of the Categories that must be present in the Dataset.
           in: query
           required: false
           type: array
@@ -518,8 +424,10 @@ paths:
           collectionFormat: multi
         - name: filter.connected_datasets.categories.min_fill_rates
           description: >-
-            MinFillRates. The minimum fill rates for each category specified in
-            Ids.
+            MinFillRates
+
+
+            The minimum fill rates for each category specified in Ids.
 
             These are inclusive of the bound. A value must be specified for each
 
@@ -538,8 +446,11 @@ paths:
           collectionFormat: multi
         - name: filter.connected_datasets.project_ids
           description: >-
-            ProjectIds. The filter to be applied to the projects associated with
-            the returned
+            ProjectIds
+
+
+            The filter to be applied to the projects associated with the
+            returned
 
             Datasets. Only Datasets within projects matching one of the project
             ids
@@ -553,7 +464,10 @@ paths:
           collectionFormat: multi
         - name: filter.min_intersection
           description: >-
-            Min Intersection. The lowest acceptable intersection relative to the
+            Min Intersection
+
+
+            The lowest acceptable intersection relative to the
 
             size of the connected Dataset. This is calculated by taking the
             number
@@ -563,7 +477,7 @@ paths:
 
             the 'best' key, and diving by the total number of rows in the from
 
-            Dataset.  Values can be between 0 and 1, inclusive. If ommitted, any
+            Dataset.  Values can be between 0 and 1, inclusive. If omitted, any
 
             intersection will be allowed.
           in: query
@@ -656,10 +570,10 @@ paths:
             $ref: '#/definitions/rpcStatus'
       parameters:
         - name: filter.ownership
-          description: >-
-            OwnershipFilter. Specifies whether to return all Datasets, or only
-            those that are
+          description: |-
+            OwnershipFilter
 
+            Specifies whether to return all Datasets, or only those that are
             owned or not owned by the requesting user.
 
              - ANY_OWNERSHIP: Returns all Datasets the user has access to.
@@ -675,8 +589,10 @@ paths:
           default: ANY_OWNERSHIP
         - name: filter.datasets.private_ids
           description: >-
-            PrivateIds. The filter to be applied to the private IDs of the
-            returned
+            PrivateIds
+
+
+            The filter to be applied to the private IDs of the returned
 
             Datasets. Only Datasets with private IDs containing one of the
             strings
@@ -690,7 +606,10 @@ paths:
           collectionFormat: multi
         - name: filter.datasets.public_names
           description: >-
-            PublicNames. The filter to be applied to the public names of the
+            PublicNames
+
+
+            The filter to be applied to the public names of the
 
             returned Datasets. Only Datasets with public names containing one of
             the
@@ -704,8 +623,10 @@ paths:
           collectionFormat: multi
         - name: filter.datasets.public_description
           description: >-
-            PublicDescription. The filter to be applied to the public
-            descriptions
+            PublicDescription
+
+
+            The filter to be applied to the public descriptions
 
             of the returned Datasets. Only Datasets with public descriptions
 
@@ -717,27 +638,30 @@ paths:
           required: false
           type: string
         - name: filter.datasets.create_time_filter.start_time
-          description: >-
-            Start. Defines the earliest time the filter is applied from. The
-            filter
+          description: |-
+            Start
 
+            Defines the earliest time the filter is applied from. The filter
             matches all dates after this point in time, inclusive.
           in: query
           required: false
           type: string
           format: date-time
         - name: filter.datasets.create_time_filter.end_time
-          description: >-
-            End. Defines the time the filter is applied until. The filter
-            matches all
+          description: |-
+            End
 
+            Defines the time the filter is applied until. The filter matches all
             dates before this point in time, inclusive.
           in: query
           required: false
           type: string
           format: date-time
         - name: filter.datasets.owner_ids
-          description: Owner User IDs. Filters Datasets on the specified owner user IDs.
+          description: |-
+            Owner User IDs
+
+            Filters Datasets on the specified owner user IDs.
           in: query
           required: false
           type: array
@@ -745,7 +669,10 @@ paths:
             type: string
           collectionFormat: multi
         - name: filter.datasets.categories.ids
-          description: Ids. The IDs of the Categories that must be present in the Dataset.
+          description: |-
+            Ids
+
+            The IDs of the Categories that must be present in the Dataset.
           in: query
           required: false
           type: array
@@ -755,8 +682,10 @@ paths:
           collectionFormat: multi
         - name: filter.datasets.categories.min_fill_rates
           description: >-
-            MinFillRates. The minimum fill rates for each category specified in
-            Ids.
+            MinFillRates
+
+
+            The minimum fill rates for each category specified in Ids.
 
             These are inclusive of the bound. A value must be specified for each
 
@@ -775,8 +704,11 @@ paths:
           collectionFormat: multi
         - name: filter.datasets.project_ids
           description: >-
-            ProjectIds. The filter to be applied to the projects associated with
-            the returned
+            ProjectIds
+
+
+            The filter to be applied to the projects associated with the
+            returned
 
             Datasets. Only Datasets within projects matching one of the project
             ids
@@ -885,6 +817,7 @@ paths:
             $ref: '#/definitions/rpcStatus'
       parameters:
         - name: body
+          description: Used to add Demo Datasets with the AddDemoDatasets method.
           in: body
           required: true
           schema:
@@ -895,7 +828,7 @@ paths:
     post:
       summary: ExplainQuery explains how a query will be executed.
       description: >-
-        Provides information about the choices made by the platfrom before
+        Provides information about the choices made by the platform before
         executing a query.
       operationId: ExplainQuery
       responses:
@@ -917,148 +850,35 @@ paths:
             $ref: '#/definitions/rpcStatus'
       parameters:
         - name: body
+          description: >-
+            Used to explain the choices made by the platform before executing a
+            query.
           in: body
           required: true
           schema:
             $ref: '#/definitions/tyraelExplainQueryRequest'
       tags:
         - Queries
-  /api/v1/identity_queries:
-    post:
-      summary: Create an Identity Query
-      description: >-
-        Queue an Identity Query for execution. Returns immediately with an ID of
-        the Identity Query created. Only available for use with Identity
-        Datasets.
-      operationId: CreateIdentityQuery
-      responses:
-        '200':
-          description: A successful response.
-          schema:
-            $ref: '#/definitions/tyraelIdentityQueryStatus'
-        '400':
-          description: Returned when the IdentityQuery could not be parsed.
-          schema:
-            $ref: '#/definitions/tyraelError'
-        '401':
-          description: Returned when the user could not be authorized.
-          schema:
-            $ref: '#/definitions/tyraelError'
-        default:
-          description: An unexpected error response.
-          schema:
-            $ref: '#/definitions/rpcStatus'
-      parameters:
-        - name: body
-          in: body
-          required: true
-          schema:
-            $ref: '#/definitions/tyraelCreateIdentityQueryRequest'
-      tags:
-        - Identity Queries
-      deprecated: true
-  /api/v1/identity_queries/push_connectors:
-    post:
-      summary: Get a list of Push Connectors permitted for an Identity Query
-      description: >-
-        Returns a list of all the Push Connectors that can be used with this
-        Identity Query.
-      operationId: GetPermittedPushConnectors
-      responses:
-        '200':
-          description: A successful response.
-          schema:
-            $ref: '#/definitions/tyraelGetPermittedPushConnectorsResponse'
-        '400':
-          description: Returned when the Identity Query could not be parsed.
-          schema:
-            $ref: '#/definitions/tyraelError'
-        '401':
-          description: Returned when the user could not be authorized.
-          schema:
-            $ref: '#/definitions/tyraelError'
-        default:
-          description: An unexpected error response.
-          schema:
-            $ref: '#/definitions/rpcStatus'
-      parameters:
-        - name: body
-          in: body
-          required: true
-          schema:
-            $ref: '#/definitions/tyraelGetPermittedPushConnectorsRequest'
-      tags:
-        - Identity Queries
-      deprecated: true
-  /api/v1/identity_queries/validate:
-    post:
-      summary: Validates an Identity Query
-      description: >-
-        Performs validation of an Identity Query without actually executing it.
-        Good for testing that your queries are correctly formatted.
-      operationId: ValidateIdentityQuery
-      responses:
-        '200':
-          description: A successful response.
-          schema:
-            $ref: '#/definitions/tyraelValidateIdentityQueryResponse'
-        '400':
-          description: Returned when the Identity Query could not be parsed.
-          schema:
-            $ref: '#/definitions/tyraelError'
-        '401':
-          description: Returned when the user could not be authorized.
-          schema:
-            $ref: '#/definitions/tyraelError'
-        default:
-          description: An unexpected error response.
-          schema:
-            $ref: '#/definitions/rpcStatus'
-      parameters:
-        - name: body
-          in: body
-          required: true
-          schema:
-            $ref: '#/definitions/tyraelValidateIdentityQueryRequest'
-      tags:
-        - Identity Queries
-      deprecated: true
-  /api/v1/identity_queries/{identity_query_id}:
+  /api/v1/health:
     get:
-      summary: Get an Identity Query
-      description: Get the current status of the Identity Query.
-      operationId: GetIdentityQuery
+      summary: Checks the health of the service
+      description: Returns the health status of the service.
+      operationId: HealthCheck
       responses:
         '200':
           description: A successful response.
           schema:
-            $ref: '#/definitions/tyraelIdentityQueryStatus'
+            $ref: '#/definitions/tyraelHealthCheckResponse'
         '401':
           description: Returned when the user could not be authorized.
-          schema:
-            $ref: '#/definitions/tyraelError'
-        '404':
-          description: Returned when the requested Identity Query could not be found.
           schema:
             $ref: '#/definitions/tyraelError'
         default:
           description: An unexpected error response.
           schema:
             $ref: '#/definitions/rpcStatus'
-      parameters:
-        - name: identity_query_id
-          description: >-
-            Identity Query ID
-
-
-            The ID of the Identity Query, as returned from the
-            CreateIdentityQuery method.
-          in: path
-          required: true
-          type: string
       tags:
-        - Identity Queries
-      deprecated: true
+        - Health
   /api/v1/permissions:
     get:
       summary: List all Permissions associated with the User.
@@ -1083,10 +903,10 @@ paths:
             $ref: '#/definitions/rpcStatus'
       parameters:
         - name: filter.direction
-          description: >-
-            Direction. Specifies whether to return all Permissions, or only
-            those that
+          description: |-
+            Direction
 
+            Specifies whether to return all Permissions, or only those that
             are incoming or outgoing.
 
              - ANY_DIRECTION: Shows all Permissions.
@@ -1102,7 +922,9 @@ paths:
           default: ANY_DIRECTION
         - name: filter.accepted
           description: |-
-            Accepted. Specifies whether to return all Permissions, or only those
+            Accepted
+
+            Specifies whether to return all Permissions, or only those
             that have or have not been accepted by the recipient.
 
              - ANY_ACCEPTED: Shows all Permissions.
@@ -1118,8 +940,10 @@ paths:
           default: ANY_ACCEPTED
         - name: filter.owned_datasets.private_ids
           description: >-
-            PrivateIds. The filter to be applied to the private IDs of the
-            returned
+            PrivateIds
+
+
+            The filter to be applied to the private IDs of the returned
 
             Datasets. Only Datasets with private IDs containing one of the
             strings
@@ -1133,7 +957,10 @@ paths:
           collectionFormat: multi
         - name: filter.owned_datasets.public_names
           description: >-
-            PublicNames. The filter to be applied to the public names of the
+            PublicNames
+
+
+            The filter to be applied to the public names of the
 
             returned Datasets. Only Datasets with public names containing one of
             the
@@ -1147,8 +974,10 @@ paths:
           collectionFormat: multi
         - name: filter.owned_datasets.public_description
           description: >-
-            PublicDescription. The filter to be applied to the public
-            descriptions
+            PublicDescription
+
+
+            The filter to be applied to the public descriptions
 
             of the returned Datasets. Only Datasets with public descriptions
 
@@ -1160,27 +989,30 @@ paths:
           required: false
           type: string
         - name: filter.owned_datasets.create_time_filter.start_time
-          description: >-
-            Start. Defines the earliest time the filter is applied from. The
-            filter
+          description: |-
+            Start
 
+            Defines the earliest time the filter is applied from. The filter
             matches all dates after this point in time, inclusive.
           in: query
           required: false
           type: string
           format: date-time
         - name: filter.owned_datasets.create_time_filter.end_time
-          description: >-
-            End. Defines the time the filter is applied until. The filter
-            matches all
+          description: |-
+            End
 
+            Defines the time the filter is applied until. The filter matches all
             dates before this point in time, inclusive.
           in: query
           required: false
           type: string
           format: date-time
         - name: filter.owned_datasets.owner_ids
-          description: Owner User IDs. Filters Datasets on the specified owner user IDs.
+          description: |-
+            Owner User IDs
+
+            Filters Datasets on the specified owner user IDs.
           in: query
           required: false
           type: array
@@ -1188,7 +1020,10 @@ paths:
             type: string
           collectionFormat: multi
         - name: filter.owned_datasets.categories.ids
-          description: Ids. The IDs of the Categories that must be present in the Dataset.
+          description: |-
+            Ids
+
+            The IDs of the Categories that must be present in the Dataset.
           in: query
           required: false
           type: array
@@ -1198,8 +1033,10 @@ paths:
           collectionFormat: multi
         - name: filter.owned_datasets.categories.min_fill_rates
           description: >-
-            MinFillRates. The minimum fill rates for each category specified in
-            Ids.
+            MinFillRates
+
+
+            The minimum fill rates for each category specified in Ids.
 
             These are inclusive of the bound. A value must be specified for each
 
@@ -1218,8 +1055,11 @@ paths:
           collectionFormat: multi
         - name: filter.owned_datasets.project_ids
           description: >-
-            ProjectIds. The filter to be applied to the projects associated with
-            the returned
+            ProjectIds
+
+
+            The filter to be applied to the projects associated with the
+            returned
 
             Datasets. Only Datasets within projects matching one of the project
             ids
@@ -1233,8 +1073,10 @@ paths:
           collectionFormat: multi
         - name: filter.other_datasets.private_ids
           description: >-
-            PrivateIds. The filter to be applied to the private IDs of the
-            returned
+            PrivateIds
+
+
+            The filter to be applied to the private IDs of the returned
 
             Datasets. Only Datasets with private IDs containing one of the
             strings
@@ -1248,7 +1090,10 @@ paths:
           collectionFormat: multi
         - name: filter.other_datasets.public_names
           description: >-
-            PublicNames. The filter to be applied to the public names of the
+            PublicNames
+
+
+            The filter to be applied to the public names of the
 
             returned Datasets. Only Datasets with public names containing one of
             the
@@ -1262,8 +1107,10 @@ paths:
           collectionFormat: multi
         - name: filter.other_datasets.public_description
           description: >-
-            PublicDescription. The filter to be applied to the public
-            descriptions
+            PublicDescription
+
+
+            The filter to be applied to the public descriptions
 
             of the returned Datasets. Only Datasets with public descriptions
 
@@ -1275,27 +1122,30 @@ paths:
           required: false
           type: string
         - name: filter.other_datasets.create_time_filter.start_time
-          description: >-
-            Start. Defines the earliest time the filter is applied from. The
-            filter
+          description: |-
+            Start
 
+            Defines the earliest time the filter is applied from. The filter
             matches all dates after this point in time, inclusive.
           in: query
           required: false
           type: string
           format: date-time
         - name: filter.other_datasets.create_time_filter.end_time
-          description: >-
-            End. Defines the time the filter is applied until. The filter
-            matches all
+          description: |-
+            End
 
+            Defines the time the filter is applied until. The filter matches all
             dates before this point in time, inclusive.
           in: query
           required: false
           type: string
           format: date-time
         - name: filter.other_datasets.owner_ids
-          description: Owner User IDs. Filters Datasets on the specified owner user IDs.
+          description: |-
+            Owner User IDs
+
+            Filters Datasets on the specified owner user IDs.
           in: query
           required: false
           type: array
@@ -1303,7 +1153,10 @@ paths:
             type: string
           collectionFormat: multi
         - name: filter.other_datasets.categories.ids
-          description: Ids. The IDs of the Categories that must be present in the Dataset.
+          description: |-
+            Ids
+
+            The IDs of the Categories that must be present in the Dataset.
           in: query
           required: false
           type: array
@@ -1313,8 +1166,10 @@ paths:
           collectionFormat: multi
         - name: filter.other_datasets.categories.min_fill_rates
           description: >-
-            MinFillRates. The minimum fill rates for each category specified in
-            Ids.
+            MinFillRates
+
+
+            The minimum fill rates for each category specified in Ids.
 
             These are inclusive of the bound. A value must be specified for each
 
@@ -1333,8 +1188,11 @@ paths:
           collectionFormat: multi
         - name: filter.other_datasets.project_ids
           description: >-
-            ProjectIds. The filter to be applied to the projects associated with
-            the returned
+            ProjectIds
+
+
+            The filter to be applied to the projects associated with the
+            returned
 
             Datasets. Only Datasets within projects matching one of the project
             ids
@@ -1367,156 +1225,6 @@ paths:
           default: ASCENDING
       tags:
         - Permissions
-  /api/v1/push_connectors:
-    get:
-      summary: List all Push Connectors
-      description: >-
-        List all Push Connectors that the recipient can use to push the results
-        from an Identity Query.
-      operationId: ListPushConnectors
-      responses:
-        '200':
-          description: A successful response.
-          schema:
-            $ref: '#/definitions/tyraelListPushConnectorsResponse'
-        '401':
-          description: Returned when the user could not be authorized.
-          schema:
-            $ref: '#/definitions/tyraelError'
-        default:
-          description: An unexpected error response.
-          schema:
-            $ref: '#/definitions/rpcStatus'
-      parameters:
-        - name: recipient_id
-          description: >-
-            RecipientId. The ListPushConnectors method will return all
-            PushConnectors that can be
-
-            used by the user with this ID.
-          in: query
-          required: false
-          type: string
-      tags:
-        - Push Connectors
-  /api/v1/push_connectors/{base_id}:
-    post:
-      summary: Create a Push Connector
-      description: >-
-        Create a new Push Connector, based on an existing type of Push
-        Connector, that can be used to push the results from an Identity Query.
-      operationId: CreatePushConnector
-      responses:
-        '200':
-          description: A successful response.
-          schema:
-            $ref: '#/definitions/tyraelCreatePushConnectorResponse'
-        '401':
-          description: Returned when the user could not be authorized.
-          schema:
-            $ref: '#/definitions/tyraelError'
-        default:
-          description: An unexpected error response.
-          schema:
-            $ref: '#/definitions/rpcStatus'
-      parameters:
-        - name: base_id
-          description: >-
-            BaseId
-
-
-            The ID of the base Push Connector that the new Push Connector is
-            based on.
-          in: path
-          required: true
-          type: string
-        - name: body
-          in: body
-          required: true
-          schema:
-            type: object
-            properties:
-              name:
-                type: string
-                description: A descriptive name for the new Push Connector.
-                title: Name
-              recipient_ids:
-                type: array
-                items:
-                  type: string
-                description: >-
-                  A list of the user IDs of users who can use the new Push
-                  Connector. Only
-
-                  users in this list will be allowed to use the new template. If
-                  left empty,
-
-                  any user will be allowed to use the new template if the owner
-                  specifies it
-
-                  in a permission shared with them.
-                title: RecipientIds
-              values:
-                type: array
-                items:
-                  $ref: '#/definitions/tyraelCreatePushConnectorRequestValue'
-                description: >-
-                  Values is a list of modified fields for the new Push
-                  Connector. Any fields
-
-                  present in the base Push Connector that aren't in this list
-                  will be left
-
-                  unchanged in the new Push Connector.
-                title: Values
-            description: >-
-              Used to create a new Push Connector with the CreatePushConnector
-              method.
-            title: Create Push Connectors Request
-      tags:
-        - Push Connectors
-  /api/v1/push_connectors/{push_connector_id}:
-    get:
-      summary: Get a Form for a Push Connector
-      description: >-
-        Returns a Form which describes the values that need to be specified in
-        order to configure a Push Connector.
-      operationId: GetPushConnectorForm
-      responses:
-        '200':
-          description: A successful response.
-          schema:
-            $ref: '#/definitions/tyraelGetPushConnectorFormResponse'
-        '401':
-          description: Returned when the user could not be authorized.
-          schema:
-            $ref: '#/definitions/tyraelError'
-        '404':
-          description: Returned when the Push Connector could not be found.
-          schema:
-            $ref: '#/definitions/tyraelError'
-        default:
-          description: An unexpected error response.
-          schema:
-            $ref: '#/definitions/rpcStatus'
-      parameters:
-        - name: push_connector_id
-          description: |-
-            PushConnectorId
-
-            The ID of the Push Connector.
-          in: path
-          required: true
-          type: string
-        - name: user_email_domain
-          description: >-
-            UserEmailDomain is the domain part only of the requesting user's
-            email address.
-          in: query
-          required: false
-          type: string
-      tags:
-        - Push Connectors
   /api/v1/queries:
     post:
       summary: Create a Query
@@ -1543,6 +1251,7 @@ paths:
             $ref: '#/definitions/rpcStatus'
       parameters:
         - name: body
+          description: Used to create a Query with the CreateQuery method.
           in: body
           required: true
           schema:
@@ -1654,8 +1363,10 @@ paths:
           type: string
         - name: start_time
           description: >-
-            Start Time. The timestamp from which to return usage data. If not
-            specified,
+            Start Time
+
+
+            The timestamp from which to return usage data. If not specified,
 
             will default to the beginning of the current month. If specified,
             the
@@ -1669,21 +1380,21 @@ paths:
           type: string
           format: date-time
         - name: end_time
-          description: >-
-            End Time. The timestamp up to which to return usage data. If not
-            specified,
+          description: |-
+            End Time
 
+            The timestamp up to which to return usage data. If not specified,
             will return all data up to the present moment. The EndTime will be
-
             rounded up to the next group boundary as specified by Grouping.
           in: query
           required: false
           type: string
           format: date-time
         - name: grouping
-          description: >-
-            Grouping. Specifies how to roll up a time series into discrete
-            groups.
+          description: |-
+            Grouping
+
+            Specifies how to roll up a time series into discrete groups.
 
              - TIME_GROUPING_UNSPECIFIED: Default value - should not be used.
              - DAY: All values within a single day will be rolled up into a single
@@ -1761,8 +1472,10 @@ paths:
           type: string
         - name: start_time
           description: >-
-            Start Time. The timestamp from which to return usage data. If not
-            specified,
+            Start Time
+
+
+            The timestamp from which to return usage data. If not specified,
 
             will default to the beginning of the current month. If specified,
             the
@@ -1776,21 +1489,21 @@ paths:
           type: string
           format: date-time
         - name: end_time
-          description: >-
-            End Time. The timestamp up to which to return usage data. If not
-            specified,
+          description: |-
+            End Time
 
+            The timestamp up to which to return usage data. If not specified,
             will return all data up to the present moment. The EndDate will be
-
             rounded up to the next group boundary as specified by Grouping.
           in: query
           required: false
           type: string
           format: date-time
         - name: grouping
-          description: >-
-            Grouping. Specifies how to roll up a time series into discrete
-            groups.
+          description: |-
+            Grouping
+
+            Specifies how to roll up a time series into discrete groups.
 
              - TIME_GROUPING_UNSPECIFIED: Default value - should not be used.
              - DAY: All values within a single day will be rolled up into a single
@@ -1839,6 +1552,7 @@ paths:
             $ref: '#/definitions/rpcStatus'
       parameters:
         - name: body
+          description: Used to validate a Query before executing it.
           in: body
           required: true
           schema:
@@ -1846,6 +1560,15 @@ paths:
       tags:
         - Queries
 definitions:
+  HealthCheckResponseHealthStatus:
+    type: string
+    enum:
+      - UNKNOWN
+      - AVAILABLE
+    default: UNKNOWN
+    description: >-
+      HealthStatus defines the different status the health of the service can be
+      in.
   SortOrder:
     type: string
     enum:
@@ -1860,7 +1583,7 @@ definitions:
   protobufAny:
     type: object
     properties:
-      type_url:
+      '@type':
         type: string
         description: >-
           A URL/resource name that uniquely identifies the type of the
@@ -1903,18 +1626,16 @@ definitions:
 
           protobuf release, and it is not used for type URLs beginning with
 
-          type.googleapis.com.
+          type.googleapis.com. As of May 2023, there are no widely used type
+          server
+
+          implementations and no plans to implement one.
 
 
           Schemes other than `http`, `https` (or the empty scheme) might be
 
           used with implementation specific semantics.
-      value:
-        type: string
-        format: byte
-        description: >-
-          Must be a valid serialized protocol buffer of the above specified
-          type.
+    additionalProperties: {}
     description: >-
       `Any` contains an arbitrary serialized protocol buffer message along with
       a
@@ -1944,6 +1665,10 @@ definitions:
           ...
           if (any.is(Foo.class)) {
             foo = any.unpack(Foo.class);
+          }
+          // or ...
+          if (any.isSameTypeAs(Foo.getDefaultInstance())) {
+            foo = any.unpack(Foo.getDefaultInstance());
           }
 
        Example 3: Pack and unpack a message in Python.
@@ -1978,7 +1703,6 @@ definitions:
       in the type URL, for example "foo.bar.com/x/y.z" will yield type
 
       name "y.z".
-
 
 
       JSON
@@ -2021,7 +1745,7 @@ definitions:
       code:
         type: integer
         format: int32
-        description: >-
+        description: |-
           The status code, which should be an enum value of
           [google.rpc.Code][google.rpc.Code].
       message:
@@ -2032,10 +1756,13 @@ definitions:
           user-facing error message should be localized and sent in the
 
           [google.rpc.Status.details][google.rpc.Status.details] field, or
-          localized by the client.
+          localized
+
+          by the client.
       details:
         type: array
         items:
+          type: object
           $ref: '#/definitions/protobufAny'
         description: >-
           A list of messages that carry the error details.  There is a common
@@ -2099,6 +1826,7 @@ definitions:
       pushes:
         type: array
         items:
+          type: object
           $ref: '#/definitions/tyraelPush'
         description: The list of pushes for this activation.
         title: Pushes
@@ -2106,6 +1834,14 @@ definitions:
         type: string
         description: The raw IQL query string representation of the query.
         title: Query String
+      join_metadata:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/tyraelJoinMetadata'
+        description: >-
+          JoinMetadata contains details about which Keys were used, between two
+          datasets, when executing the query.
     description: Activation describes information about an activation.
   tyraelActivationQueryExecutionStatus:
     type: string
@@ -2213,13 +1949,23 @@ definitions:
         title: Column Separator
       string_literal_column:
         $ref: '#/definitions/tyraelActivationStringLiteral'
-        description: The optional string literal column.
+        description: |-
+          The optional string literal column.
+
+          Deprecated: use string_literal_columns.
         title: String Literal Column
       original_record_count:
         type: integer
         format: int64
         description: A count of the records before de-duplication
         title: Original Record Count
+      string_literal_columns:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/tyraelActivationStringLiteral'
+        description: The optional list of string literal columns.
+        title: StringLiteralColumns
     description: ActivationSummary describes summary information about an activation.
   tyraelActivationsFilter:
     type: object
@@ -2293,6 +2039,7 @@ definitions:
       permissions:
         type: array
         items:
+          type: object
           $ref: '#/definitions/tyraelPermission'
         description: Details of the permissions to the Demo Datasets.
         title: Permissions
@@ -2370,6 +2117,7 @@ definitions:
       representations:
         type: array
         items:
+          type: object
           $ref: '#/definitions/tyraelRepresentation'
         description: An array of all Representations of this Category in this Dataset.
         title: Representations
@@ -2430,6 +2178,7 @@ definitions:
       joins:
         type: array
         items:
+          type: object
           $ref: '#/definitions/tyraelJoinPlan'
         description: Joins is a list of expected joins between two datasets.
         title: Joins
@@ -2464,6 +2213,7 @@ definitions:
       keys:
         type: array
         items:
+          type: object
           $ref: '#/definitions/tyraelConnectionKey'
         description: |-
           Contains the intersection and duplicates for each key
@@ -2563,11 +2313,49 @@ definitions:
           size of the connected Dataset. This is calculated by taking the number
           of rows in the from Dataset that are also in the to Dataset when using
           the 'best' key, and diving by the total number of rows in the from
-          Dataset.  Values can be between 0 and 1, inclusive. If ommitted, any
+          Dataset.  Values can be between 0 and 1, inclusive. If omitted, any
           intersection will be allowed.
         title: Min Intersection
     description: Contains the filter expressions for listing Connections.
     title: Connections Filter
+  tyraelCountMetadata:
+    type: object
+    properties:
+      dataset:
+        $ref: '#/definitions/tyraelCountMetadataDataset'
+        description: Dataset is the dataset on which the count took place on.
+      keys:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/tyraelCountMetadataKeyMetadata'
+        description: >-
+          Keys is the list of global schema Key IDs used when counting on this
+          dataset.
+    description: >-
+      CountMetadata contains details about which Keys were used to produce the
+      resulting counts on a given dataset.
+  tyraelCountMetadataDataset:
+    type: object
+    properties:
+      id:
+        type: string
+        description: ID is the globally unique dataset identifier.
+      name:
+        type: string
+        description: Name is the dataset name.
+    description: Dataset contains the name and ID of a dataset.
+  tyraelCountMetadataKeyMetadata:
+    type: object
+    properties:
+      key_id:
+        type: string
+        format: int64
+        description: KeyID is the internal id of the Key.
+      name:
+        type: string
+        description: Name is the name of the key.
+    description: KeyMetadata contains metadata about a specific Key used in the count.
   tyraelCreateActivationQueryRequest:
     type: object
     properties:
@@ -2582,6 +2370,7 @@ definitions:
       path_overrides:
         type: array
         items:
+          type: object
           $ref: '#/definitions/tyraelPathOverride'
         description: >-
           A list of instructions on how to connect two datasets, overriding the
@@ -2599,74 +2388,36 @@ definitions:
         title: Column Separator
       string_literal_column:
         $ref: '#/definitions/tyraelActivationStringLiteral'
-        description: The optional string literal column.
-        title: StringLiteralColumn
-    description: Used to queue an Activation Query with the CreateActivationQuery endpoint.
-    title: Create Activation Query Request
-  tyraelCreateIdentityQueryRequest:
-    type: object
-    properties:
-      query:
-        type: string
         description: |-
-          The Query that should be queued. This takes the
-          format of an InfoSum Identity Query. See
-          the documentation of the InfoSum Identity Query Language
-          for more information.
-        title: Query
-      path_overrides:
+          The optional string literal column.
+
+          Deprecated: use string_literal_columns.
+        title: StringLiteralColumn
+      header_overrides:
+        type: object
+        additionalProperties:
+          type: string
+        description: An optional map of query output column to header override.
+        title: HeaderOverrides
+      string_literal_columns:
         type: array
         items:
-          $ref: '#/definitions/tyraelPathOverride'
-        description: >-
-          A list of instructions on how to connect two datasets, overriding the
-          automatic choices
-
-          made by the core engine.
-        title: Path Overrides
-      push_connector_config:
-        $ref: '#/definitions/tyraelPushConnectorConfig'
-        description: >-
-          The configuration for the Push Connector that the results should be
-          sent to.
-        title: Push Connector Config
-      campaign_id:
+          type: object
+          $ref: '#/definitions/tyraelActivationStringLiteral'
+        description: The optional list of string literal columns.
+        title: StringLiteralColumns
+      multi_value_delimiter:
         type: string
-        description: A name that a user can associate with an identity query.
-        title: CampaignId
-    description: Used to create an Identity Query with the CreateIdentityQuery method.
-    title: Create Identity Query Request
-  tyraelCreatePushConnectorRequestValue:
-    type: object
-    properties:
-      field_id:
-        type: string
-        description: |-
-          Idenitifies which field from the base Push Connector is being referred
-          to with this Value.
-        title: FieldId
-      value:
-        type: string
-        description: The default value for this field in the new Push Connector.
-        title: Value
-      user_editable:
-        type: boolean
-        description: |-
-          If true, Value can be considered a default value, and anyone using the
-          Push Connector will be able to change the value for that field.
-          If false, users will not be able to change or see this value, and
-          whatever Value is set to will be used when pushing Identity Results.
-        title: UserEditable
-    description: Value defines the value of a field in a Push Connector.
-  tyraelCreatePushConnectorResponse:
-    type: object
-    properties:
-      push_connector:
-        $ref: '#/definitions/tyraelPushConnector'
-        description: The ID and name of the new Push Connector.
-        title: PushConnector
-    description: The ID and name of the new Push Connector.
-    title: Create Push Connector Response
+        description: The delimiter for multi-value columns.
+        title: MultiValueDelimiter
+      identities_to_flatten:
+        type: array
+        items:
+          type: string
+        description: A list of multi-value identity columns to be flattened.
+        title: IdentitiesToFlatten
+    description: Used to queue an Activation Query with the CreateActivationQuery endpoint.
+    title: Create Activation Query Request
   tyraelCreateQueryRequest:
     type: object
     properties:
@@ -2681,6 +2432,7 @@ definitions:
       path_overrides:
         type: array
         items:
+          type: object
           $ref: '#/definitions/tyraelPathOverride'
         description: >-
           A list of instructions on how to connect two datasets, overriding the
@@ -2698,6 +2450,15 @@ definitions:
 
           result.
         title: Sample
+      count_overrides:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/tyraelDatasetWithKeys'
+        description: >-
+          A list of dataset IDs with an ordered list of keys to be used when
+          calculating a count on that dataset.
+        title: Count Overrides
     description: Used to create a Query with the CreateQuery method.
     title: Create Query Request
   tyraelCreditShare:
@@ -2773,6 +2534,7 @@ definitions:
       shares:
         type: array
         items:
+          type: object
           $ref: '#/definitions/tyraelCreditShare'
         description: |-
           A breakdown of how many credits have been allocated and
@@ -2790,6 +2552,10 @@ definitions:
       - INTEGER_RANGES
       - STRING_SET
       - INTEGER_SET
+      - FLOAT
+      - FLOAT_SET
+      - TIMESTAMP
+      - TIMESTAMP_SET
     default: STRINGS
     description: >-
       DataType defines the different types of data a Representation can take.
@@ -2807,6 +2573,10 @@ definitions:
       aggregation.
        - STRING_SET: String set represents unique list of string.
        - INTEGER_SET: Integer set represents unique list of integers.
+       - FLOAT: Float represents a single value float.
+       - FLOAT_SET: FloatSet is an array of floats.
+       - TIMESTAMP: Timestamp represents a single value timestamp.
+       - TIMESTAMP_SET: TimestampSet is an array of timestamps.
   tyraelDataset:
     type: object
     properties:
@@ -2920,18 +2690,21 @@ definitions:
       keys:
         type: array
         items:
+          type: object
           $ref: '#/definitions/tyraelKey'
         description: Describes all key columns.
         title: Keys
       categories:
         type: array
         items:
+          type: object
           $ref: '#/definitions/tyraelCategory'
         description: Describes all categories.
         title: Categories
       identities:
         type: array
         items:
+          type: object
           $ref: '#/definitions/tyraelIdentity'
         description: Describes all Identities.
         title: Identities
@@ -3052,6 +2825,7 @@ definitions:
       categories:
         type: array
         items:
+          type: object
           $ref: '#/definitions/tyraelCategory'
         description: The Categories that belong to this Dataset.
         title: Categories
@@ -3072,6 +2846,7 @@ definitions:
       keys:
         type: array
         items:
+          type: object
           $ref: '#/definitions/tyraelKey'
         description: The Keys in this Dataset.
         title: Keys
@@ -3139,6 +2914,7 @@ definitions:
       permissions:
         type: array
         items:
+          type: object
           $ref: '#/definitions/tyraelDatasetPermissionUsage'
         description: |-
           Contains Usage information for all Permissions on this
@@ -3276,6 +3052,7 @@ definitions:
       dimensions:
         type: array
         items:
+          type: object
           $ref: '#/definitions/tyraelDimension'
         description: Child dimensions of this Dimension.
         title: Child dimensions
@@ -3355,6 +3132,7 @@ definitions:
       path_overrides:
         type: array
         items:
+          type: object
           $ref: '#/definitions/tyraelPathOverride'
         description: >-
           A list of instructions on how to connect two datasets, overriding the
@@ -3378,6 +3156,7 @@ definitions:
       hop_table:
         type: array
         items:
+          type: object
           $ref: '#/definitions/tyraelHop'
         description: >-
           HopTable is the list of all joins that have taken place between
@@ -3387,44 +3166,6 @@ definitions:
       An explanation of the choices made by the platform before executing the
       query.
     title: Explain Query Response
-  tyraelFormField:
-    type: object
-    properties:
-      id:
-        type: string
-        description: The unique identifier for the field.
-        title: Id
-      label:
-        type: string
-        description: A human readable label for the field.
-        title: Label
-      options:
-        type: array
-        items:
-          type: string
-        description: |-
-          A suggestion for possible values for this field. Not all fields will
-          specify Options.
-        title: Options
-    description: >-
-      Fields specify the values that must be specified to configurea Push
-      Connector.
-    title: Form Field
-  tyraelFormPanel:
-    type: object
-    properties:
-      label:
-        type: string
-        description: A human readable label for the panel.
-        title: Label
-      fields:
-        type: array
-        items:
-          $ref: '#/definitions/tyraelFormField'
-        description: A list of fields for the panel.
-        title: Fields
-    description: Panels make up the Form for a Push Connector.
-    title: Form Panel
   tyraelGetActivationResponse:
     type: object
     properties:
@@ -3466,6 +3207,7 @@ definitions:
       timeseries:
         type: array
         items:
+          type: object
           $ref: '#/definitions/tyraelDatasetUsageTimeValue'
         description: >-
           An array of datapoints that describe the Usage for a Dataset over
@@ -3479,6 +3221,7 @@ definitions:
       timeseries:
         type: array
         items:
+          type: object
           $ref: '#/definitions/tyraelPermissionUsageTimeValue'
         description: >-
           An array of datapoints that describe the Usage for a Permission over
@@ -3486,35 +3229,14 @@ definitions:
         title: Timeseries
     description: The response from the GetPermissionUsage method.
     title: Get Permissions Usage Response
-  tyraelGetPermittedPushConnectorsRequest:
+  tyraelHealthCheckResponse:
     type: object
     properties:
-      private_id:
-        type: string
-        description: The Private ID of the Dataset to retrieve, as assigned by the user.
-        title: Private Dataset ID
-    description: The dataset to return a list of permitted Push Connectors for.
-    title: Get Permitted Push Connectors Request
-  tyraelGetPermittedPushConnectorsResponse:
-    type: object
-    properties:
-      push_connectors:
-        type: array
-        items:
-          $ref: '#/definitions/tyraelPushConnector'
-        description: A list of the permitted Push Connectors.
-        title: PushConnectors
-    description: The list of permitted Push Connectors.
-    title: Get Permitted Push Connectors Response
-  tyraelGetPushConnectorFormResponse:
-    type: object
-    properties:
-      form:
-        $ref: '#/definitions/tyraelPushConnectorForm'
-        description: Contains the Push Connector fields that need to be populated.
-        title: Form
-    description: The Form for a Push Connector.
-    title: Get Push Connector Form Response
+      status:
+        $ref: '#/definitions/HealthCheckResponseHealthStatus'
+        description: Is the current health of the service.
+        title: Status
+    description: HealthCheckResponse is the output for the HealthCheck method.
   tyraelHop:
     type: object
     properties:
@@ -3619,35 +3341,6 @@ definitions:
       A list of statistics that provide an indication of the quality of the
       Identity query.
     title: Identity Quality Measures
-  tyraelIdentityQueryStatus:
-    type: object
-    properties:
-      identity_query_id:
-        type: string
-        description: The ID of the Identity Query.
-        title: Identity Query ID
-      query_completed:
-        type: boolean
-        description: Whether the Query has finished or not.
-        title: Query Completed
-      query_error:
-        $ref: '#/definitions/rpcStatus'
-        description: Contains the error if the Query failed.
-        title: Query Error
-      query_response:
-        $ref: '#/definitions/tyraelIdentityResponse'
-        description: Contains the response if the Query succeeded.
-      push_completed:
-        type: boolean
-        description: Indicates whether or not the Push is still in progress.
-        title: Push Completed
-      push_error:
-        $ref: '#/definitions/rpcStatus'
-        description: |-
-          Push Error
-          Contains any errors that were encountered whilst executing the push.
-    description: Status of a started Identity Query.
-    title: Indentity Query Status
   tyraelIdentityResponse:
     type: object
     properties:
@@ -3718,6 +3411,45 @@ definitions:
       A list of statistics that provide an indication of the quality of the
       Insight query.
     title: Insight Quality Measures
+  tyraelJoinMetadata:
+    type: object
+    properties:
+      from_dataset:
+        $ref: '#/definitions/tyraelJoinMetadataDataset'
+        description: FormDataset is the dataset the join started from.
+      to_dataset:
+        $ref: '#/definitions/tyraelJoinMetadataDataset'
+        description: ToDataset is the destination dataset of the join.
+      keys:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/tyraelJoinMetadataKeyMetadata'
+        description: Keys contains the keys that were used in the join.
+    description: >-
+      JoinMetadata contains details about which Keys were used, between two
+      datasets, when executing the query.
+  tyraelJoinMetadataDataset:
+    type: object
+    properties:
+      id:
+        type: string
+        description: ID is the globally unique dataset identifier.
+      name:
+        type: string
+        description: Name is the dataset name.
+    description: Dataset contains the name and ID of a dataset.
+  tyraelJoinMetadataKeyMetadata:
+    type: object
+    properties:
+      key_id:
+        type: string
+        format: int64
+        description: KeyID is the internal ID of the Key.
+      name:
+        type: string
+        description: Name is the name of the key.
+    description: KeyMetadata contains metadata about a specific Key used in the join.
   tyraelJoinPlan:
     type: object
     properties:
@@ -3771,7 +3503,7 @@ definitions:
         description: >-
           The fraction of the values in this Key that are `null`,
 
-          in the range (0, 1], representating a percentage value between 0% and
+          in the range (0, 1], representing a percentage value between 0% and
           100%.
         title: NullFraction
       num_distinct:
@@ -3853,6 +3585,7 @@ definitions:
       keys:
         type: array
         items:
+          type: object
           $ref: '#/definitions/tyraelKeyJoinStats'
         description: The list of keys that could participate in the join.
         title: Keys
@@ -3868,63 +3601,34 @@ definitions:
       Key Plan is a description of the keys that have participated in the join
       and any remaining keys that did not participate in the join.
     title: Key Plan
-  tyraelListActivationPushConnectorsResponse:
-    type: object
-    properties:
-      push_connectors:
-        type: array
-        items:
-          $ref: '#/definitions/tyraelPushConnector'
-        description: >-
-          Is a list of permitted push connector IDs for the specified activation
-          query,
-
-          and their associated display names.
-        title: PushConnectors
-    description: >-
-      ListActivationPushConnectorsResponse is the output of the
-      ListActivationPushConnectors endpoint.
-    title: >-
-      List Push Connectors Response is the output of the
-      ListActivationPushConnectors endpoint
   tyraelListActivationsResponse:
     type: object
     properties:
       activations:
         type: array
         items:
+          type: object
           $ref: '#/definitions/tyraelActivationSummary'
         description: The list of activations which met the activation filter requirements.
         title: Activations
     description: ListActivationsResponse is the response from the ListActivations endpoint.
     title: List Activation Queries Response
-  tyraelListBasePushConnectorsResponse:
-    type: object
-    properties:
-      push_connectors:
-        type: array
-        items:
-          $ref: '#/definitions/tyraelPushConnector'
-        description: A list of base Push Connector IDs and their associated names.
-        title: PushConnectors
-    description: >-
-      The list of Push Connectors that can be used to create new Push
-      Connectors.
-    title: List Base Push Connectors Response
   tyraelListConnectionsResponse:
     type: object
     properties:
       connections:
         type: array
         items:
+          type: object
           $ref: '#/definitions/tyraelConnection'
         description: |-
           A list of all Connections between the users Datasets and
           those the user has been granted access to.
         title: Connections
-      Datasets:
+      datasets:
         type: array
         items:
+          type: object
           $ref: '#/definitions/tyraelDataset'
         description: A is a list of Datasets included.
         title: Datasets
@@ -3939,7 +3643,7 @@ definitions:
           Specifies whether to return all Datasets, or only those that are
           owned or not owned by the requesting user.
         title: OwnershipFilter
-      Datasets:
+      datasets:
         $ref: '#/definitions/tyraelDatasetFilter'
         description: >-
           Contains parameters for filtering Datasets based on user visible
@@ -3950,9 +3654,10 @@ definitions:
   tyraelListDatasetsResponse:
     type: object
     properties:
-      Datasets:
+      datasets:
         type: array
         items:
+          type: object
           $ref: '#/definitions/tyraelDataset'
         description: The Datasets returned by the ListDatasets method.
         title: Datasets
@@ -3995,22 +3700,12 @@ definitions:
       permissions:
         type: array
         items:
+          type: object
           $ref: '#/definitions/tyraelPermission'
         description: Contains the requested Permissions.
         title: Permissions
     description: The response from the ListPermissions method.
     title: List Permissions Response
-  tyraelListPushConnectorsResponse:
-    type: object
-    properties:
-      push_connectors:
-        type: array
-        items:
-          $ref: '#/definitions/tyraelPushConnector'
-        description: A list of Push Connector IDs and their associated names.
-        title: PushConnectors
-    description: The list of Push Connectors that the recipient can use.
-    title: List Push Connectors Response
   tyraelOccurrence:
     type: object
     properties:
@@ -4024,7 +3719,7 @@ definitions:
         description: >-
           The frequency with which this Value appears in the Representation,
 
-          in the range (0, 1], representating a percentage value between 0% and
+          in the range (0, 1], representing a percentage value between 0% and
           100%.
         title: Frequency
     description: >-
@@ -4089,7 +3784,7 @@ definitions:
         title: Accept Time
       accepted:
         type: boolean
-        description: Indicates whether the Permission has been accpeted by the Recipient.
+        description: Indicates whether the Permission has been accepted by the Recipient.
         title: Accepted
       credits:
         $ref: '#/definitions/tyraelCreditShare'
@@ -4229,60 +3924,6 @@ definitions:
         description: Indicates whether the push successfully completed.
         title: Push Successful
     description: Push contains details about a specific push of an activation.
-  tyraelPushActivationResultResponse:
-    type: object
-    properties:
-      push_id:
-        type: string
-        description: Is the unique identifier for the push request.
-        title: Push ID
-    description: >-
-      PushActivationResultResponse is the output of the PushActivationResult
-      endpoint.
-    title: Push activation query results request
-  tyraelPushConnector:
-    type: object
-    properties:
-      id:
-        type: string
-        description: The ID of the push connector.
-        title: Id
-      name:
-        type: string
-        description: The display name of the push connector.
-        title: Name
-    description: The Name and ID for a Push Connector.
-    title: Push Connector
-  tyraelPushConnectorConfig:
-    type: object
-    properties:
-      id:
-        type: string
-        description: The ID of the Push Connector.
-        title: Id
-      config:
-        type: object
-        additionalProperties:
-          type: string
-        description: A map of Configuration Form field IDs to their values.
-        title: Config
-    description: The configuration for a Push Connector.
-    title: Push Connector Config
-  tyraelPushConnectorForm:
-    type: object
-    properties:
-      panels:
-        type: array
-        items:
-          $ref: '#/definitions/tyraelFormPanel'
-        description: >-
-          A list of panels. Panels contain fields which should be set to
-          configure
-
-          the Push Connector.
-        title: Panels
-    description: The Form for a Push Connector.
-    title: Push Connector Form
   tyraelPushStatus:
     type: string
     enum:
@@ -4338,6 +3979,7 @@ definitions:
       dimensions:
         type: array
         items:
+          type: object
           $ref: '#/definitions/tyraelDimension'
         description: A hierarchical result of an InfoSum Query Language SELECT statement.
         title: Result Dimensions
@@ -4354,6 +3996,24 @@ definitions:
           A number of statistics that provide an indication of the quality of
           the query.
         title: Quality Measures
+      join_metadata:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/tyraelJoinMetadata'
+        description: >-
+          JoinMetadata contains details about which Keys were used, between two
+          datasets, when executing the query.
+        title: Join Metadata
+      count_metadata:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/tyraelCountMetadata'
+        description: >-
+          CountMetadata contains details about which Keys were used to produce
+          the resulting counts on a given dataset.
+        title: Count Metadata
     description: The Result of a Query.
     title: Query Result
   tyraelRedactionThreshold:
@@ -4366,9 +4026,10 @@ definitions:
           Threshold is the redaction threshold that will be applied to all bins
           in the results.
         title: Threshold
-      Datasets:
+      datasets:
         type: array
         items:
+          type: object
           $ref: '#/definitions/tyraelDatasetThreshold'
         description: >-
           Datasets is a list of redaction thresholds for each dataset involved
@@ -4400,7 +4061,7 @@ definitions:
         description: >-
           How accurate this Representation is to the source data. It is
 
-          in the range (0, 1], representating a percentage value between 0% and
+          in the range (0, 1], representing a percentage value between 0% and
           100%.
 
           Things that affect the Precision of a Representation include any data
@@ -4460,6 +4121,7 @@ definitions:
       representations:
         type: array
         items:
+          type: object
           $ref: '#/definitions/tyraelRepresentationStats'
         description: >-
           RepresentationStats is the list of all possible representations for
@@ -4518,6 +4180,7 @@ definitions:
       dimensions:
         type: array
         items:
+          type: object
           $ref: '#/definitions/tyraelDimensionPlan'
         description: Dimensions describes the expected Dimensions in the results
         title: Dimensions
@@ -4551,9 +4214,10 @@ definitions:
           Threshold is the rounding threshold that will be applied to all bins
           in the results.
         title: Threshold
-      Datasets:
+      datasets:
         type: array
         items:
+          type: object
           $ref: '#/definitions/tyraelDatasetThreshold'
         description: >-
           Datasets is a list of rounding thresholds for each dataset involved in
@@ -4614,7 +4278,7 @@ definitions:
         description: >-
           The fraction of the values in this Representation that are `null`,
 
-          in the range (0, 1], representating a percentage value between 0% and
+          in the range (0, 1], representing a percentage value between 0% and
           100%.
         title: NullFraction
       num_distinct:
@@ -4637,6 +4301,7 @@ definitions:
       most_common:
         type: array
         items:
+          type: object
           $ref: '#/definitions/tyraelOccurrence'
         description: |-
           An array of the most common elements in the Representation, if there
@@ -4716,6 +4381,7 @@ definitions:
       path_overrides:
         type: array
         items:
+          type: object
           $ref: '#/definitions/tyraelPathOverride'
         description: |-
           A list of instructions on how to connect two datasets,
@@ -4723,8 +4389,25 @@ definitions:
         title: Path Overrides
       string_literal_column:
         $ref: '#/definitions/tyraelActivationStringLiteral'
-        description: The optional string literal output column for the query
+        description: |-
+          The optional string literal output column for the query
+
+          Deprecated: use string_literal_columns.
         title: String Literal Column
+      header_overrides:
+        type: object
+        additionalProperties:
+          type: string
+        description: >-
+          HeaderOverrides is an optional map of query output column to header
+          override.
+      string_literal_columns:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/tyraelActivationStringLiteral'
+        description: The list of optional string literal output columns for the query
+        title: String Literal Columns
     description: >-
       ValidateActivationQueryRequest is the output of the
       ValidateActivationQuery endpoint.
@@ -4740,44 +4423,6 @@ definitions:
       ValidateActivationQueryResponse is the output of the
       ValidateActivationQuery method.
     title: Validate activation query response
-  tyraelValidateIdentityQueryRequest:
-    type: object
-    properties:
-      query:
-        type: string
-        description: |-
-          The Query that should be queued. This takes the
-          format of an InfoSum Identity Query. See
-          the documentation of the InfoSum Identity Query Language
-          for more information.
-        title: Query
-      path_overrides:
-        type: array
-        items:
-          $ref: '#/definitions/tyraelPathOverride'
-        description: >-
-          A list of instructions on how to connect two datasets, overriding the
-          automatic choices
-
-          made by the core engine.
-        title: Path Overrides
-      push_connector_config:
-        $ref: '#/definitions/tyraelPushConnectorConfig'
-        description: >-
-          The configuration for the Push Connector that the results should be
-          sent to.
-        title: Push Connector Config
-    description: Used to validate an Identity Query before executing it.
-    title: Validate Identity Request
-  tyraelValidateIdentityQueryResponse:
-    type: object
-    properties:
-      success:
-        type: boolean
-        description: True if the Identity Query was successully validated.
-        title: Success
-    description: Whether the Identity Query was successfully validated.
-    title: Validate Identity Query Response
   tyraelValidateQueryRequest:
     type: object
     properties:
@@ -4792,6 +4437,7 @@ definitions:
       path_overrides:
         type: array
         items:
+          type: object
           $ref: '#/definitions/tyraelPathOverride'
         description: >-
           A list of instructions on how to connect two datasets, overriding the
@@ -4810,6 +4456,16 @@ definitions:
         title: Success
     description: Whether the Query was successfully validated.
     title: Validate Query Response
+securityDefinitions:
+  API Keys:
+    type: apiKey
+    description: >-
+      Your V1 Public and Private key separated by / e.g.
+      <public_key>/<private_key>. Or a V2 API key e.g. <v2_api_key>
+    name: Authorization
+    in: header
+security:
+  - API Keys: []
 externalDocs:
   description: Official documentation
   url: https://support.infosum.com/

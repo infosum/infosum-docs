@@ -10,6 +10,11 @@
       "email": "support@infosum.com"
     }
   },
+  "tags": [
+    {
+      "name": "Tyrael"
+    }
+  ],
   "schemes": [
     "https"
   ],
@@ -54,14 +59,14 @@
         "parameters": [
           {
             "name": "filter.campaign_name",
-            "description": "Campaign Name. The filter to be applied to the campaign name. Case insensitive. Supports partial names.",
+            "description": "Campaign Name\n\nThe filter to be applied to the campaign name. Case insensitive. Supports partial names.",
             "in": "query",
             "required": false,
             "type": "string"
           },
           {
             "name": "filter.submitted_at_filter.start_time",
-            "description": "Start. Defines the earliest time the filter is applied from. The filter\nmatches all dates after this point in time, inclusive.",
+            "description": "Start\n\nDefines the earliest time the filter is applied from. The filter\nmatches all dates after this point in time, inclusive.",
             "in": "query",
             "required": false,
             "type": "string",
@@ -69,7 +74,7 @@
           },
           {
             "name": "filter.submitted_at_filter.end_time",
-            "description": "End. Defines the time the filter is applied until. The filter matches all\ndates before this point in time, inclusive.",
+            "description": "End\n\nDefines the time the filter is applied until. The filter matches all\ndates before this point in time, inclusive.",
             "in": "query",
             "required": false,
             "type": "string",
@@ -77,21 +82,21 @@
           },
           {
             "name": "filter.query_successful",
-            "description": "Query Successful. Filters activations that were successfully completed or not.",
+            "description": "Query Successful\n\nFilters activations that were successfully completed or not.",
             "in": "query",
             "required": false,
             "type": "boolean"
           },
           {
             "name": "filter.results_expired",
-            "description": "Results Expired. Filters activations that have expired or not.",
+            "description": "Results Expired\n\nFilters activations that have expired or not.",
             "in": "query",
             "required": false,
             "type": "boolean"
           },
           {
             "name": "filter.push_destinations",
-            "description": "Push Destinations. Filters queries that have been pushed to the specified\ndestinations.",
+            "description": "Push Destinations\n\nFilters queries that have been pushed to the specified\ndestinations.",
             "in": "query",
             "required": false,
             "type": "array",
@@ -102,7 +107,7 @@
           },
           {
             "name": "filter.output_columns",
-            "description": "Output Columns. Filters activations by the selected output columns. Activations which contain any of the specified output columns are included in the result",
+            "description": "Output Columns\n\nFilters activations by the selected output columns. Activations which contain any of the specified output columns are included in the result",
             "in": "query",
             "required": false,
             "type": "array",
@@ -113,7 +118,7 @@
           },
           {
             "name": "filter.activation_dataset_private_ids",
-            "description": "Activation Dataset Private IDs. Filters queries by the activation dataset private ID used in\nthe query. Activations for any of the dataset private IDs specified are included in the result.",
+            "description": "Activation Dataset Private IDs\n\nFilters queries by the activation dataset private ID used in\nthe query. Activations for any of the dataset private IDs specified are included in the result.",
             "in": "query",
             "required": false,
             "type": "array",
@@ -124,7 +129,7 @@
           },
           {
             "name": "filter.project_ids",
-            "description": "Project IDs. Filters queries by the projects that the activation dataset\nbelongs to. Activations whose dataset belongs to any of the specified projects are included in the result.",
+            "description": "Project IDs\n\nFilters queries by the projects that the activation dataset\nbelongs to. Activations whose dataset belongs to any of the specified projects are included in the result.",
             "in": "query",
             "required": false,
             "type": "array",
@@ -202,6 +207,7 @@
         "parameters": [
           {
             "name": "body",
+            "description": "Used to queue an Activation Query with the CreateActivationQuery endpoint.",
             "in": "body",
             "required": true,
             "schema": {
@@ -254,6 +260,7 @@
         "parameters": [
           {
             "name": "body",
+            "description": "ValidateActivationQueryRequest is the output of the ValidateActivationQuery endpoint.",
             "in": "body",
             "required": true,
             "schema": {
@@ -317,169 +324,6 @@
         ]
       }
     },
-    "/api/v1/activations/{activation_id}/push": {
-      "post": {
-        "summary": "Pushes the activation query results to the specified push connector",
-        "description": "Pushes the result of an activation query to the specified push connector",
-        "operationId": "PushActivationResult",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/tyraelPushActivationResultResponse"
-            }
-          },
-          "400": {
-            "description": "Returned when the Activation Query results could not be pushed.",
-            "schema": {
-              "$ref": "#/definitions/tyraelError"
-            }
-          },
-          "401": {
-            "description": "Returned when the user could not be authorized.",
-            "schema": {
-              "$ref": "#/definitions/tyraelError"
-            }
-          },
-          "403": {
-            "description": "Returned when the user does not have access to activations via the InfoSum API.",
-            "schema": {
-              "$ref": "#/definitions/tyraelError"
-            }
-          },
-          "404": {
-            "description": "Returned when the Activation Query can not be found.",
-            "schema": {
-              "$ref": "#/definitions/tyraelError"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "activation_id",
-            "description": "Activation ID\n\nThe ID of the activation to push the results of.",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "push_connector_id": {
-                  "type": "string",
-                  "description": "Is the ID of the Push Connector to push the results to.",
-                  "title": "Push Connector ID"
-                },
-                "push_connector_config": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "type": "string"
-                  },
-                  "description": "The push connector map of Configuration Form field IDs to their values for configuring the push connector.",
-                  "title": "PushConnectorConfig"
-                }
-              },
-              "description": "PushActivationResultRequest is the input for the PushActivationResult endpoints.",
-              "title": "Push activation query results request"
-            }
-          }
-        ],
-        "tags": [
-          "Activations"
-        ]
-      }
-    },
-    "/api/v1/activations/{activation_id}/push_connectors": {
-      "get": {
-        "summary": "List the permitted Push Connectors for an Activation Query",
-        "description": "Returns a list of all the Push Connectors that can be used with the specified Activation Query.",
-        "operationId": "ListActivationPushConnectors",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/tyraelListActivationPushConnectorsResponse"
-            }
-          },
-          "401": {
-            "description": "Returned when the user could not be authorized.",
-            "schema": {
-              "$ref": "#/definitions/tyraelError"
-            }
-          },
-          "403": {
-            "description": "Returned when the user does not have access to activations via the InfoSum API.",
-            "schema": {
-              "$ref": "#/definitions/tyraelError"
-            }
-          },
-          "404": {
-            "description": "Returned when the Activation Query can not be found.",
-            "schema": {
-              "$ref": "#/definitions/tyraelError"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "activation_id",
-            "description": "Activation ID\n\nIs the ID of the activation to list the permitted push connectors for.",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "Activations"
-        ]
-      }
-    },
-    "/api/v1/base_push_connectors": {
-      "get": {
-        "summary": "List all base Push Connectors",
-        "description": "List all Push Connectors that can be used to create a new Push Connector.",
-        "operationId": "ListBasePushConnectors",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/tyraelListBasePushConnectorsResponse"
-            }
-          },
-          "401": {
-            "description": "Returned when the user could not be authorized.",
-            "schema": {
-              "$ref": "#/definitions/tyraelError"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "tags": [
-          "Push Connectors"
-        ]
-      }
-    },
     "/api/v1/connections": {
       "get": {
         "summary": "List all available Connections",
@@ -514,7 +358,7 @@
         "parameters": [
           {
             "name": "filter.origin_private_ids",
-            "description": "Origin Private Dataset IDs. The private IDs of the Datasets to display all connections from.",
+            "description": "Origin Private Dataset IDs\n\nThe private IDs of the Datasets to display all connections from.",
             "in": "query",
             "required": false,
             "type": "array",
@@ -525,7 +369,7 @@
           },
           {
             "name": "filter.connected_datasets.private_ids",
-            "description": "PrivateIds. The filter to be applied to the private IDs of the returned\nDatasets. Only Datasets with private IDs containing one of the strings\nspecified in this filter will be returned. Case insensitive.",
+            "description": "PrivateIds\n\nThe filter to be applied to the private IDs of the returned\nDatasets. Only Datasets with private IDs containing one of the strings\nspecified in this filter will be returned. Case insensitive.",
             "in": "query",
             "required": false,
             "type": "array",
@@ -536,7 +380,7 @@
           },
           {
             "name": "filter.connected_datasets.public_names",
-            "description": "PublicNames. The filter to be applied to the public names of the\nreturned Datasets. Only Datasets with public names containing one of the\nstring specified in this filter will be returned. Case insensitive.",
+            "description": "PublicNames\n\nThe filter to be applied to the public names of the\nreturned Datasets. Only Datasets with public names containing one of the\nstring specified in this filter will be returned. Case insensitive.",
             "in": "query",
             "required": false,
             "type": "array",
@@ -547,14 +391,14 @@
           },
           {
             "name": "filter.connected_datasets.public_description",
-            "description": "PublicDescription. The filter to be applied to the public descriptions\nof the returned Datasets. Only Datasets with public descriptions\ncontaining the string specified in this filter will be returned. Case\ninsensitive.",
+            "description": "PublicDescription\n\nThe filter to be applied to the public descriptions\nof the returned Datasets. Only Datasets with public descriptions\ncontaining the string specified in this filter will be returned. Case\ninsensitive.",
             "in": "query",
             "required": false,
             "type": "string"
           },
           {
             "name": "filter.connected_datasets.create_time_filter.start_time",
-            "description": "Start. Defines the earliest time the filter is applied from. The filter\nmatches all dates after this point in time, inclusive.",
+            "description": "Start\n\nDefines the earliest time the filter is applied from. The filter\nmatches all dates after this point in time, inclusive.",
             "in": "query",
             "required": false,
             "type": "string",
@@ -562,7 +406,7 @@
           },
           {
             "name": "filter.connected_datasets.create_time_filter.end_time",
-            "description": "End. Defines the time the filter is applied until. The filter matches all\ndates before this point in time, inclusive.",
+            "description": "End\n\nDefines the time the filter is applied until. The filter matches all\ndates before this point in time, inclusive.",
             "in": "query",
             "required": false,
             "type": "string",
@@ -570,7 +414,7 @@
           },
           {
             "name": "filter.connected_datasets.owner_ids",
-            "description": "Owner User IDs. Filters Datasets on the specified owner user IDs.",
+            "description": "Owner User IDs\n\nFilters Datasets on the specified owner user IDs.",
             "in": "query",
             "required": false,
             "type": "array",
@@ -581,7 +425,7 @@
           },
           {
             "name": "filter.connected_datasets.categories.ids",
-            "description": "Ids. The IDs of the Categories that must be present in the Dataset.",
+            "description": "Ids\n\nThe IDs of the Categories that must be present in the Dataset.",
             "in": "query",
             "required": false,
             "type": "array",
@@ -593,7 +437,7 @@
           },
           {
             "name": "filter.connected_datasets.categories.min_fill_rates",
-            "description": "MinFillRates. The minimum fill rates for each category specified in Ids.\nThese are inclusive of the bound. A value must be specified for each\nCategory. If the user doesn't want to filter by fill rate, they can set\nthe minimum fill rate to 0, which will match all fill rate values.\nValues should be in the range 0 to 1, inclusive.",
+            "description": "MinFillRates\n\nThe minimum fill rates for each category specified in Ids.\nThese are inclusive of the bound. A value must be specified for each\nCategory. If the user doesn't want to filter by fill rate, they can set\nthe minimum fill rate to 0, which will match all fill rate values.\nValues should be in the range 0 to 1, inclusive.",
             "in": "query",
             "required": false,
             "type": "array",
@@ -605,7 +449,7 @@
           },
           {
             "name": "filter.connected_datasets.project_ids",
-            "description": "ProjectIds. The filter to be applied to the projects associated with the returned\nDatasets. Only Datasets within projects matching one of the project ids\nspecified in this filter will be returned. Case insensitive.",
+            "description": "ProjectIds\n\nThe filter to be applied to the projects associated with the returned\nDatasets. Only Datasets within projects matching one of the project ids\nspecified in this filter will be returned. Case insensitive.",
             "in": "query",
             "required": false,
             "type": "array",
@@ -616,7 +460,7 @@
           },
           {
             "name": "filter.min_intersection",
-            "description": "Min Intersection. The lowest acceptable intersection relative to the\nsize of the connected Dataset. This is calculated by taking the number\nof rows in the from Dataset that are also in the to Dataset when using\nthe 'best' key, and diving by the total number of rows in the from\nDataset.  Values can be between 0 and 1, inclusive. If ommitted, any\nintersection will be allowed.",
+            "description": "Min Intersection\n\nThe lowest acceptable intersection relative to the\nsize of the connected Dataset. This is calculated by taking the number\nof rows in the from Dataset that are also in the to Dataset when using\nthe 'best' key, and diving by the total number of rows in the from\nDataset.  Values can be between 0 and 1, inclusive. If omitted, any\nintersection will be allowed.",
             "in": "query",
             "required": false,
             "type": "number",
@@ -733,7 +577,7 @@
         "parameters": [
           {
             "name": "filter.ownership",
-            "description": "OwnershipFilter. Specifies whether to return all Datasets, or only those that are\nowned or not owned by the requesting user.\n\n - ANY_OWNERSHIP: Returns all Datasets the user has access to.\n - OWNED: Only returns Datasets owned by the user.\n - NOT_OWNED: Only returns Datasets not owned by the user.",
+            "description": "OwnershipFilter\n\nSpecifies whether to return all Datasets, or only those that are\nowned or not owned by the requesting user.\n\n - ANY_OWNERSHIP: Returns all Datasets the user has access to.\n - OWNED: Only returns Datasets owned by the user.\n - NOT_OWNED: Only returns Datasets not owned by the user.",
             "in": "query",
             "required": false,
             "type": "string",
@@ -746,7 +590,7 @@
           },
           {
             "name": "filter.datasets.private_ids",
-            "description": "PrivateIds. The filter to be applied to the private IDs of the returned\nDatasets. Only Datasets with private IDs containing one of the strings\nspecified in this filter will be returned. Case insensitive.",
+            "description": "PrivateIds\n\nThe filter to be applied to the private IDs of the returned\nDatasets. Only Datasets with private IDs containing one of the strings\nspecified in this filter will be returned. Case insensitive.",
             "in": "query",
             "required": false,
             "type": "array",
@@ -757,7 +601,7 @@
           },
           {
             "name": "filter.datasets.public_names",
-            "description": "PublicNames. The filter to be applied to the public names of the\nreturned Datasets. Only Datasets with public names containing one of the\nstring specified in this filter will be returned. Case insensitive.",
+            "description": "PublicNames\n\nThe filter to be applied to the public names of the\nreturned Datasets. Only Datasets with public names containing one of the\nstring specified in this filter will be returned. Case insensitive.",
             "in": "query",
             "required": false,
             "type": "array",
@@ -768,14 +612,14 @@
           },
           {
             "name": "filter.datasets.public_description",
-            "description": "PublicDescription. The filter to be applied to the public descriptions\nof the returned Datasets. Only Datasets with public descriptions\ncontaining the string specified in this filter will be returned. Case\ninsensitive.",
+            "description": "PublicDescription\n\nThe filter to be applied to the public descriptions\nof the returned Datasets. Only Datasets with public descriptions\ncontaining the string specified in this filter will be returned. Case\ninsensitive.",
             "in": "query",
             "required": false,
             "type": "string"
           },
           {
             "name": "filter.datasets.create_time_filter.start_time",
-            "description": "Start. Defines the earliest time the filter is applied from. The filter\nmatches all dates after this point in time, inclusive.",
+            "description": "Start\n\nDefines the earliest time the filter is applied from. The filter\nmatches all dates after this point in time, inclusive.",
             "in": "query",
             "required": false,
             "type": "string",
@@ -783,7 +627,7 @@
           },
           {
             "name": "filter.datasets.create_time_filter.end_time",
-            "description": "End. Defines the time the filter is applied until. The filter matches all\ndates before this point in time, inclusive.",
+            "description": "End\n\nDefines the time the filter is applied until. The filter matches all\ndates before this point in time, inclusive.",
             "in": "query",
             "required": false,
             "type": "string",
@@ -791,7 +635,7 @@
           },
           {
             "name": "filter.datasets.owner_ids",
-            "description": "Owner User IDs. Filters Datasets on the specified owner user IDs.",
+            "description": "Owner User IDs\n\nFilters Datasets on the specified owner user IDs.",
             "in": "query",
             "required": false,
             "type": "array",
@@ -802,7 +646,7 @@
           },
           {
             "name": "filter.datasets.categories.ids",
-            "description": "Ids. The IDs of the Categories that must be present in the Dataset.",
+            "description": "Ids\n\nThe IDs of the Categories that must be present in the Dataset.",
             "in": "query",
             "required": false,
             "type": "array",
@@ -814,7 +658,7 @@
           },
           {
             "name": "filter.datasets.categories.min_fill_rates",
-            "description": "MinFillRates. The minimum fill rates for each category specified in Ids.\nThese are inclusive of the bound. A value must be specified for each\nCategory. If the user doesn't want to filter by fill rate, they can set\nthe minimum fill rate to 0, which will match all fill rate values.\nValues should be in the range 0 to 1, inclusive.",
+            "description": "MinFillRates\n\nThe minimum fill rates for each category specified in Ids.\nThese are inclusive of the bound. A value must be specified for each\nCategory. If the user doesn't want to filter by fill rate, they can set\nthe minimum fill rate to 0, which will match all fill rate values.\nValues should be in the range 0 to 1, inclusive.",
             "in": "query",
             "required": false,
             "type": "array",
@@ -826,7 +670,7 @@
           },
           {
             "name": "filter.datasets.project_ids",
-            "description": "ProjectIds. The filter to be applied to the projects associated with the returned\nDatasets. Only Datasets within projects matching one of the project ids\nspecified in this filter will be returned. Case insensitive.",
+            "description": "ProjectIds\n\nThe filter to be applied to the projects associated with the returned\nDatasets. Only Datasets within projects matching one of the project ids\nspecified in this filter will be returned. Case insensitive.",
             "in": "query",
             "required": false,
             "type": "array",
@@ -967,6 +811,7 @@
         "parameters": [
           {
             "name": "body",
+            "description": "Used to add Demo Datasets with the AddDemoDatasets method.",
             "in": "body",
             "required": true,
             "schema": {
@@ -982,7 +827,7 @@
     "/api/v1/explain": {
       "post": {
         "summary": "ExplainQuery explains how a query will be executed.",
-        "description": "Provides information about the choices made by the platfrom before executing a query.",
+        "description": "Provides information about the choices made by the platform before executing a query.",
         "operationId": "ExplainQuery",
         "responses": {
           "200": {
@@ -1013,6 +858,7 @@
         "parameters": [
           {
             "name": "body",
+            "description": "Used to explain the choices made by the platform before executing a query.",
             "in": "body",
             "required": true,
             "schema": {
@@ -1025,167 +871,20 @@
         ]
       }
     },
-    "/api/v1/identity_queries": {
-      "post": {
-        "summary": "Create an Identity Query",
-        "description": "Queue an Identity Query for execution. Returns immediately with an ID of the Identity Query created. Only available for use with Identity Datasets.",
-        "operationId": "CreateIdentityQuery",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/tyraelIdentityQueryStatus"
-            }
-          },
-          "400": {
-            "description": "Returned when the IdentityQuery could not be parsed.",
-            "schema": {
-              "$ref": "#/definitions/tyraelError"
-            }
-          },
-          "401": {
-            "description": "Returned when the user could not be authorized.",
-            "schema": {
-              "$ref": "#/definitions/tyraelError"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/tyraelCreateIdentityQueryRequest"
-            }
-          }
-        ],
-        "tags": [
-          "Identity Queries"
-        ],
-        "deprecated": true
-      }
-    },
-    "/api/v1/identity_queries/push_connectors": {
-      "post": {
-        "summary": "Get a list of Push Connectors permitted for an Identity Query",
-        "description": "Returns a list of all the Push Connectors that can be used with this Identity Query.",
-        "operationId": "GetPermittedPushConnectors",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/tyraelGetPermittedPushConnectorsResponse"
-            }
-          },
-          "400": {
-            "description": "Returned when the Identity Query could not be parsed.",
-            "schema": {
-              "$ref": "#/definitions/tyraelError"
-            }
-          },
-          "401": {
-            "description": "Returned when the user could not be authorized.",
-            "schema": {
-              "$ref": "#/definitions/tyraelError"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/tyraelGetPermittedPushConnectorsRequest"
-            }
-          }
-        ],
-        "tags": [
-          "Identity Queries"
-        ],
-        "deprecated": true
-      }
-    },
-    "/api/v1/identity_queries/validate": {
-      "post": {
-        "summary": "Validates an Identity Query",
-        "description": "Performs validation of an Identity Query without actually executing it. Good for testing that your queries are correctly formatted.",
-        "operationId": "ValidateIdentityQuery",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/tyraelValidateIdentityQueryResponse"
-            }
-          },
-          "400": {
-            "description": "Returned when the Identity Query could not be parsed.",
-            "schema": {
-              "$ref": "#/definitions/tyraelError"
-            }
-          },
-          "401": {
-            "description": "Returned when the user could not be authorized.",
-            "schema": {
-              "$ref": "#/definitions/tyraelError"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/tyraelValidateIdentityQueryRequest"
-            }
-          }
-        ],
-        "tags": [
-          "Identity Queries"
-        ],
-        "deprecated": true
-      }
-    },
-    "/api/v1/identity_queries/{identity_query_id}": {
+    "/api/v1/health": {
       "get": {
-        "summary": "Get an Identity Query",
-        "description": "Get the current status of the Identity Query.",
-        "operationId": "GetIdentityQuery",
+        "summary": "Checks the health of the service",
+        "description": "Returns the health status of the service.",
+        "operationId": "HealthCheck",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/tyraelIdentityQueryStatus"
+              "$ref": "#/definitions/tyraelHealthCheckResponse"
             }
           },
           "401": {
             "description": "Returned when the user could not be authorized.",
-            "schema": {
-              "$ref": "#/definitions/tyraelError"
-            }
-          },
-          "404": {
-            "description": "Returned when the requested Identity Query could not be found.",
             "schema": {
               "$ref": "#/definitions/tyraelError"
             }
@@ -1197,19 +896,9 @@
             }
           }
         },
-        "parameters": [
-          {
-            "name": "identity_query_id",
-            "description": "Identity Query ID\n\nThe ID of the Identity Query, as returned from the CreateIdentityQuery method.",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
         "tags": [
-          "Identity Queries"
-        ],
-        "deprecated": true
+          "Health"
+        ]
       }
     },
     "/api/v1/permissions": {
@@ -1246,7 +935,7 @@
         "parameters": [
           {
             "name": "filter.direction",
-            "description": "Direction. Specifies whether to return all Permissions, or only those that\nare incoming or outgoing.\n\n - ANY_DIRECTION: Shows all Permissions.\n - INCOMING: Only shows incoming Permissions.\n - OUTGOING: Only shows outgoing Permissions.",
+            "description": "Direction\n\nSpecifies whether to return all Permissions, or only those that\nare incoming or outgoing.\n\n - ANY_DIRECTION: Shows all Permissions.\n - INCOMING: Only shows incoming Permissions.\n - OUTGOING: Only shows outgoing Permissions.",
             "in": "query",
             "required": false,
             "type": "string",
@@ -1259,7 +948,7 @@
           },
           {
             "name": "filter.accepted",
-            "description": "Accepted. Specifies whether to return all Permissions, or only those\nthat have or have not been accepted by the recipient.\n\n - ANY_ACCEPTED: Shows all Permissions.\n - INACTIVE: Only shows inactive Permissions.\n - ACTIVE: Only shows active Permissions.",
+            "description": "Accepted\n\nSpecifies whether to return all Permissions, or only those\nthat have or have not been accepted by the recipient.\n\n - ANY_ACCEPTED: Shows all Permissions.\n - INACTIVE: Only shows inactive Permissions.\n - ACTIVE: Only shows active Permissions.",
             "in": "query",
             "required": false,
             "type": "string",
@@ -1272,7 +961,7 @@
           },
           {
             "name": "filter.owned_datasets.private_ids",
-            "description": "PrivateIds. The filter to be applied to the private IDs of the returned\nDatasets. Only Datasets with private IDs containing one of the strings\nspecified in this filter will be returned. Case insensitive.",
+            "description": "PrivateIds\n\nThe filter to be applied to the private IDs of the returned\nDatasets. Only Datasets with private IDs containing one of the strings\nspecified in this filter will be returned. Case insensitive.",
             "in": "query",
             "required": false,
             "type": "array",
@@ -1283,7 +972,7 @@
           },
           {
             "name": "filter.owned_datasets.public_names",
-            "description": "PublicNames. The filter to be applied to the public names of the\nreturned Datasets. Only Datasets with public names containing one of the\nstring specified in this filter will be returned. Case insensitive.",
+            "description": "PublicNames\n\nThe filter to be applied to the public names of the\nreturned Datasets. Only Datasets with public names containing one of the\nstring specified in this filter will be returned. Case insensitive.",
             "in": "query",
             "required": false,
             "type": "array",
@@ -1294,14 +983,14 @@
           },
           {
             "name": "filter.owned_datasets.public_description",
-            "description": "PublicDescription. The filter to be applied to the public descriptions\nof the returned Datasets. Only Datasets with public descriptions\ncontaining the string specified in this filter will be returned. Case\ninsensitive.",
+            "description": "PublicDescription\n\nThe filter to be applied to the public descriptions\nof the returned Datasets. Only Datasets with public descriptions\ncontaining the string specified in this filter will be returned. Case\ninsensitive.",
             "in": "query",
             "required": false,
             "type": "string"
           },
           {
             "name": "filter.owned_datasets.create_time_filter.start_time",
-            "description": "Start. Defines the earliest time the filter is applied from. The filter\nmatches all dates after this point in time, inclusive.",
+            "description": "Start\n\nDefines the earliest time the filter is applied from. The filter\nmatches all dates after this point in time, inclusive.",
             "in": "query",
             "required": false,
             "type": "string",
@@ -1309,7 +998,7 @@
           },
           {
             "name": "filter.owned_datasets.create_time_filter.end_time",
-            "description": "End. Defines the time the filter is applied until. The filter matches all\ndates before this point in time, inclusive.",
+            "description": "End\n\nDefines the time the filter is applied until. The filter matches all\ndates before this point in time, inclusive.",
             "in": "query",
             "required": false,
             "type": "string",
@@ -1317,7 +1006,7 @@
           },
           {
             "name": "filter.owned_datasets.owner_ids",
-            "description": "Owner User IDs. Filters Datasets on the specified owner user IDs.",
+            "description": "Owner User IDs\n\nFilters Datasets on the specified owner user IDs.",
             "in": "query",
             "required": false,
             "type": "array",
@@ -1328,7 +1017,7 @@
           },
           {
             "name": "filter.owned_datasets.categories.ids",
-            "description": "Ids. The IDs of the Categories that must be present in the Dataset.",
+            "description": "Ids\n\nThe IDs of the Categories that must be present in the Dataset.",
             "in": "query",
             "required": false,
             "type": "array",
@@ -1340,7 +1029,7 @@
           },
           {
             "name": "filter.owned_datasets.categories.min_fill_rates",
-            "description": "MinFillRates. The minimum fill rates for each category specified in Ids.\nThese are inclusive of the bound. A value must be specified for each\nCategory. If the user doesn't want to filter by fill rate, they can set\nthe minimum fill rate to 0, which will match all fill rate values.\nValues should be in the range 0 to 1, inclusive.",
+            "description": "MinFillRates\n\nThe minimum fill rates for each category specified in Ids.\nThese are inclusive of the bound. A value must be specified for each\nCategory. If the user doesn't want to filter by fill rate, they can set\nthe minimum fill rate to 0, which will match all fill rate values.\nValues should be in the range 0 to 1, inclusive.",
             "in": "query",
             "required": false,
             "type": "array",
@@ -1352,7 +1041,7 @@
           },
           {
             "name": "filter.owned_datasets.project_ids",
-            "description": "ProjectIds. The filter to be applied to the projects associated with the returned\nDatasets. Only Datasets within projects matching one of the project ids\nspecified in this filter will be returned. Case insensitive.",
+            "description": "ProjectIds\n\nThe filter to be applied to the projects associated with the returned\nDatasets. Only Datasets within projects matching one of the project ids\nspecified in this filter will be returned. Case insensitive.",
             "in": "query",
             "required": false,
             "type": "array",
@@ -1363,7 +1052,7 @@
           },
           {
             "name": "filter.other_datasets.private_ids",
-            "description": "PrivateIds. The filter to be applied to the private IDs of the returned\nDatasets. Only Datasets with private IDs containing one of the strings\nspecified in this filter will be returned. Case insensitive.",
+            "description": "PrivateIds\n\nThe filter to be applied to the private IDs of the returned\nDatasets. Only Datasets with private IDs containing one of the strings\nspecified in this filter will be returned. Case insensitive.",
             "in": "query",
             "required": false,
             "type": "array",
@@ -1374,7 +1063,7 @@
           },
           {
             "name": "filter.other_datasets.public_names",
-            "description": "PublicNames. The filter to be applied to the public names of the\nreturned Datasets. Only Datasets with public names containing one of the\nstring specified in this filter will be returned. Case insensitive.",
+            "description": "PublicNames\n\nThe filter to be applied to the public names of the\nreturned Datasets. Only Datasets with public names containing one of the\nstring specified in this filter will be returned. Case insensitive.",
             "in": "query",
             "required": false,
             "type": "array",
@@ -1385,14 +1074,14 @@
           },
           {
             "name": "filter.other_datasets.public_description",
-            "description": "PublicDescription. The filter to be applied to the public descriptions\nof the returned Datasets. Only Datasets with public descriptions\ncontaining the string specified in this filter will be returned. Case\ninsensitive.",
+            "description": "PublicDescription\n\nThe filter to be applied to the public descriptions\nof the returned Datasets. Only Datasets with public descriptions\ncontaining the string specified in this filter will be returned. Case\ninsensitive.",
             "in": "query",
             "required": false,
             "type": "string"
           },
           {
             "name": "filter.other_datasets.create_time_filter.start_time",
-            "description": "Start. Defines the earliest time the filter is applied from. The filter\nmatches all dates after this point in time, inclusive.",
+            "description": "Start\n\nDefines the earliest time the filter is applied from. The filter\nmatches all dates after this point in time, inclusive.",
             "in": "query",
             "required": false,
             "type": "string",
@@ -1400,7 +1089,7 @@
           },
           {
             "name": "filter.other_datasets.create_time_filter.end_time",
-            "description": "End. Defines the time the filter is applied until. The filter matches all\ndates before this point in time, inclusive.",
+            "description": "End\n\nDefines the time the filter is applied until. The filter matches all\ndates before this point in time, inclusive.",
             "in": "query",
             "required": false,
             "type": "string",
@@ -1408,7 +1097,7 @@
           },
           {
             "name": "filter.other_datasets.owner_ids",
-            "description": "Owner User IDs. Filters Datasets on the specified owner user IDs.",
+            "description": "Owner User IDs\n\nFilters Datasets on the specified owner user IDs.",
             "in": "query",
             "required": false,
             "type": "array",
@@ -1419,7 +1108,7 @@
           },
           {
             "name": "filter.other_datasets.categories.ids",
-            "description": "Ids. The IDs of the Categories that must be present in the Dataset.",
+            "description": "Ids\n\nThe IDs of the Categories that must be present in the Dataset.",
             "in": "query",
             "required": false,
             "type": "array",
@@ -1431,7 +1120,7 @@
           },
           {
             "name": "filter.other_datasets.categories.min_fill_rates",
-            "description": "MinFillRates. The minimum fill rates for each category specified in Ids.\nThese are inclusive of the bound. A value must be specified for each\nCategory. If the user doesn't want to filter by fill rate, they can set\nthe minimum fill rate to 0, which will match all fill rate values.\nValues should be in the range 0 to 1, inclusive.",
+            "description": "MinFillRates\n\nThe minimum fill rates for each category specified in Ids.\nThese are inclusive of the bound. A value must be specified for each\nCategory. If the user doesn't want to filter by fill rate, they can set\nthe minimum fill rate to 0, which will match all fill rate values.\nValues should be in the range 0 to 1, inclusive.",
             "in": "query",
             "required": false,
             "type": "array",
@@ -1443,7 +1132,7 @@
           },
           {
             "name": "filter.other_datasets.project_ids",
-            "description": "ProjectIds. The filter to be applied to the projects associated with the returned\nDatasets. Only Datasets within projects matching one of the project ids\nspecified in this filter will be returned. Case insensitive.",
+            "description": "ProjectIds\n\nThe filter to be applied to the projects associated with the returned\nDatasets. Only Datasets within projects matching one of the project ids\nspecified in this filter will be returned. Case insensitive.",
             "in": "query",
             "required": false,
             "type": "array",
@@ -1474,169 +1163,6 @@
         ],
         "tags": [
           "Permissions"
-        ]
-      }
-    },
-    "/api/v1/push_connectors": {
-      "get": {
-        "summary": "List all Push Connectors",
-        "description": "List all Push Connectors that the recipient can use to push the results from an Identity Query.",
-        "operationId": "ListPushConnectors",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/tyraelListPushConnectorsResponse"
-            }
-          },
-          "401": {
-            "description": "Returned when the user could not be authorized.",
-            "schema": {
-              "$ref": "#/definitions/tyraelError"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "recipient_id",
-            "description": "RecipientId. The ListPushConnectors method will return all PushConnectors that can be\nused by the user with this ID.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "Push Connectors"
-        ]
-      }
-    },
-    "/api/v1/push_connectors/{base_id}": {
-      "post": {
-        "summary": "Create a Push Connector",
-        "description": "Create a new Push Connector, based on an existing type of Push Connector, that can be used to push the results from an Identity Query.",
-        "operationId": "CreatePushConnector",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/tyraelCreatePushConnectorResponse"
-            }
-          },
-          "401": {
-            "description": "Returned when the user could not be authorized.",
-            "schema": {
-              "$ref": "#/definitions/tyraelError"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "base_id",
-            "description": "BaseId\n\nThe ID of the base Push Connector that the new Push Connector is based on.",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string",
-                  "description": "A descriptive name for the new Push Connector.",
-                  "title": "Name"
-                },
-                "recipient_ids": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "description": "A list of the user IDs of users who can use the new Push Connector. Only\nusers in this list will be allowed to use the new template. If left empty,\nany user will be allowed to use the new template if the owner specifies it\nin a permission shared with them.",
-                  "title": "RecipientIds"
-                },
-                "values": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/definitions/tyraelCreatePushConnectorRequestValue"
-                  },
-                  "description": "Values is a list of modified fields for the new Push Connector. Any fields\npresent in the base Push Connector that aren't in this list will be left\nunchanged in the new Push Connector.",
-                  "title": "Values"
-                }
-              },
-              "description": "Used to create a new Push Connector with the CreatePushConnector method.",
-              "title": "Create Push Connectors Request"
-            }
-          }
-        ],
-        "tags": [
-          "Push Connectors"
-        ]
-      }
-    },
-    "/api/v1/push_connectors/{push_connector_id}": {
-      "get": {
-        "summary": "Get a Form for a Push Connector",
-        "description": "Returns a Form which describes the values that need to be specified in order to configure a Push Connector.",
-        "operationId": "GetPushConnectorForm",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/tyraelGetPushConnectorFormResponse"
-            }
-          },
-          "401": {
-            "description": "Returned when the user could not be authorized.",
-            "schema": {
-              "$ref": "#/definitions/tyraelError"
-            }
-          },
-          "404": {
-            "description": "Returned when the Push Connector could not be found.",
-            "schema": {
-              "$ref": "#/definitions/tyraelError"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "push_connector_id",
-            "description": "PushConnectorId\n\nThe ID of the Push Connector.",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "user_email_domain",
-            "description": "UserEmailDomain is the domain part only of the requesting user's email address.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "Push Connectors"
         ]
       }
     },
@@ -1674,6 +1200,7 @@
         "parameters": [
           {
             "name": "body",
+            "description": "Used to create a Query with the CreateQuery method.",
             "in": "body",
             "required": true,
             "schema": {
@@ -1823,7 +1350,7 @@
           },
           {
             "name": "start_time",
-            "description": "Start Time. The timestamp from which to return usage data. If not specified,\nwill default to the beginning of the current month. If specified, the\nStartTime will be rounded down to the next group boundary as specified\nby Grouping.",
+            "description": "Start Time\n\nThe timestamp from which to return usage data. If not specified,\nwill default to the beginning of the current month. If specified, the\nStartTime will be rounded down to the next group boundary as specified\nby Grouping.",
             "in": "query",
             "required": false,
             "type": "string",
@@ -1831,7 +1358,7 @@
           },
           {
             "name": "end_time",
-            "description": "End Time. The timestamp up to which to return usage data. If not specified,\nwill return all data up to the present moment. The EndTime will be\nrounded up to the next group boundary as specified by Grouping.",
+            "description": "End Time\n\nThe timestamp up to which to return usage data. If not specified,\nwill return all data up to the present moment. The EndTime will be\nrounded up to the next group boundary as specified by Grouping.",
             "in": "query",
             "required": false,
             "type": "string",
@@ -1839,7 +1366,7 @@
           },
           {
             "name": "grouping",
-            "description": "Grouping. Specifies how to roll up a time series into discrete groups.\n\n - TIME_GROUPING_UNSPECIFIED: Default value - should not be used.\n - DAY: All values within a single day will be rolled up into a single\ndatapoint.\n - WEEK: All values within a single week (Monday - Sunday) will be\nrolled up into a single datapoint.\n - MONTH: All values within a single calendar month will be rolled up\ninto a single datapoint.\n - YEAR: All values within a single calendar year will be rolled up into\na single datapoint.",
+            "description": "Grouping\n\nSpecifies how to roll up a time series into discrete groups.\n\n - TIME_GROUPING_UNSPECIFIED: Default value - should not be used.\n - DAY: All values within a single day will be rolled up into a single\ndatapoint.\n - WEEK: All values within a single week (Monday - Sunday) will be\nrolled up into a single datapoint.\n - MONTH: All values within a single calendar month will be rolled up\ninto a single datapoint.\n - YEAR: All values within a single calendar year will be rolled up into\na single datapoint.",
             "in": "query",
             "required": false,
             "type": "string",
@@ -1912,7 +1439,7 @@
           },
           {
             "name": "start_time",
-            "description": "Start Time. The timestamp from which to return usage data. If not specified,\nwill default to the beginning of the current month. If specified, the\nStartTime will be rounded down to the next group boundary as specified\nby Grouping.",
+            "description": "Start Time\n\nThe timestamp from which to return usage data. If not specified,\nwill default to the beginning of the current month. If specified, the\nStartTime will be rounded down to the next group boundary as specified\nby Grouping.",
             "in": "query",
             "required": false,
             "type": "string",
@@ -1920,7 +1447,7 @@
           },
           {
             "name": "end_time",
-            "description": "End Time. The timestamp up to which to return usage data. If not specified,\nwill return all data up to the present moment. The EndDate will be\nrounded up to the next group boundary as specified by Grouping.",
+            "description": "End Time\n\nThe timestamp up to which to return usage data. If not specified,\nwill return all data up to the present moment. The EndDate will be\nrounded up to the next group boundary as specified by Grouping.",
             "in": "query",
             "required": false,
             "type": "string",
@@ -1928,7 +1455,7 @@
           },
           {
             "name": "grouping",
-            "description": "Grouping. Specifies how to roll up a time series into discrete groups.\n\n - TIME_GROUPING_UNSPECIFIED: Default value - should not be used.\n - DAY: All values within a single day will be rolled up into a single\ndatapoint.\n - WEEK: All values within a single week (Monday - Sunday) will be\nrolled up into a single datapoint.\n - MONTH: All values within a single calendar month will be rolled up\ninto a single datapoint.\n - YEAR: All values within a single calendar year will be rolled up into\na single datapoint.",
+            "description": "Grouping\n\nSpecifies how to roll up a time series into discrete groups.\n\n - TIME_GROUPING_UNSPECIFIED: Default value - should not be used.\n - DAY: All values within a single day will be rolled up into a single\ndatapoint.\n - WEEK: All values within a single week (Monday - Sunday) will be\nrolled up into a single datapoint.\n - MONTH: All values within a single calendar month will be rolled up\ninto a single datapoint.\n - YEAR: All values within a single calendar year will be rolled up into\na single datapoint.",
             "in": "query",
             "required": false,
             "type": "string",
@@ -1981,6 +1508,7 @@
         "parameters": [
           {
             "name": "body",
+            "description": "Used to validate a Query before executing it.",
             "in": "body",
             "required": true,
             "schema": {
@@ -1995,6 +1523,15 @@
     }
   },
   "definitions": {
+    "HealthCheckResponseHealthStatus": {
+      "type": "string",
+      "enum": [
+        "UNKNOWN",
+        "AVAILABLE"
+      ],
+      "default": "UNKNOWN",
+      "description": "HealthStatus defines the different status the health of the service can be in."
+    },
     "SortOrder": {
       "type": "string",
       "enum": [
@@ -2007,17 +1544,13 @@
     "protobufAny": {
       "type": "object",
       "properties": {
-        "type_url": {
+        "@type": {
           "type": "string",
-          "description": "A URL/resource name that uniquely identifies the type of the serialized\nprotocol buffer message. This string must contain at least\none \"/\" character. The last segment of the URL's path must represent\nthe fully qualified name of the type (as in\n`path/google.protobuf.Duration`). The name should be in a canonical form\n(e.g., leading \".\" is not accepted).\n\nIn practice, teams usually precompile into the binary all types that they\nexpect it to use in the context of Any. However, for URLs which use the\nscheme `http`, `https`, or no scheme, one can optionally set up a type\nserver that maps type URLs to message definitions as follows:\n\n* If no scheme is provided, `https` is assumed.\n* An HTTP GET on the URL must yield a [google.protobuf.Type][]\n  value in binary format, or produce an error.\n* Applications are allowed to cache lookup results based on the\n  URL, or have them precompiled into a binary to avoid any\n  lookup. Therefore, binary compatibility needs to be preserved\n  on changes to types. (Use versioned type names to manage\n  breaking changes.)\n\nNote: this functionality is not currently available in the official\nprotobuf release, and it is not used for type URLs beginning with\ntype.googleapis.com.\n\nSchemes other than `http`, `https` (or the empty scheme) might be\nused with implementation specific semantics."
-        },
-        "value": {
-          "type": "string",
-          "format": "byte",
-          "description": "Must be a valid serialized protocol buffer of the above specified type."
+          "description": "A URL/resource name that uniquely identifies the type of the serialized\nprotocol buffer message. This string must contain at least\none \"/\" character. The last segment of the URL's path must represent\nthe fully qualified name of the type (as in\n`path/google.protobuf.Duration`). The name should be in a canonical form\n(e.g., leading \".\" is not accepted).\n\nIn practice, teams usually precompile into the binary all types that they\nexpect it to use in the context of Any. However, for URLs which use the\nscheme `http`, `https`, or no scheme, one can optionally set up a type\nserver that maps type URLs to message definitions as follows:\n\n* If no scheme is provided, `https` is assumed.\n* An HTTP GET on the URL must yield a [google.protobuf.Type][]\n  value in binary format, or produce an error.\n* Applications are allowed to cache lookup results based on the\n  URL, or have them precompiled into a binary to avoid any\n  lookup. Therefore, binary compatibility needs to be preserved\n  on changes to types. (Use versioned type names to manage\n  breaking changes.)\n\nNote: this functionality is not currently available in the official\nprotobuf release, and it is not used for type URLs beginning with\ntype.googleapis.com. As of May 2023, there are no widely used type server\nimplementations and no plans to implement one.\n\nSchemes other than `http`, `https` (or the empty scheme) might be\nused with implementation specific semantics."
         }
       },
-      "description": "`Any` contains an arbitrary serialized protocol buffer message along with a\nURL that describes the type of the serialized message.\n\nProtobuf library provides support to pack/unpack Any values in the form\nof utility functions or additional generated methods of the Any type.\n\nExample 1: Pack and unpack a message in C++.\n\n    Foo foo = ...;\n    Any any;\n    any.PackFrom(foo);\n    ...\n    if (any.UnpackTo(\u0026foo)) {\n      ...\n    }\n\nExample 2: Pack and unpack a message in Java.\n\n    Foo foo = ...;\n    Any any = Any.pack(foo);\n    ...\n    if (any.is(Foo.class)) {\n      foo = any.unpack(Foo.class);\n    }\n\n Example 3: Pack and unpack a message in Python.\n\n    foo = Foo(...)\n    any = Any()\n    any.Pack(foo)\n    ...\n    if any.Is(Foo.DESCRIPTOR):\n      any.Unpack(foo)\n      ...\n\n Example 4: Pack and unpack a message in Go\n\n     foo := \u0026pb.Foo{...}\n     any, err := anypb.New(foo)\n     if err != nil {\n       ...\n     }\n     ...\n     foo := \u0026pb.Foo{}\n     if err := any.UnmarshalTo(foo); err != nil {\n       ...\n     }\n\nThe pack methods provided by protobuf library will by default use\n'type.googleapis.com/full.type.name' as the type URL and the unpack\nmethods only use the fully qualified type name after the last '/'\nin the type URL, for example \"foo.bar.com/x/y.z\" will yield type\nname \"y.z\".\n\n\nJSON\n====\nThe JSON representation of an `Any` value uses the regular\nrepresentation of the deserialized, embedded message, with an\nadditional field `@type` which contains the type URL. Example:\n\n    package google.profile;\n    message Person {\n      string first_name = 1;\n      string last_name = 2;\n    }\n\n    {\n      \"@type\": \"type.googleapis.com/google.profile.Person\",\n      \"firstName\": \u003cstring\u003e,\n      \"lastName\": \u003cstring\u003e\n    }\n\nIf the embedded message type is well-known and has a custom JSON\nrepresentation, that representation will be embedded adding a field\n`value` which holds the custom JSON in addition to the `@type`\nfield. Example (for message [google.protobuf.Duration][]):\n\n    {\n      \"@type\": \"type.googleapis.com/google.protobuf.Duration\",\n      \"value\": \"1.212s\"\n    }"
+      "additionalProperties": {},
+      "description": "`Any` contains an arbitrary serialized protocol buffer message along with a\nURL that describes the type of the serialized message.\n\nProtobuf library provides support to pack/unpack Any values in the form\nof utility functions or additional generated methods of the Any type.\n\nExample 1: Pack and unpack a message in C++.\n\n    Foo foo = ...;\n    Any any;\n    any.PackFrom(foo);\n    ...\n    if (any.UnpackTo(\u0026foo)) {\n      ...\n    }\n\nExample 2: Pack and unpack a message in Java.\n\n    Foo foo = ...;\n    Any any = Any.pack(foo);\n    ...\n    if (any.is(Foo.class)) {\n      foo = any.unpack(Foo.class);\n    }\n    // or ...\n    if (any.isSameTypeAs(Foo.getDefaultInstance())) {\n      foo = any.unpack(Foo.getDefaultInstance());\n    }\n\n Example 3: Pack and unpack a message in Python.\n\n    foo = Foo(...)\n    any = Any()\n    any.Pack(foo)\n    ...\n    if any.Is(Foo.DESCRIPTOR):\n      any.Unpack(foo)\n      ...\n\n Example 4: Pack and unpack a message in Go\n\n     foo := \u0026pb.Foo{...}\n     any, err := anypb.New(foo)\n     if err != nil {\n       ...\n     }\n     ...\n     foo := \u0026pb.Foo{}\n     if err := any.UnmarshalTo(foo); err != nil {\n       ...\n     }\n\nThe pack methods provided by protobuf library will by default use\n'type.googleapis.com/full.type.name' as the type URL and the unpack\nmethods only use the fully qualified type name after the last '/'\nin the type URL, for example \"foo.bar.com/x/y.z\" will yield type\nname \"y.z\".\n\nJSON\n====\nThe JSON representation of an `Any` value uses the regular\nrepresentation of the deserialized, embedded message, with an\nadditional field `@type` which contains the type URL. Example:\n\n    package google.profile;\n    message Person {\n      string first_name = 1;\n      string last_name = 2;\n    }\n\n    {\n      \"@type\": \"type.googleapis.com/google.profile.Person\",\n      \"firstName\": \u003cstring\u003e,\n      \"lastName\": \u003cstring\u003e\n    }\n\nIf the embedded message type is well-known and has a custom JSON\nrepresentation, that representation will be embedded adding a field\n`value` which holds the custom JSON in addition to the `@type`\nfield. Example (for message [google.protobuf.Duration][]):\n\n    {\n      \"@type\": \"type.googleapis.com/google.protobuf.Duration\",\n      \"value\": \"1.212s\"\n    }"
     },
     "rpcStatus": {
       "type": "object",
@@ -2025,15 +1558,16 @@
         "code": {
           "type": "integer",
           "format": "int32",
-          "description": "The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code]."
+          "description": "The status code, which should be an enum value of\n[google.rpc.Code][google.rpc.Code]."
         },
         "message": {
           "type": "string",
-          "description": "A developer-facing error message, which should be in English. Any\nuser-facing error message should be localized and sent in the\n[google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client."
+          "description": "A developer-facing error message, which should be in English. Any\nuser-facing error message should be localized and sent in the\n[google.rpc.Status.details][google.rpc.Status.details] field, or localized\nby the client."
         },
         "details": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/protobufAny"
           },
           "description": "A list of messages that carry the error details.  There is a common set of\nmessage types for APIs to use."
@@ -2075,6 +1609,7 @@
         "pushes": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/tyraelPush"
           },
           "description": "The list of pushes for this activation.",
@@ -2084,6 +1619,14 @@
           "type": "string",
           "description": "The raw IQL query string representation of the query.",
           "title": "Query String"
+        },
+        "join_metadata": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/tyraelJoinMetadata"
+          },
+          "description": "JoinMetadata contains details about which Keys were used, between two datasets, when executing the query."
         }
       },
       "description": "Activation describes information about an activation."
@@ -2201,7 +1744,7 @@
         },
         "string_literal_column": {
           "$ref": "#/definitions/tyraelActivationStringLiteral",
-          "description": "The optional string literal column.",
+          "description": "The optional string literal column.\n\nDeprecated: use string_literal_columns.",
           "title": "String Literal Column"
         },
         "original_record_count": {
@@ -2209,6 +1752,15 @@
           "format": "int64",
           "description": "A count of the records before de-duplication",
           "title": "Original Record Count"
+        },
+        "string_literal_columns": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/tyraelActivationStringLiteral"
+          },
+          "description": "The optional list of string literal columns.",
+          "title": "StringLiteralColumns"
         }
       },
       "description": "ActivationSummary describes summary information about an activation."
@@ -2282,6 +1834,7 @@
         "permissions": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/tyraelPermission"
           },
           "description": "Details of the permissions to the Demo Datasets.",
@@ -2349,6 +1902,7 @@
         "representations": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/tyraelRepresentation"
           },
           "description": "An array of all Representations of this Category in this Dataset.",
@@ -2405,6 +1959,7 @@
         "joins": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/tyraelJoinPlan"
           },
           "description": "Joins is a list of expected joins between two datasets.",
@@ -2441,6 +1996,7 @@
         "keys": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/tyraelConnectionKey"
           },
           "description": "Contains the intersection and duplicates for each key\nthat the Datasets have in common.",
@@ -2521,12 +2077,59 @@
         "min_intersection": {
           "type": "number",
           "format": "double",
-          "description": "The lowest acceptable intersection relative to the\nsize of the connected Dataset. This is calculated by taking the number\nof rows in the from Dataset that are also in the to Dataset when using\nthe 'best' key, and diving by the total number of rows in the from\nDataset.  Values can be between 0 and 1, inclusive. If ommitted, any\nintersection will be allowed.",
+          "description": "The lowest acceptable intersection relative to the\nsize of the connected Dataset. This is calculated by taking the number\nof rows in the from Dataset that are also in the to Dataset when using\nthe 'best' key, and diving by the total number of rows in the from\nDataset.  Values can be between 0 and 1, inclusive. If omitted, any\nintersection will be allowed.",
           "title": "Min Intersection"
         }
       },
       "description": "Contains the filter expressions for listing Connections.",
       "title": "Connections Filter"
+    },
+    "tyraelCountMetadata": {
+      "type": "object",
+      "properties": {
+        "dataset": {
+          "$ref": "#/definitions/tyraelCountMetadataDataset",
+          "description": "Dataset is the dataset on which the count took place on."
+        },
+        "keys": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/tyraelCountMetadataKeyMetadata"
+          },
+          "description": "Keys is the list of global schema Key IDs used when counting on this dataset."
+        }
+      },
+      "description": "CountMetadata contains details about which Keys were used to produce the resulting counts on a given dataset."
+    },
+    "tyraelCountMetadataDataset": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "ID is the globally unique dataset identifier."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name is the dataset name."
+        }
+      },
+      "description": "Dataset contains the name and ID of a dataset."
+    },
+    "tyraelCountMetadataKeyMetadata": {
+      "type": "object",
+      "properties": {
+        "key_id": {
+          "type": "string",
+          "format": "int64",
+          "description": "KeyID is the internal id of the Key."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name is the name of the key."
+        }
+      },
+      "description": "KeyMetadata contains metadata about a specific Key used in the count."
     },
     "tyraelCreateActivationQueryRequest": {
       "type": "object",
@@ -2539,6 +2142,7 @@
         "path_overrides": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/tyraelPathOverride"
           },
           "description": "A list of instructions on how to connect two datasets, overriding the automatic choices\nmade by the core engine.",
@@ -2556,75 +2160,42 @@
         },
         "string_literal_column": {
           "$ref": "#/definitions/tyraelActivationStringLiteral",
-          "description": "The optional string literal column.",
+          "description": "The optional string literal column.\n\nDeprecated: use string_literal_columns.",
           "title": "StringLiteralColumn"
+        },
+        "header_overrides": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "An optional map of query output column to header override.",
+          "title": "HeaderOverrides"
+        },
+        "string_literal_columns": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/tyraelActivationStringLiteral"
+          },
+          "description": "The optional list of string literal columns.",
+          "title": "StringLiteralColumns"
+        },
+        "multi_value_delimiter": {
+          "type": "string",
+          "description": "The delimiter for multi-value columns.",
+          "title": "MultiValueDelimiter"
+        },
+        "identities_to_flatten": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "A list of multi-value identity columns to be flattened.",
+          "title": "IdentitiesToFlatten"
         }
       },
       "description": "Used to queue an Activation Query with the CreateActivationQuery endpoint.",
       "title": "Create Activation Query Request"
-    },
-    "tyraelCreateIdentityQueryRequest": {
-      "type": "object",
-      "properties": {
-        "query": {
-          "type": "string",
-          "description": "The Query that should be queued. This takes the\nformat of an InfoSum Identity Query. See\nthe documentation of the InfoSum Identity Query Language\nfor more information.",
-          "title": "Query"
-        },
-        "path_overrides": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/tyraelPathOverride"
-          },
-          "description": "A list of instructions on how to connect two datasets, overriding the automatic choices\nmade by the core engine.",
-          "title": "Path Overrides"
-        },
-        "push_connector_config": {
-          "$ref": "#/definitions/tyraelPushConnectorConfig",
-          "description": "The configuration for the Push Connector that the results should be sent to.",
-          "title": "Push Connector Config"
-        },
-        "campaign_id": {
-          "type": "string",
-          "description": "A name that a user can associate with an identity query.",
-          "title": "CampaignId"
-        }
-      },
-      "description": "Used to create an Identity Query with the CreateIdentityQuery method.",
-      "title": "Create Identity Query Request"
-    },
-    "tyraelCreatePushConnectorRequestValue": {
-      "type": "object",
-      "properties": {
-        "field_id": {
-          "type": "string",
-          "description": "Idenitifies which field from the base Push Connector is being referred\nto with this Value.",
-          "title": "FieldId"
-        },
-        "value": {
-          "type": "string",
-          "description": "The default value for this field in the new Push Connector.",
-          "title": "Value"
-        },
-        "user_editable": {
-          "type": "boolean",
-          "description": "If true, Value can be considered a default value, and anyone using the\nPush Connector will be able to change the value for that field.\nIf false, users will not be able to change or see this value, and\nwhatever Value is set to will be used when pushing Identity Results.",
-          "title": "UserEditable"
-        }
-      },
-      "description": "Value defines the value of a field in a Push Connector."
-    },
-    "tyraelCreatePushConnectorResponse": {
-      "type": "object",
-      "properties": {
-        "push_connector": {
-          "$ref": "#/definitions/tyraelPushConnector",
-          "description": "The ID and name of the new Push Connector.",
-          "title": "PushConnector"
-        }
-      },
-      "description": "The ID and name of the new Push Connector.",
-      "title": "Create Push Connector Response"
     },
     "tyraelCreateQueryRequest": {
       "type": "object",
@@ -2637,6 +2208,7 @@
         "path_overrides": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/tyraelPathOverride"
           },
           "description": "A list of instructions on how to connect two datasets, overriding the automatic choices\nmade by the core engine.",
@@ -2646,6 +2218,15 @@
           "type": "boolean",
           "description": "A flag that can be used to execute the query against a smaller sample\nof the data. Can be used to reduce the execution time for a less accurate\nresult.",
           "title": "Sample"
+        },
+        "count_overrides": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/tyraelDatasetWithKeys"
+          },
+          "description": "A list of dataset IDs with an ordered list of keys to be used when calculating a count on that dataset.",
+          "title": "Count Overrides"
         }
       },
       "description": "Used to create a Query with the CreateQuery method.",
@@ -2710,6 +2291,7 @@
         "shares": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/tyraelCreditShare"
           },
           "description": "A breakdown of how many credits have been allocated and\nused for each Permission. For non-owners, only the share\nrelated to their Permission is shown.",
@@ -2727,10 +2309,14 @@
         "INTEGERS",
         "INTEGER_RANGES",
         "STRING_SET",
-        "INTEGER_SET"
+        "INTEGER_SET",
+        "FLOAT",
+        "FLOAT_SET",
+        "TIMESTAMP",
+        "TIMESTAMP_SET"
       ],
       "default": "STRINGS",
-      "description": "DataType defines the different types of data a Representation can take.\n\n - STRINGS: String values. Representations of this type are suitable for use with\na BARCHART aggregation.\n - BOOLEANS: Either True or False. Representations of this type are suitable for use with\na BARCHART aggregation.\n - INTEGERS: Signed integer values. Representations of this type are suitable for use with\na HISTOGRAM aggregation.\n - INTEGER_RANGES: Ranges of signed integer values, expressed as tuples of [low, high).\nThe lower value is inclusive and the higher value is exclusive.\nRepresentations of this type are suitable for use with a HISTOGRAM aggregation.\n - STRING_SET: String set represents unique list of string.\n - INTEGER_SET: Integer set represents unique list of integers."
+      "description": "DataType defines the different types of data a Representation can take.\n\n - STRINGS: String values. Representations of this type are suitable for use with\na BARCHART aggregation.\n - BOOLEANS: Either True or False. Representations of this type are suitable for use with\na BARCHART aggregation.\n - INTEGERS: Signed integer values. Representations of this type are suitable for use with\na HISTOGRAM aggregation.\n - INTEGER_RANGES: Ranges of signed integer values, expressed as tuples of [low, high).\nThe lower value is inclusive and the higher value is exclusive.\nRepresentations of this type are suitable for use with a HISTOGRAM aggregation.\n - STRING_SET: String set represents unique list of string.\n - INTEGER_SET: Integer set represents unique list of integers.\n - FLOAT: Float represents a single value float.\n - FLOAT_SET: FloatSet is an array of floats.\n - TIMESTAMP: Timestamp represents a single value timestamp.\n - TIMESTAMP_SET: TimestampSet is an array of timestamps."
     },
     "tyraelDataset": {
       "type": "object",
@@ -2845,6 +2431,7 @@
         "keys": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/tyraelKey"
           },
           "description": "Describes all key columns.",
@@ -2853,6 +2440,7 @@
         "categories": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/tyraelCategory"
           },
           "description": "Describes all categories.",
@@ -2861,6 +2449,7 @@
         "identities": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/tyraelIdentity"
           },
           "description": "Describes all Identities.",
@@ -2976,6 +2565,7 @@
         "categories": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/tyraelCategory"
           },
           "description": "The Categories that belong to this Dataset.",
@@ -2996,6 +2586,7 @@
         "keys": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/tyraelKey"
           },
           "description": "The Keys in this Dataset.",
@@ -3070,6 +2661,7 @@
         "permissions": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/tyraelDatasetPermissionUsage"
           },
           "description": "Contains Usage information for all Permissions on this\nDataset.",
@@ -3188,6 +2780,7 @@
         "dimensions": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/tyraelDimension"
           },
           "description": "Child dimensions of this Dimension.",
@@ -3268,6 +2861,7 @@
         "path_overrides": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/tyraelPathOverride"
           },
           "description": "A list of instructions on how to connect two datasets, overriding the automatic choices\nmade by the core engine.",
@@ -3288,6 +2882,7 @@
         "hop_table": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/tyraelHop"
           },
           "description": "HopTable is the list of all joins that have taken place between datasets.",
@@ -3296,51 +2891,6 @@
       },
       "description": "An explanation of the choices made by the platform before executing the query.",
       "title": "Explain Query Response"
-    },
-    "tyraelFormField": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "The unique identifier for the field.",
-          "title": "Id"
-        },
-        "label": {
-          "type": "string",
-          "description": "A human readable label for the field.",
-          "title": "Label"
-        },
-        "options": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "A suggestion for possible values for this field. Not all fields will\nspecify Options.",
-          "title": "Options"
-        }
-      },
-      "description": "Fields specify the values that must be specified to configurea Push Connector.",
-      "title": "Form Field"
-    },
-    "tyraelFormPanel": {
-      "type": "object",
-      "properties": {
-        "label": {
-          "type": "string",
-          "description": "A human readable label for the panel.",
-          "title": "Label"
-        },
-        "fields": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/tyraelFormField"
-          },
-          "description": "A list of fields for the panel.",
-          "title": "Fields"
-        }
-      },
-      "description": "Panels make up the Form for a Push Connector.",
-      "title": "Form Panel"
     },
     "tyraelGetActivationResponse": {
       "type": "object",
@@ -3389,6 +2939,7 @@
         "timeseries": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/tyraelDatasetUsageTimeValue"
           },
           "description": "An array of datapoints that describe the Usage for a Dataset over time.",
@@ -3404,6 +2955,7 @@
         "timeseries": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/tyraelPermissionUsageTimeValue"
           },
           "description": "An array of datapoints that describe the Usage for a Permission over time.",
@@ -3413,44 +2965,16 @@
       "description": "The response from the GetPermissionUsage method.",
       "title": "Get Permissions Usage Response"
     },
-    "tyraelGetPermittedPushConnectorsRequest": {
+    "tyraelHealthCheckResponse": {
       "type": "object",
       "properties": {
-        "private_id": {
-          "type": "string",
-          "description": "The Private ID of the Dataset to retrieve, as assigned by the user.",
-          "title": "Private Dataset ID"
+        "status": {
+          "$ref": "#/definitions/HealthCheckResponseHealthStatus",
+          "description": "Is the current health of the service.",
+          "title": "Status"
         }
       },
-      "description": "The dataset to return a list of permitted Push Connectors for.",
-      "title": "Get Permitted Push Connectors Request"
-    },
-    "tyraelGetPermittedPushConnectorsResponse": {
-      "type": "object",
-      "properties": {
-        "push_connectors": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/tyraelPushConnector"
-          },
-          "description": "A list of the permitted Push Connectors.",
-          "title": "PushConnectors"
-        }
-      },
-      "description": "The list of permitted Push Connectors.",
-      "title": "Get Permitted Push Connectors Response"
-    },
-    "tyraelGetPushConnectorFormResponse": {
-      "type": "object",
-      "properties": {
-        "form": {
-          "$ref": "#/definitions/tyraelPushConnectorForm",
-          "description": "Contains the Push Connector fields that need to be populated.",
-          "title": "Form"
-        }
-      },
-      "description": "The Form for a Push Connector.",
-      "title": "Get Push Connector Form Response"
+      "description": "HealthCheckResponse is the output for the HealthCheck method."
     },
     "tyraelHop": {
       "type": "object",
@@ -3552,41 +3076,6 @@
       "description": "A list of statistics that provide an indication of the quality of the Identity query.",
       "title": "Identity Quality Measures"
     },
-    "tyraelIdentityQueryStatus": {
-      "type": "object",
-      "properties": {
-        "identity_query_id": {
-          "type": "string",
-          "description": "The ID of the Identity Query.",
-          "title": "Identity Query ID"
-        },
-        "query_completed": {
-          "type": "boolean",
-          "description": "Whether the Query has finished or not.",
-          "title": "Query Completed"
-        },
-        "query_error": {
-          "$ref": "#/definitions/rpcStatus",
-          "description": "Contains the error if the Query failed.",
-          "title": "Query Error"
-        },
-        "query_response": {
-          "$ref": "#/definitions/tyraelIdentityResponse",
-          "description": "Contains the response if the Query succeeded."
-        },
-        "push_completed": {
-          "type": "boolean",
-          "description": "Indicates whether or not the Push is still in progress.",
-          "title": "Push Completed"
-        },
-        "push_error": {
-          "$ref": "#/definitions/rpcStatus",
-          "description": "Push Error\nContains any errors that were encountered whilst executing the push."
-        }
-      },
-      "description": "Status of a started Identity Query.",
-      "title": "Indentity Query Status"
-    },
     "tyraelIdentityResponse": {
       "type": "object",
       "properties": {
@@ -3649,6 +3138,57 @@
       "description": "A list of statistics that provide an indication of the quality of the Insight query.",
       "title": "Insight Quality Measures"
     },
+    "tyraelJoinMetadata": {
+      "type": "object",
+      "properties": {
+        "from_dataset": {
+          "$ref": "#/definitions/tyraelJoinMetadataDataset",
+          "description": "FormDataset is the dataset the join started from."
+        },
+        "to_dataset": {
+          "$ref": "#/definitions/tyraelJoinMetadataDataset",
+          "description": "ToDataset is the destination dataset of the join."
+        },
+        "keys": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/tyraelJoinMetadataKeyMetadata"
+          },
+          "description": "Keys contains the keys that were used in the join."
+        }
+      },
+      "description": "JoinMetadata contains details about which Keys were used, between two datasets, when executing the query."
+    },
+    "tyraelJoinMetadataDataset": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "ID is the globally unique dataset identifier."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name is the dataset name."
+        }
+      },
+      "description": "Dataset contains the name and ID of a dataset."
+    },
+    "tyraelJoinMetadataKeyMetadata": {
+      "type": "object",
+      "properties": {
+        "key_id": {
+          "type": "string",
+          "format": "int64",
+          "description": "KeyID is the internal ID of the Key."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name is the name of the key."
+        }
+      },
+      "description": "KeyMetadata contains metadata about a specific Key used in the join."
+    },
     "tyraelJoinPlan": {
       "type": "object",
       "properties": {
@@ -3698,7 +3238,7 @@
         "null_fraction": {
           "type": "number",
           "format": "double",
-          "description": "The fraction of the values in this Key that are `null`,\nin the range (0, 1], representating a percentage value between 0% and 100%.",
+          "description": "The fraction of the values in this Key that are `null`,\nin the range (0, 1], representing a percentage value between 0% and 100%.",
           "title": "NullFraction"
         },
         "num_distinct": {
@@ -3767,6 +3307,7 @@
         "keys": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/tyraelKeyJoinStats"
           },
           "description": "The list of keys that could participate in the join.",
@@ -3781,27 +3322,13 @@
       "description": "Key Plan is a description of the keys that have participated in the join and any remaining keys that did not participate in the join.",
       "title": "Key Plan"
     },
-    "tyraelListActivationPushConnectorsResponse": {
-      "type": "object",
-      "properties": {
-        "push_connectors": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/tyraelPushConnector"
-          },
-          "description": "Is a list of permitted push connector IDs for the specified activation query,\nand their associated display names.",
-          "title": "PushConnectors"
-        }
-      },
-      "description": "ListActivationPushConnectorsResponse is the output of the ListActivationPushConnectors endpoint.",
-      "title": "List Push Connectors Response is the output of the ListActivationPushConnectors endpoint"
-    },
     "tyraelListActivationsResponse": {
       "type": "object",
       "properties": {
         "activations": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/tyraelActivationSummary"
           },
           "description": "The list of activations which met the activation filter requirements.",
@@ -3811,35 +3338,22 @@
       "description": "ListActivationsResponse is the response from the ListActivations endpoint.",
       "title": "List Activation Queries Response"
     },
-    "tyraelListBasePushConnectorsResponse": {
-      "type": "object",
-      "properties": {
-        "push_connectors": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/tyraelPushConnector"
-          },
-          "description": "A list of base Push Connector IDs and their associated names.",
-          "title": "PushConnectors"
-        }
-      },
-      "description": "The list of Push Connectors that can be used to create new Push Connectors.",
-      "title": "List Base Push Connectors Response"
-    },
     "tyraelListConnectionsResponse": {
       "type": "object",
       "properties": {
         "connections": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/tyraelConnection"
           },
           "description": "A list of all Connections between the users Datasets and\nthose the user has been granted access to.",
           "title": "Connections"
         },
-        "Datasets": {
+        "datasets": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/tyraelDataset"
           },
           "description": "A is a list of Datasets included.",
@@ -3857,7 +3371,7 @@
           "description": "Specifies whether to return all Datasets, or only those that are\nowned or not owned by the requesting user.",
           "title": "OwnershipFilter"
         },
-        "Datasets": {
+        "datasets": {
           "$ref": "#/definitions/tyraelDatasetFilter",
           "description": "Contains parameters for filtering Datasets based on user visible properties.",
           "title": "Datasets"
@@ -3869,9 +3383,10 @@
     "tyraelListDatasetsResponse": {
       "type": "object",
       "properties": {
-        "Datasets": {
+        "datasets": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/tyraelDataset"
           },
           "description": "The Datasets returned by the ListDatasets method.",
@@ -3914,6 +3429,7 @@
         "permissions": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/tyraelPermission"
           },
           "description": "Contains the requested Permissions.",
@@ -3922,21 +3438,6 @@
       },
       "description": "The response from the ListPermissions method.",
       "title": "List Permissions Response"
-    },
-    "tyraelListPushConnectorsResponse": {
-      "type": "object",
-      "properties": {
-        "push_connectors": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/tyraelPushConnector"
-          },
-          "description": "A list of Push Connector IDs and their associated names.",
-          "title": "PushConnectors"
-        }
-      },
-      "description": "The list of Push Connectors that the recipient can use.",
-      "title": "List Push Connectors Response"
     },
     "tyraelOccurrence": {
       "type": "object",
@@ -3949,7 +3450,7 @@
         "frequency": {
           "type": "number",
           "format": "double",
-          "description": "The frequency with which this Value appears in the Representation,\nin the range (0, 1], representating a percentage value between 0% and 100%.",
+          "description": "The frequency with which this Value appears in the Representation,\nin the range (0, 1], representing a percentage value between 0% and 100%.",
           "title": "Frequency"
         }
       },
@@ -4015,7 +3516,7 @@
         },
         "accepted": {
           "type": "boolean",
-          "description": "Indicates whether the Permission has been accpeted by the Recipient.",
+          "description": "Indicates whether the Permission has been accepted by the Recipient.",
           "title": "Accepted"
         },
         "credits": {
@@ -4148,70 +3649,6 @@
       },
       "description": "Push contains details about a specific push of an activation."
     },
-    "tyraelPushActivationResultResponse": {
-      "type": "object",
-      "properties": {
-        "push_id": {
-          "type": "string",
-          "description": "Is the unique identifier for the push request.",
-          "title": "Push ID"
-        }
-      },
-      "description": "PushActivationResultResponse is the output of the PushActivationResult endpoint.",
-      "title": "Push activation query results request"
-    },
-    "tyraelPushConnector": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "The ID of the push connector.",
-          "title": "Id"
-        },
-        "name": {
-          "type": "string",
-          "description": "The display name of the push connector.",
-          "title": "Name"
-        }
-      },
-      "description": "The Name and ID for a Push Connector.",
-      "title": "Push Connector"
-    },
-    "tyraelPushConnectorConfig": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "The ID of the Push Connector.",
-          "title": "Id"
-        },
-        "config": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          },
-          "description": "A map of Configuration Form field IDs to their values.",
-          "title": "Config"
-        }
-      },
-      "description": "The configuration for a Push Connector.",
-      "title": "Push Connector Config"
-    },
-    "tyraelPushConnectorForm": {
-      "type": "object",
-      "properties": {
-        "panels": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/tyraelFormPanel"
-          },
-          "description": "A list of panels. Panels contain fields which should be set to configure\nthe Push Connector.",
-          "title": "Panels"
-        }
-      },
-      "description": "The Form for a Push Connector.",
-      "title": "Push Connector Form"
-    },
     "tyraelPushStatus": {
       "type": "string",
       "enum": [
@@ -4267,6 +3704,7 @@
         "dimensions": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/tyraelDimension"
           },
           "description": "A hierarchical result of an InfoSum Query Language SELECT statement.",
@@ -4282,6 +3720,24 @@
           "$ref": "#/definitions/tyraelInsightQualityMeasures",
           "description": "A number of statistics that provide an indication of the quality of the query.",
           "title": "Quality Measures"
+        },
+        "join_metadata": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/tyraelJoinMetadata"
+          },
+          "description": "JoinMetadata contains details about which Keys were used, between two datasets, when executing the query.",
+          "title": "Join Metadata"
+        },
+        "count_metadata": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/tyraelCountMetadata"
+          },
+          "description": "CountMetadata contains details about which Keys were used to produce the resulting counts on a given dataset.",
+          "title": "Count Metadata"
         }
       },
       "description": "The Result of a Query.",
@@ -4296,9 +3752,10 @@
           "description": "Threshold is the redaction threshold that will be applied to all bins in the results.",
           "title": "Threshold"
         },
-        "Datasets": {
+        "datasets": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/tyraelDatasetThreshold"
           },
           "description": "Datasets is a list of redaction thresholds for each dataset involved in the query.",
@@ -4329,7 +3786,7 @@
         "precision": {
           "type": "number",
           "format": "double",
-          "description": "How accurate this Representation is to the source data. It is\nin the range (0, 1], representating a percentage value between 0% and 100%.\nThings that affect the Precision of a Representation include any data transformations\nthat had to be performed to match the source data into this Representation.",
+          "description": "How accurate this Representation is to the source data. It is\nin the range (0, 1], representing a percentage value between 0% and 100%.\nThings that affect the Precision of a Representation include any data transformations\nthat had to be performed to match the source data into this Representation.",
           "title": "Precision"
         },
         "statistics": {
@@ -4383,6 +3840,7 @@
         "representations": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/tyraelRepresentationStats"
           },
           "description": "RepresentationStats is the list of all possible representations for the category.",
@@ -4446,6 +3904,7 @@
         "dimensions": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/tyraelDimensionPlan"
           },
           "description": "Dimensions describes the expected Dimensions in the results",
@@ -4479,9 +3938,10 @@
           "description": "Threshold is the rounding threshold that will be applied to all bins in the results.",
           "title": "Threshold"
         },
-        "Datasets": {
+        "datasets": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/tyraelDatasetThreshold"
           },
           "description": "Datasets is a list of rounding thresholds for each dataset involved in the query.",
@@ -4533,7 +3993,7 @@
         "null_fraction": {
           "type": "number",
           "format": "double",
-          "description": "The fraction of the values in this Representation that are `null`,\nin the range (0, 1], representating a percentage value between 0% and 100%.",
+          "description": "The fraction of the values in this Representation that are `null`,\nin the range (0, 1], representing a percentage value between 0% and 100%.",
           "title": "NullFraction"
         },
         "num_distinct": {
@@ -4545,6 +4005,7 @@
         "most_common": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/tyraelOccurrence"
           },
           "description": "An array of the most common elements in the Representation, if there\nare any that occur with greater frequency than others.",
@@ -4613,6 +4074,7 @@
         "path_overrides": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/tyraelPathOverride"
           },
           "description": "A list of instructions on how to connect two datasets,\noverriding the automatic choices made by the core engine.",
@@ -4620,8 +4082,24 @@
         },
         "string_literal_column": {
           "$ref": "#/definitions/tyraelActivationStringLiteral",
-          "description": "The optional string literal output column for the query",
+          "description": "The optional string literal output column for the query\n\nDeprecated: use string_literal_columns.",
           "title": "String Literal Column"
+        },
+        "header_overrides": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "HeaderOverrides is an optional map of query output column to header override."
+        },
+        "string_literal_columns": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/tyraelActivationStringLiteral"
+          },
+          "description": "The list of optional string literal output columns for the query",
+          "title": "String Literal Columns"
         }
       },
       "description": "ValidateActivationQueryRequest is the output of the ValidateActivationQuery endpoint.",
@@ -4639,43 +4117,6 @@
       "description": "ValidateActivationQueryResponse is the output of the ValidateActivationQuery method.",
       "title": "Validate activation query response"
     },
-    "tyraelValidateIdentityQueryRequest": {
-      "type": "object",
-      "properties": {
-        "query": {
-          "type": "string",
-          "description": "The Query that should be queued. This takes the\nformat of an InfoSum Identity Query. See\nthe documentation of the InfoSum Identity Query Language\nfor more information.",
-          "title": "Query"
-        },
-        "path_overrides": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/tyraelPathOverride"
-          },
-          "description": "A list of instructions on how to connect two datasets, overriding the automatic choices\nmade by the core engine.",
-          "title": "Path Overrides"
-        },
-        "push_connector_config": {
-          "$ref": "#/definitions/tyraelPushConnectorConfig",
-          "description": "The configuration for the Push Connector that the results should be sent to.",
-          "title": "Push Connector Config"
-        }
-      },
-      "description": "Used to validate an Identity Query before executing it.",
-      "title": "Validate Identity Request"
-    },
-    "tyraelValidateIdentityQueryResponse": {
-      "type": "object",
-      "properties": {
-        "success": {
-          "type": "boolean",
-          "description": "True if the Identity Query was successully validated.",
-          "title": "Success"
-        }
-      },
-      "description": "Whether the Identity Query was successfully validated.",
-      "title": "Validate Identity Query Response"
-    },
     "tyraelValidateQueryRequest": {
       "type": "object",
       "properties": {
@@ -4687,6 +4128,7 @@
         "path_overrides": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/tyraelPathOverride"
           },
           "description": "A list of instructions on how to connect two datasets, overriding the automatic choices\nmade by the core engine.",
@@ -4709,6 +4151,19 @@
       "title": "Validate Query Response"
     }
   },
+  "securityDefinitions": {
+    "API Keys": {
+      "type": "apiKey",
+      "description": "Your V1 Public and Private key separated by / e.g. \u003cpublic_key\u003e/\u003cprivate_key\u003e. Or a V2 API key e.g. \u003cv2_api_key\u003e",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "security": [
+    {
+      "API Keys": []
+    }
+  ],
   "externalDocs": {
     "description": "Official documentation",
     "url": "https://support.infosum.com/"
