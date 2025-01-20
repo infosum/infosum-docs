@@ -1,6 +1,31 @@
 consumes:
   - application/json
 definitions:
+  Accounts.Company:
+    properties:
+      display_name:
+        description: The display name of the company.
+        type: string
+      id:
+        description: The ID  of the company.
+        type: string
+    type: object
+  Accounts.GetAccountInformationResponse:
+    properties:
+      company:
+        allOf:
+          - $ref: '#/definitions/Accounts.Company'
+        description: The company details that was requested.
+      display_name:
+        description: The user's display name.
+        type: string
+      id:
+        description: The user's ID.
+        type: string
+    title: >-
+      GetAccountInformationResponse is the response for the
+      GetAccountInformation rpc
+    type: object
   Accounts.GetCompanyDisplayNameResponse:
     description: GetDisplayNameResponse is the response for the GetCompanyDisplayName rpc.
     properties:
@@ -5480,20 +5505,6 @@ definitions:
           - $ref: '#/definitions/Recordsets.Recordset'
         description: The Recordset overview, presenting an overview of the Recordset data.
     type: object
-  Recordsets.ValidateResponse:
-    description: ValidateResponse returns recordset and if it's valid.
-    properties:
-      reason:
-        description: Optional reason detailing why the recordset is invalid.
-        type: string
-      recordset:
-        allOf:
-          - $ref: '#/definitions/Recordsets.Recordset'
-        description: The details of the requested recordset.
-      valid:
-        description: Is the recordset valid.
-        type: boolean
-    type: object
   Recordsets.ValueType:
     default: VALUE_TYPE_INVALID
     description: ValueType is the type of data stored in each column.
@@ -5935,6 +5946,34 @@ paths:
           schema:
             $ref: '#/definitions/Error'
       summary: Get a company's display name.
+      tags:
+        - Accounts
+  /api/v2/accounts/me:
+    get:
+      description: Get a user's account details .
+      operationId: GetAccountInformation
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/Accounts.GetAccountInformationResponse'
+        '401':
+          description: Returned when the user could not be authorized.
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: Returned when the user does not have the required permission.
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/Error'
+      summary: Get a user's account details.
       tags:
         - Accounts
   /api/v2/accounts/users/display_name:
@@ -11977,55 +12016,6 @@ paths:
           schema:
             $ref: '#/definitions/Error'
       summary: List recordset columns
-      tags:
-        - Recordsets
-  /api/v2/recordsets/{cloud_vault_id}/{recordset_id}/validate:
-    get:
-      description: Validate will validate that a recordset hasn't been tampered with
-      operationId: validateRecordset
-      parameters:
-        - description: >-
-            The globally unique identifier for the Cloud Vault where the
-            recordset is.
-          in: path
-          name: cloud_vault_id
-          required: true
-          type: string
-        - description: The ID of the recordset.
-          in: path
-          name: recordset_id
-          required: true
-          type: string
-      responses:
-        '200':
-          description: A successful response.
-          schema:
-            $ref: '#/definitions/Recordsets.ValidateResponse'
-        '400':
-          description: Returned when the request was not valid.
-          schema:
-            $ref: '#/definitions/Error'
-        '401':
-          description: Returned when the user could not be authorized.
-          schema:
-            $ref: '#/definitions/Error'
-        '403':
-          description: Returned when the user does not have the required permission.
-          schema:
-            $ref: '#/definitions/Error'
-        '404':
-          description: Returned when the recordset could not be found.
-          schema:
-            $ref: '#/definitions/Error'
-        '500':
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/Error'
-        default:
-          description: An unexpected error response.
-          schema:
-            $ref: '#/definitions/Error'
-      summary: Validate that a specific recordset is valid
       tags:
         - Recordsets
   /api/v2/reports/insight:
