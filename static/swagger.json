@@ -12285,6 +12285,13 @@
 						"name": "import_id",
 						"required": true,
 						"type": "string"
+					},
+					{
+						"description": "An optional destination folder, if provided all imported files will be copied in this folder. This will override the Importer target folder.",
+						"in": "query",
+						"name": "target_folder",
+						"required": false,
+						"type": "string"
 					}
 				],
 				"responses": {
