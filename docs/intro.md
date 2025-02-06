@@ -12,9 +12,9 @@ Before you can get an API Key to use with the platform you will need to be regis
 
 ## API Versions
 
-InfoSum currently supports two API versions in parallel. Please note that the APIs use different authentication tokens and the instructions for obtaining tokens are on each API page respectively. 
+InfoSum currently supports two API versions in parallel. They both share the same authentication mechanism and v2 tokens are valid for both APIs.
 
-The v1 API was created specifically for executing queries and activating the results using datasets which have already been created in the platform via the UI and the [relevant permissions](https://support.infosum.com/hc/en-us/articles/360019049798-Permissions-overview) granted between all collaborators. Visit the [InfoSum V1 API Guide](./v1_api/) to learn how to generate V1 API tokens and get started!
+The v1 API was created specifically for executing queries and activating the results using datasets which have already been created in the platform via the UI and the [relevant permissions](https://support.infosum.com/hc/en-us/articles/360019049798-Permissions-overview) granted between all collaborators.
 
-The V2 API is in active development and covers all new features. The V2 API will eventually cover all aspects of platform usage. If you are unsure about if you have access to the features covered in the v2 API then please contact to your InfoSum customer success representative. Visit the [InfoSum V2 API Guide](./v2_api/) to learn how to generate V2 API tokens and get started!
+The v2 API is the next generation of APIs from InfoSum and is in active development covering all new features. The v2 API will eventually cover all aspects of platform usage. If you are unsure about if you have access to the features covered in the v2 API then please contact to your InfoSum customer success representative.
 
