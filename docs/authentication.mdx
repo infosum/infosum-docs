@@ -1,0 +1,34 @@
+---
+sidebar_position: 2
+---
+
+import NoAPIKeysImageURL from '@site/static/img/authentication/no-api-keys-v2.png';
+import SetExpiryImageURL from '@site/static/img/authentication/set-api-key-expiry-v2.png';
+import GrantedAPIKeysImageURL from '@site/static/img/authentication/granted-public-private-api-keys-v2.png';
+import Admonition from '@theme/Admonition';
+
+
+# Authentication
+
+In order to get started building with the InfoSum APIs you first need to generate an API token via the Platform UI.
+
+<Admonition type="note">
+You must provide your API token in the authorization header for all API requests to `/api/` paths.
+</Admonition>
+
+Head to the [API Access Keys](https://accounts.infosum.com/access/api-keys-v2) page in your [InfoSum Account](https://accounts.infosum.com/). It appears in the sidebar navigation under **Access &rarr; API Keys V2**.
+
+<Admonition type="note">
+V1 Access Keys are deprecated. Please use v2 Access keys for both `/api/v1` and `/api/v2` paths.
+</Admonition>
+
+If you have previously generated keys you will see them listed here. If not you will see the following screen:
+
+<img src={NoAPIKeysImageURL}/><p/>
+Select **NEW API KEY** and you will be given a date selector for the expiry date for the new API token:
+
+<img src={SetExpiryImageURL} className="center_half_image" /><p/>
+On submitting the expiry time you will be given your API Key Token:
+
+<img src={GrantedAPIKeysImageURL} className="center_half_image"/><p/>
+Please store your API Key Token safely for later use. After you close this pop-up, you will not be able to view the key token again.
