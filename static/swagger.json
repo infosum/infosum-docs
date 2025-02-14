@@ -5228,6 +5228,42 @@
 			],
 			"type": "string"
 		},
+		"Queries.CreatePairQueryRequest": {
+			"description": "CreatePairQueryRequest is the input to the CreatePairQuery method.",
+			"properties": {
+				"collaborator_dataset_id": {
+					"description": "CollaboratorDatasetId is the ID of the dataset you are collaborating with.",
+					"type": "string"
+				},
+				"column_identifier": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Queries.PairColumnIdentifier"
+						}
+					],
+					"description": "ColumnIdentifier contains details of the column to be used as the identifier."
+				},
+				"dataset_id": {
+					"description": "DatasetId is the ID of the dataset you want the query to be run against.",
+					"type": "string"
+				},
+				"query_name": {
+					"description": "QueryName is the name of the query.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Queries.CreatePairQueryResponse": {
+			"description": "CreatePairQueryResponse is the output of the CreatePairQuery method.",
+			"properties": {
+				"query_id": {
+					"description": "QueryId is the ID of the PAIR activation query.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
 		"Queries.CreatePrivatePathRequest": {
 			"description": "CreatePrivatePathRequest is the input to the CreatePrivatePath method.",
 			"properties": {
@@ -5264,6 +5300,33 @@
 				}
 			},
 			"type": "object"
+		},
+		"Queries.PairColumnIdentifier": {
+			"description": "PairColumnIdentifier defines what column and data type should be used as the identifier in a PAIR query.",
+			"properties": {
+				"column_name": {
+					"description": "ColumnName is the name of the column to be used as the identifier.",
+					"type": "string"
+				},
+				"column_type": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Queries.PairColumnType"
+						}
+					],
+					"description": "ColumnType is the data type of the column."
+				}
+			},
+			"type": "object"
+		},
+		"Queries.PairColumnType": {
+			"default": "PAIR_COLUMN_TYPE_INVALID",
+			"description": "PairColumnType is a list of support identifier for the Google PAIR protocol.",
+			"enum": [
+				"PAIR_COLUMN_TYPE_INVALID",
+				"PAIR_COLUMN_TYPE_EMAIL"
+			],
+			"type": "string"
 		},
 		"Queries.PrivatePathDataset": {
 			"description": "PrivatePathDataset is details of a dataset used in a private path collaboration.",
@@ -13362,6 +13425,65 @@
 				"summary": "Publishes prepared data to a dataset.",
 				"tags": [
 					"Publishing"
+				]
+			}
+		},
+		"/api/v2/queries/pair/activation": {
+			"post": {
+				"description": "Create a PAIR enabled activation query.",
+				"operationId": "CreatePairQuery",
+				"parameters": [
+					{
+						"description": "CreatePairQueryRequest is the input to the CreatePairQuery method.",
+						"in": "body",
+						"name": "body",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Queries.CreatePairQueryRequest"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Queries.CreatePairQueryResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the required permission.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Create a PAIR enabled activation query",
+				"tags": [
+					"Queries"
 				]
 			}
 		},
