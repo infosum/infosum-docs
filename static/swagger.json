@@ -863,6 +863,12 @@
 				},
 				"region": {
 					"$ref": "#/definitions/Region"
+				},
+				"remote_connector_id": {
+					"type": "string"
+				},
+				"remote_connector_type": {
+					"$ref": "#/definitions/RemoteConnectorType"
 				}
 			},
 			"type": "object"
@@ -6379,6 +6385,15 @@
 				"IBM_EU_CENTRAL_1",
 				"AWS_EU_CENTRAL_1",
 				"AWS_AP_SOUTHEAST_2"
+			],
+			"type": "string"
+		},
+		"RemoteConnectorType": {
+			"default": "REMOTE_CONNECTOR_TYPE_INVALID",
+			"description": "RemoteConnectorType is an enum that denotes the provider for a remote connector.",
+			"enum": [
+				"REMOTE_CONNECTOR_TYPE_INVALID",
+				"REMOTE_CONNECTOR_TYPE_SNOWFLAKE"
 			],
 			"type": "string"
 		},
