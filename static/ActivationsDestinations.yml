@@ -1,0 +1,120 @@
+openapi: 3.0.0
+info:
+  title: Activation and Destination
+  version: 1.0.0
+servers:
+  - url: https://{{infosum_api}}
+tags:
+  - name: Activation Queries
+  - name: Destination Management
+paths:
+  /api/v1/queries:
+    post:
+      tags:
+        - Activation Queries
+      summary: 1. Create Activation Query
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              type: string
+              example: >-
+                "{\n    \"query\": {{query}},\n    \"campaign_name\":
+                {{campaign_name}}\n}"
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: '{{v2_api_key}}'
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/v1/queries/{activation_id}/result:
+    get:
+      tags:
+        - Activation Queries
+      summary: 1b. Check Activation Query Status
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: '{{v2_api_key}}'
+        - name: activation_id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/v2/destinations/instances/{destination_id}:
+    get:
+      tags:
+        - Destination Management
+      summary: 2a. Get Destination Details
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: '{{v2_api_key}}'
+        - name: destination_id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/v2/activations/queries/{activation_id}/destinations/{destination_id}/push:
+    post:
+      tags:
+        - Destination Management
+      summary: 2. Push Activation Results to Destination
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              type: string
+              example: >-
+                "{\n    \"push_config\": {\n        \"filename\":
+                \"{{filename}}\"\n    }\n}"
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: '{{v2_api_key}}'
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: activation_id
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: destination_id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}

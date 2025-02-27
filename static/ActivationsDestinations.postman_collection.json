@@ -1,0 +1,237 @@
+{
+	"info": {
+		"_postman_id": "8e436353-390f-45f4-b3bd-f4e90ed25648",
+		"name": "Activation and Destination",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38314644"
+	},
+	"item": [
+		{
+			"name": "Activation Queries",
+			"item": [
+				{
+					"name": "1. Create Activation Query",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"activation_id\", pm.response.json().activation.summary.activation_id);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{v2_api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"query\": {{query}},\n    \"campaign_name\": {{campaign_name}}\n}"
+						},
+						"url": {
+							"raw": "https://{{infosum_api}}/api/v1/queries",
+							"protocol": "https",
+							"host": [
+								"{{infosum_api}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"queries"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1b. Check Activation Query Status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{v2_api_key}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{infosum_api}}/api/v1/queries/{{activation_id}}/result",
+							"protocol": "https",
+							"host": [
+								"{{infosum_api}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"queries",
+								"{{activation_id}}",
+								"result"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Destination Management",
+			"item": [
+				{
+					"name": "2a. Get Destination Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{v2_api_key}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{infosum_api}}/api/v2/destinations/instances/{{destination_id}}",
+							"protocol": "https",
+							"host": [
+								"{{infosum_api}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"destinations",
+								"instances",
+								"{{destination_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2. Push Activation Results to Destination",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{v2_api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"push_config\": {\n        \"filename\": \"{{filename}}\"\n    }\n}"
+						},
+						"url": {
+							"raw": "https://{{infosum_api}}/api/v2/activations/queries/{{activation_id}}/destinations/{{destination_id}}/push",
+							"protocol": "https",
+							"host": [
+								"{{infosum_api}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"activations",
+								"queries",
+								"{{activation_id}}",
+								"destinations",
+								"{{destination_id}}",
+								"push"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "infosum_api",
+			"value": "api.infosum.com"
+		},
+		{
+			"key": "v2_api_key",
+			"value": "9SRJAn6QrrbEtvfMKnS9UC38aw3jNV2euRW9K6TAP6g3"
+		},
+		{
+			"key": "destination_id",
+			"value": ""
+		},
+		{
+			"key": "query",
+			"value": ""
+		},
+		{
+			"key": "campaign_name",
+			"value": ""
+		},
+		{
+			"key": "activation_id",
+			"value": ""
+		},
+		{
+			"key": "filename",
+			"value": ""
+		}
+	]
+}

@@ -1,0 +1,2461 @@
+openapi: 3.0.0
+info:
+  title: Onboarding Playbook
+  description: >-
+    This page contains the essential endpoints of the InfoSum API that help users securely manage data throughout the onboarding process, allowing them to import, normalize, prepare, and publish data for analysis from cloud vaults to datasets. You can download the swagger file above or grab a [Postman Collection here](/Onboarding.postman_collection.json) 
+
+
+    Email InfoSum Support: support@infosum.com
+
+    <h2>ID Reference Table</h2>
+    <table>
+      <tbody>
+        <tr>
+          <th>Postman Step Number</th>
+          <th>ID Name</th>
+          <th>ID Structure</th>
+          <th>Where to find it</th>
+          <th>When to collect</th>
+        </tr>
+      </tbody>
+      <tbody>
+        <tr>
+          <td>1, 4, 7, 10</td>
+          <td>Cloud Vault ID</td>
+          <td>CLV.<em>AWS_Region_selected</em>.xx</td>
+          <td>in URL of <strong>Cloud Vaults</strong> page</td>
+          <td>Have ready before hand</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Import ID</td>
+          <td>IMP.xx</td>
+          <td>in URL of <strong>Importing</strong> page, when an Importer has been selected</td>
+          <td>Have ready before hand</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Import Execution ID</td>
+          <td>IMT.xx</td>
+          <td>Response from step 2</td>
+          <td>Can be grabbed from output of step 2</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>Recordset Config ID</td>
+          <td>RSC.xx</td>
+          <td>Go <strong>Recordset Configs</strong> on the <strong>Cloud Vault</strong> in URL of <strong>Recordset Configs</strong>, when a config has been selected</td>
+          <td>Have ready before hand</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>Recordset Execution ID</td>
+          <td>MRC.xx</td>
+          <td>Response from step 4</td>
+          <td>Can be grabbed from output of step 4</td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td>Recordset ID</td>
+          <td>RSC.xx</td>
+          <td>Response from step 5</td>
+          <td>Can be grabbed from output of step 5</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td>Normalization Config Name</td>
+          <td><em>text</em>
+          <td>Dropdown <strong>Normalization Config</strong> on the Normalize page</td>
+          <td>Have ready before hand</td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td>Normalization Config ID</td>
+          <td>NMC.xx</td>
+          <td>Response from step 5</td>
+          <td>Can be grabbed from output of step 6</td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td>Normalization Execution ID</td>
+          <td>NMZ.xx</td>
+          <td>Response from step 7</td>
+          <td>Can be grabbed from output of step 7</td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td>Dataset Prepare Config Name</td>
+          <td><em>text-DD MMM YYYY - HH:MM</em></td>
+          <td>Automations page</td>
+          <td>When creating a dataset config, save the name Have ready before hand</td>
+        </tr>
+        <tr>
+          <td>10</td>
+          <td>Normalized Recordset ID</td>
+          <td>RCS.xx</td>
+          <td>Response from step 8</td>
+          <td>Can be grabbed from output of step 8</td>
+        </tr>
+        <tr>
+          <td>10</td>
+          <td>Dataset Prepare ID</td>
+          <td><em>AWS_Region_selected</em>.xx</td>
+          <td>in URL of <strong>Datasets</strong> page, when a dataset is selected</td>
+          <td>Have ready before hand</td>
+        </tr>
+        <tr>
+          <td>10</td>
+          <td>Dataset Prepare Config ID</td>
+          <td>DPC.xx</td>
+          <td>Response from step 9</td>
+          <td>Can be grabbed from output of step 9</td>
+        </tr>
+        <tr>
+          <td>11, 12, 13</td>
+          <td>Prepare/Publish Execution ID</td>
+          <td>PUB.xx</td>
+          <td>Response from step 10</td>
+          <td>Can be grabbed from output of step 10</td>
+        </tr>
+      </tbody>
+    </table>
+
+servers:
+  - url: http://{{baseurl}}
+components:
+  securitySchemes:
+    API_Key:
+      description: "Your API key"
+      in: "header"
+      type: apiKey
+      name: "Authorization"
+security:
+  - API_Key: [https://support.infosum.com/hc/en-us/articles/360018850497-Accessing-the-API#h_01JBBT9BG3D0V2AFWGDBJT9YYF]
+paths:
+  /api/v2/cloud_vaults/{Cloud Vault ID}:
+    get:
+      tags:
+        - Onboarding
+      summary: 1. Get a Cloud Vault.
+      description: Get the details of a specific Cloud Vault.
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Cloud Vault ID
+          in: path
+          schema:
+            type: string
+          required: true
+          description: (Required)
+          example: CLV.xx
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                cloud_vault:
+                  created_by: <string>
+                  created_date_time: <dateTime>
+                  description: <string>
+                  id: <string>
+                  name: <string>
+                  owner_id: <string>
+                  region: <string>
+                  updated_date_time: <dateTime>
+        '400':
+          description: Bad Request
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '401':
+          description: Unauthorized
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '403':
+          description: Forbidden
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '404':
+          description: Not Found
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: Internal Server Error
+                  value:
+                    details:
+                      code: <string>
+                      message: <string>
+                    error:
+                      code: <string>
+                      message: <string>
+                    help_url: <string>
+                    request_id: <string>
+                    time: <dateTime>
+                example-1:
+                  summary: An unexpected error response.
+                  value:
+                    details:
+                      code: <string>
+                      message: <string>
+                    error:
+                      code: <string>
+                      message: <string>
+                    help_url: <string>
+                    request_id: <string>
+                    time: <dateTime>
+  /api/v2/imports/importers/{Import ID}/execute:
+    post:
+      tags:
+        - Onboarding
+      summary: 2. Execute Import
+      description: Executes an import for the specified import ID.
+      requestBody:
+        content: {}
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Import ID
+          in: path
+          schema:
+            type: string
+          required: true
+          example: 'IMP.xx'
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                execution_id: <string>
+        '400':
+          description: Bad Request
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '401':
+          description: Unauthorized
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '403':
+          description: Forbidden
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '404':
+          description: Not Found
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: Internal Server Error
+                  value:
+                    details:
+                      code: <string>
+                      message: <string>
+                    error:
+                      code: <string>
+                      message: <string>
+                    help_url: <string>
+                    request_id: <string>
+                    time: <dateTime>
+                example-1:
+                  summary: An unexpected error response.
+                  value:
+                    details:
+                      code: <string>
+                      message: <string>
+                    error:
+                      code: <string>
+                      message: <string>
+                    help_url: <string>
+                    request_id: <string>
+                    time: <dateTime>
+  /api/v2/imports/executions/{execution_id}:
+    get:
+      tags:
+        - Onboarding
+      summary: 3. Gets Import Execution
+      description: Gets a specific import execution.
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: execution_id
+          in: path
+          schema:
+            type: string
+          required: true
+          description: (Required) The ID of the Import execution task to retrieve.
+          example: 'Import Execution ID (IMT)'
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                execution_details:
+                  execution:
+                    cloud_vault_id: <string>
+                    created_date_time: <dateTime>
+                    current_status: NO_STATUS
+                    id: <string>
+                    import_id: <string>
+                    progress:
+                      completion_percentage: <float>
+                      speed: <int64>
+                      total_bytes: <int64>
+                      transferred_bytes: <int64>
+                    updated_date_time: <dateTime>
+                    user_id: <string>
+                  history:
+                    - date_time: <dateTime>
+                      error:
+                        details:
+                          code: <string>
+                          message: <string>
+                        error:
+                          code: <string>
+                          message: <string>
+                        help_url: <string>
+                        request_id: <string>
+                        time: <dateTime>
+                      message: <string>
+                      status: NO_STATUS
+                    - date_time: <dateTime>
+                      error:
+                        details:
+                          code: <string>
+                          message: <string>
+                        error:
+                          code: <string>
+                          message: <string>
+                        help_url: <string>
+                        request_id: <string>
+                        time: <dateTime>
+                      message: <string>
+                      status: NO_STATUS
+        '400':
+          description: Bad Request
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '401':
+          description: Unauthorized
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '403':
+          description: Forbidden
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '404':
+          description: Not Found
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: Internal Server Error
+                  value:
+                    details:
+                      code: <string>
+                      message: <string>
+                    error:
+                      code: <string>
+                      message: <string>
+                    help_url: <string>
+                    request_id: <string>
+                    time: <dateTime>
+                example-1:
+                  summary: An unexpected error response.
+                  value:
+                    details:
+                      code: <string>
+                      message: <string>
+                    error:
+                      code: <string>
+                      message: <string>
+                    help_url: <string>
+                    request_id: <string>
+                    time: <dateTime>
+  /api/v2/recordset-creation/execute:
+    post:
+      tags:
+        - Onboarding
+      summary: 4. Create a Recordset.
+      description: >-
+        Create a recordset from files on a cloud vault. Valid characters for
+        recordset names: alphanumeric, '_', '-', ' '.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                cloud_vault_id: 'Cloud Vault ID (CLV)'
+                recordset_name: RecordSet Name
+                config_id: 'Recordset Config ID (RSC)'
+                filepaths:
+                  - filename.csv
+      parameters:
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                execution_id: <string>
+        '400':
+          description: Bad Request
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '401':
+          description: Unauthorized
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '403':
+          description: Forbidden
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '404':
+          description: Not Found
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '409':
+          description: Conflict
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: Internal Server Error
+                  value:
+                    details:
+                      code: <string>
+                      message: <string>
+                    error:
+                      code: <string>
+                      message: <string>
+                    help_url: <string>
+                    request_id: <string>
+                    time: <dateTime>
+                example-1:
+                  summary: An unexpected error response.
+                  value:
+                    details:
+                      code: <string>
+                      message: <string>
+                    error:
+                      code: <string>
+                      message: <string>
+                    help_url: <string>
+                    request_id: <string>
+                    time: <dateTime>
+  /api/v2/recordset-creation/executions/{execution_id}:
+    get:
+      tags:
+        - Onboarding
+      summary: 5. Get a Recordset Execution.
+      description: Get the details of a specific recordset execution.
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: execution_id
+          in: path
+          schema:
+            type: string
+          required: true
+          description: (Required) The ID of the execution to get.
+          example: 'Recordset Execution ID (MRC)'
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                execution_details:
+                  cloud_vault_id: <string>
+                  config_id: <string>
+                  created_date_time: <dateTime>
+                  current_status: NO_STATUS
+                  execution_config:
+                    file_type: AUTO
+                    header_names:
+                      - <string>
+                      - <string>
+                    header_row: <boolean>
+                    primary_delimiter: <string>
+                    secondary_delimiter: <string>
+                  filepaths:
+                    - <string>
+                    - <string>
+                  history:
+                    - date_time: <dateTime>
+                      error:
+                        details:
+                          code: <string>
+                          message: <string>
+                        error:
+                          code: <string>
+                          message: <string>
+                        help_url: <string>
+                        request_id: <string>
+                        time: <dateTime>
+                      message: <string>
+                      status: NO_STATUS
+                    - date_time: <dateTime>
+                      error:
+                        details:
+                          code: <string>
+                          message: <string>
+                        error:
+                          code: <string>
+                          message: <string>
+                        help_url: <string>
+                        request_id: <string>
+                        time: <dateTime>
+                      message: <string>
+                      status: NO_STATUS
+                  id: <string>
+                  progress:
+                    completion_percentage: <float>
+                    lines_processed: <int64>
+                    malformed_lines: <int64>
+                    total_lines: <int64>
+                  recordset_id: <string>
+                  recordset_name: <string>
+                  updated_date_time: <dateTime>
+                  user_id: <string>
+        '400':
+          description: Bad Request
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '401':
+          description: Unauthorized
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '403':
+          description: Forbidden
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '404':
+          description: Not Found
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: Internal Server Error
+                  value:
+                    details:
+                      code: <string>
+                      message: <string>
+                    error:
+                      code: <string>
+                      message: <string>
+                    help_url: <string>
+                    request_id: <string>
+                    time: <dateTime>
+                example-1:
+                  summary: An unexpected error response.
+                  value:
+                    details:
+                      code: <string>
+                      message: <string>
+                    error:
+                      code: <string>
+                      message: <string>
+                    help_url: <string>
+                    request_id: <string>
+                    time: <dateTime>
+  /api/v2/normalizations/configs:
+    get:
+      tags:
+        - Onboarding
+      summary: 6. List company Normalization Configurations.
+      description: List company normalization configurations
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: filter
+          in: query
+          schema:
+            type: string
+          description: >-
+            Filter is a string containing logic that can specify a restricted
+            set of
+
+            Cloud Vaults to be returned. e.g. `name co 'Test' or name co 'Acme'`
+
+
+            The following values are permitted:
+                name
+                created_date_time (RFC3339 format)
+                updated_date_time (RFC3339 format)
+          example: name eq <Normalization Config Name>
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                configs:
+                  - created_date_time: <dateTime>
+                    description: <string>
+                    id: <string>
+                    name: <string>
+                    updated_date_time: <dateTime>
+                  - created_date_time: <dateTime>
+                    description: <string>
+                    id: <string>
+                    name: <string>
+                    updated_date_time: <dateTime>
+                pagination:
+                  next_page: <integer>
+                  results: <integer>
+                  total_results: <integer>
+        '400':
+          description: Bad Request
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '401':
+          description: Unauthorized
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '403':
+          description: Forbidden
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: Internal Server Error
+                  value:
+                    details:
+                      code: <string>
+                      message: <string>
+                    error:
+                      code: <string>
+                      message: <string>
+                    help_url: <string>
+                    request_id: <string>
+                    time: <dateTime>
+                example-1:
+                  summary: An unexpected error response.
+                  value:
+                    details:
+                      code: <string>
+                      message: <string>
+                    error:
+                      code: <string>
+                      message: <string>
+                    help_url: <string>
+                    request_id: <string>
+                    time: <dateTime>
+  /api/v2/normalizations/execute:
+    post:
+      tags:
+        - Onboarding
+      summary: 7. Start a Normalization.
+      description: Start a normalization
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                cloud_vault_id: 'Cloud Vault ID (CLV)'
+                input_recordset_id: 'RecordSet ID (RSC 2)'
+                normalization_config_id: 'Normalization Config ID (NMC)'
+                output_recordset_name: RecordSet Name
+                processing_speed: 1
+      parameters:
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                execution_id: <string>
+        '400':
+          description: Bad Request
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '401':
+          description: Unauthorized
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '403':
+          description: Forbidden
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '409':
+          description: Conflict
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: Internal Server Error
+                  value:
+                    details:
+                      code: <string>
+                      message: <string>
+                    error:
+                      code: <string>
+                      message: <string>
+                    help_url: <string>
+                    request_id: <string>
+                    time: <dateTime>
+                example-1:
+                  summary: An unexpected error response.
+                  value:
+                    details:
+                      code: <string>
+                      message: <string>
+                    error:
+                      code: <string>
+                      message: <string>
+                    help_url: <string>
+                    request_id: <string>
+                    time: <dateTime>
+  /api/v2/normalizations/executions/{execution_id}:
+    get:
+      tags:
+        - Onboarding
+      summary: 8. Get a Normalization.
+      description: Get a normalization
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: execution_id
+          in: path
+          schema:
+            type: string
+          required: true
+          description: (Required) NormalizationID is the ID of the normalization.
+          example: 'Normalization Execution ID (NMZ)'
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                normalization_details:
+                  history:
+                    - date_time: <dateTime>
+                      error:
+                        details:
+                          code: <string>
+                          message: <string>
+                        error:
+                          code: <string>
+                          message: <string>
+                        help_url: <string>
+                        request_id: <string>
+                        time: <dateTime>
+                      message: <string>
+                      status: NO_STATUS
+                    - date_time: <dateTime>
+                      error:
+                        details:
+                          code: <string>
+                          message: <string>
+                        error:
+                          code: <string>
+                          message: <string>
+                        help_url: <string>
+                        request_id: <string>
+                        time: <dateTime>
+                      message: <string>
+                      status: NO_STATUS
+                  normalization:
+                    cloud_vault_id: <string>
+                    config_id: <string>
+                    created_date_time: <dateTime>
+                    current_status: NO_STATUS
+                    id: <string>
+                    input_recordset_id: <string>
+                    output_recordset_id: <string>
+                    output_recordset_name: <string>
+                    processing_speed: <long>
+                    progress:
+                      completion_percentage: <float>
+                    updated_date_time: <dateTime>
+                    user_id: <string>
+        '400':
+          description: Bad Request
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '401':
+          description: Unauthorized
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '403':
+          description: Forbidden
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '404':
+          description: Not Found
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: Internal Server Error
+                  value:
+                    details:
+                      code: <string>
+                      message: <string>
+                    error:
+                      code: <string>
+                      message: <string>
+                    help_url: <string>
+                    request_id: <string>
+                    time: <dateTime>
+                example-1:
+                  summary: An unexpected error response.
+                  value:
+                    details:
+                      code: <string>
+                      message: <string>
+                    error:
+                      code: <string>
+                      message: <string>
+                    help_url: <string>
+                    request_id: <string>
+                    time: <dateTime>
+  /api/v2/dataset-prepare-configs:
+    get:
+      tags:
+        - Onboarding
+      summary: 9. List company Dataset Prepare Configurations.
+      description: List company dataset prepare configurations
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: filter
+          in: query
+          schema:
+            type: string
+          description: >-
+            Filter is a string containing logic that can specify a restricted
+            set of
+
+            Cloud Vaults to be returned. e.g. `name co 'Test' or name co 'Acme'`
+
+
+            The following values are permitted:
+                name
+                created_date_time (RFC3339 format)
+                updated_date_time (RFC3339 format)
+          example: name eq 'Dataset Prepare Config Name'
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                configs:
+                  - created_date_time: <dateTime>
+                    dataset_publish_config_summary:
+                      category_column_count: <long>
+                      export_column_count: <long>
+                      incremental_full_refresh: <boolean>
+                      key_column_count: <long>
+                      purge_expired_rows_only: <boolean>
+                      redaction_threshold: <long>
+                      rounding_threshold: <long>
+                    description: <string>
+                    id: <string>
+                    name: <string>
+                    updated_date_time: <dateTime>
+                    user_id: <string>
+                  - created_date_time: <dateTime>
+                    dataset_publish_config_summary:
+                      category_column_count: <long>
+                      export_column_count: <long>
+                      incremental_full_refresh: <boolean>
+                      key_column_count: <long>
+                      purge_expired_rows_only: <boolean>
+                      redaction_threshold: <long>
+                      rounding_threshold: <long>
+                    description: <string>
+                    id: <string>
+                    name: <string>
+                    updated_date_time: <dateTime>
+                    user_id: <string>
+                pagination:
+                  next_page: <integer>
+                  results: <integer>
+                  total_results: <integer>
+        '400':
+          description: Bad Request
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '401':
+          description: Unauthorized
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '403':
+          description: Forbidden
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: Internal Server Error
+                  value:
+                    details:
+                      code: <string>
+                      message: <string>
+                    error:
+                      code: <string>
+                      message: <string>
+                    help_url: <string>
+                    request_id: <string>
+                    time: <dateTime>
+                example-1:
+                  summary: An unexpected error response.
+                  value:
+                    details:
+                      code: <string>
+                      message: <string>
+                    error:
+                      code: <string>
+                      message: <string>
+                    help_url: <string>
+                    request_id: <string>
+                    time: <dateTime>
+  /api/v2/prepares/execute:
+    post:
+      tags:
+        - Onboarding
+      summary: 10. Start a Prepare on normalized data.
+      description: Start a Prepare Operation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                cloud_vault_id: 'Cloud Vault ID (CLV)'
+                config_id: 'Dataset Prepare Config ID (DPC)'
+                dataset_id: 'Dataset Prepare ID'
+                recordset_id: 'Normalized Recordset ID (RCS)'
+      parameters:
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                execution_id: <string>
+        '400':
+          description: Bad Request
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '401':
+          description: Unauthorized
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '403':
+          description: Forbidden
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '409':
+          description: Conflict
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: Internal Server Error
+                  value:
+                    details:
+                      code: <string>
+                      message: <string>
+                    error:
+                      code: <string>
+                      message: <string>
+                    help_url: <string>
+                    request_id: <string>
+                    time: <dateTime>
+                example-1:
+                  summary: An unexpected error response.
+                  value:
+                    details:
+                      code: <string>
+                      message: <string>
+                    error:
+                      code: <string>
+                      message: <string>
+                    help_url: <string>
+                    request_id: <string>
+                    time: <dateTime>
+  /api/v2/prepares/executions/{execution_id}:
+    get:
+      tags:
+        - Onboarding
+      summary: 11. Get details on a Prepare operation.
+      description: Get details on a Prepare operation.
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: execution_id
+          in: path
+          schema:
+            type: string
+          required: true
+          description: (Required) ExecutionID is the ID of the prepare execution to fetch.
+          example: 'Prepare/Publish Execution ID (PUB)'
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                prepare_details:
+                  history:
+                    - date_time: <dateTime>
+                      error:
+                        details:
+                          code: <string>
+                          message: <string>
+                        error:
+                          code: <string>
+                          message: <string>
+                        help_url: <string>
+                        request_id: <string>
+                        time: <dateTime>
+                      message: <string>
+                      prepare_status: NO_STATUS
+                      status: NO_STATUS
+                    - date_time: <dateTime>
+                      error:
+                        details:
+                          code: <string>
+                          message: <string>
+                        error:
+                          code: <string>
+                          message: <string>
+                        help_url: <string>
+                        request_id: <string>
+                        time: <dateTime>
+                      message: <string>
+                      prepare_status: NO_STATUS
+                      status: NO_STATUS
+                  prepare:
+                    cloud_vault_id: <string>
+                    config:
+                      category_selection:
+                        - <int64>
+                        - <int64>
+                      export_column_selection:
+                        - <string>
+                        - <string>
+                      incremental_full_refresh: <boolean>
+                      key_selection:
+                        - <int64>
+                        - <int64>
+                      purge_expired_rows_only: <boolean>
+                      redaction_threshold: <long>
+                      rounding_threshold: <long>
+                    config_embedded:
+                      category_selection:
+                        - <int64>
+                        - <int64>
+                      export_column_selection:
+                        - <string>
+                        - <string>
+                      incremental_full_refresh: <boolean>
+                      key_selection:
+                        - <int64>
+                        - <int64>
+                      purge_expired_rows_only: <boolean>
+                      redaction_threshold: <long>
+                      rounding_threshold: <long>
+                    config_id: <string>
+                    created_date_time: <dateTime>
+                    current_status: NO_STATUS
+                    dataset_id: <string>
+                    expiration_date_time: <dateTime>
+                    id: <string>
+                    prepare_status: NO_STATUS
+                    progress:
+                      completion_percentage: <float>
+                    recordset_id: <string>
+                    updated_date_time: <dateTime>
+                    user_id: <string>
+        '400':
+          description: Bad Request
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '401':
+          description: Unauthorized
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '403':
+          description: Forbidden
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '404':
+          description: Not Found
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: Internal Server Error
+                  value:
+                    details:
+                      code: <string>
+                      message: <string>
+                    error:
+                      code: <string>
+                      message: <string>
+                    help_url: <string>
+                    request_id: <string>
+                    time: <dateTime>
+                example-1:
+                  summary: An unexpected error response.
+                  value:
+                    details:
+                      code: <string>
+                      message: <string>
+                    error:
+                      code: <string>
+                      message: <string>
+                    help_url: <string>
+                    request_id: <string>
+                    time: <dateTime>
+  /api/v2/prepares/{execution_id}/publish:
+    post:
+      tags:
+        - Onboarding
+      summary: 12. Publishes prepared data to a dataset.
+      description: Publishes prepared data to a dataset.
+      requestBody:
+        content: {}
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: execution_id
+          in: path
+          schema:
+            type: string
+          required: true
+          description: >-
+            (Required) ExecutionID is the id of the prepare execution to publish
+            to the dataset.
+          example: 'Prepare/Publish Execution ID (PUB)'
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                execution_id: <string>
+        '400':
+          description: Bad Request
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '401':
+          description: Unauthorized
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '403':
+          description: Forbidden
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: Internal Server Error
+                  value:
+                    details:
+                      code: <string>
+                      message: <string>
+                    error:
+                      code: <string>
+                      message: <string>
+                    help_url: <string>
+                    request_id: <string>
+                    time: <dateTime>
+                example-1:
+                  summary: An unexpected error response.
+                  value:
+                    details:
+                      code: <string>
+                      message: <string>
+                    error:
+                      code: <string>
+                      message: <string>
+                    help_url: <string>
+                    request_id: <string>
+                    time: <dateTime>
+  /api/v2/prepares/executions/{executionid}:
+    get:
+      tags:
+        - Onboarding
+      summary: 13. Get details on a Publish operation.
+      description: Get details on a Publish operation.
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: execution_id
+          in: path
+          schema:
+            type: string
+          required: true
+          description: (Required) ExecutionID is the ID of the publish execution to fetch.
+          example: 'Prepare/Publish Execution ID (PUB)'
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                prepare_details:
+                  history:
+                    - date_time: <dateTime>
+                      error:
+                        details:
+                          code: <string>
+                          message: <string>
+                        error:
+                          code: <string>
+                          message: <string>
+                        help_url: <string>
+                        request_id: <string>
+                        time: <dateTime>
+                      message: <string>
+                      prepare_status: NO_STATUS
+                      status: NO_STATUS
+                    - date_time: <dateTime>
+                      error:
+                        details:
+                          code: <string>
+                          message: <string>
+                        error:
+                          code: <string>
+                          message: <string>
+                        help_url: <string>
+                        request_id: <string>
+                        time: <dateTime>
+                      message: <string>
+                      prepare_status: NO_STATUS
+                      status: NO_STATUS
+                  prepare:
+                    cloud_vault_id: <string>
+                    config:
+                      category_selection:
+                        - <int64>
+                        - <int64>
+                      export_column_selection:
+                        - <string>
+                        - <string>
+                      incremental_full_refresh: <boolean>
+                      key_selection:
+                        - <int64>
+                        - <int64>
+                      purge_expired_rows_only: <boolean>
+                      redaction_threshold: <long>
+                      rounding_threshold: <long>
+                    config_embedded:
+                      category_selection:
+                        - <int64>
+                        - <int64>
+                      export_column_selection:
+                        - <string>
+                        - <string>
+                      incremental_full_refresh: <boolean>
+                      key_selection:
+                        - <int64>
+                        - <int64>
+                      purge_expired_rows_only: <boolean>
+                      redaction_threshold: <long>
+                      rounding_threshold: <long>
+                    config_id: <string>
+                    created_date_time: <dateTime>
+                    current_status: NO_STATUS
+                    dataset_id: <string>
+                    expiration_date_time: <dateTime>
+                    id: <string>
+                    prepare_status: NO_STATUS
+                    progress:
+                      completion_percentage: <float>
+                    recordset_id: <string>
+                    updated_date_time: <dateTime>
+                    user_id: <string>
+        '400':
+          description: Bad Request
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '401':
+          description: Unauthorized
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '403':
+          description: Forbidden
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '404':
+          description: Not Found
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: Internal Server Error
+                  value:
+                    details:
+                      code: <string>
+                      message: <string>
+                    error:
+                      code: <string>
+                      message: <string>
+                    help_url: <string>
+                    request_id: <string>
+                    time: <dateTime>
+                example-1:
+                  summary: An unexpected error response.
+                  value:
+                    details:
+                      code: <string>
+                      message: <string>
+                    error:
+                      code: <string>
+                      message: <string>
+                    help_url: <string>
+                    request_id: <string>
+                    time: <dateTime>
