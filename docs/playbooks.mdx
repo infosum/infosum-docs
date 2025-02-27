@@ -1,0 +1,52 @@
+---
+sidebar_position: 4
+---
+
+# API Playbooks
+
+InfoSum currently supports a collection of their APIs packaged for new & advanced users of InfoSum for users looking to begin leveraging InfoSum's API suite. The best use cases are for users who want to improve operational efficiency and enhance their business current capabilities.
+
+We currently offer the following playbooks:
+- Onboarding Data
+- Activation Queries & Pushing to a Destination
+
+## Getting Started
+
+### User Management - (UI only) 
+Please ensure that your user has been created and has all the appropriate rights. You can confirm this with your InfoSum representative and this step should be completed by the InfoSum support team
+-   User Rights: To successfully execute the onboarding process, the user responsible for creating or managing it must have the following permissions at the time of execution:
+	- All rights related to data onboarding (import, normalizing, and publishing rights).
+	- Lack of any of the rights will result in failure.
+
+  
+
+### Initial data onboarding - (Suggested to attempt in UI first)
+Please contact your InfoSum representative to organize data onboarding training if this hasn’t happened yet. You will be able to create the setup together and have all the configurations you need to leverage the API. You can get an [overview of data onboarding](https://support.infosum.com/hc/en-us/articles/9858951946513-Overview-of-Data-Onboarding) in the linked article.
+
+  
+
+### Server-side set up
+
+You will need to provide your own server for imports. We support S3 cross-account, SFTP, and GCS.
+
+As the API configuration will reuse the existing configurations down to the location of the files or folders, it is important to set up the server so that the Importer can always find the new files (and only the new files). We recommend reading the section [Server-side preparation](https://support.infosum.com/hc/en-us/articles/21919882459666-Data-Onboarding-Automation#h_01JFD5Q7TCNNY67X7AGSJHER11)’ in our UI-based automation article.  
+
+**Note on local file imports:** We can support local file onboarding via the API but we discourage the use as it provides less flexibility, it’s harder to manage, and it has lower data privacy protections. If you wish to use local file imports via API please reach out to your InfoSum representative to discuss your setup.
+
+
+## Onboarding Data
+The goal of data onboarding is publishing a standardized and encrypted version of your data to a Bunker (called dataset in the platform), an isolated cloud instance that can be permissioned for collaboration. Onboarding happens in a file management staging environment called Cloud Vault. Once all onboarding tasks are completed, the data will be available in your Bunker. The onboarding API reuses saved configurations across each onboarding task to perform the import on a set schedule. This means that data onboarding always needs to happen manually first. **We ask that your team performs the initial end-to-end data onboarding via the UI to set up the configurations, as this will provide clear context and significantly simplify the automated API setup.** 
+
+### Task List 
+-   Identify your server via an import connector configuration or ICC
+-   Import the data to your Cloud Vault using an Importer
+-   Create a recordset of the data’s format
+-   Normalize the data (standardization)
+-   Prepare the data (select columns)
+-   Publish the data to a Bunker
+
+## Activation & Destination
+TODO
+
+### Task List 
+-   TODO
