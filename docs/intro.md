@@ -3,11 +3,11 @@ sidebar_position: 1
 ---
 # Intro
 
-Welcome to the [InfoSum](https://www.infosum.com) Developer Documentation. If you require information on how the [InfoSum Platform](https://www.platform.infosum.com) works you may want to check out the [Help Centre](https://support.infosum.com), which contains in-depth information on all aspects of the Platform.
+Welcome to the [InfoSum](https://www.infosum.com) Developer Documentation. If you require information on how the [InfoSum Platform](https://www.platform.infosum.com) works you should visit our [Help Centre](https://support.infosum.com), which contains in-depth information on all aspects of the Platform.
 
 ## Creating an InfoSum Account
 
-Before you can get an API Key to use with the platform you will need to be registered as a user on the [InfoSum Platform](https://www.platform.infosum.com). Please [Contact Us](https://www.infosum.com/company/contact) in order to request a demo and get in touch.
+Before you can get an API Key to use with the platform you will need to be registered as a user on the [InfoSum Platform](https://www.platform.infosum.com). Please [Contact Us](https://www.infosum.com/company/contact) or your Customer Success representative if you need help accessing the platform.
 
 ## API Versions
 
@@ -25,5 +25,5 @@ InfoSum currently supports a collection of their APIs packaged for new & advance
 
 We currently offer the following playbooks:
 
-- Onboarding Data
-- Activation Queries & Pushing to a Destination
+- [Onboarding Data](https://infosum.github.io/infosum-docs/api/ActivationDestination)
+- [Activation Queries & Pushing to a Destination](https://infosum.github.io/infosum-docs/api/ActivationDestination)

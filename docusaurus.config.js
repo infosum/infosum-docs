@@ -130,7 +130,7 @@ const config = {
           position: 'left',
           items:[
             { to: '/api/Onboarding', label: 'Onboarding Data'},
-            { to: '/api/ActivationDestination', label: 'Activation & Destinations' },
+            { to: '/api/ActivationDestination', label: 'Activation Queries & Destinations' },
           ]},
           {
             href: 'https://github.com/infosum',

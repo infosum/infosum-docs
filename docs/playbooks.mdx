@@ -10,43 +10,30 @@ We currently offer the following playbooks:
 - Onboarding Data
 - Activation Queries & Pushing to a Destination
 
-## Getting Started
-
-### User Management - (UI only) 
-Please ensure that your user has been created and has all the appropriate rights. You can confirm this with your InfoSum representative and this step should be completed by the InfoSum support team
--   User Rights: To successfully execute the onboarding process, the user responsible for creating or managing it must have the following permissions at the time of execution:
-	- All rights related to data onboarding (import, normalizing, and publishing rights).
-	- Lack of any of the rights will result in failure.
-
-  
-
-### Initial data onboarding - (Suggested to attempt in UI first)
-Please contact your InfoSum representative to organize data onboarding training if this hasn’t happened yet. You will be able to create the setup together and have all the configurations you need to leverage the API. You can get an [overview of data onboarding](https://support.infosum.com/hc/en-us/articles/9858951946513-Overview-of-Data-Onboarding) in the linked article.
-
-  
-
-### Server-side set up
-
-You will need to provide your own server for imports. We support S3 cross-account, SFTP, and GCS.
-
-As the API configuration will reuse the existing configurations down to the location of the files or folders, it is important to set up the server so that the Importer can always find the new files (and only the new files). We recommend reading the section [Server-side preparation](https://support.infosum.com/hc/en-us/articles/21919882459666-Data-Onboarding-Automation#h_01JFD5Q7TCNNY67X7AGSJHER11)’ in our UI-based automation article.  
-
-**Note on local file imports:** We can support local file onboarding via the API but we discourage the use as it provides less flexibility, it’s harder to manage, and it has lower data privacy protections. If you wish to use local file imports via API please reach out to your InfoSum representative to discuss your setup.
-
-
-## Onboarding Data
+### [Onboarding Data](https://infosum.github.io/infosum-docs/api/ActivationDestination)
 The goal of data onboarding is publishing a standardized and encrypted version of your data to a Bunker (called dataset in the platform), an isolated cloud instance that can be permissioned for collaboration. Onboarding happens in a file management staging environment called Cloud Vault. Once all onboarding tasks are completed, the data will be available in your Bunker. The onboarding API reuses saved configurations across each onboarding task to perform the import on a set schedule. This means that data onboarding always needs to happen manually first. **We ask that your team performs the initial end-to-end data onboarding via the UI to set up the configurations, as this will provide clear context and significantly simplify the automated API setup.** 
 
-### Task List 
--   Identify your server via an import connector configuration or ICC
--   Import the data to your Cloud Vault using an Importer
--   Create a recordset of the data’s format
--   Normalize the data (standardization)
--   Prepare the data (select columns)
--   Publish the data to a Bunker
+#### Task List 
+1. Identify your server via an import connector configuration or ICC
+2. Import the data to your Cloud Vault using an Importer
+3. Confirm import was successfully
+4. Create a recordset of the data’s format
+5. Confirm recordset was created successfully
+6. List Normalization Configurations
+7. Normalize the data (standardization)
+8. Confirm normalization was successfully
+9. List Dataset Prepare Configurations
+10. Prepare the data
+11. Confirm bunker was prepared successfully
+12. Publish the data to a Bunker
+13. Confirm bunker was published successfully
 
-## Activation & Destination
-TODO
 
-### Task List 
--   TODO
+### [Activation Queries & Pushing to a Destination](https://infosum.github.io/infosum-docs/api/ActivationDestination)
+The goal of activating data and pushing to a destination is to recieve (or send) intersected data outside of InfoSum. You will run an activation query and then push the result to any one of our destinations. These include: [DV360, Amazon Ads, TikTok, The Trade Desk, and more!](https://support.infosum.com/hc/en-us/articles/12128356485778-Supported-Destinations-for-Activation)
+
+#### Task List 
+1. Create an activation query
+    - Optional: Check results ran successfully after running the query
+2. Push query results to Destination
+    - Optional: Confirm the destination exists before pushing or grab the Destination configuration

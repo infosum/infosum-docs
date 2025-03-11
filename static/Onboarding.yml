@@ -1,13 +1,20 @@
 openapi: 3.0.0
 info:
   title: Onboarding Playbook
+  version: OB 1.0
   description: >-
     This page contains the essential endpoints of the InfoSum API that help users securely manage data throughout the onboarding process, allowing them to import, normalize, prepare, and publish data for analysis from cloud vaults to datasets. You can download the swagger file above or grab a [Postman Collection here](/Onboarding.postman_collection.json) 
 
 
-    Email InfoSum Support: support@infosum.com
+    InfoSum Support: support@infosum.com | [Terms of Service](https://www.infosum.com/legals/website-terms) | [Official Documentation](https://support.infosum.com/)
 
-    <h2>ID Reference Table</h2>
+
+    We highly suggest that you complete your initial data onboarding in the UI first. Please contact your InfoSum representative to organize data onboarding training if this hasn’t happened yet. You will be able to create the setup together and have all the configurations you need to leverage the API. You can get an [overview of data onboarding](https://support.infosum.com/hc/en-us/articles/9858951946513-Overview-of-Data-Onboarding) in the linked article.
+
+
+    **Note on local file imports:** We can support local file onboarding via the API but we discourage the use as it provides less flexibility, it’s harder to manage, and it has lower data privacy protections. If you wish to use local file imports via API please reach out to your InfoSum representative to discuss your setup.
+
+    <h3>ID Reference Table</h3>
     <table>
       <tbody>
         <tr>
@@ -111,15 +118,15 @@ info:
           <td>Can be grabbed from output of step 9</td>
         </tr>
         <tr>
-          <td>11, 12, 13</td>
+          <td>11, 12, 13 </td>
           <td>Prepare/Publish Execution ID</td>
           <td>PUB.xx</td>
           <td>Response from step 10</td>
           <td>Can be grabbed from output of step 10</td>
         </tr>
+        <tr> </tr>
       </tbody>
     </table>
-
 servers:
   - url: http://{{baseurl}}
 components:
@@ -129,6 +136,8 @@ components:
       in: "header"
       type: apiKey
       name: "Authorization"
+tags:
+  - name: Onboarding
 security:
   - API_Key: [https://support.infosum.com/hc/en-us/articles/360018850497-Accessing-the-API#h_01JBBT9BG3D0V2AFWGDBJT9YYF]
 paths:
@@ -149,7 +158,7 @@ paths:
           schema:
             type: string
           required: true
-          description: (Required)
+          description: ID of Cloud Vault you would like to upload file to
           example: CLV.xx
       responses:
         '200':
@@ -313,6 +322,7 @@ paths:
             type: string
           required: true
           example: 'IMP.xx'
+          description: ID of the Importer used to import data from server
       responses:
         '200':
           description: OK
@@ -447,7 +457,7 @@ paths:
                     help_url: <string>
                     request_id: <string>
                     time: <dateTime>
-  /api/v2/imports/executions/{execution_id}:
+  /api/v2/imports/executions/{Import Execution ID}:
     get:
       tags:
         - Onboarding
@@ -464,8 +474,8 @@ paths:
           schema:
             type: string
           required: true
-          description: (Required) The ID of the Import execution task to retrieve.
-          example: 'Import Execution ID (IMT)'
+          description: The ID of the Import execution task to retrieve.
+          example: 'IMT.xx'
       responses:
         '200':
           description: OK
@@ -825,7 +835,7 @@ paths:
                     help_url: <string>
                     request_id: <string>
                     time: <dateTime>
-  /api/v2/recordset-creation/executions/{execution_id}:
+  /api/v2/recordset-creation/executions/{Recordset Execution ID (MRC)}:
     get:
       tags:
         - Onboarding
@@ -842,8 +852,8 @@ paths:
           schema:
             type: string
           required: true
-          description: (Required) The ID of the execution to get.
-          example: 'Recordset Execution ID (MRC)'
+          description: The ID of the normalization execution to retrieve.
+          example: 'MRC.xx'
       responses:
         '200':
           description: OK
@@ -1035,7 +1045,7 @@ paths:
       tags:
         - Onboarding
       summary: 6. List company Normalization Configurations.
-      description: List company normalization configurations
+      description: List company normalization configurations. 
       parameters:
         - name: Accept
           in: header
@@ -1347,7 +1357,7 @@ paths:
                     help_url: <string>
                     request_id: <string>
                     time: <dateTime>
-  /api/v2/normalizations/executions/{execution_id}:
+  /api/v2/normalizations/executions/{Normalization Execution ID (NMZ)}:
     get:
       tags:
         - Onboarding
@@ -1364,8 +1374,8 @@ paths:
           schema:
             type: string
           required: true
-          description: (Required) NormalizationID is the ID of the normalization.
-          example: 'Normalization Execution ID (NMZ)'
+          description: Normalization Execution ID (NMZ) is the ID of the normalization execution.
+          example: 'NMZ.xx'
       responses:
         '200':
           description: OK
@@ -1875,7 +1885,7 @@ paths:
                     help_url: <string>
                     request_id: <string>
                     time: <dateTime>
-  /api/v2/prepares/executions/{execution_id}:
+  /api/v2/prepares/executions/{Prepare Publish Execution ID (PUB)}:
     get:
       tags:
         - Onboarding
@@ -1893,7 +1903,7 @@ paths:
             type: string
           required: true
           description: (Required) ExecutionID is the ID of the prepare execution to fetch.
-          example: 'Prepare/Publish Execution ID (PUB)'
+          example: 'PUB.xx'
       responses:
         '200':
           description: OK
@@ -2099,7 +2109,7 @@ paths:
                     help_url: <string>
                     request_id: <string>
                     time: <dateTime>
-  /api/v2/prepares/{execution_id}/publish:
+  /api/v2/prepares/{Prepare/Publish Execution ID (PUB)}/publish:
     post:
       tags:
         - Onboarding
@@ -2119,9 +2129,9 @@ paths:
             type: string
           required: true
           description: >-
-            (Required) ExecutionID is the id of the prepare execution to publish
+            ExecutionID is the id of the prepare execution to publish
             to the dataset.
-          example: 'Prepare/Publish Execution ID (PUB)'
+          example: 'PUB.xx'
       responses:
         '200':
           description: OK
@@ -2235,7 +2245,7 @@ paths:
                     help_url: <string>
                     request_id: <string>
                     time: <dateTime>
-  /api/v2/prepares/executions/{executionid}:
+  /api/v2/prepares/executions/{Prepare/Publish Execution ID (PUB)}:
     get:
       tags:
         - Onboarding
@@ -2253,7 +2263,7 @@ paths:
             type: string
           required: true
           description: (Required) ExecutionID is the ID of the publish execution to fetch.
-          example: 'Prepare/Publish Execution ID (PUB)'
+          example: 'PUB.xx'
       responses:
         '200':
           description: OK
