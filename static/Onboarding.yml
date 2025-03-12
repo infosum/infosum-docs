@@ -3,7 +3,7 @@ info:
   title: Onboarding Playbook
   version: OB 1.0
   description: >-
-    This page contains the essential endpoints of the InfoSum API that help users securely manage data throughout the onboarding process, allowing them to import, normalize, prepare, and publish data for analysis from cloud vaults to datasets. You can download the swagger file above or grab a [Postman Collection here](/Onboarding.postman_collection.json) 
+    This page contains the essential endpoints of the InfoSum API that help users securely manage data throughout the onboarding process, allowing them to import, normalize, prepare, and publish data for analysis from cloud vaults to datasets. You can download the swagger file above or reach out to solutions@infosum.com if you prefer a Postman Collection. 
 
 
     InfoSum Support: support@infosum.com | [Terms of Service](https://www.infosum.com/legals/website-terms) | [Official Documentation](https://support.infosum.com/)
@@ -14,7 +14,49 @@ info:
 
     **Note on local file imports:** We can support local file onboarding via the API but we discourage the use as it provides less flexibility, it’s harder to manage, and it has lower data privacy protections. If you wish to use local file imports via API please reach out to your InfoSum representative to discuss your setup.
 
-    <h3>ID Reference Table</h3>
+
+    Task List 
+
+
+    1. Identify your server via an import connector configuration or ICC
+
+
+    2. Import the data to your Cloud Vault using an Importer
+
+
+    3. Confirm import was successfully
+
+
+    4. Create a recordset of the data’s format
+
+
+    5. Confirm recordset was created successfully
+
+
+    6. List Normalization Configurations
+
+
+    7. Normalize the data (standardization)
+
+
+    8. Confirm normalization was successfully
+
+
+    9. List Dataset Prepare Configurations
+
+
+    10. Prepare the data
+
+
+    11. Confirm bunker was prepared successfully
+
+
+    12. Publish the data to a Bunker
+
+
+    13. Confirm bunker was published successfully
+
+    <h3>Parameter Reference Table</h3>
     <table>
       <tbody>
         <tr>

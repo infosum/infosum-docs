@@ -10,30 +10,9 @@ We currently offer the following playbooks:
 - Onboarding Data
 - Activation Queries & Pushing to a Destination
 
-### [Onboarding Data](https://infosum.github.io/infosum-docs/api/ActivationDestination)
+### [Onboarding Data](https://infosum.github.io/infosum-docs/api/Onboarding)
 The goal of data onboarding is publishing a standardized and encrypted version of your data to a Bunker (called dataset in the platform), an isolated cloud instance that can be permissioned for collaboration. Onboarding happens in a file management staging environment called Cloud Vault. Once all onboarding tasks are completed, the data will be available in your Bunker. The onboarding API reuses saved configurations across each onboarding task to perform the import on a set schedule. This means that data onboarding always needs to happen manually first. **We ask that your team performs the initial end-to-end data onboarding via the UI to set up the configurations, as this will provide clear context and significantly simplify the automated API setup.** 
-
-#### Task List 
-1. Identify your server via an import connector configuration or ICC
-2. Import the data to your Cloud Vault using an Importer
-3. Confirm import was successfully
-4. Create a recordset of the data’s format
-5. Confirm recordset was created successfully
-6. List Normalization Configurations
-7. Normalize the data (standardization)
-8. Confirm normalization was successfully
-9. List Dataset Prepare Configurations
-10. Prepare the data
-11. Confirm bunker was prepared successfully
-12. Publish the data to a Bunker
-13. Confirm bunker was published successfully
 
 
 ### [Activation Queries & Pushing to a Destination](https://infosum.github.io/infosum-docs/api/ActivationDestination)
 The goal of activating data and pushing to a destination is to recieve (or send) intersected data outside of InfoSum. You will run an activation query and then push the result to any one of our destinations. These include: [DV360, Amazon Ads, TikTok, The Trade Desk, and more!](https://support.infosum.com/hc/en-us/articles/12128356485778-Supported-Destinations-for-Activation)
-
-#### Task List 
-1. Create an activation query
-    - Optional: Check results ran successfully after running the query
-2. Push query results to Destination
-    - Optional: Confirm the destination exists before pushing or grab the Destination configuration

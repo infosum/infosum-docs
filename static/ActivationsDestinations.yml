@@ -3,13 +3,24 @@ info:
   title: Activation Queries & Destinations
   version: AD 1.0
   description: >-
-    This page contains the essential endpoints of the InfoSum API that help users securely manage data throughout the activation process, allowing them to activate and push data for analysis from InfoSum to [one of our destinations](https://support.infosum.com/hc/en-us/articles/12128356485778-Supported-Destinations-for-Activation). You can download the swagger file above or grab a [Postman Collection here](/ActivationsDestinations.postman_collection.json) 
+    This page contains the essential endpoints of the InfoSum API that help users securely manage data throughout the activation process, allowing them to activate and push data for analysis from InfoSum to [one of our destinations](https://support.infosum.com/hc/en-us/articles/12128356485778-Supported-Destinations-for-Activation). You can download the swagger file above or reach out to solutions@infosum.com if you prefer a Postman Collection. 
 
 
     InfoSum Support: support@infosum.com | [Terms of Service](https://www.infosum.com/legals/website-terms) | [Official Documentation](https://support.infosum.com/)
 
 
     We highly suggest attempting to activate and push to a destination in the UI first. This way users can confirm they have the correct rights to activate and push to a destination. Additionally, this will allow users to create the destinations and set the configurations before attempting to push via the API. Future versions of the API Playbooks will outline creating a destination and modifying configurations.
+
+
+    Task List 
+
+
+    1. Create an activation query
+      - Optional (1b): Check results ran successfully after running the query
+
+
+    2. Push query results to Destination
+      - Optional (2a): Confirm the destination exists before pushing or grab the Destination configuration
 
     <h3>Parameter Reference Table</h3>
     <table>
