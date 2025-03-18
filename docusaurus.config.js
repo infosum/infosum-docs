@@ -56,6 +56,16 @@ const config = {
             spec: 'static/swagger.json',
             route: '/api/v2'
           },
+          {
+            id: 'infosum-openapi-v2-activation',
+            spec: 'static/ActivationsDestinations.yml',
+            route: '/api/ActivationDestination'
+          },
+          {
+            id: 'infosum-openapi-v2-onboard',
+            spec: 'static/Onboarding.yml',
+            route: '/api/Onboarding'
+          }
         ],
       },
     ],
@@ -109,11 +119,18 @@ const config = {
         items: [
           { to: '/docs/intro', label: 'Docs', position: 'left'},
           { type: 'dropdown',
-          label: 'REST Reference',
+            label: 'REST Reference',
           position: 'left',
           items:[
             { to: '/api/v2', label: 'v2'},
             { to: '/api/v1', label: 'v1' },
+          ]},
+          { type: 'dropdown',
+            label: 'API Playbooks',
+          position: 'left',
+          items:[
+            { to: '/api/Onboarding', label: 'Onboarding Data'},
+            { to: '/api/ActivationDestination', label: 'Activation Queries & Destinations' },
           ]},
           {
             href: 'https://github.com/infosum',
