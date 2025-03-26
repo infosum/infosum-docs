@@ -1216,16 +1216,16 @@
 			"description": "Dataset is the summary of a dataset returned when getting a dataset.",
 			"properties": {
 				"created_by": {
-					"description": "CreatedBy is the user ID who creates the dataset.",
+					"description": "The ID of the user who created the dataset.",
 					"type": "string"
 				},
 				"created_date_time": {
-					"description": "CreatedDateTime is the datetime that the dataset was created.",
+					"description": "Creation date time of the dataset.",
 					"format": "date-time",
 					"type": "string"
 				},
 				"dataset_id": {
-					"description": "DatasetID is the ID of the dataset.",
+					"description": "The ID of the dataset.",
 					"type": "string"
 				},
 				"dataset_type": {
@@ -1234,10 +1234,10 @@
 							"$ref": "#/definitions/Datasets.DatasetType"
 						}
 					],
-					"title": "DatasetType is the dataset type, insight or activation"
+					"description": "The type of dataset, e.g. insight/activation."
 				},
 				"description": {
-					"description": "Description is a user defined string to describe the dataset.",
+					"description": "Description for the dataset.",
 					"type": "string"
 				},
 				"expiration": {
@@ -1246,18 +1246,18 @@
 							"$ref": "#/definitions/Datasets.DatasetExpiration"
 						}
 					],
-					"description": "Expiration specifies information about how the dataset should expire."
+					"description": "Expiration details of the dataset."
 				},
 				"owner_id": {
-					"description": "OwnerID is the ID of the company that owns the dataset.",
+					"description": "ID of the owner of the dataset.",
 					"type": "string"
 				},
 				"private_id": {
-					"description": "PrivateID is the private ID of the dataset.",
+					"description": "The private ID of the dataset. This is the name used when querying the dataset - it must be unique within the owner scope and must have a length 17 character or less.",
 					"type": "string"
 				},
 				"public_name": {
-					"description": "PublicName is the public name of the dataset.",
+					"description": "The public name of the dataset. The public name does not need to be unique but must not be empty, may only contain alphanumeric character and may have a maximum length of 100 characters.",
 					"type": "string"
 				},
 				"publish_details": {
@@ -1266,10 +1266,10 @@
 							"$ref": "#/definitions/Datasets.ListedPublishDetails"
 						}
 					],
-					"description": "ListedPublishDetails is the summary info for the published slot."
+					"description": "Summary details of the publish to this dataset. Empty if no recordset has been published to the dataset."
 				},
 				"published_by": {
-					"description": "PublishedBy is the user ID who creates the dataset.",
+					"description": "The ID of the user who published the dataset. Empty if the dataset has not yet been published to.",
 					"type": "string"
 				},
 				"region": {
@@ -1278,7 +1278,7 @@
 							"$ref": "#/definitions/Datasets.Region"
 						}
 					],
-					"description": "Region is the cloud vault region the dataset can accept input data from."
+					"description": "The region of the dataset. Only prepares in the same region can be published to this dataset."
 				}
 			},
 			"type": "object"
@@ -1352,16 +1352,16 @@
 			"description": "ListedDataset is the summary of a dataset returned when listing datasets.",
 			"properties": {
 				"created_by": {
-					"description": "CreatedBy is the user ID who creates the dataset.",
+					"description": "The ID of the user who created the dataset.",
 					"type": "string"
 				},
 				"created_date_time": {
-					"description": "CreatedDateTime is the datetime that the dataset was created.",
+					"description": "Creation date time of the dataset.",
 					"format": "date-time",
 					"type": "string"
 				},
 				"dataset_id": {
-					"description": "DatasetID is the ID of the dataset.",
+					"description": "The ID of the dataset.",
 					"type": "string"
 				},
 				"dataset_type": {
@@ -1370,10 +1370,10 @@
 							"$ref": "#/definitions/Datasets.DatasetType"
 						}
 					],
-					"title": "DatasetType is the dataset type, insight or activation"
+					"description": "The type of dataset, e.g. insight/activation."
 				},
 				"description": {
-					"description": "Description is a user defined string to describe the dataset.",
+					"description": "Description for the dataset.",
 					"type": "string"
 				},
 				"expiration": {
@@ -1382,18 +1382,18 @@
 							"$ref": "#/definitions/Datasets.DatasetExpiration"
 						}
 					],
-					"description": "Expiration specifies information about how the dataset should expire."
+					"description": "Expiration details of the dataset."
 				},
 				"owner_id": {
-					"description": "OwnerID is the ID of the company that owns the dataset.",
+					"description": "ID of the owner of the dataset.",
 					"type": "string"
 				},
 				"private_id": {
-					"description": "PrivateID is the private ID of the dataset.",
+					"description": "The private ID of the dataset. This is the name used when querying the dataset - it must be unique within the owner scope and must have a length 17 character or less.",
 					"type": "string"
 				},
 				"public_name": {
-					"description": "PublicName is the public name of the dataset.",
+					"description": "The public name of the dataset. The public name does not need to be unique but must not be empty, may only contain alphanumeric character and may have a maximum length of 100 characters.",
 					"type": "string"
 				},
 				"publish_details": {
@@ -1402,10 +1402,10 @@
 							"$ref": "#/definitions/Datasets.ListedPublishDetails"
 						}
 					],
-					"description": "ListedPublishDetails is the summary info for the published slot."
+					"description": "Summary details of the publish to this dataset. Empty if no recordset has been published to the dataset."
 				},
 				"published_by": {
-					"description": "PublishedBy is the user ID who creates the dataset.",
+					"description": "The ID of the user who published the dataset. Empty if the dataset has not yet been published to.",
 					"type": "string"
 				},
 				"region": {
@@ -1414,7 +1414,7 @@
 							"$ref": "#/definitions/Datasets.Region"
 						}
 					],
-					"description": "Region is the cloud vault region the dataset can accept input data from."
+					"description": "The region of the dataset. Only prepares in the same region can be published to this dataset."
 				}
 			},
 			"type": "object"
