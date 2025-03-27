@@ -14,6 +14,7 @@ info:
 
     **Note on local file imports:** We can support local file onboarding via the API but we discourage the use as it provides less flexibility, it’s harder to manage, and it has lower data privacy protections. If you wish to use local file imports via API please reach out to your InfoSum representative to discuss your setup.
 
+
     Task List 
 
 
