@@ -1,0 +1,681 @@
+openapi: 3.0.0
+info:
+  title: Activation Queries & Destinations
+  version: AD 1.0
+  description: >-
+    This page contains the essential endpoints of the InfoSum API that help users securely manage data throughout the activation process, allowing them to activate and push data for analysis from InfoSum to [one of our destinations](https://support.infosum.com/hc/en-us/articles/12128356485778-Supported-Destinations-for-Activation). You can download the swagger file above or email solutions@infosum.com to share a Postman Collection.
+
+
+    InfoSum Support: support@infosum.com | [Terms of Service](https://www.infosum.com/legals/website-terms) | [Official Documentation](https://support.infosum.com/)
+
+
+    We highly suggest attempting to activate and push to a destination in the UI first. This way users can confirm they have the correct rights to activate and push to a destination. Additionally, this will allow users to create the destinations and set the configurations before attempting to push via the API. Future versions of the API Playbooks will outline creating a destination and modifying configurations.
+
+    Task List 
+
+
+    1. Create an activation query
+
+
+    2. Optional: Check results ran successfully after running the query
+
+
+    3. Optional: Confirm the destination exists before pushing or grab the Destination configuration
+
+
+    4. Push query results to Destination
+
+
+    <h3>Parameter Reference Table</h3>
+    <table>
+      <tbody>
+        <tr>
+          <th>Postman Step Number</th>
+          <th>Parameter Name</th>
+          <th>Parameter Structure</th>
+          <th>Where to find it</th>
+          <th>When to collect</th>
+        </tr>
+      </tbody>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Query</td>
+          <td>"SELECT self.ID FROM self INTERSECT them"</td>
+          <td>Write it in <strong>Query Tool</strong> or find in <strong>Activations</strong> Page.</td>
+          <td>Have ready before hand</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>Campaign Name</td>
+          <td><em>text</em></td>
+          <td><strong>This is user generated.</strong> This will be the name InfoSum uses to reference the activation result.</td>
+          <td>Have ready before hand</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Query ID</td>
+          <td>xx</td>
+          <td>Response from step 1</td>
+          <td>Can be grabbed from output of step 1</td>
+        </tr>
+        <tr>
+          <td>3, 4</td>
+          <td>Destination ID</td>
+          <td>DST.xx</td>
+          <td>in URL of <strong>Destinations</strong> page</td>
+          <td>Have ready before hand</td>
+        </tr>
+        <tr> 
+          <td>4</td>
+          <td>Destination Push Config</td>
+          <td>JSON config</td>
+          <td>Response from step 3</td>
+          <td>Can be grabbed from output of step 3</td>
+        </tr>
+        <tr> 
+          <td>4</td>
+          <td>Destination Filename</td>
+          <td><em>text</em>.csv (or another file type)</td>
+          <td><strong>This is user generated.</strong> This will be the name InfoSum gives to the file in the destination.</td>
+          <td>Have ready before hand</td>
+        </tr>
+        <tr> </tr>
+      </tbody>
+    </table>
+
+servers:
+  - url: http://{{baseurl}}
+  - url: https://api.infosum.com
+components:
+  securitySchemes:
+    apikeyAuth:
+      type: http
+      scheme: apikey
+security:
+  - apikeyAuth: []
+tags:
+  - name: Activations
+  - name: Destinations
+paths:
+  /api/v1/activations:
+    post:
+      tags:
+        - Activations
+      summary: 1. Create a Query
+      description: >-
+        Queue a Query for execution. Returns immediately with an ID of the Query
+        created.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                query: Query
+                campaign_name: Campaign Name
+      parameters:
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                query_id: <string>
+                done: <boolean>
+        '400':
+          description: Bad Request
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: <string>
+                metadata:
+                  quis57: <string>
+        '401':
+          description: Unauthorized
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: <string>
+                metadata:
+                  quis57: <string>
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                code: <integer>
+                message: <string>
+                details:
+                  - '@type': <string>
+                    incididunt_6: {}
+                  - '@type': <string>
+  /api/v1/activations/{query_id}:
+    get:
+      tags:
+        - Activations
+      summary: 2. Get a Result
+      description: Get the Result of a Query, when it is available.
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: query_id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                dimensions:
+                  - value: <string>
+                    category: <string>
+                    count: <long>
+                    continuous: <boolean>
+                    private_id: <string>
+                    dimensions:
+                      - value: >-
+                          <Circular reference to
+                          #/components/schemas/tyraelDimension detected>
+                      - value: >-
+                          <Circular reference to
+                          #/components/schemas/tyraelDimension detected>
+                  - value: <string>
+                    category: <string>
+                    count: <long>
+                    continuous: <boolean>
+                    private_id: <string>
+                    dimensions:
+                      - value: >-
+                          <Circular reference to
+                          #/components/schemas/tyraelDimension detected>
+                      - value: >-
+                          <Circular reference to
+                          #/components/schemas/tyraelDimension detected>
+                audience: <long>
+                quality_measures:
+                  redaction_threshold_outlier: <float>
+                  rounding_threshold_outlier: <float>
+                  model_accuracy: <float>
+                  result_precision_include_empty_bins: <float>
+                  result_precision_exclude_empty_bins: <float>
+                join_metadata:
+                  - from_dataset:
+                      id: <string>
+                      name: <string>
+                    to_dataset:
+                      id: <string>
+                      name: <string>
+                    keys:
+                      - key_id: <int64>
+                        name: <string>
+                      - key_id: <int64>
+                        name: <string>
+                  - from_dataset:
+                      id: <string>
+                      name: <string>
+                    to_dataset:
+                      id: <string>
+                      name: <string>
+                    keys:
+                      - key_id: <int64>
+                        name: <string>
+                      - key_id: <int64>
+                        name: <string>
+                count_metadata:
+                  - dataset:
+                      id: <string>
+                      name: <string>
+                    keys:
+                      - key_id: <int64>
+                        name: <string>
+                      - key_id: <int64>
+                        name: <string>
+                  - dataset:
+                      id: <string>
+                      name: <string>
+                    keys:
+                      - key_id: <int64>
+                        name: <string>
+                      - key_id: <int64>
+                        name: <string>
+        '401':
+          description: Unauthorized
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: <string>
+                metadata:
+                  quis57: <string>
+        '404':
+          description: Not Found
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: <string>
+                metadata:
+                  quis57: <string>
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                code: <integer>
+                message: <string>
+                details:
+                  - '@type': <string>
+                    incididunt_6: {}
+                  - '@type': <string>
+  /api/v2/destinations/instances/{destination_id}:
+    get:
+      tags:
+        - Destinations
+      summary: 3. Get Destination Instance
+      description: Returns details about an owned Destination Instance.
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: destination_id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                destination:
+                  config: {}
+                  created_time: <dateTime>
+                  creator_id: <string>
+                  description: <string>
+                  destination_type_id: <string>
+                  editable_paths:
+                    - <string>
+                    - <string>
+                  id: <string>
+                  incoming_share_id: <string>
+                  name: <string>
+                  outgoing_share_ids:
+                    - <string>
+                    - <string>
+                  owner_id: <string>
+                  permission_ids:
+                    - <string>
+                    - <string>
+                  permissioned_to_permitted_company: <boolean>
+                  updated_time: <dateTime>
+        '400':
+          description: Bad Request
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '401':
+          description: Unauthorized
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '403':
+          description: Forbidden
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '404':
+          description: Not Found
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: Internal Server Error
+                  value:
+                    details:
+                      code: <string>
+                      message: <string>
+                    error:
+                      code: <string>
+                      message: <string>
+                    help_url: <string>
+                    request_id: <string>
+                    time: <dateTime>
+                example-1:
+                  summary: An unexpected error response.
+                  value:
+                    details:
+                      code: <string>
+                      message: <string>
+                    error:
+                      code: <string>
+                      message: <string>
+                    help_url: <string>
+                    request_id: <string>
+                    time: <dateTime>
+  /api/v2/activations/queries/{query_id}/destinations/{destination_id}/push:
+    post:
+      tags:
+        - Destinations
+      summary: 4. Push Activation Result to Destination
+      description: Pushes results of a query to a specific destination instance.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example: 
+                push_config": {
+                  filename: filename
+                    }
+      parameters:
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: query_id
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: destination_id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                push_id: <string>
+        '400':
+          description: Bad Request
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '401':
+          description: Unauthorized
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '403':
+          description: Forbidden
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '404':
+          description: Not Found
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: Internal Server Error
+                  value:
+                    details:
+                      code: <string>
+                      message: <string>
+                    error:
+                      code: <string>
+                      message: <string>
+                    help_url: <string>
+                    request_id: <string>
+                    time: <dateTime>
+                example-1:
+                  summary: An unexpected error response.
+                  value:
+                    details:
+                      code: <string>
+                      message: <string>
+                    error:
+                      code: <string>
+                      message: <string>
+                    help_url: <string>
+                    request_id: <string>
+                    time: <dateTime>

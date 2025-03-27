@@ -3,5 +3,6 @@ export default {
     'intro',
     'authentication',
     'filtering',
+    'playbooks'
   ],
 };
