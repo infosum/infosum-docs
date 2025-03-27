@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  title: InfoSum Developer Documentation
+  title: InfoSum Developer API
   description: >-
     This page contains the documentation for the InfoSum Developer API. The
     methods allow you to try making requests and inspect the input and output
@@ -10,8 +10,6 @@ info:
   contact:
     name: InfoSum Support
     email: support@infosum.com
-tags:
-  - name: Tyrael
 schemes:
   - https
 consumes:
@@ -4467,5 +4465,5 @@ securityDefinitions:
 security:
   - API Keys: []
 externalDocs:
-  description: Official documentation
+  description: Official Documentation
   url: https://support.infosum.com/

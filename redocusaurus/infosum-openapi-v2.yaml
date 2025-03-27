@@ -4549,9 +4549,7 @@ definitions:
     description: PublishResponse is the empty response for the Publish rpc.
     properties:
       execution_id:
-        description: >-
-          ExecutionID is the id of the prepare execution to publish to the
-          dataset.
+        description: ExecutionID is the id of the prepare execution that was published.
         type: string
     type: object
   Publishing.v1.Status:
