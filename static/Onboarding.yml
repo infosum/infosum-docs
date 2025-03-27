@@ -23,7 +23,7 @@ info:
     2. Import the data to your Cloud Vault using an Importer
 
 
-    3. Confirm import was successfully
+    3. Confirm import was created successfully
 
 
     4. Create a recordset of the data’s format
@@ -38,7 +38,7 @@ info:
     7. Normalize the data (standardization)
 
 
-    8. Confirm normalization was successfully
+    8. Confirm normalization was created successfully
 
 
     9. List Dataset Prepare Configurations
