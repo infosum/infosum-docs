@@ -863,6 +863,12 @@
 				},
 				"region": {
 					"$ref": "#/definitions/Region"
+				},
+				"remote_connector_id": {
+					"type": "string"
+				},
+				"remote_connector_type": {
+					"$ref": "#/definitions/RemoteConnectorType"
 				}
 			},
 			"type": "object"
@@ -1154,136 +1160,6 @@
 			},
 			"type": "object"
 		},
-		"Dataset_Stats.AttributeColumnStatsResponse": {
-			"description": "AttributeColumnStatsResponse is the response returned by AttributeColumnStats method.",
-			"properties": {
-				"id_to_representations_stats": {
-					"additionalProperties": {
-						"$ref": "#/definitions/Dataset_Stats.RepresentationStatsList"
-					},
-					"description": "IdToRepresentationsStats is a map of attribute column ID to a list of their corresponding representations stats.",
-					"type": "object"
-				}
-			},
-			"type": "object"
-		},
-		"Dataset_Stats.ExportColumnStatsResponse": {
-			"description": "ExportColumnStatsResponse is the response to ExportColumnStats method.",
-			"properties": {
-				"valid_values": {
-					"description": "ValidValues is the number of valid values for this export column.",
-					"format": "uint64",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Dataset_Stats.KeyColumnStatsResponse": {
-			"description": "KeyColumnStatsResponse is the response returned by KeyColumnStats method.",
-			"properties": {
-				"key_id_to_stats": {
-					"additionalProperties": {
-						"$ref": "#/definitions/Dataset_Stats.v2.KeyColumnStats"
-					},
-					"description": "KeyIdToStats is a map of key column ID to its corresponding stats.",
-					"type": "object"
-				}
-			},
-			"type": "object"
-		},
-		"Dataset_Stats.RepresentationStats": {
-			"description": "RepresentationStats holds stats information for a attribute column representation.",
-			"properties": {
-				"distinct_values": {
-					"description": "DistinctValues is the number of distinct values for this representation.",
-					"format": "uint64",
-					"type": "string"
-				},
-				"multi_value": {
-					"description": "MultiValue is set to true if this is a multi-value key column.",
-					"type": "boolean"
-				},
-				"representation_id": {
-					"description": "RepresentationId is the ID of the representation.",
-					"type": "string"
-				},
-				"valid_values": {
-					"description": "ValidValues is the number of valid values for this representation.",
-					"format": "uint64",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Dataset_Stats.RepresentationStatsList": {
-			"description": "RepresentationStatsList contains a list of RepresentationStats that can be used in a map field.",
-			"properties": {
-				"representations_stats": {
-					"items": {
-						"$ref": "#/definitions/Dataset_Stats.RepresentationStats",
-						"type": "object"
-					},
-					"type": "array"
-				}
-			},
-			"type": "object"
-		},
-		"Dataset_Stats.SummaryStatsResponse": {
-			"description": "SummaryStatsResponse is the response returned by SummaryStats method.",
-			"properties": {
-				"attribute_columns": {
-					"description": "AttributeColumns is the number of attributes of the dataset.",
-					"format": "uint64",
-					"type": "string"
-				},
-				"export_columns": {
-					"description": "ExportColumns is the number of export columns of the dataset.",
-					"format": "uint64",
-					"type": "string"
-				},
-				"key_columns": {
-					"description": "KeyColumns is the number of keys of the dataset.",
-					"format": "uint64",
-					"type": "string"
-				},
-				"total_rows": {
-					"description": "TotalRows is the total rows of the dataset.",
-					"format": "uint64",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Dataset_Stats.v2.KeyColumnStats": {
-			"description": "KeyColumnStats holds stats information for a key column.",
-			"properties": {
-				"distinct_identifiers": {
-					"description": "DistinctIdentifiers is the number of distinct identifiers for this key column.",
-					"format": "uint64",
-					"type": "string"
-				},
-				"distinct_values": {
-					"description": "DistinctValues is the number of distinct values for this key column.",
-					"format": "uint64",
-					"type": "string"
-				},
-				"identifiers": {
-					"description": "Identifiers is the number of identifiers for this key column.",
-					"format": "uint64",
-					"type": "string"
-				},
-				"multi_value": {
-					"description": "MultiValue is set to true if this is a multi-value key column.",
-					"type": "boolean"
-				},
-				"valid_values": {
-					"description": "ValidValues is the number of valid values for this key column.",
-					"format": "uint64",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
 		"Datasets.CreateDatasetRequest": {
 			"description": "CreateDatasetRequest is the input used by the CreateDataset rpc.",
 			"properties": {
@@ -1340,16 +1216,16 @@
 			"description": "Dataset is the summary of a dataset returned when getting a dataset.",
 			"properties": {
 				"created_by": {
-					"description": "CreatedBy is the user ID who creates the dataset.",
+					"description": "The ID of the user who created the dataset.",
 					"type": "string"
 				},
 				"created_date_time": {
-					"description": "CreatedDateTime is the datetime that the dataset was created.",
+					"description": "Creation date time of the dataset.",
 					"format": "date-time",
 					"type": "string"
 				},
 				"dataset_id": {
-					"description": "DatasetID is the ID of the dataset.",
+					"description": "The ID of the dataset.",
 					"type": "string"
 				},
 				"dataset_type": {
@@ -1358,10 +1234,10 @@
 							"$ref": "#/definitions/Datasets.DatasetType"
 						}
 					],
-					"title": "DatasetType is the dataset type, insight or activation"
+					"description": "The type of dataset, e.g. insight/activation."
 				},
 				"description": {
-					"description": "Description is a user defined string to describe the dataset.",
+					"description": "Description for the dataset.",
 					"type": "string"
 				},
 				"expiration": {
@@ -1370,18 +1246,18 @@
 							"$ref": "#/definitions/Datasets.DatasetExpiration"
 						}
 					],
-					"description": "Expiration specifies information about how the dataset should expire."
+					"description": "Expiration details of the dataset."
 				},
 				"owner_id": {
-					"description": "OwnerID is the ID of the company that owns the dataset.",
+					"description": "ID of the owner of the dataset.",
 					"type": "string"
 				},
 				"private_id": {
-					"description": "PrivateID is the private ID of the dataset.",
+					"description": "The private ID of the dataset. This is the name used when querying the dataset - it must be unique within the owner scope and must have a length 17 character or less.",
 					"type": "string"
 				},
 				"public_name": {
-					"description": "PublicName is the public name of the dataset.",
+					"description": "The public name of the dataset. The public name does not need to be unique but must not be empty, may only contain alphanumeric character and may have a maximum length of 100 characters.",
 					"type": "string"
 				},
 				"publish_details": {
@@ -1390,10 +1266,10 @@
 							"$ref": "#/definitions/Datasets.ListedPublishDetails"
 						}
 					],
-					"description": "ListedPublishDetails is the summary info for the published slot."
+					"description": "Summary details of the publish to this dataset. Empty if no recordset has been published to the dataset."
 				},
 				"published_by": {
-					"description": "PublishedBy is the user ID who creates the dataset.",
+					"description": "The ID of the user who published the dataset. Empty if the dataset has not yet been published to.",
 					"type": "string"
 				},
 				"region": {
@@ -1402,7 +1278,7 @@
 							"$ref": "#/definitions/Datasets.Region"
 						}
 					],
-					"description": "Region is the cloud vault region the dataset can accept input data from."
+					"description": "The region of the dataset. Only prepares in the same region can be published to this dataset."
 				}
 			},
 			"type": "object"
@@ -1476,16 +1352,16 @@
 			"description": "ListedDataset is the summary of a dataset returned when listing datasets.",
 			"properties": {
 				"created_by": {
-					"description": "CreatedBy is the user ID who creates the dataset.",
+					"description": "The ID of the user who created the dataset.",
 					"type": "string"
 				},
 				"created_date_time": {
-					"description": "CreatedDateTime is the datetime that the dataset was created.",
+					"description": "Creation date time of the dataset.",
 					"format": "date-time",
 					"type": "string"
 				},
 				"dataset_id": {
-					"description": "DatasetID is the ID of the dataset.",
+					"description": "The ID of the dataset.",
 					"type": "string"
 				},
 				"dataset_type": {
@@ -1494,10 +1370,10 @@
 							"$ref": "#/definitions/Datasets.DatasetType"
 						}
 					],
-					"title": "DatasetType is the dataset type, insight or activation"
+					"description": "The type of dataset, e.g. insight/activation."
 				},
 				"description": {
-					"description": "Description is a user defined string to describe the dataset.",
+					"description": "Description for the dataset.",
 					"type": "string"
 				},
 				"expiration": {
@@ -1506,18 +1382,18 @@
 							"$ref": "#/definitions/Datasets.DatasetExpiration"
 						}
 					],
-					"description": "Expiration specifies information about how the dataset should expire."
+					"description": "Expiration details of the dataset."
 				},
 				"owner_id": {
-					"description": "OwnerID is the ID of the company that owns the dataset.",
+					"description": "ID of the owner of the dataset.",
 					"type": "string"
 				},
 				"private_id": {
-					"description": "PrivateID is the private ID of the dataset.",
+					"description": "The private ID of the dataset. This is the name used when querying the dataset - it must be unique within the owner scope and must have a length 17 character or less.",
 					"type": "string"
 				},
 				"public_name": {
-					"description": "PublicName is the public name of the dataset.",
+					"description": "The public name of the dataset. The public name does not need to be unique but must not be empty, may only contain alphanumeric character and may have a maximum length of 100 characters.",
 					"type": "string"
 				},
 				"publish_details": {
@@ -1526,10 +1402,10 @@
 							"$ref": "#/definitions/Datasets.ListedPublishDetails"
 						}
 					],
-					"description": "ListedPublishDetails is the summary info for the published slot."
+					"description": "Summary details of the publish to this dataset. Empty if no recordset has been published to the dataset."
 				},
 				"published_by": {
-					"description": "PublishedBy is the user ID who creates the dataset.",
+					"description": "The ID of the user who published the dataset. Empty if the dataset has not yet been published to.",
 					"type": "string"
 				},
 				"region": {
@@ -1538,7 +1414,7 @@
 							"$ref": "#/definitions/Datasets.Region"
 						}
 					],
-					"description": "Region is the cloud vault region the dataset can accept input data from."
+					"description": "The region of the dataset. Only prepares in the same region can be published to this dataset."
 				}
 			},
 			"type": "object"
@@ -4999,10 +4875,6 @@
 			},
 			"type": "object"
 		},
-		"Publishing.GetPrepareStatsResponse": {
-			"description": "GetPrepareStatsResponse is the response for the GetPrepareStats rpc.\n\nPrepare",
-			"type": "object"
-		},
 		"Publishing.History": {
 			"description": "History holds information about the status of a prepare publish execution\nshard.",
 			"properties": {
@@ -6513,6 +6385,15 @@
 				"IBM_EU_CENTRAL_1",
 				"AWS_EU_CENTRAL_1",
 				"AWS_AP_SOUTHEAST_2"
+			],
+			"type": "string"
+		},
+		"RemoteConnectorType": {
+			"default": "REMOTE_CONNECTOR_TYPE_INVALID",
+			"description": "RemoteConnectorType is an enum that denotes the provider for a remote connector.",
+			"enum": [
+				"REMOTE_CONNECTOR_TYPE_INVALID",
+				"REMOTE_CONNECTOR_TYPE_SNOWFLAKE"
 			],
 			"type": "string"
 		},
@@ -9629,254 +9510,6 @@
 				]
 			}
 		},
-		"/api/v2/datasets/stats/attribute_columns/{dataset_id}": {
-			"get": {
-				"description": "Get stats for all the attribute columns of a dataset.",
-				"operationId": "AttributeColumnStats",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "dataset_id",
-						"required": true,
-						"type": "string"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "A successful response.",
-						"schema": {
-							"$ref": "#/definitions/Dataset_Stats.AttributeColumnStatsResponse"
-						}
-					},
-					"400": {
-						"description": "Returned when the AttributeColumnStats request was not valid.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"401": {
-						"description": "Returned when the user could not be authorized.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"403": {
-						"description": "Returned when the user does not have the required permission.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"404": {
-						"description": "Returned when the dataset ID isn't found.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"500": {
-						"description": "Internal Server Error",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"default": {
-						"description": "An unexpected error response.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					}
-				},
-				"summary": "Get stats for all the attribute columns of a dataset.",
-				"tags": [
-					"Dataset Stats"
-				]
-			}
-		},
-		"/api/v2/datasets/stats/export_columns/{dataset_id}": {
-			"get": {
-				"description": "Get stats for all the export columns of a dataset.",
-				"operationId": "ExportColumnStats",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "dataset_id",
-						"required": true,
-						"type": "string"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "A successful response.",
-						"schema": {
-							"$ref": "#/definitions/Dataset_Stats.ExportColumnStatsResponse"
-						}
-					},
-					"400": {
-						"description": "Returned when the ExportColumnStats request was not valid.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"401": {
-						"description": "Returned when the user could not be authorized.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"403": {
-						"description": "Returned when the user does not have the required permission.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"404": {
-						"description": "Returned when the dataset ID isn't found.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"500": {
-						"description": "Internal Server Error",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"default": {
-						"description": "An unexpected error response.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					}
-				},
-				"summary": "Get stats for all the export columns of a dataset.",
-				"tags": [
-					"Dataset Stats"
-				]
-			}
-		},
-		"/api/v2/datasets/stats/key_columns/{dataset_id}": {
-			"get": {
-				"description": "Get stats for all the key columns of a dataset.",
-				"operationId": "KeyColumnStats",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "dataset_id",
-						"required": true,
-						"type": "string"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "A successful response.",
-						"schema": {
-							"$ref": "#/definitions/Dataset_Stats.KeyColumnStatsResponse"
-						}
-					},
-					"400": {
-						"description": "Returned when the KeyColumnStats request was not valid.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"401": {
-						"description": "Returned when the user could not be authorized.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"403": {
-						"description": "Returned when the user does not have the required permission.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"404": {
-						"description": "Returned when the dataset ID isn't found.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"500": {
-						"description": "Internal Server Error",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"default": {
-						"description": "An unexpected error response.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					}
-				},
-				"summary": "Get stats for all the key columns of a dataset.",
-				"tags": [
-					"Dataset Stats"
-				]
-			}
-		},
-		"/api/v2/datasets/stats/summary/{dataset_id}": {
-			"get": {
-				"description": "Get summary stats for a dataset.",
-				"operationId": "SummaryStats",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "dataset_id",
-						"required": true,
-						"type": "string"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "A successful response.",
-						"schema": {
-							"$ref": "#/definitions/Dataset_Stats.SummaryStatsResponse"
-						}
-					},
-					"400": {
-						"description": "Returned when the SummaryStats request was not valid.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"401": {
-						"description": "Returned when the user could not be authorized.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"403": {
-						"description": "Returned when the user does not have the required permission.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"404": {
-						"description": "Returned when the dataset ID isn't found.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"500": {
-						"description": "Internal Server Error",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"default": {
-						"description": "An unexpected error response.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					}
-				},
-				"summary": "Get summary stats for a dataset.",
-				"tags": [
-					"Dataset Stats"
-				]
-			}
-		},
 		"/api/v2/datasets/{dataset_id}": {
 			"delete": {
 				"description": "Deletes a dataset and any underlying compute resource.",
@@ -12285,6 +11918,13 @@
 						"name": "import_id",
 						"required": true,
 						"type": "string"
+					},
+					{
+						"description": "An optional destination folder, if provided all imported files will be copied in this folder. This will override the Importer target folder.",
+						"in": "query",
+						"name": "target_folder",
+						"required": false,
+						"type": "string"
 					}
 				],
 				"responses": {
@@ -13741,69 +13381,6 @@
 					}
 				},
 				"summary": "Cancel a Prepare operation.",
-				"tags": [
-					"Publishing"
-				]
-			}
-		},
-		"/api/v2/prepares/executions/{execution_id}/stats": {
-			"get": {
-				"description": "Get stats about a specific prepare operation.",
-				"operationId": "GetPrepareStats",
-				"parameters": [
-					{
-						"description": "ExecutionID is the ID of the prepare execution to fetch stats for.",
-						"in": "path",
-						"name": "execution_id",
-						"required": true,
-						"type": "string"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "A successful response.",
-						"schema": {
-							"$ref": "#/definitions/Publishing.GetPrepareStatsResponse"
-						}
-					},
-					"400": {
-						"description": "Returned when the GetPrepareStats request was not valid.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"401": {
-						"description": "Returned when the user could not be authorized.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"403": {
-						"description": "Returned when the user does not have the required permission.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"404": {
-						"description": "Returned when the dataset ID isn't found.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"500": {
-						"description": "Internal Server Error",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"default": {
-						"description": "An unexpected error response.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					}
-				},
-				"summary": "Get stats about a specific prepare operation.",
 				"tags": [
 					"Publishing"
 				]
