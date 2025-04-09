@@ -3803,8 +3803,75 @@
 			},
 			"type": "object"
 		},
+		"Normalization_Config.CustomKey": {
+			"properties": {
+				"functions": {
+					"description": "Functions is a list of functions to apply to the data of the input columm, in order,\nto produce the data for the output column.",
+					"items": {
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"input_column": {
+					"description": "InputColumn is the name of the column in the input recordset to be used\nto create the custom key.",
+					"type": "string"
+				},
+				"output_column": {
+					"description": "OutputColumn is the name of the column in the output recordset after normalization.",
+					"type": "string"
+				}
+			},
+			"title": "CustomKey is the definition for creating a user defined key from an input column,",
+			"type": "object"
+		},
+		"Normalization_Config.DataType": {
+			"default": "DATATYPE_INVALID",
+			"description": "DataType is the list of types that an output column from normalization can be.",
+			"enum": [
+				"DATATYPE_INVALID",
+				"INTEGER",
+				"FLOAT",
+				"STRING",
+				"TIMESTAMP",
+				"BOOL"
+			],
+			"type": "string"
+		},
 		"Normalization_Config.DeleteConfigResponse": {
 			"description": "DeleteConfigResponse is the empty response of the DeleteConfig rpc.",
+			"type": "object"
+		},
+		"Normalization_Config.EnrichmentConfig": {
+			"description": "EnrichmentConfig can be provided as part of a normalisation config to determine how to enrich the imported data\nduring the normalisation process.",
+			"properties": {
+				"uk_addr_mapper": {
+					"$ref": "#/definitions/Normalization_Config.UKAddrMapper"
+				},
+				"us_addr_mapper": {
+					"$ref": "#/definitions/Normalization_Config.USAddrMapper"
+				}
+			},
+			"type": "object"
+		},
+		"Normalization_Config.ExportColumn": {
+			"description": "ExportColumn is the definition for creating a column of activation data from an input column.",
+			"properties": {
+				"functions": {
+					"description": "Functions is a list of functions to apply to the data of the input columm, in order,\nto produce the data for the output column.",
+					"items": {
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"input_column": {
+					"description": "InputColumn is the name of the column in the input recordset to be used\nto create the export column.",
+					"type": "string"
+				},
+				"output_column": {
+					"description": "OutputColumn is the name of the column in the output recordset after normalization.",
+					"type": "string"
+				}
+			},
 			"type": "object"
 		},
 		"Normalization_Config.GetConfigResponse": {
@@ -3819,6 +3886,35 @@
 					"description": "Config is the normalisation configuration that was requested."
 				}
 			},
+			"type": "object"
+		},
+		"Normalization_Config.GlobalKey": {
+			"properties": {
+				"functions": {
+					"description": "Functions is a list of functions to apply to the data of the input column, in order,\nbefore the functions in the global schema are applied to produce the data for the output column.",
+					"items": {
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"global_schema_id": {
+					"description": "GlobalSchemaId is the id number of the global schema key to create.",
+					"format": "int64",
+					"type": "integer"
+				},
+				"input_column": {
+					"description": "InputColumn is the name of the column in the input recordset to be used\nto create the key.",
+					"type": "string"
+				},
+				"user_params": {
+					"additionalProperties": {
+						"type": "string"
+					},
+					"description": "UserParams allows customization of the default functions' parameters for a global schema key.\nEach entry uses the format \u003cfunction_name.param_name\u003e to specify which function's parameter to override.\nThis enables overriding specific parameters of the default functions applied to the global schema key.\nThe provided parameter value is interpreted as an input column if not enclosed with single quotes.\nThe global schema key defines a list of customizable parameters, if any.",
+					"type": "object"
+				}
+			},
+			"title": "GlobalKey is a definition for creating an instance of a global schema key.\nfrom an input column",
 			"type": "object"
 		},
 		"Normalization_Config.IncrementalInstruction": {
@@ -3954,9 +4050,57 @@
 			},
 			"type": "object"
 		},
+		"Normalization_Config.NormalizerConfig": {
+			"properties": {
+				"categories": {
+					"items": {
+						"$ref": "#/definitions/Normalization_Config.UserCategory",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"custom_keys": {
+					"items": {
+						"$ref": "#/definitions/Normalization_Config.CustomKey",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"enrichments": {
+					"items": {
+						"$ref": "#/definitions/Normalization_Config.EnrichmentConfig",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"export_columns": {
+					"items": {
+						"$ref": "#/definitions/Normalization_Config.ExportColumn",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"keys": {
+					"items": {
+						"$ref": "#/definitions/Normalization_Config.GlobalKey",
+						"type": "object"
+					},
+					"type": "array"
+				}
+			},
+			"type": "object"
+		},
 		"Normalization_Config.Null": {
 			"description": "Null is an enum used to map values to JSON null.",
 			"type": "object"
+		},
+		"Normalization_Config.NullValue": {
+			"default": "NULL_VALUE",
+			"description": "`NullValue` is a singleton enumeration to represent the null value for the\n`Value` type union.\n\nThe JSON representation for `NullValue` is JSON `null`.\n\n - NULL_VALUE: Null value.",
+			"enum": [
+				"NULL_VALUE"
+			],
+			"type": "string"
 		},
 		"Normalization_Config.Pair": {
 			"description": "Pair is a key-value pair describing a single element of a mapping.",
@@ -4065,6 +4209,137 @@
 						"type": "string"
 					},
 					"type": "array"
+				}
+			},
+			"type": "object"
+		},
+		"Normalization_Config.UKAddrMapper": {
+			"description": "UKAddrMapper contains the config required for normalisation data enrichment using the UK address mapper.",
+			"properties": {
+				"house_number_column": {
+					"description": "HouseNumberColumn is the name of the column the house number.",
+					"type": "string"
+				},
+				"postcode_column": {
+					"description": "PostcodeColumn is the name of the column containing the address's postcode, if available. The postcode is\nnot required but allows for much faster processing.",
+					"type": "string"
+				},
+				"street_name_column": {
+					"description": "StreetNameColumn is the name of the column containing the street name.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Normalization_Config.USAddrMapper": {
+			"description": "USAddrMapper contains the config required for normalisation data enrichment using the US address mapper.",
+			"properties": {
+				"city_column": {
+					"description": "CityColumn is the name of the column containing the postal town / city.",
+					"type": "string"
+				},
+				"first_addr_line_column": {
+					"description": "FirstAddrLineColumn is the name of the column containing the first address line. This can be the full address or just the street name.",
+					"type": "string"
+				},
+				"house_number_column": {
+					"description": "HouseNumberColumn is the name of the column containing the house number.\nIf present, it will be prepended to the first address line during enrichment.",
+					"type": "string"
+				},
+				"secondary_addr_line_column": {
+					"description": "SecondaryAddrLineColumn is the name of the column containing the second address line.",
+					"type": "string"
+				},
+				"state_column": {
+					"description": "StateColumn is the name of the column containing the address's state.",
+					"type": "string"
+				},
+				"third_addr_line_column": {
+					"description": "ThirdAddrLineColumn is the name of the column containing the third address line.",
+					"type": "string"
+				},
+				"zipcode_column": {
+					"description": "ZipcodeColumn is the name of the column containing the address's zipcode.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Normalization_Config.UpdateConfigBody": {
+			"description": "UpdateConfigRequest is the request to update a normalization config.",
+			"properties": {
+				"payload": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Normalization_Config.UpdateConfigPayload"
+						}
+					],
+					"description": "Payload is the full normalization config payload to fully replace the existing config."
+				}
+			},
+			"type": "object"
+		},
+		"Normalization_Config.UpdateConfigPayload": {
+			"description": "UpdateConfigPayload is the request payload for updating a normalization config.",
+			"properties": {
+				"config": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Normalization_Config.NormalizerConfig"
+						}
+					],
+					"description": "Config is the complete updated normalization config."
+				},
+				"description": {
+					"description": "Description is the updated normalization config description.",
+					"type": "string"
+				},
+				"name": {
+					"description": "Name is the updated normalization config name.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Normalization_Config.UpdateConfigResponse": {
+			"description": "UpdateConfigResponse is the response for UpdateConfig.",
+			"properties": {
+				"config": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Normalization_Config.NormalizerConfig"
+						}
+					],
+					"description": "Config is the updated normalization config."
+				}
+			},
+			"type": "object"
+		},
+		"Normalization_Config.UserCategory": {
+			"description": "UserCategory is the definition for creating a user defined category from an input column.",
+			"properties": {
+				"data_type": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Normalization_Config.DataType"
+						}
+					],
+					"description": "DataType specifies the type of the data in the output recordset."
+				},
+				"functions": {
+					"description": "Functions is a list of functions to apply to the data of the input columm, in order,\nto produce the data for the output column.",
+					"items": {
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"input_column": {
+					"description": "InputColumn is the name of the column in the input recordset to be used\nto create the category.",
+					"type": "string"
+				},
+				"output_column": {
+					"description": "OutputColumn is the name of the column in the output recordset after normalization.",
+					"type": "string"
 				}
 			},
 			"type": "object"
@@ -12558,6 +12833,75 @@
 					}
 				},
 				"summary": "Get a Normalization Configuration.",
+				"tags": [
+					"Normalization Config"
+				]
+			},
+			"post": {
+				"description": "Updates a normalization config. This endpoint uses the POST method instead of PATCH, so the complete updated config—including all details—is required to replace the existing one.",
+				"operationId": "UpdateConfig",
+				"parameters": [
+					{
+						"description": "ConfigID is the ID of the config to update.",
+						"in": "path",
+						"name": "config_id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"in": "body",
+						"name": "body",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Normalization_Config.UpdateConfigBody"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Normalization_Config.UpdateConfigResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the UpdateConfigRequest request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the required permission.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"404": {
+						"description": "Returned when the specified normalisation config does not exist.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Updates a normalization config.",
 				"tags": [
 					"Normalization Config"
 				]
