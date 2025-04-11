@@ -861,9 +861,6 @@
 				"prefix": {
 					"type": "string"
 				},
-				"provider": {
-					"$ref": "#/definitions/CloudVaultProvider"
-				},
 				"region": {
 					"$ref": "#/definitions/Region"
 				},
@@ -875,17 +872,6 @@
 				}
 			},
 			"type": "object"
-		},
-		"CloudVaultProvider": {
-			"default": "INFOSUM",
-			"enum": [
-				"INFOSUM",
-				"GOOGLE",
-				"AMAZON",
-				"AZURE",
-				"SNOWFLAKE"
-			],
-			"type": "string"
 		},
 		"CloudVaultsList": {
 			"description": "CloudVaultsList contains a list of Cloud Vault IDs.",
