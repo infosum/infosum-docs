@@ -4307,7 +4307,7 @@
 				"config": {
 					"allOf": [
 						{
-							"$ref": "#/definitions/Normalization_Config.NormalizerConfig"
+							"$ref": "#/definitions/Normalization_Config.ConfigEntity"
 						}
 					],
 					"description": "Config is the updated normalization config."
