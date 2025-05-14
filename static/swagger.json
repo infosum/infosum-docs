@@ -863,6 +863,12 @@
 				},
 				"region": {
 					"$ref": "#/definitions/Region"
+				},
+				"remote_connector_id": {
+					"type": "string"
+				},
+				"remote_connector_type": {
+					"$ref": "#/definitions/RemoteConnectorType"
 				}
 			},
 			"type": "object"
@@ -1033,6 +1039,1056 @@
 			},
 			"type": "object"
 		},
+		"Collaborations.ActivationDatasetPermission": {
+			"properties": {
+				"collaboration_dataset_name": {
+					"description": "A name, unique within this collaboration, used to refer to the dataset in queries, audience builder, etc.",
+					"type": "string"
+				},
+				"dataset_id": {
+					"description": "The ID of the dataset added to the collaboration.",
+					"type": "string"
+				},
+				"exportable_to_members": {
+					"description": "The collaboration members whose destinations can be used as a target to export activation query results to from this dataset. If this field is empty then no query results from this dataset can be exported.",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				},
+				"intersection_only": {
+					"description": "If true, restricts the dataset to being used in queries where it is intersected with at least one other dataset.",
+					"type": "boolean"
+				},
+				"owner_id": {
+					"description": "The company owning the dataset.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Collaborations.AddActivationDatasetBody": {
+			"properties": {
+				"collaboration_dataset_name": {
+					"description": "A name, unique within this collaboration, used to refer to the dataset in queries, audience builder, etc. Note: the value should between 1 and 17 characters long and alphanumeric only",
+					"type": "string"
+				},
+				"dataset_id": {
+					"description": "The ID of the activation dataset to be added to the collaboration.",
+					"type": "string"
+				},
+				"exportable_to_members": {
+					"description": "The collaboration members whose destinations can be used as a target to export activation query results to from this dataset. If this field is empty then no query results from this dataset can be exported.",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				},
+				"intersection_only": {
+					"description": "Whether the activation dataset should only allow intersection queries.",
+					"type": "boolean"
+				}
+			},
+			"type": "object"
+		},
+		"Collaborations.AddActivationDatasetResponse": {
+			"type": "object"
+		},
+		"Collaborations.AddDestinationBody": {
+			"properties": {
+				"destination_id": {
+					"description": "The ID of the destination to add.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Collaborations.AddDestinationResponse": {
+			"type": "object"
+		},
+		"Collaborations.AddInsightDatasetBody": {
+			"properties": {
+				"activation_allowed": {
+					"description": "If true, allows the dataset to be used in activation queries within the collaboration.",
+					"type": "boolean"
+				},
+				"allowed_attributes": {
+					"description": "A list of the attributes in the insight dataset that can be queried against.",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				},
+				"attribute_restriction": {
+					"description": "If true, restricts the allowed attributes to only those in the `allowed_attributes` list. If false, then all attributes (present and future) will be allowed.",
+					"type": "boolean"
+				},
+				"collaboration_dataset_name": {
+					"description": "A name, unique within this collaboration, used to refer to the dataset in queries, audience builder, etc. Note: the value should between 1 and 17 characters long and alphanumeric only",
+					"type": "string"
+				},
+				"dataset_id": {
+					"description": "The ID of the insight dataset to be added to the collaboration.",
+					"type": "string"
+				},
+				"intersection_only": {
+					"description": "Whether the insight dataset should only allow intersection queries.",
+					"type": "boolean"
+				}
+			},
+			"type": "object"
+		},
+		"Collaborations.AddInsightDatasetResponse": {
+			"type": "object"
+		},
+		"Collaborations.Any": {
+			"additionalProperties": {},
+			"description": "`Any` contains an arbitrary serialized protocol buffer message along with a\nURL that describes the type of the serialized message.\n\nProtobuf library provides support to pack/unpack Any values in the form\nof utility functions or additional generated methods of the Any type.\n\nExample 1: Pack and unpack a message in C++.\n\n    Foo foo = ...;\n    Any any;\n    any.PackFrom(foo);\n    ...\n    if (any.UnpackTo(\u0026foo)) {\n      ...\n    }\n\nExample 2: Pack and unpack a message in Java.\n\n    Foo foo = ...;\n    Any any = Any.pack(foo);\n    ...\n    if (any.is(Foo.class)) {\n      foo = any.unpack(Foo.class);\n    }\n    // or ...\n    if (any.isSameTypeAs(Foo.getDefaultInstance())) {\n      foo = any.unpack(Foo.getDefaultInstance());\n    }\n\n Example 3: Pack and unpack a message in Python.\n\n    foo = Foo(...)\n    any = Any()\n    any.Pack(foo)\n    ...\n    if any.Is(Foo.DESCRIPTOR):\n      any.Unpack(foo)\n      ...\n\n Example 4: Pack and unpack a message in Go\n\n     foo := \u0026pb.Foo{...}\n     any, err := anypb.New(foo)\n     if err != nil {\n       ...\n     }\n     ...\n     foo := \u0026pb.Foo{}\n     if err := any.UnmarshalTo(foo); err != nil {\n       ...\n     }\n\nThe pack methods provided by protobuf library will by default use\n'type.googleapis.com/full.type.name' as the type URL and the unpack\nmethods only use the fully qualified type name after the last '/'\nin the type URL, for example \"foo.bar.com/x/y.z\" will yield type\nname \"y.z\".\n\nJSON\n====\nThe JSON representation of an `Any` value uses the regular\nrepresentation of the deserialized, embedded message, with an\nadditional field `@type` which contains the type URL. Example:\n\n    package google.profile;\n    message Person {\n      string first_name = 1;\n      string last_name = 2;\n    }\n\n    {\n      \"@type\": \"type.googleapis.com/google.profile.Person\",\n      \"firstName\": \u003cstring\u003e,\n      \"lastName\": \u003cstring\u003e\n    }\n\nIf the embedded message type is well-known and has a custom JSON\nrepresentation, that representation will be embedded adding a field\n`value` which holds the custom JSON in addition to the `@type`\nfield. Example (for message [google.protobuf.Duration][]):\n\n    {\n      \"@type\": \"type.googleapis.com/google.protobuf.Duration\",\n      \"value\": \"1.212s\"\n    }",
+			"properties": {
+				"@type": {
+					"description": "A URL/resource name that uniquely identifies the type of the serialized\nprotocol buffer message. This string must contain at least\none \"/\" character. The last segment of the URL's path must represent\nthe fully qualified name of the type (as in\n`path/google.protobuf.Duration`). The name should be in a canonical form\n(e.g., leading \".\" is not accepted).\n\nIn practice, teams usually precompile into the binary all types that they\nexpect it to use in the context of Any. However, for URLs which use the\nscheme `http`, `https`, or no scheme, one can optionally set up a type\nserver that maps type URLs to message definitions as follows:\n\n* If no scheme is provided, `https` is assumed.\n* An HTTP GET on the URL must yield a [google.protobuf.Type][]\n  value in binary format, or produce an error.\n* Applications are allowed to cache lookup results based on the\n  URL, or have them precompiled into a binary to avoid any\n  lookup. Therefore, binary compatibility needs to be preserved\n  on changes to types. (Use versioned type names to manage\n  breaking changes.)\n\nNote: this functionality is not currently available in the official\nprotobuf release, and it is not used for type URLs beginning with\ntype.googleapis.com. As of May 2023, there are no widely used type server\nimplementations and no plans to implement one.\n\nSchemes other than `http`, `https` (or the empty scheme) might be\nused with implementation specific semantics.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Collaborations.AttributeDetail": {
+			"properties": {
+				"fill_rate": {
+					"description": "The percentage of valid rows represented as a decimal number between zero and one.",
+					"format": "float",
+					"type": "number"
+				},
+				"id": {
+					"description": "The unique numeric identifier of this attribute.",
+					"format": "int64",
+					"type": "string"
+				},
+				"label": {
+					"description": "The name of this attribute.",
+					"type": "string"
+				},
+				"type": {
+					"description": "The type of this attribute",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Collaborations.AttributeSummary": {
+			"description": "AttributeSummary provides summary information about an attribute.",
+			"properties": {
+				"label": {
+					"description": "The name of this attribute.",
+					"type": "string"
+				},
+				"type": {
+					"description": "The type of this attribute",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Collaborations.CloseCollaborationResponse": {
+			"type": "object"
+		},
+		"Collaborations.Collaboration": {
+			"properties": {
+				"activation_datasets": {
+					"description": "The activation datasets that have been added to this collaboration.",
+					"items": {
+						"$ref": "#/definitions/Collaborations.ActivationDatasetPermission",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"created_date_time": {
+					"description": "The date and time that the collaboration was created.",
+					"format": "date-time",
+					"type": "string"
+				},
+				"description": {
+					"description": "A description of the collaboration.",
+					"type": "string"
+				},
+				"destination_ids": {
+					"description": "The IDs of destinations that have been added to this collaboration.",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				},
+				"id": {
+					"description": "The ID of the collaboration",
+					"type": "string"
+				},
+				"insight_datasets": {
+					"description": "The insight datasets that have been added to this collaboration.",
+					"items": {
+						"$ref": "#/definitions/Collaborations.InsightDatasetPermission",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"members": {
+					"description": "The members of the collaboration.",
+					"items": {
+						"$ref": "#/definitions/Collaborations.CollaborationMember",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"name": {
+					"description": "The name of the collaboration.",
+					"type": "string"
+				},
+				"owner": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Collaborations.CollaborationMember"
+						}
+					],
+					"description": "The collaboration owner."
+				},
+				"status": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Collaborations.v2.Status"
+						}
+					],
+					"description": "The status of the collaboration."
+				},
+				"updated_date_time": {
+					"description": "The date and time that the collaboration was last updated.",
+					"format": "date-time",
+					"type": "string"
+				}
+			},
+			"title": "Collaboration is the representation of the contents of a collaboration",
+			"type": "object"
+		},
+		"Collaborations.CollaborationEvent": {
+			"properties": {
+				"company_id": {
+					"description": "The ID of the company which performed the action.",
+					"type": "string"
+				},
+				"entities": {
+					"description": "The list of entities referenced in the message along with associated name and ownership details.",
+					"items": {
+						"$ref": "#/definitions/Collaborations.EventEntity",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"event_date_time": {
+					"description": "The date and time the event occurred.",
+					"format": "date-time",
+					"type": "string"
+				},
+				"message": {
+					"description": "The event message that occurred.",
+					"type": "string"
+				},
+				"metadata": {
+					"additionalProperties": {
+						"type": "string"
+					},
+					"description": "A map of accompanying metadata relating to the event.",
+					"type": "object"
+				},
+				"type": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Collaborations.EventType"
+						}
+					],
+					"description": "The type of event that occurred."
+				}
+			},
+			"type": "object"
+		},
+		"Collaborations.CollaborationMember": {
+			"properties": {
+				"display_name": {
+					"description": "The company display name of the collaboration member.",
+					"type": "string"
+				},
+				"id": {
+					"description": "The company ID of the collaboration member.",
+					"type": "string"
+				},
+				"rights": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Collaborations.MemberRights"
+						}
+					],
+					"description": "The rights of the member in the context of the collaboration."
+				}
+			},
+			"type": "object"
+		},
+		"Collaborations.CollaborationSummary": {
+			"properties": {
+				"created_date_time": {
+					"description": "The date and time that the collaboration was created.",
+					"format": "date-time",
+					"type": "string"
+				},
+				"description": {
+					"description": "A description of the collaboration.",
+					"type": "string"
+				},
+				"id": {
+					"description": "The ID of the collaboration",
+					"type": "string"
+				},
+				"members": {
+					"description": "The members of the collaboration.",
+					"items": {
+						"$ref": "#/definitions/Collaborations.CollaborationMember",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"name": {
+					"description": "The name of the collaboration.",
+					"type": "string"
+				},
+				"owner": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Collaborations.CollaborationMember"
+						}
+					],
+					"description": "The collaboration owner."
+				},
+				"status": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Collaborations.v2.Status"
+						}
+					],
+					"description": "The status of the collaboration."
+				},
+				"updated_date_time": {
+					"description": "The date and time that the collaboration was last updated.",
+					"format": "date-time",
+					"type": "string"
+				}
+			},
+			"title": "CollaborationSummary",
+			"type": "object"
+		},
+		"Collaborations.Connection": {
+			"description": "Connection is the representation of the contents of a connection.",
+			"properties": {
+				"from_dataset_id": {
+					"description": "The ID of the dataset the connection is from",
+					"type": "string"
+				},
+				"highest_overlap_key": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Collaborations.Key"
+						}
+					],
+					"description": "The details of the key with the highest overlap between the two datasets"
+				},
+				"id": {
+					"description": "The ID of the connection",
+					"type": "string"
+				},
+				"keys": {
+					"description": "The details of all the matching keys of the two datasets",
+					"items": {
+						"$ref": "#/definitions/Collaborations.Key",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"to_dataset_id": {
+					"description": "The ID of the dataset the connection is to",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Collaborations.ConnectionSummary": {
+			"description": "ConnectionSummary is the summary view of a connection that does not include all the connected keys, only the key with the highest overlap.",
+			"properties": {
+				"from_dataset_id": {
+					"description": "The ID of the dataset the connection is from",
+					"type": "string"
+				},
+				"highest_overlap_key": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Collaborations.Key"
+						}
+					],
+					"description": "The details of the key with the highest overlap between the two datasets"
+				},
+				"id": {
+					"description": "The ID of the connection",
+					"type": "string"
+				},
+				"to_dataset_id": {
+					"description": "The ID of the dataset the connection is to",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Collaborations.CreateCollaborationMember": {
+			"properties": {
+				"company_id": {
+					"description": "The company ID of the member to add to the collaboration.",
+					"type": "string"
+				},
+				"rights": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Collaborations.MemberRights"
+						}
+					],
+					"description": "The member's rights under this collaboration."
+				}
+			},
+			"type": "object"
+		},
+		"Collaborations.CreateCollaborationRequest": {
+			"properties": {
+				"collaborators": {
+					"description": "The companies and rights of the other members in the collaboration.",
+					"items": {
+						"$ref": "#/definitions/Collaborations.CreateCollaborationMember",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"creator_rights": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Collaborations.MemberRights"
+						}
+					],
+					"description": "The rights that you grant yourself under this collaboration."
+				},
+				"description": {
+					"description": "An optional description for the collaboration, eg; the purpose or goal.",
+					"type": "string"
+				},
+				"name": {
+					"description": "A name for this collaboration",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Collaborations.CreateCollaborationResponse": {
+			"properties": {
+				"collaboration_id": {
+					"description": "The ID of the newly created collaboration.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Collaborations.DatasetSummary": {
+			"description": "DatasetSummary is the summary view of a dataset.",
+			"properties": {
+				"attributes": {
+					"description": "The list of attributes for this dataset. Will only be populated for dataset type 'INSIGHT'",
+					"items": {
+						"$ref": "#/definitions/Collaborations.AttributeSummary",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"collaboration_dataset_name": {
+					"description": "The name of the dataset as used in the collaboration",
+					"type": "string"
+				},
+				"id": {
+					"description": "The ID of the dataset",
+					"type": "string"
+				},
+				"keys": {
+					"description": "The list of keys for this dataset",
+					"items": {
+						"$ref": "#/definitions/Collaborations.KeySummary",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"output_columns": {
+					"description": "The list of output columns for this dataset. Will only be populated for dataset type 'IDENTITY'",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				},
+				"owner_id": {
+					"description": "The ID of the dataset's owner",
+					"type": "string"
+				},
+				"public_dataset_name": {
+					"description": "The public name of the dataset",
+					"type": "string"
+				},
+				"row_count": {
+					"description": "The valid row count of the dataset",
+					"format": "int64",
+					"type": "string"
+				},
+				"type": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Collaborations.DatasetType"
+						}
+					],
+					"description": "The type of the dataset"
+				}
+			},
+			"type": "object"
+		},
+		"Collaborations.DatasetType": {
+			"default": "DATASET_TYPE_INVALID",
+			"description": "DatasetType gives the dataset type, insight or identity.\n\n - DATASET_TYPE_INVALID: Invalid is used when no other enum applies.\n - DATASET_TYPE_INSIGHT: Insight is for insight datasets.\n - DATASET_TYPE_IDENTITY: Identity is for identity (activation) datasets.",
+			"enum": [
+				"DATASET_TYPE_INVALID",
+				"DATASET_TYPE_INSIGHT",
+				"DATASET_TYPE_IDENTITY"
+			],
+			"type": "string"
+		},
+		"Collaborations.Destination": {
+			"description": "Destination is the information required to define a destination.",
+			"properties": {
+				"config": {
+					"description": "The configuration of the destination, all secrets have been removed.",
+					"type": "object"
+				},
+				"created_time": {
+					"description": "The created date time of the destination.",
+					"format": "date-time",
+					"type": "string"
+				},
+				"creator_id": {
+					"description": "The ID of the user who created the destination.",
+					"type": "string"
+				},
+				"description": {
+					"description": "A description of the destination.",
+					"type": "string"
+				},
+				"destination_type_id": {
+					"description": "The type ID of the destination.",
+					"type": "string"
+				},
+				"editable_paths": {
+					"description": "The paths of the fields in the config that can be edited at push time.",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				},
+				"id": {
+					"description": "The ID of the destination.",
+					"type": "string"
+				},
+				"name": {
+					"description": "The name of the destination.",
+					"type": "string"
+				},
+				"owner_id": {
+					"description": "The Company ID of the owner of the destination.",
+					"type": "string"
+				},
+				"updated_time": {
+					"description": "The date time the destination was last updated.",
+					"format": "date-time",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Collaborations.DestinationOverview": {
+			"description": "DestinationOverview provides an overview of a destination.",
+			"properties": {
+				"created_date_time": {
+					"description": "The created date time of the destination.",
+					"format": "date-time",
+					"readOnly": true,
+					"type": "string"
+				},
+				"creator_id": {
+					"description": "The ID of the user who created the destination.",
+					"readOnly": true,
+					"type": "string"
+				},
+				"description": {
+					"description": "A description of the destination.",
+					"type": "string"
+				},
+				"destination_type_id": {
+					"description": "The type ID of the destination.",
+					"type": "string"
+				},
+				"id": {
+					"description": "The ID of the destination.",
+					"readOnly": true,
+					"type": "string"
+				},
+				"name": {
+					"description": "The name of the destination.",
+					"type": "string"
+				},
+				"owner_id": {
+					"description": "The Company ID of the owner of the destination.",
+					"readOnly": true,
+					"type": "string"
+				},
+				"updated_date_time": {
+					"description": "The date time the destination was last updated.",
+					"format": "date-time",
+					"readOnly": true,
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Collaborations.EntityType": {
+			"default": "ENTITY_INVALID",
+			"enum": [
+				"ENTITY_INVALID",
+				"ENTITY_USER",
+				"ENTITY_COMPANY",
+				"ENTITY_DATASET",
+				"ENTITY_DESTINATION",
+				"ENTITY_AUDIENCE",
+				"ENTITY_SEGMENT"
+			],
+			"type": "string"
+		},
+		"Collaborations.EventEntity": {
+			"properties": {
+				"company_id": {
+					"description": "The company ID associated with the entity.",
+					"type": "string"
+				},
+				"id": {
+					"description": "The ID of the entity.",
+					"type": "string"
+				},
+				"name": {
+					"description": "The human friendly name of the entity.",
+					"type": "string"
+				},
+				"type": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Collaborations.EntityType"
+						}
+					],
+					"description": "The type of entity."
+				}
+			},
+			"type": "object"
+		},
+		"Collaborations.EventType": {
+			"default": "TYPE_INVALID",
+			"enum": [
+				"TYPE_INVALID",
+				"TYPE_COLLABORATION_CREATED",
+				"TYPE_DESTINATION_ADDED",
+				"TYPE_DESTINATION_REMOVED",
+				"TYPE_INSIGHT_DATASET_ADDED",
+				"TYPE_INSIGHT_DATASET_REMOVED",
+				"TYPE_ACTIVATION_DATASET_ADDED",
+				"TYPE_ACTIVATION_DATASET_REMOVED",
+				"TYPE_COLLABORATION_CLOSED",
+				"TYPE_COLLABORATION_LEFT",
+				"TYPE_ACTIVATION_QUERY_RESULTS_EXPORTED",
+				"TYPE_ACTIVATION_QUERY_SUCCESSFUL",
+				"TYPE_INSIGHT_QUERY_SUCCESSFUL",
+				"TYPE_DATASET_PUBLISHED",
+				"TYPE_AUDIENCE_CREATED",
+				"TYPE_AUDIENCE_DELETED",
+				"TYPE_SEGMENT_CREATED",
+				"TYPE_SEGMENT_DELETED"
+			],
+			"type": "string"
+		},
+		"Collaborations.GetCollaborationResponse": {
+			"properties": {
+				"collaboration": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Collaborations.Collaboration"
+						}
+					],
+					"description": "Details of the requested collaboration."
+				}
+			},
+			"type": "object"
+		},
+		"Collaborations.GetConnectionResponse": {
+			"properties": {
+				"connection": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Collaborations.Connection"
+						}
+					],
+					"description": "Details of the requested connection."
+				}
+			},
+			"type": "object"
+		},
+		"Collaborations.GetDatasetDetailsResponse": {
+			"properties": {
+				"attributes": {
+					"description": "Details of each attribute provided by the dataset. Only relevant when `dataset_type` is 'INSIGHT'.",
+					"items": {
+						"$ref": "#/definitions/Collaborations.AttributeDetail",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"collaboration_dataset_name": {
+					"description": "The name of the dataset as used in the collaboration.",
+					"type": "string"
+				},
+				"id": {
+					"description": "The ID of the dataset.",
+					"type": "string"
+				},
+				"keys": {
+					"description": "Details of each key of the dataset.",
+					"items": {
+						"$ref": "#/definitions/Collaborations.KeyDetail",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"output_columns": {
+					"description": "List of output columns names which can be selected in activation queries. Only relevant when dataset_type is 'IDENTITY'.",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				},
+				"owner_id": {
+					"description": "The ID of the dataset's owner.",
+					"type": "string"
+				},
+				"public_dataset_name": {
+					"description": "The public name of the dataset.",
+					"type": "string"
+				},
+				"published_date_time": {
+					"description": "The moment the dataset was last published.",
+					"format": "date-time",
+					"type": "string"
+				},
+				"region": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Collaborations.Region"
+						}
+					],
+					"description": "The region of the dataset."
+				},
+				"row_count": {
+					"description": "The valid row count of the dataset.",
+					"format": "int64",
+					"type": "string"
+				},
+				"type": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Collaborations.DatasetType"
+						}
+					],
+					"description": "The type of the dataset."
+				}
+			},
+			"title": "GetDatasetDetailsRequest _",
+			"type": "object"
+		},
+		"Collaborations.GetDestinationDetailsResponse": {
+			"properties": {
+				"destination": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Collaborations.Destination"
+						}
+					],
+					"description": "The object containing the details of the requested destination."
+				}
+			},
+			"type": "object"
+		},
+		"Collaborations.HttpBody": {
+			"description": "Message that represents an arbitrary HTTP body. It should only be used for\npayload formats that can't be represented as JSON, such as raw binary or\nan HTML page.\n\n\nThis message can be used both in streaming and non-streaming API methods in\nthe request as well as the response.\n\nIt can be used as a top-level request field, which is convenient if one\nwants to extract parameters from either the URL or HTTP template into the\nrequest fields and also want access to the raw HTTP body.\n\nExample:\n\n    message GetResourceRequest {\n      // A unique request id.\n      string request_id = 1;\n\n      // The raw HTTP body is bound to this field.\n      google.api.HttpBody http_body = 2;\n\n    }\n\n    service ResourceService {\n      rpc GetResource(GetResourceRequest)\n        returns (google.api.HttpBody);\n      rpc UpdateResource(google.api.HttpBody)\n        returns (google.protobuf.Empty);\n\n    }\n\nExample with streaming methods:\n\n    service CaldavService {\n      rpc GetCalendar(stream google.api.HttpBody)\n        returns (stream google.api.HttpBody);\n      rpc UpdateCalendar(stream google.api.HttpBody)\n        returns (stream google.api.HttpBody);\n\n    }\n\nUse of this type only changes how the request and response bodies are\nhandled, all other features will continue to work unchanged.",
+			"properties": {
+				"content_type": {
+					"description": "The HTTP Content-Type header value specifying the content type of the body.",
+					"type": "string"
+				},
+				"data": {
+					"description": "The HTTP request/response body as raw binary.",
+					"format": "byte",
+					"type": "string"
+				},
+				"extensions": {
+					"description": "Application specific response metadata. Must be set in the first response\nfor streaming APIs.",
+					"items": {
+						"$ref": "#/definitions/Collaborations.Any",
+						"type": "object"
+					},
+					"type": "array"
+				}
+			},
+			"type": "object"
+		},
+		"Collaborations.InsightDatasetPermission": {
+			"properties": {
+				"activation_allowed": {
+					"description": "If true, allows the dataset to be used in activation queries within the collaboration.",
+					"type": "boolean"
+				},
+				"allowed_attributes": {
+					"description": "The attributes allowed to be queried as part of this collaboration if `attribute_restriction` is set.",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				},
+				"attribute_restriction": {
+					"description": "If true, restricts the allowed attributes to only those in the `allowed_attributes` list. If false, then all attributes present and future will be allowed.",
+					"type": "boolean"
+				},
+				"collaboration_dataset_name": {
+					"description": "A name, unique within this collaboration, used to refer to the dataset in queries, audience builder, etc.",
+					"type": "string"
+				},
+				"dataset_id": {
+					"description": "The ID of the dataset added to the collaboration.",
+					"type": "string"
+				},
+				"intersection_only": {
+					"description": "If true, restricts the dataset to being used in queries where it is intersected with at least one other dataset.",
+					"type": "boolean"
+				},
+				"owner_id": {
+					"description": "The company owning the dataset.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Collaborations.Key": {
+			"description": "Key is the representation of the details of connected key between two datasets.",
+			"properties": {
+				"id": {
+					"description": "The id number of the key",
+					"format": "int64",
+					"type": "string"
+				},
+				"intersection": {
+					"description": "The number of intersected records with this key",
+					"format": "int64",
+					"type": "string"
+				},
+				"intersection_percentage": {
+					"description": "The percentage of intersection records ",
+					"format": "float",
+					"type": "number"
+				},
+				"name": {
+					"description": "The name of the key",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Collaborations.KeyDetail": {
+			"properties": {
+				"fill_rate": {
+					"description": "The percentage of valid rows represented as a decimal number between zero and one.",
+					"format": "float",
+					"type": "number"
+				},
+				"id": {
+					"description": "The unique numeric identifier of this key.",
+					"format": "int64",
+					"type": "string"
+				},
+				"label": {
+					"description": "The name of this key.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Collaborations.KeySummary": {
+			"description": "AttributeSummary provides summary information about a key.",
+			"properties": {
+				"id": {
+					"description": "The ID of the key",
+					"format": "int64",
+					"type": "string"
+				},
+				"label": {
+					"description": "The ID of the key",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Collaborations.LeaveCollaborationResponse": {
+			"type": "object"
+		},
+		"Collaborations.ListCollaborationEventsResponse": {
+			"properties": {
+				"events": {
+					"items": {
+						"$ref": "#/definitions/Collaborations.CollaborationEvent",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"pagination": {
+					"$ref": "#/definitions/PaginationResponse"
+				}
+			},
+			"type": "object"
+		},
+		"Collaborations.ListCollaborationsResponse": {
+			"properties": {
+				"collaborations": {
+					"description": "Summaries of all collaborations that the user's company is owner or a member of. The returned data is affected by any filters in the original request.",
+					"items": {
+						"$ref": "#/definitions/Collaborations.CollaborationSummary",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"pagination": {
+					"$ref": "#/definitions/PaginationResponse"
+				}
+			},
+			"type": "object"
+		},
+		"Collaborations.ListConnectionsResponse": {
+			"properties": {
+				"connections": {
+					"description": "Summaries of all connections of the given collaboration. The returned data is affected by any filters in the original request.",
+					"items": {
+						"$ref": "#/definitions/Collaborations.ConnectionSummary",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"pagination": {
+					"$ref": "#/definitions/PaginationResponse"
+				}
+			},
+			"type": "object"
+		},
+		"Collaborations.ListDatasetsResponse": {
+			"properties": {
+				"datasets": {
+					"description": "Summaries of all datasets of the given collaboration. The returned data is affected by any filters in the original request.",
+					"items": {
+						"$ref": "#/definitions/Collaborations.DatasetSummary",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"pagination": {
+					"$ref": "#/definitions/PaginationResponse"
+				}
+			},
+			"type": "object"
+		},
+		"Collaborations.ListDestinationsResponse": {
+			"properties": {
+				"destinations": {
+					"description": "Summaries of all destinations of the given collaboration. The returned data is affected by any filters in the original request.",
+					"items": {
+						"$ref": "#/definitions/Collaborations.DestinationOverview",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"pagination": {
+					"$ref": "#/definitions/PaginationResponse"
+				}
+			},
+			"type": "object"
+		},
+		"Collaborations.MemberRights": {
+			"properties": {
+				"contributor": {
+					"description": "If true, allows the member to add resources such as datasets and destinations to the collaboration.",
+					"type": "boolean"
+				},
+				"detailed_logs": {
+					"description": "If true, allows the member to retrieve detailed information about collaboration log events such as query parameters and exported row counts.",
+					"type": "boolean"
+				},
+				"operator": {
+					"description": "If true, allows the member to create audiences, segments and queries and export to destinations subject to the collaboration rights.",
+					"type": "boolean"
+				}
+			},
+			"type": "object"
+		},
+		"Collaborations.NullValue": {
+			"default": "NULL_VALUE",
+			"description": "`NullValue` is a singleton enumeration to represent the null value for the\n`Value` type union.\n\nThe JSON representation for `NullValue` is JSON `null`.\n\n - NULL_VALUE: Null value.",
+			"enum": [
+				"NULL_VALUE"
+			],
+			"type": "string"
+		},
+		"Collaborations.Region": {
+			"default": "UNKNOWN",
+			"description": "Region enumerates the supported cloud providers and locations.\n\n - UNKNOWN: UNKNOWN means the region has not been defined.\n - AWS_EU_WEST_2: AWS_EU_WEST_2 means AWS Europe (London).\n - AWS_US_EAST_1: AWS_US_EAST_1 means AWS US East (N. Virginia).\n - IBM_EU_CENTRAL_1: IBM_EU_CENTRAL_1 means IBM MZR EU Central (Frankfurt).\n - AWS_EU_CENTRAL_1: AWS_EU_CENTRAL_1 means AWS Europe (Frankfurt).\n - AWS_AP_SOUTHEAST_2: AWS_AP_SOUTHEAST_2 means AWS Asia Pacific (Sydney)",
+			"enum": [
+				"UNKNOWN",
+				"AWS_EU_WEST_2",
+				"AWS_US_EAST_1",
+				"IBM_EU_CENTRAL_1",
+				"AWS_EU_CENTRAL_1",
+				"AWS_AP_SOUTHEAST_2"
+			],
+			"type": "string"
+		},
+		"Collaborations.RemoveActivationDatasetResponse": {
+			"type": "object"
+		},
+		"Collaborations.RemoveDestinationResponse": {
+			"type": "object"
+		},
+		"Collaborations.RemoveInsightDatasetResponse": {
+			"type": "object"
+		},
+		"Collaborations.v2.Status": {
+			"default": "STATUS_INVALID",
+			"description": "Status is the status of the collaboration.\n\n - STATUS_INVALID: STATUS_INVALID.\n - STATUS_ACTIVE: STATUS_ACTIVE indicates the collaboration is active.\n - STATUS_CLOSED: STATUS_CLOSED indicates that the collaboration can no longer be used to run queries or push data, but exists now for audit purposes",
+			"enum": [
+				"STATUS_INVALID",
+				"STATUS_ACTIVE",
+				"STATUS_CLOSED"
+			],
+			"type": "string"
+		},
 		"Connections.CalculateMatchRateRequest": {
 			"description": "CalculateMatchRateRequest is the input to the CalculateMatchRate method.",
 			"properties": {
@@ -1170,10 +2226,12 @@
 		"Dataset_Stats.ExportColumnStatsResponse": {
 			"description": "ExportColumnStatsResponse is the response to ExportColumnStats method.",
 			"properties": {
-				"valid_values": {
+				"label_to_stats": {
+					"additionalProperties": {
+						"$ref": "#/definitions/Dataset_Stats.v2.ExportColumnStats"
+					},
 					"description": "ValidValues is the number of valid values for this export column.",
-					"format": "uint64",
-					"type": "string"
+					"type": "object"
 				}
 			},
 			"type": "object"
@@ -1252,6 +2310,26 @@
 					"type": "string"
 				}
 			},
+			"type": "object"
+		},
+		"Dataset_Stats.v2.ExportColumnStats": {
+			"properties": {
+				"distinct_values": {
+					"description": "DistinctValues is the number of distinct values for this key column.",
+					"format": "uint64",
+					"type": "string"
+				},
+				"multi_values": {
+					"description": "MultiValue is set to true if this is a multi-value key column.",
+					"type": "boolean"
+				},
+				"valid_values": {
+					"description": "ValidValues is the number of valid values for this key column.",
+					"format": "uint64",
+					"type": "string"
+				}
+			},
+			"title": "ExportColumnStats holds stats information for an export column",
 			"type": "object"
 		},
 		"Dataset_Stats.v2.KeyColumnStats": {
@@ -1340,16 +2418,16 @@
 			"description": "Dataset is the summary of a dataset returned when getting a dataset.",
 			"properties": {
 				"created_by": {
-					"description": "CreatedBy is the user ID who creates the dataset.",
+					"description": "The ID of the user who created the dataset.",
 					"type": "string"
 				},
 				"created_date_time": {
-					"description": "CreatedDateTime is the datetime that the dataset was created.",
+					"description": "Creation date time of the dataset.",
 					"format": "date-time",
 					"type": "string"
 				},
 				"dataset_id": {
-					"description": "DatasetID is the ID of the dataset.",
+					"description": "The ID of the dataset.",
 					"type": "string"
 				},
 				"dataset_type": {
@@ -1358,10 +2436,10 @@
 							"$ref": "#/definitions/Datasets.DatasetType"
 						}
 					],
-					"title": "DatasetType is the dataset type, insight or activation"
+					"description": "The type of dataset, e.g. insight/activation."
 				},
 				"description": {
-					"description": "Description is a user defined string to describe the dataset.",
+					"description": "Description for the dataset.",
 					"type": "string"
 				},
 				"expiration": {
@@ -1370,18 +2448,18 @@
 							"$ref": "#/definitions/Datasets.DatasetExpiration"
 						}
 					],
-					"description": "Expiration specifies information about how the dataset should expire."
+					"description": "Expiration details of the dataset."
 				},
 				"owner_id": {
-					"description": "OwnerID is the ID of the company that owns the dataset.",
+					"description": "ID of the owner of the dataset.",
 					"type": "string"
 				},
 				"private_id": {
-					"description": "PrivateID is the private ID of the dataset.",
+					"description": "The private ID of the dataset. This is the name used when querying the dataset - it must be unique within the owner scope and must have a length 17 character or less.",
 					"type": "string"
 				},
 				"public_name": {
-					"description": "PublicName is the public name of the dataset.",
+					"description": "The public name of the dataset. The public name does not need to be unique but must not be empty, may only contain alphanumeric character and may have a maximum length of 100 characters.",
 					"type": "string"
 				},
 				"publish_details": {
@@ -1390,10 +2468,10 @@
 							"$ref": "#/definitions/Datasets.ListedPublishDetails"
 						}
 					],
-					"description": "ListedPublishDetails is the summary info for the published slot."
+					"description": "Summary details of the publish to this dataset. Empty if no recordset has been published to the dataset."
 				},
 				"published_by": {
-					"description": "PublishedBy is the user ID who creates the dataset.",
+					"description": "The ID of the user who published the dataset. Empty if the dataset has not yet been published to.",
 					"type": "string"
 				},
 				"region": {
@@ -1402,7 +2480,7 @@
 							"$ref": "#/definitions/Datasets.Region"
 						}
 					],
-					"description": "Region is the cloud vault region the dataset can accept input data from."
+					"description": "The region of the dataset. Only prepares in the same region can be published to this dataset."
 				}
 			},
 			"type": "object"
@@ -1476,16 +2554,16 @@
 			"description": "ListedDataset is the summary of a dataset returned when listing datasets.",
 			"properties": {
 				"created_by": {
-					"description": "CreatedBy is the user ID who creates the dataset.",
+					"description": "The ID of the user who created the dataset.",
 					"type": "string"
 				},
 				"created_date_time": {
-					"description": "CreatedDateTime is the datetime that the dataset was created.",
+					"description": "Creation date time of the dataset.",
 					"format": "date-time",
 					"type": "string"
 				},
 				"dataset_id": {
-					"description": "DatasetID is the ID of the dataset.",
+					"description": "The ID of the dataset.",
 					"type": "string"
 				},
 				"dataset_type": {
@@ -1494,10 +2572,10 @@
 							"$ref": "#/definitions/Datasets.DatasetType"
 						}
 					],
-					"title": "DatasetType is the dataset type, insight or activation"
+					"description": "The type of dataset, e.g. insight/activation."
 				},
 				"description": {
-					"description": "Description is a user defined string to describe the dataset.",
+					"description": "Description for the dataset.",
 					"type": "string"
 				},
 				"expiration": {
@@ -1506,18 +2584,18 @@
 							"$ref": "#/definitions/Datasets.DatasetExpiration"
 						}
 					],
-					"description": "Expiration specifies information about how the dataset should expire."
+					"description": "Expiration details of the dataset."
 				},
 				"owner_id": {
-					"description": "OwnerID is the ID of the company that owns the dataset.",
+					"description": "ID of the owner of the dataset.",
 					"type": "string"
 				},
 				"private_id": {
-					"description": "PrivateID is the private ID of the dataset.",
+					"description": "The private ID of the dataset. This is the name used when querying the dataset - it must be unique within the owner scope and must have a length 17 character or less.",
 					"type": "string"
 				},
 				"public_name": {
-					"description": "PublicName is the public name of the dataset.",
+					"description": "The public name of the dataset. The public name does not need to be unique but must not be empty, may only contain alphanumeric character and may have a maximum length of 100 characters.",
 					"type": "string"
 				},
 				"publish_details": {
@@ -1526,10 +2604,10 @@
 							"$ref": "#/definitions/Datasets.ListedPublishDetails"
 						}
 					],
-					"description": "ListedPublishDetails is the summary info for the published slot."
+					"description": "Summary details of the publish to this dataset. Empty if no recordset has been published to the dataset."
 				},
 				"published_by": {
-					"description": "PublishedBy is the user ID who creates the dataset.",
+					"description": "The ID of the user who published the dataset. Empty if the dataset has not yet been published to.",
 					"type": "string"
 				},
 				"region": {
@@ -1538,7 +2616,7 @@
 							"$ref": "#/definitions/Datasets.Region"
 						}
 					],
-					"description": "Region is the cloud vault region the dataset can accept input data from."
+					"description": "The region of the dataset. Only prepares in the same region can be published to this dataset."
 				}
 			},
 			"type": "object"
@@ -3927,8 +5005,75 @@
 			},
 			"type": "object"
 		},
+		"Normalization_Config.CustomKey": {
+			"properties": {
+				"functions": {
+					"description": "Functions is a list of functions to apply to the data of the input columm, in order,\nto produce the data for the output column.",
+					"items": {
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"input_column": {
+					"description": "InputColumn is the name of the column in the input recordset to be used\nto create the custom key.",
+					"type": "string"
+				},
+				"output_column": {
+					"description": "OutputColumn is the name of the column in the output recordset after normalization.",
+					"type": "string"
+				}
+			},
+			"title": "CustomKey is the definition for creating a user defined key from an input column,",
+			"type": "object"
+		},
+		"Normalization_Config.DataType": {
+			"default": "DATATYPE_INVALID",
+			"description": "DataType is the list of types that an output column from normalization can be.",
+			"enum": [
+				"DATATYPE_INVALID",
+				"INTEGER",
+				"FLOAT",
+				"STRING",
+				"TIMESTAMP",
+				"BOOL"
+			],
+			"type": "string"
+		},
 		"Normalization_Config.DeleteConfigResponse": {
 			"description": "DeleteConfigResponse is the empty response of the DeleteConfig rpc.",
+			"type": "object"
+		},
+		"Normalization_Config.EnrichmentConfig": {
+			"description": "EnrichmentConfig can be provided as part of a normalisation config to determine how to enrich the imported data\nduring the normalisation process.",
+			"properties": {
+				"uk_addr_mapper": {
+					"$ref": "#/definitions/Normalization_Config.UKAddrMapper"
+				},
+				"us_addr_mapper": {
+					"$ref": "#/definitions/Normalization_Config.USAddrMapper"
+				}
+			},
+			"type": "object"
+		},
+		"Normalization_Config.ExportColumn": {
+			"description": "ExportColumn is the definition for creating a column of activation data from an input column.",
+			"properties": {
+				"functions": {
+					"description": "Functions is a list of functions to apply to the data of the input columm, in order,\nto produce the data for the output column.",
+					"items": {
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"input_column": {
+					"description": "InputColumn is the name of the column in the input recordset to be used\nto create the export column.",
+					"type": "string"
+				},
+				"output_column": {
+					"description": "OutputColumn is the name of the column in the output recordset after normalization.",
+					"type": "string"
+				}
+			},
 			"type": "object"
 		},
 		"Normalization_Config.GetConfigResponse": {
@@ -3943,6 +5088,35 @@
 					"description": "Config is the normalisation configuration that was requested."
 				}
 			},
+			"type": "object"
+		},
+		"Normalization_Config.GlobalKey": {
+			"properties": {
+				"functions": {
+					"description": "Functions is a list of functions to apply to the data of the input column, in order,\nbefore the functions in the global schema are applied to produce the data for the output column.",
+					"items": {
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"global_schema_id": {
+					"description": "GlobalSchemaId is the id number of the global schema key to create.",
+					"format": "int64",
+					"type": "integer"
+				},
+				"input_column": {
+					"description": "InputColumn is the name of the column in the input recordset to be used\nto create the key.",
+					"type": "string"
+				},
+				"user_params": {
+					"additionalProperties": {
+						"type": "string"
+					},
+					"description": "UserParams allows customization of the default functions' parameters for a global schema key.\nEach entry uses the format \u003cfunction_name.param_name\u003e to specify which function's parameter to override.\nThis enables overriding specific parameters of the default functions applied to the global schema key.\nThe provided parameter value is interpreted as an input column if not enclosed with single quotes.\nThe global schema key defines a list of customizable parameters, if any.",
+					"type": "object"
+				}
+			},
+			"title": "GlobalKey is a definition for creating an instance of a global schema key.\nfrom an input column",
 			"type": "object"
 		},
 		"Normalization_Config.IncrementalInstruction": {
@@ -4078,9 +5252,57 @@
 			},
 			"type": "object"
 		},
+		"Normalization_Config.NormalizerConfig": {
+			"properties": {
+				"categories": {
+					"items": {
+						"$ref": "#/definitions/Normalization_Config.UserCategory",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"custom_keys": {
+					"items": {
+						"$ref": "#/definitions/Normalization_Config.CustomKey",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"enrichments": {
+					"items": {
+						"$ref": "#/definitions/Normalization_Config.EnrichmentConfig",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"export_columns": {
+					"items": {
+						"$ref": "#/definitions/Normalization_Config.ExportColumn",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"keys": {
+					"items": {
+						"$ref": "#/definitions/Normalization_Config.GlobalKey",
+						"type": "object"
+					},
+					"type": "array"
+				}
+			},
+			"type": "object"
+		},
 		"Normalization_Config.Null": {
 			"description": "Null is an enum used to map values to JSON null.",
 			"type": "object"
+		},
+		"Normalization_Config.NullValue": {
+			"default": "NULL_VALUE",
+			"description": "`NullValue` is a singleton enumeration to represent the null value for the\n`Value` type union.\n\nThe JSON representation for `NullValue` is JSON `null`.\n\n - NULL_VALUE: Null value.",
+			"enum": [
+				"NULL_VALUE"
+			],
+			"type": "string"
 		},
 		"Normalization_Config.Pair": {
 			"description": "Pair is a key-value pair describing a single element of a mapping.",
@@ -4189,6 +5411,137 @@
 						"type": "string"
 					},
 					"type": "array"
+				}
+			},
+			"type": "object"
+		},
+		"Normalization_Config.UKAddrMapper": {
+			"description": "UKAddrMapper contains the config required for normalisation data enrichment using the UK address mapper.",
+			"properties": {
+				"house_number_column": {
+					"description": "HouseNumberColumn is the name of the column the house number.",
+					"type": "string"
+				},
+				"postcode_column": {
+					"description": "PostcodeColumn is the name of the column containing the address's postcode, if available. The postcode is\nnot required but allows for much faster processing.",
+					"type": "string"
+				},
+				"street_name_column": {
+					"description": "StreetNameColumn is the name of the column containing the street name.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Normalization_Config.USAddrMapper": {
+			"description": "USAddrMapper contains the config required for normalisation data enrichment using the US address mapper.",
+			"properties": {
+				"city_column": {
+					"description": "CityColumn is the name of the column containing the postal town / city.",
+					"type": "string"
+				},
+				"first_addr_line_column": {
+					"description": "FirstAddrLineColumn is the name of the column containing the first address line. This can be the full address or just the street name.",
+					"type": "string"
+				},
+				"house_number_column": {
+					"description": "HouseNumberColumn is the name of the column containing the house number.\nIf present, it will be prepended to the first address line during enrichment.",
+					"type": "string"
+				},
+				"secondary_addr_line_column": {
+					"description": "SecondaryAddrLineColumn is the name of the column containing the second address line.",
+					"type": "string"
+				},
+				"state_column": {
+					"description": "StateColumn is the name of the column containing the address's state.",
+					"type": "string"
+				},
+				"third_addr_line_column": {
+					"description": "ThirdAddrLineColumn is the name of the column containing the third address line.",
+					"type": "string"
+				},
+				"zipcode_column": {
+					"description": "ZipcodeColumn is the name of the column containing the address's zipcode.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Normalization_Config.UpdateConfigBody": {
+			"description": "UpdateConfigRequest is the request to update a normalization config.",
+			"properties": {
+				"payload": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Normalization_Config.UpdateConfigPayload"
+						}
+					],
+					"description": "Payload is the full normalization config payload to fully replace the existing config."
+				}
+			},
+			"type": "object"
+		},
+		"Normalization_Config.UpdateConfigPayload": {
+			"description": "UpdateConfigPayload is the request payload for updating a normalization config.",
+			"properties": {
+				"config": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Normalization_Config.NormalizerConfig"
+						}
+					],
+					"description": "Config is the complete updated normalization config."
+				},
+				"description": {
+					"description": "Description is the updated normalization config description.",
+					"type": "string"
+				},
+				"name": {
+					"description": "Name is the updated normalization config name.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Normalization_Config.UpdateConfigResponse": {
+			"description": "UpdateConfigResponse is the response for UpdateConfig.",
+			"properties": {
+				"config": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Normalization_Config.ConfigEntity"
+						}
+					],
+					"description": "Config is the updated normalization config."
+				}
+			},
+			"type": "object"
+		},
+		"Normalization_Config.UserCategory": {
+			"description": "UserCategory is the definition for creating a user defined category from an input column.",
+			"properties": {
+				"data_type": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Normalization_Config.DataType"
+						}
+					],
+					"description": "DataType specifies the type of the data in the output recordset."
+				},
+				"functions": {
+					"description": "Functions is a list of functions to apply to the data of the input columm, in order,\nto produce the data for the output column.",
+					"items": {
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"input_column": {
+					"description": "InputColumn is the name of the column in the input recordset to be used\nto create the category.",
+					"type": "string"
+				},
+				"output_column": {
+					"description": "OutputColumn is the name of the column in the output recordset after normalization.",
+					"type": "string"
 				}
 			},
 			"type": "object"
@@ -4997,10 +6350,6 @@
 					"description": "Prepare holds all information on the prepare as well as the shards being used to process the\nprepare."
 				}
 			},
-			"type": "object"
-		},
-		"Publishing.GetPrepareStatsResponse": {
-			"description": "GetPrepareStatsResponse is the response for the GetPrepareStats rpc.\n\nPrepare",
 			"type": "object"
 		},
 		"Publishing.History": {
@@ -6513,6 +7862,15 @@
 				"IBM_EU_CENTRAL_1",
 				"AWS_EU_CENTRAL_1",
 				"AWS_AP_SOUTHEAST_2"
+			],
+			"type": "string"
+		},
+		"RemoteConnectorType": {
+			"default": "REMOTE_CONNECTOR_TYPE_INVALID",
+			"description": "RemoteConnectorType is an enum that denotes the provider for a remote connector.",
+			"enum": [
+				"REMOTE_CONNECTOR_TYPE_INVALID",
+				"REMOTE_CONNECTOR_TYPE_SNOWFLAKE"
 			],
 			"type": "string"
 		},
@@ -8438,6 +9796,1503 @@
 				]
 			}
 		},
+		"/api/v2/collaborations": {
+			"get": {
+				"description": "Returns a list of collaboration summaries where the requesting users company is the owner or a member. The output is affected by provided filters.",
+				"operationId": "ListCollaborations",
+				"parameters": [
+					{
+						"description": "The requested page of records. Default is 1.",
+						"format": "int32",
+						"in": "query",
+						"name": "pagination.page",
+						"required": false,
+						"type": "integer"
+					},
+					{
+						"description": "The number of records to return per page. Maximum is 500. Default is 100.",
+						"format": "int32",
+						"in": "query",
+						"name": "pagination.per_page",
+						"required": false,
+						"type": "integer"
+					},
+					{
+						"description": "OrderBy is a comma seperated value to define sorting.\ne.g 'created_time,name DESC'\nThe values are seperated by space, '{column} {ASC/DESC}'\nValid columns: `created_date_time`, `updated_date_time`, `owner`, `status`, `name`",
+						"in": "query",
+						"name": "order_by",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"description": "Supported filters are `id`, `name`, `description`, `created_date_time`, `updated_date_time`, `owner`, `members`, `status`",
+						"in": "query",
+						"name": "filter",
+						"required": false,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Collaborations.ListCollaborationsResponse"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the right to list collaborations.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "List Collaborations",
+				"tags": [
+					"Collaborations"
+				]
+			},
+			"post": {
+				"description": "Creates a new collaboration with the provided company IDs as members. Members cannot be added after the collaboration is created.",
+				"operationId": "CreateCollaboration",
+				"parameters": [
+					{
+						"in": "body",
+						"name": "body",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Collaborations.CreateCollaborationRequest"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Collaborations.CreateCollaborationResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the right to create a collaboration.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Create Collaboration",
+				"tags": [
+					"Collaborations"
+				]
+			}
+		},
+		"/api/v2/collaborations/{collaboration_id}": {
+			"get": {
+				"description": "Returns the details for the requested collaboration ID.",
+				"operationId": "GetCollaboration",
+				"parameters": [
+					{
+						"description": "The ID of the collaboration to get details about.",
+						"in": "path",
+						"name": "collaboration_id",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Collaborations.GetCollaborationResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the right to view details of a collaboration.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"404": {
+						"description": "Returned when the collaboration could not be found.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Get Collaboration",
+				"tags": [
+					"Collaborations"
+				]
+			}
+		},
+		"/api/v2/collaborations/{collaboration_id}/activation-datasets": {
+			"post": {
+				"description": "Adds an activation dataset to the collaboration.",
+				"operationId": "AddActivationDataset",
+				"parameters": [
+					{
+						"description": "The ID of the collaboration the dataset should be added to.",
+						"in": "path",
+						"name": "collaboration_id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"in": "body",
+						"name": "body",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Collaborations.AddActivationDatasetBody"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Collaborations.AddActivationDatasetResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the right to add the resource.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"404": {
+						"description": "Returned when the collaboration could not be found.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Add Activation Dataset",
+				"tags": [
+					"Collaborations"
+				]
+			}
+		},
+		"/api/v2/collaborations/{collaboration_id}/activation-datasets/{dataset_id}": {
+			"delete": {
+				"description": "Removes an activation dataset owned by the caller from the collaboration.",
+				"operationId": "RemoveActivationDataset",
+				"parameters": [
+					{
+						"description": "The ID of the collaboration the dataset should be removed from.",
+						"in": "path",
+						"name": "collaboration_id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"description": "The ID of the activation dataset to be removed from the collaboration.",
+						"in": "path",
+						"name": "dataset_id",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Collaborations.RemoveActivationDatasetResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the right to remove the resource.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"404": {
+						"description": "Returned when the collaboration could not be found.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Remove Activation Dataset",
+				"tags": [
+					"Collaborations"
+				]
+			}
+		},
+		"/api/v2/collaborations/{collaboration_id}/close": {
+			"post": {
+				"description": "Closes a collaboration you own. Irreversible. This means that the collaboration can no longer be used for new queries or exports but previous activity can still be seen.",
+				"operationId": "CloseCollaboration",
+				"parameters": [
+					{
+						"description": "The ID of the collaboration to close.",
+						"in": "path",
+						"name": "collaboration_id",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Collaborations.CloseCollaborationResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the right to close the collaboration.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"404": {
+						"description": "Returned when the collaboration could not be found.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Close Collaboration",
+				"tags": [
+					"Collaborations"
+				]
+			}
+		},
+		"/api/v2/collaborations/{collaboration_id}/connections": {
+			"get": {
+				"description": "Returns a list of connections between datasets in the given collaboration. The output is affected by provided filters.",
+				"operationId": "ListConnections",
+				"parameters": [
+					{
+						"description": "The ID of the collaboration to get connection details from.",
+						"in": "path",
+						"name": "collaboration_id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"description": "The requested page of records. Default is 1.",
+						"format": "int32",
+						"in": "query",
+						"name": "pagination.page",
+						"required": false,
+						"type": "integer"
+					},
+					{
+						"description": "The number of records to return per page. Maximum is 500. Default is 100.",
+						"format": "int32",
+						"in": "query",
+						"name": "pagination.per_page",
+						"required": false,
+						"type": "integer"
+					},
+					{
+						"description": "OrderBy is a comma seperated value to define sorting.\ne.g 'created_time,name DESC'\nThe values are seperated by space, '{column} {ASC/DESC}'\nValid columns: `created_date_time`, `updated_date_time`, `owner`, `status`, `name`",
+						"in": "query",
+						"name": "order_by",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"description": "Supported filters are `from_dataset_id`, `to_dataset_id`",
+						"in": "query",
+						"name": "filter",
+						"required": false,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Collaborations.ListConnectionsResponse"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the right to list collaborations.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "List Connections",
+				"tags": [
+					"Collaborations"
+				]
+			}
+		},
+		"/api/v2/collaborations/{collaboration_id}/connections/{connection_id}": {
+			"get": {
+				"description": "Returns the details for the requested connection ID.",
+				"operationId": "GetConnection",
+				"parameters": [
+					{
+						"description": "The ID of the collaboration to get connection details from.",
+						"in": "path",
+						"name": "collaboration_id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"description": "The ID of the connection to get details about.",
+						"in": "path",
+						"name": "connection_id",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Collaborations.GetConnectionResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the right to view details of a collaboration.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"404": {
+						"description": "Returned when the collaboration or connection ID could not be found.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Get Connection",
+				"tags": [
+					"Collaborations"
+				]
+			}
+		},
+		"/api/v2/collaborations/{collaboration_id}/datasets": {
+			"get": {
+				"description": "Returns a list of datasets between datasets in the given collaboration. The output is affected by provided filters.",
+				"operationId": "ListDatasets",
+				"parameters": [
+					{
+						"description": "The ID of the collaboration to get dataset details from.",
+						"in": "path",
+						"name": "collaboration_id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"description": "The requested page of records. Default is 1.",
+						"format": "int32",
+						"in": "query",
+						"name": "pagination.page",
+						"required": false,
+						"type": "integer"
+					},
+					{
+						"description": "The number of records to return per page. Maximum is 500. Default is 100.",
+						"format": "int32",
+						"in": "query",
+						"name": "pagination.per_page",
+						"required": false,
+						"type": "integer"
+					},
+					{
+						"description": "OrderBy is a comma seperated value to define sorting.\ne.g 'created_time,name DESC'\nThe values are seperated by space, '{column} {ASC/DESC}'\nValid columns: `created_date_time`, `updated_date_time`, `owner`, `name`",
+						"in": "query",
+						"name": "order_by",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"description": "Supported filters are `dataset_id`, `owner_id`",
+						"in": "query",
+						"name": "filter",
+						"required": false,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Collaborations.ListDatasetsResponse"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the right to list collaboration datasets.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "List Datasets",
+				"tags": [
+					"Collaborations"
+				]
+			}
+		},
+		"/api/v2/collaborations/{collaboration_id}/datasets/{dataset_id}": {
+			"get": {
+				"description": "Returns the details for the requested dataset within given collaboration.",
+				"operationId": "GetDatasetDetails",
+				"parameters": [
+					{
+						"description": "The ID of the collaboration the dataset belongs to.",
+						"in": "path",
+						"name": "collaboration_id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"description": "The ID of the dataset you want information about.",
+						"in": "path",
+						"name": "dataset_id",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Collaborations.GetDatasetDetailsResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the right to view details of a dataset in this collaboration.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"404": {
+						"description": "Returned when the collaboration or dataset could not be found.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Get details of a dataset within this collaboration",
+				"tags": [
+					"Collaborations"
+				]
+			}
+		},
+		"/api/v2/collaborations/{collaboration_id}/datasets/{dataset_id}/stats/attribute_columns": {
+			"get": {
+				"description": "Get stats for all the attribute columns of a dataset.",
+				"operationId": "AttributeColumnStats",
+				"parameters": [
+					{
+						"description": "The ID of the collaboration to get dataset stats from.",
+						"in": "path",
+						"name": "collaboration_id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"description": "The id of the dataset to get summary stats for.",
+						"in": "path",
+						"name": "dataset_id",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Dataset_Stats.AttributeColumnStatsResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the AttributeColumnStats request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the required permission.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"404": {
+						"description": "Returned when the dataset ID isn't found.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Get stats for all the attribute columns of a dataset.",
+				"tags": [
+					"Dataset Stats"
+				]
+			}
+		},
+		"/api/v2/collaborations/{collaboration_id}/datasets/{dataset_id}/stats/export_columns": {
+			"get": {
+				"description": "Get stats for all the export columns of a dataset.",
+				"operationId": "ExportColumnStats",
+				"parameters": [
+					{
+						"description": "The ID of the collaboration to get dataset stats from.",
+						"in": "path",
+						"name": "collaboration_id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"description": "The id of the dataset to get export column stats for.",
+						"in": "path",
+						"name": "dataset_id",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Dataset_Stats.ExportColumnStatsResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the ExportColumnStats request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the required permission.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"404": {
+						"description": "Returned when the dataset ID isn't found.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Get stats for all the export columns of a dataset.",
+				"tags": [
+					"Dataset Stats"
+				]
+			}
+		},
+		"/api/v2/collaborations/{collaboration_id}/datasets/{dataset_id}/stats/key_columns": {
+			"get": {
+				"description": "Get stats for all the key columns of a dataset.",
+				"operationId": "KeyColumnStats",
+				"parameters": [
+					{
+						"description": "The ID of the collaboration to get dataset stats from.",
+						"in": "path",
+						"name": "collaboration_id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"description": "The id of the dataset to get summary stats for.",
+						"in": "path",
+						"name": "dataset_id",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Dataset_Stats.KeyColumnStatsResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the KeyColumnStats request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the required permission.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"404": {
+						"description": "Returned when the dataset ID isn't found.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Get stats for all the key columns of a dataset.",
+				"tags": [
+					"Dataset Stats"
+				]
+			}
+		},
+		"/api/v2/collaborations/{collaboration_id}/datasets/{dataset_id}/stats/summary": {
+			"get": {
+				"description": "Get summary stats for a dataset.",
+				"operationId": "SummaryStats",
+				"parameters": [
+					{
+						"description": "The ID of the collaboration to get dataset stats from.",
+						"in": "path",
+						"name": "collaboration_id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"description": "The id of the dataset to get summary stats for.",
+						"in": "path",
+						"name": "dataset_id",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Dataset_Stats.SummaryStatsResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the SummaryStats request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the required permission.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"404": {
+						"description": "Returned when the dataset ID isn't found.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Get summary stats for a dataset.",
+				"tags": [
+					"Dataset Stats"
+				]
+			}
+		},
+		"/api/v2/collaborations/{collaboration_id}/destinations": {
+			"post": {
+				"description": "Adds a destination to the collaboration.",
+				"operationId": "AddDestination",
+				"parameters": [
+					{
+						"description": "The ID of the collaboration the destination should be added to.",
+						"in": "path",
+						"name": "collaboration_id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"in": "body",
+						"name": "body",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Collaborations.AddDestinationBody"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Collaborations.AddDestinationResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the right to add the resource.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"404": {
+						"description": "Returned when the collaboration could not be found.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Add Destination",
+				"tags": [
+					"Collaborations"
+				]
+			}
+		},
+		"/api/v2/collaborations/{collaboration_id}/destinations/{destination_id}": {
+			"delete": {
+				"description": "Removes a destination owned by the caller from the collaboration.",
+				"operationId": "RemoveDestination",
+				"parameters": [
+					{
+						"description": "The ID of the collaboration the destination should be removed from.",
+						"in": "path",
+						"name": "collaboration_id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"description": "The ID of the destination to remove.",
+						"in": "path",
+						"name": "destination_id",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Collaborations.RemoveDestinationResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the right to remove the resource.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"404": {
+						"description": "Returned when the collaboration could not be found.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Remove Destination",
+				"tags": [
+					"Collaborations"
+				]
+			}
+		},
+		"/api/v2/collaborations/{collaboration_id}/events": {
+			"get": {
+				"description": "Lists the events associated with this collaboration.",
+				"operationId": "ListCollaborationEvents",
+				"parameters": [
+					{
+						"description": "The ID of the collaboration to fetch events for.",
+						"in": "path",
+						"name": "collaboration_id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"description": "The requested page of records. Default is 1.",
+						"format": "int32",
+						"in": "query",
+						"name": "pagination.page",
+						"required": false,
+						"type": "integer"
+					},
+					{
+						"description": "The number of records to return per page. Maximum is 500. Default is 100.",
+						"format": "int32",
+						"in": "query",
+						"name": "pagination.per_page",
+						"required": false,
+						"type": "integer"
+					},
+					{
+						"description": "OrderBy is a comma seperated value to define sorting.\ne.g 'created_time,name DESC'\nThe values are seperated by space, '{column} {ASC/DESC}'\nValid columns: `event_date_time`",
+						"in": "query",
+						"name": "order_by",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"description": "Supported filters are `event_type` and `company_id`",
+						"in": "query",
+						"name": "filter",
+						"required": false,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Collaborations.ListCollaborationEventsResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the right to list the events.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"404": {
+						"description": "Returned when the collaboration could not be found.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "List Collaboration Events",
+				"tags": [
+					"Collaborations"
+				]
+			}
+		},
+		"/api/v2/collaborations/{collaboration_id}/events/export": {
+			"get": {
+				"description": "Exports the events associated with this collaboration as a csv file.",
+				"operationId": "ExportCollaborationEvents",
+				"parameters": [
+					{
+						"description": "The ID of the collaboration to export events for.",
+						"in": "path",
+						"name": "collaboration_id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"description": "OrderBy is a comma seperated value to define sorting.\ne.g 'created_time,name DESC'\nThe values are seperated by space, '{column} {ASC/DESC}'\nValid columns: `event_date_time`",
+						"in": "query",
+						"name": "order_by",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"description": "Supported filters are `event_type` and `company_id`",
+						"in": "query",
+						"name": "filter",
+						"required": false,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.(streaming responses)",
+						"schema": {
+							"format": "binary",
+							"properties": {},
+							"title": "Free form byte stream",
+							"type": "string"
+						}
+					},
+					"400": {
+						"description": "Returned when the request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the right to list the events.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"404": {
+						"description": "Returned when the collaboration could not be found.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Export Collaboration Events",
+				"tags": [
+					"Collaborations"
+				]
+			}
+		},
+		"/api/v2/collaborations/{collaboration_id}/insight-datasets": {
+			"post": {
+				"description": "Adds an insight dataset to the collaboration.",
+				"operationId": "AddInsightDataset",
+				"parameters": [
+					{
+						"description": "The ID of the collaboration the dataset should be added to.",
+						"in": "path",
+						"name": "collaboration_id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"in": "body",
+						"name": "body",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Collaborations.AddInsightDatasetBody"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Collaborations.AddInsightDatasetResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the right to add the resource.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"404": {
+						"description": "Returned when the collaboration could not be found.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Add Insight Dataset",
+				"tags": [
+					"Collaborations"
+				]
+			}
+		},
+		"/api/v2/collaborations/{collaboration_id}/insight-datasets/{dataset_id}": {
+			"delete": {
+				"description": "Removes an insight dataset owned by the caller from the collaboration.",
+				"operationId": "RemoveInsightDataset",
+				"parameters": [
+					{
+						"description": "The ID of the collaboration the dataset should be removed from.",
+						"in": "path",
+						"name": "collaboration_id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"description": "The ID of the insight dataset to be removed from the collaboration.",
+						"in": "path",
+						"name": "dataset_id",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Collaborations.RemoveInsightDatasetResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the right to remove the resource.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"404": {
+						"description": "Returned when the collaboration could not be found.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Remove Insight Dataset",
+				"tags": [
+					"Collaborations"
+				]
+			}
+		},
+		"/api/v2/collaborations/{collaboration_id}/leave": {
+			"post": {
+				"description": "Leaving the collaboration will mean the leaving company will no longer be able to see any details about the collaboration including the event logs.",
+				"operationId": "LeaveCollaboration",
+				"parameters": [
+					{
+						"description": "The ID of the collaboration to leave.",
+						"in": "path",
+						"name": "collaboration_id",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Collaborations.LeaveCollaborationResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the owner of the collaboration tries to leave, they must close the collaboration.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"404": {
+						"description": "Returned when the collaboration could not be found.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Leave Collaboration",
+				"tags": [
+					"Collaborations"
+				]
+			}
+		},
 		"/api/v2/connections/pair/match-rate": {
 			"post": {
 				"description": "Calculates the match rate between two PAIR enabled datasets.",
@@ -9626,254 +12481,6 @@
 				"summary": "Creates a dataset.",
 				"tags": [
 					"Datasets"
-				]
-			}
-		},
-		"/api/v2/datasets/stats/attribute_columns/{dataset_id}": {
-			"get": {
-				"description": "Get stats for all the attribute columns of a dataset.",
-				"operationId": "AttributeColumnStats",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "dataset_id",
-						"required": true,
-						"type": "string"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "A successful response.",
-						"schema": {
-							"$ref": "#/definitions/Dataset_Stats.AttributeColumnStatsResponse"
-						}
-					},
-					"400": {
-						"description": "Returned when the AttributeColumnStats request was not valid.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"401": {
-						"description": "Returned when the user could not be authorized.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"403": {
-						"description": "Returned when the user does not have the required permission.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"404": {
-						"description": "Returned when the dataset ID isn't found.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"500": {
-						"description": "Internal Server Error",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"default": {
-						"description": "An unexpected error response.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					}
-				},
-				"summary": "Get stats for all the attribute columns of a dataset.",
-				"tags": [
-					"Dataset Stats"
-				]
-			}
-		},
-		"/api/v2/datasets/stats/export_columns/{dataset_id}": {
-			"get": {
-				"description": "Get stats for all the export columns of a dataset.",
-				"operationId": "ExportColumnStats",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "dataset_id",
-						"required": true,
-						"type": "string"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "A successful response.",
-						"schema": {
-							"$ref": "#/definitions/Dataset_Stats.ExportColumnStatsResponse"
-						}
-					},
-					"400": {
-						"description": "Returned when the ExportColumnStats request was not valid.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"401": {
-						"description": "Returned when the user could not be authorized.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"403": {
-						"description": "Returned when the user does not have the required permission.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"404": {
-						"description": "Returned when the dataset ID isn't found.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"500": {
-						"description": "Internal Server Error",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"default": {
-						"description": "An unexpected error response.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					}
-				},
-				"summary": "Get stats for all the export columns of a dataset.",
-				"tags": [
-					"Dataset Stats"
-				]
-			}
-		},
-		"/api/v2/datasets/stats/key_columns/{dataset_id}": {
-			"get": {
-				"description": "Get stats for all the key columns of a dataset.",
-				"operationId": "KeyColumnStats",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "dataset_id",
-						"required": true,
-						"type": "string"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "A successful response.",
-						"schema": {
-							"$ref": "#/definitions/Dataset_Stats.KeyColumnStatsResponse"
-						}
-					},
-					"400": {
-						"description": "Returned when the KeyColumnStats request was not valid.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"401": {
-						"description": "Returned when the user could not be authorized.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"403": {
-						"description": "Returned when the user does not have the required permission.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"404": {
-						"description": "Returned when the dataset ID isn't found.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"500": {
-						"description": "Internal Server Error",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"default": {
-						"description": "An unexpected error response.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					}
-				},
-				"summary": "Get stats for all the key columns of a dataset.",
-				"tags": [
-					"Dataset Stats"
-				]
-			}
-		},
-		"/api/v2/datasets/stats/summary/{dataset_id}": {
-			"get": {
-				"description": "Get summary stats for a dataset.",
-				"operationId": "SummaryStats",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "dataset_id",
-						"required": true,
-						"type": "string"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "A successful response.",
-						"schema": {
-							"$ref": "#/definitions/Dataset_Stats.SummaryStatsResponse"
-						}
-					},
-					"400": {
-						"description": "Returned when the SummaryStats request was not valid.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"401": {
-						"description": "Returned when the user could not be authorized.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"403": {
-						"description": "Returned when the user does not have the required permission.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"404": {
-						"description": "Returned when the dataset ID isn't found.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"500": {
-						"description": "Internal Server Error",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"default": {
-						"description": "An unexpected error response.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					}
-				},
-				"summary": "Get summary stats for a dataset.",
-				"tags": [
-					"Dataset Stats"
 				]
 			}
 		},
@@ -12285,6 +14892,13 @@
 						"name": "import_id",
 						"required": true,
 						"type": "string"
+					},
+					{
+						"description": "An optional destination folder, if provided all imported files will be copied in this folder. This will override the Importer target folder.",
+						"in": "query",
+						"name": "target_folder",
+						"required": false,
+						"type": "string"
 					}
 				],
 				"responses": {
@@ -12918,6 +15532,75 @@
 					}
 				},
 				"summary": "Get a Normalization Configuration.",
+				"tags": [
+					"Normalization Config"
+				]
+			},
+			"post": {
+				"description": "Updates a normalization config. This endpoint uses the POST method instead of PATCH, so the complete updated config—including all details—is required to replace the existing one.",
+				"operationId": "UpdateConfig",
+				"parameters": [
+					{
+						"description": "ConfigID is the ID of the config to update.",
+						"in": "path",
+						"name": "config_id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"in": "body",
+						"name": "body",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Normalization_Config.UpdateConfigBody"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Normalization_Config.UpdateConfigResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the UpdateConfigRequest request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the required permission.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"404": {
+						"description": "Returned when the specified normalisation config does not exist.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Updates a normalization config.",
 				"tags": [
 					"Normalization Config"
 				]
@@ -13741,69 +16424,6 @@
 					}
 				},
 				"summary": "Cancel a Prepare operation.",
-				"tags": [
-					"Publishing"
-				]
-			}
-		},
-		"/api/v2/prepares/executions/{execution_id}/stats": {
-			"get": {
-				"description": "Get stats about a specific prepare operation.",
-				"operationId": "GetPrepareStats",
-				"parameters": [
-					{
-						"description": "ExecutionID is the ID of the prepare execution to fetch stats for.",
-						"in": "path",
-						"name": "execution_id",
-						"required": true,
-						"type": "string"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "A successful response.",
-						"schema": {
-							"$ref": "#/definitions/Publishing.GetPrepareStatsResponse"
-						}
-					},
-					"400": {
-						"description": "Returned when the GetPrepareStats request was not valid.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"401": {
-						"description": "Returned when the user could not be authorized.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"403": {
-						"description": "Returned when the user does not have the required permission.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"404": {
-						"description": "Returned when the dataset ID isn't found.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"500": {
-						"description": "Internal Server Error",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"default": {
-						"description": "An unexpected error response.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					}
-				},
-				"summary": "Get stats about a specific prepare operation.",
 				"tags": [
 					"Publishing"
 				]
