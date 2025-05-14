@@ -892,7 +892,522 @@ definitions:
       cloud_vault:
         $ref: '#/definitions/Cloud_Vaults.CloudVault'
     type: object
-  Collaborations.ActivationDatasetPermission:
+  Collaboration_Connections.Connection:
+    description: Connection is the representation of the contents of a connection.
+    properties:
+      from_dataset_id:
+        description: The ID of the dataset the connection is from
+        type: string
+      highest_overlap_key:
+        allOf:
+          - $ref: '#/definitions/Collaboration_Connections.Key'
+        description: >-
+          The details of the key with the highest overlap between the two
+          datasets
+      id:
+        description: The ID of the connection
+        type: string
+      keys:
+        description: The details of all the matching keys of the two datasets
+        items:
+          $ref: '#/definitions/Collaboration_Connections.Key'
+          type: object
+        type: array
+      to_dataset_id:
+        description: The ID of the dataset the connection is to
+        type: string
+    type: object
+  Collaboration_Connections.ConnectionSummary:
+    description: >-
+      ConnectionSummary is the summary view of a connection that does not
+      include all the connected keys, only the key with the highest overlap.
+    properties:
+      from_dataset_id:
+        description: The ID of the dataset the connection is from
+        type: string
+      highest_overlap_key:
+        allOf:
+          - $ref: '#/definitions/Collaboration_Connections.Key'
+        description: >-
+          The details of the key with the highest overlap between the two
+          datasets
+      id:
+        description: The ID of the connection
+        type: string
+      to_dataset_id:
+        description: The ID of the dataset the connection is to
+        type: string
+    type: object
+  Collaboration_Connections.GetConnectionResponse:
+    properties:
+      connection:
+        allOf:
+          - $ref: '#/definitions/Collaboration_Connections.Connection'
+        description: Details of the requested connection.
+    type: object
+  Collaboration_Connections.Key:
+    description: >-
+      Key is the representation of the details of connected key between two
+      datasets.
+    properties:
+      id:
+        description: The id number of the key
+        format: int64
+        type: string
+      intersection:
+        description: The number of intersected records with this key
+        format: int64
+        type: string
+      intersection_percentage:
+        description: 'The percentage of intersection records '
+        format: float
+        type: number
+      name:
+        description: The name of the key
+        type: string
+    type: object
+  Collaboration_Connections.ListConnectionsResponse:
+    properties:
+      connections:
+        description: >-
+          Summaries of all connections of the given collaboration. The returned
+          data is affected by any filters in the original request.
+        items:
+          $ref: '#/definitions/Collaboration_Connections.ConnectionSummary'
+          type: object
+        type: array
+      pagination:
+        $ref: '#/definitions/PaginationResponse'
+    type: object
+  Collaboration_Datasets.AttributeColumnStatsResponse:
+    description: >-
+      AttributeColumnStatsResponse is the response returned by
+      AttributeColumnStats method.
+    properties:
+      id_to_representations_stats:
+        additionalProperties:
+          $ref: '#/definitions/Collaboration_Datasets.RepresentationStatsList'
+        description: >-
+          IdToRepresentationsStats is a map of attribute column ID to a list of
+          their corresponding representations stats.
+        type: object
+    type: object
+  Collaboration_Datasets.AttributeDetail:
+    properties:
+      fill_rate:
+        description: >-
+          The percentage of valid rows represented as a decimal number between
+          zero and one.
+        format: float
+        type: number
+      id:
+        description: The unique numeric identifier of this attribute.
+        format: int64
+        type: string
+      label:
+        description: The name of this attribute.
+        type: string
+      type:
+        description: The type of this attribute
+        type: string
+    type: object
+  Collaboration_Datasets.AttributeSummary:
+    description: AttributeSummary provides summary information about an attribute.
+    properties:
+      label:
+        description: The name of this attribute.
+        type: string
+      type:
+        description: The type of this attribute
+        type: string
+    type: object
+  Collaboration_Datasets.DatasetSummary:
+    description: DatasetSummary is the summary view of a dataset.
+    properties:
+      attributes:
+        description: >-
+          The list of attributes for this dataset. Will only be populated for
+          dataset type 'INSIGHT'
+        items:
+          $ref: '#/definitions/Collaboration_Datasets.AttributeSummary'
+          type: object
+        type: array
+      collaboration_dataset_name:
+        description: The name of the dataset as used in the collaboration
+        type: string
+      id:
+        description: The ID of the dataset
+        type: string
+      keys:
+        description: The list of keys for this dataset
+        items:
+          $ref: '#/definitions/Collaboration_Datasets.KeySummary'
+          type: object
+        type: array
+      output_columns:
+        description: >-
+          The list of output columns for this dataset. Will only be populated
+          for dataset type 'IDENTITY'
+        items:
+          type: string
+        type: array
+      owner_id:
+        description: The ID of the dataset's owner
+        type: string
+      public_dataset_name:
+        description: The public name of the dataset
+        type: string
+      row_count:
+        description: The valid row count of the dataset
+        format: int64
+        type: string
+      type:
+        allOf:
+          - $ref: '#/definitions/Collaboration_Datasets.DatasetType'
+        description: The type of the dataset
+    type: object
+  Collaboration_Datasets.DatasetType:
+    default: DATASET_TYPE_INVALID
+    description: |-
+      DatasetType gives the dataset type, insight or identity.
+
+       - DATASET_TYPE_INVALID: Invalid is used when no other enum applies.
+       - DATASET_TYPE_INSIGHT: Insight is for insight datasets.
+       - DATASET_TYPE_IDENTITY: Identity is for identity (activation) datasets.
+    enum:
+      - DATASET_TYPE_INVALID
+      - DATASET_TYPE_INSIGHT
+      - DATASET_TYPE_IDENTITY
+    type: string
+  Collaboration_Datasets.ExportColumnStatsResponse:
+    description: ExportColumnStatsResponse is the response to ExportColumnStats method.
+    properties:
+      label_to_stats:
+        additionalProperties:
+          $ref: '#/definitions/Collaboration_Datasets.v2.ExportColumnStats'
+        description: ValidValues is the number of valid values for this export column.
+        type: object
+    type: object
+  Collaboration_Datasets.GetDatasetDetailsResponse:
+    properties:
+      attributes:
+        description: >-
+          Details of each attribute provided by the dataset. Only relevant when
+          `dataset_type` is 'INSIGHT'.
+        items:
+          $ref: '#/definitions/Collaboration_Datasets.AttributeDetail'
+          type: object
+        type: array
+      collaboration_dataset_name:
+        description: The name of the dataset as used in the collaboration.
+        type: string
+      id:
+        description: The ID of the dataset.
+        type: string
+      keys:
+        description: Details of each key of the dataset.
+        items:
+          $ref: '#/definitions/Collaboration_Datasets.KeyDetail'
+          type: object
+        type: array
+      output_columns:
+        description: >-
+          List of output columns names which can be selected in activation
+          queries. Only relevant when dataset_type is 'IDENTITY'.
+        items:
+          type: string
+        type: array
+      owner_id:
+        description: The ID of the dataset's owner.
+        type: string
+      public_dataset_name:
+        description: The public name of the dataset.
+        type: string
+      published_date_time:
+        description: The moment the dataset was last published.
+        format: date-time
+        type: string
+      region:
+        allOf:
+          - $ref: '#/definitions/Collaboration_Datasets.Region'
+        description: The region of the dataset.
+      row_count:
+        description: The valid row count of the dataset.
+        format: int64
+        type: string
+      type:
+        allOf:
+          - $ref: '#/definitions/Collaboration_Datasets.DatasetType'
+        description: The type of the dataset.
+    title: GetDatasetDetailsRequest _
+    type: object
+  Collaboration_Datasets.KeyColumnStatsResponse:
+    description: KeyColumnStatsResponse is the response returned by KeyColumnStats method.
+    properties:
+      key_id_to_stats:
+        additionalProperties:
+          $ref: '#/definitions/Collaboration_Datasets.v2.KeyColumnStats'
+        description: KeyIdToStats is a map of key column ID to its corresponding stats.
+        type: object
+    type: object
+  Collaboration_Datasets.KeyDetail:
+    properties:
+      fill_rate:
+        description: >-
+          The percentage of valid rows represented as a decimal number between
+          zero and one.
+        format: float
+        type: number
+      id:
+        description: The unique numeric identifier of this key.
+        format: int64
+        type: string
+      label:
+        description: The name of this key.
+        type: string
+    type: object
+  Collaboration_Datasets.KeySummary:
+    description: AttributeSummary provides summary information about a key.
+    properties:
+      id:
+        description: The ID of the key
+        format: int64
+        type: string
+      label:
+        description: The ID of the key
+        type: string
+    type: object
+  Collaboration_Datasets.ListDatasetsResponse:
+    properties:
+      datasets:
+        description: >-
+          Summaries of all datasets of the given collaboration. The returned
+          data is affected by any filters in the original request.
+        items:
+          $ref: '#/definitions/Collaboration_Datasets.DatasetSummary'
+          type: object
+        type: array
+      pagination:
+        $ref: '#/definitions/PaginationResponse'
+    type: object
+  Collaboration_Datasets.Region:
+    default: UNKNOWN
+    description: |-
+      Region enumerates the supported cloud providers and locations.
+
+       - UNKNOWN: UNKNOWN means the region has not been defined.
+       - AWS_EU_WEST_2: AWS_EU_WEST_2 means AWS Europe (London).
+       - AWS_US_EAST_1: AWS_US_EAST_1 means AWS US East (N. Virginia).
+       - IBM_EU_CENTRAL_1: IBM_EU_CENTRAL_1 means IBM MZR EU Central (Frankfurt).
+       - AWS_EU_CENTRAL_1: AWS_EU_CENTRAL_1 means AWS Europe (Frankfurt).
+       - AWS_AP_SOUTHEAST_2: AWS_AP_SOUTHEAST_2 means AWS Asia Pacific (Sydney)
+    enum:
+      - UNKNOWN
+      - AWS_EU_WEST_2
+      - AWS_US_EAST_1
+      - IBM_EU_CENTRAL_1
+      - AWS_EU_CENTRAL_1
+      - AWS_AP_SOUTHEAST_2
+    type: string
+  Collaboration_Datasets.RepresentationStats:
+    description: >-
+      RepresentationStats holds stats information for a attribute column
+      representation.
+    properties:
+      distinct_values:
+        description: >-
+          DistinctValues is the number of distinct values for this
+          representation.
+        format: uint64
+        type: string
+      multi_value:
+        description: MultiValue is set to true if this is a multi-value key column.
+        type: boolean
+      representation_id:
+        description: RepresentationId is the ID of the representation.
+        type: string
+      valid_values:
+        description: ValidValues is the number of valid values for this representation.
+        format: uint64
+        type: string
+    type: object
+  Collaboration_Datasets.RepresentationStatsList:
+    description: >-
+      RepresentationStatsList contains a list of RepresentationStats that can be
+      used in a map field.
+    properties:
+      representations_stats:
+        items:
+          $ref: '#/definitions/Collaboration_Datasets.RepresentationStats'
+          type: object
+        type: array
+    type: object
+  Collaboration_Datasets.SummaryStatsResponse:
+    description: SummaryStatsResponse is the response returned by SummaryStats method.
+    properties:
+      attribute_columns:
+        description: AttributeColumns is the number of attributes of the dataset.
+        format: uint64
+        type: string
+      export_columns:
+        description: ExportColumns is the number of export columns of the dataset.
+        format: uint64
+        type: string
+      key_columns:
+        description: KeyColumns is the number of keys of the dataset.
+        format: uint64
+        type: string
+      total_rows:
+        description: TotalRows is the total rows of the dataset.
+        format: uint64
+        type: string
+    type: object
+  Collaboration_Datasets.v2.ExportColumnStats:
+    properties:
+      distinct_values:
+        description: DistinctValues is the number of distinct values for this key column.
+        format: uint64
+        type: string
+      multi_values:
+        description: MultiValue is set to true if this is a multi-value key column.
+        type: boolean
+      valid_values:
+        description: ValidValues is the number of valid values for this key column.
+        format: uint64
+        type: string
+    title: ExportColumnStats holds stats information for an export column
+    type: object
+  Collaboration_Datasets.v2.KeyColumnStats:
+    description: KeyColumnStats holds stats information for a key column.
+    properties:
+      distinct_identifiers:
+        description: >-
+          DistinctIdentifiers is the number of distinct identifiers for this key
+          column.
+        format: uint64
+        type: string
+      distinct_values:
+        description: DistinctValues is the number of distinct values for this key column.
+        format: uint64
+        type: string
+      identifiers:
+        description: Identifiers is the number of identifiers for this key column.
+        format: uint64
+        type: string
+      multi_value:
+        description: MultiValue is set to true if this is a multi-value key column.
+        type: boolean
+      valid_values:
+        description: ValidValues is the number of valid values for this key column.
+        format: uint64
+        type: string
+    type: object
+  Collaboration_Destinations.Destination:
+    description: Destination is the information required to define a destination.
+    properties:
+      config:
+        description: The configuration of the destination, all secrets have been removed.
+        type: object
+      created_time:
+        description: The created date time of the destination.
+        format: date-time
+        type: string
+      creator_id:
+        description: The ID of the user who created the destination.
+        type: string
+      description:
+        description: A description of the destination.
+        type: string
+      destination_type_id:
+        description: The type ID of the destination.
+        type: string
+      editable_paths:
+        description: The paths of the fields in the config that can be edited at push time.
+        items:
+          type: string
+        type: array
+      id:
+        description: The ID of the destination.
+        type: string
+      name:
+        description: The name of the destination.
+        type: string
+      owner_id:
+        description: The Company ID of the owner of the destination.
+        type: string
+      updated_time:
+        description: The date time the destination was last updated.
+        format: date-time
+        type: string
+    type: object
+  Collaboration_Destinations.DestinationOverview:
+    description: DestinationOverview provides an overview of a destination.
+    properties:
+      created_date_time:
+        description: The created date time of the destination.
+        format: date-time
+        readOnly: true
+        type: string
+      creator_id:
+        description: The ID of the user who created the destination.
+        readOnly: true
+        type: string
+      description:
+        description: A description of the destination.
+        type: string
+      destination_type_id:
+        description: The type ID of the destination.
+        type: string
+      id:
+        description: The ID of the destination.
+        readOnly: true
+        type: string
+      name:
+        description: The name of the destination.
+        type: string
+      owner_id:
+        description: The Company ID of the owner of the destination.
+        readOnly: true
+        type: string
+      updated_date_time:
+        description: The date time the destination was last updated.
+        format: date-time
+        readOnly: true
+        type: string
+    type: object
+  Collaboration_Destinations.GetDestinationDetailsResponse:
+    properties:
+      destination:
+        allOf:
+          - $ref: '#/definitions/Collaboration_Destinations.Destination'
+        description: The object containing the details of the requested destination.
+    type: object
+  Collaboration_Destinations.ListDestinationsResponse:
+    properties:
+      destinations:
+        description: >-
+          Summaries of all destinations of the given collaboration. The returned
+          data is affected by any filters in the original request.
+        items:
+          $ref: '#/definitions/Collaboration_Destinations.DestinationOverview'
+          type: object
+        type: array
+      pagination:
+        $ref: '#/definitions/PaginationResponse'
+    type: object
+  Collaboration_Destinations.NullValue:
+    default: NULL_VALUE
+    description: |-
+      `NullValue` is a singleton enumeration to represent the null value for the
+      `Value` type union.
+
+      The JSON representation for `NullValue` is JSON `null`.
+
+       - NULL_VALUE: Null value.
+    enum:
+      - NULL_VALUE
+    type: string
+  Collaboration_Management.ActivationDatasetPermission:
     properties:
       collaboration_dataset_name:
         description: >-
@@ -919,7 +1434,7 @@ definitions:
         description: The company owning the dataset.
         type: string
     type: object
-  Collaborations.AddActivationDatasetBody:
+  Collaboration_Management.AddActivationDatasetBody:
     properties:
       collaboration_dataset_name:
         description: >-
@@ -942,17 +1457,17 @@ definitions:
         description: Whether the activation dataset should only allow intersection queries.
         type: boolean
     type: object
-  Collaborations.AddActivationDatasetResponse:
+  Collaboration_Management.AddActivationDatasetResponse:
     type: object
-  Collaborations.AddDestinationBody:
+  Collaboration_Management.AddDestinationBody:
     properties:
       destination_id:
         description: The ID of the destination to add.
         type: string
     type: object
-  Collaborations.AddDestinationResponse:
+  Collaboration_Management.AddDestinationResponse:
     type: object
-  Collaborations.AddInsightDatasetBody:
+  Collaboration_Management.AddInsightDatasetBody:
     properties:
       activation_allowed:
         description: >-
@@ -985,9 +1500,9 @@ definitions:
         description: Whether the insight dataset should only allow intersection queries.
         type: boolean
     type: object
-  Collaborations.AddInsightDatasetResponse:
+  Collaboration_Management.AddInsightDatasetResponse:
     type: object
-  Collaborations.Any:
+  Collaboration_Management.Any:
     additionalProperties: {}
     description: >-
       `Any` contains an arbitrary serialized protocol buffer message along with
@@ -1146,43 +1661,14 @@ definitions:
           used with implementation specific semantics.
         type: string
     type: object
-  Collaborations.AttributeDetail:
-    properties:
-      fill_rate:
-        description: >-
-          The percentage of valid rows represented as a decimal number between
-          zero and one.
-        format: float
-        type: number
-      id:
-        description: The unique numeric identifier of this attribute.
-        format: int64
-        type: string
-      label:
-        description: The name of this attribute.
-        type: string
-      type:
-        description: The type of this attribute
-        type: string
+  Collaboration_Management.CloseCollaborationResponse:
     type: object
-  Collaborations.AttributeSummary:
-    description: AttributeSummary provides summary information about an attribute.
-    properties:
-      label:
-        description: The name of this attribute.
-        type: string
-      type:
-        description: The type of this attribute
-        type: string
-    type: object
-  Collaborations.CloseCollaborationResponse:
-    type: object
-  Collaborations.Collaboration:
+  Collaboration_Management.Collaboration:
     properties:
       activation_datasets:
         description: The activation datasets that have been added to this collaboration.
         items:
-          $ref: '#/definitions/Collaborations.ActivationDatasetPermission'
+          $ref: '#/definitions/Collaboration_Management.ActivationDatasetPermission'
           type: object
         type: array
       created_date_time:
@@ -1203,13 +1689,13 @@ definitions:
       insight_datasets:
         description: The insight datasets that have been added to this collaboration.
         items:
-          $ref: '#/definitions/Collaborations.InsightDatasetPermission'
+          $ref: '#/definitions/Collaboration_Management.InsightDatasetPermission'
           type: object
         type: array
       members:
         description: The members of the collaboration.
         items:
-          $ref: '#/definitions/Collaborations.CollaborationMember'
+          $ref: '#/definitions/Collaboration_Management.CollaborationMember'
           type: object
         type: array
       name:
@@ -1217,11 +1703,11 @@ definitions:
         type: string
       owner:
         allOf:
-          - $ref: '#/definitions/Collaborations.CollaborationMember'
+          - $ref: '#/definitions/Collaboration_Management.CollaborationMember'
         description: The collaboration owner.
       status:
         allOf:
-          - $ref: '#/definitions/Collaborations.v2.Status'
+          - $ref: '#/definitions/Collaboration_Management.v2.Status'
         description: The status of the collaboration.
       updated_date_time:
         description: The date and time that the collaboration was last updated.
@@ -1229,7 +1715,7 @@ definitions:
         type: string
     title: Collaboration is the representation of the contents of a collaboration
     type: object
-  Collaborations.CollaborationEvent:
+  Collaboration_Management.CollaborationEvent:
     properties:
       company_id:
         description: The ID of the company which performed the action.
@@ -1239,7 +1725,7 @@ definitions:
           The list of entities referenced in the message along with associated
           name and ownership details.
         items:
-          $ref: '#/definitions/Collaborations.EventEntity'
+          $ref: '#/definitions/Collaboration_Management.EventEntity'
           type: object
         type: array
       event_date_time:
@@ -1256,10 +1742,10 @@ definitions:
         type: object
       type:
         allOf:
-          - $ref: '#/definitions/Collaborations.EventType'
+          - $ref: '#/definitions/Collaboration_Management.EventType'
         description: The type of event that occurred.
     type: object
-  Collaborations.CollaborationMember:
+  Collaboration_Management.CollaborationMember:
     properties:
       display_name:
         description: The company display name of the collaboration member.
@@ -1269,10 +1755,10 @@ definitions:
         type: string
       rights:
         allOf:
-          - $ref: '#/definitions/Collaborations.MemberRights'
+          - $ref: '#/definitions/Collaboration_Management.MemberRights'
         description: The rights of the member in the context of the collaboration.
     type: object
-  Collaborations.CollaborationSummary:
+  Collaboration_Management.CollaborationSummary:
     properties:
       created_date_time:
         description: The date and time that the collaboration was created.
@@ -1287,7 +1773,7 @@ definitions:
       members:
         description: The members of the collaboration.
         items:
-          $ref: '#/definitions/Collaborations.CollaborationMember'
+          $ref: '#/definitions/Collaboration_Management.CollaborationMember'
           type: object
         type: array
       name:
@@ -1295,11 +1781,11 @@ definitions:
         type: string
       owner:
         allOf:
-          - $ref: '#/definitions/Collaborations.CollaborationMember'
+          - $ref: '#/definitions/Collaboration_Management.CollaborationMember'
         description: The collaboration owner.
       status:
         allOf:
-          - $ref: '#/definitions/Collaborations.v2.Status'
+          - $ref: '#/definitions/Collaboration_Management.v2.Status'
         description: The status of the collaboration.
       updated_date_time:
         description: The date and time that the collaboration was last updated.
@@ -1307,73 +1793,27 @@ definitions:
         type: string
     title: CollaborationSummary
     type: object
-  Collaborations.Connection:
-    description: Connection is the representation of the contents of a connection.
-    properties:
-      from_dataset_id:
-        description: The ID of the dataset the connection is from
-        type: string
-      highest_overlap_key:
-        allOf:
-          - $ref: '#/definitions/Collaborations.Key'
-        description: >-
-          The details of the key with the highest overlap between the two
-          datasets
-      id:
-        description: The ID of the connection
-        type: string
-      keys:
-        description: The details of all the matching keys of the two datasets
-        items:
-          $ref: '#/definitions/Collaborations.Key'
-          type: object
-        type: array
-      to_dataset_id:
-        description: The ID of the dataset the connection is to
-        type: string
-    type: object
-  Collaborations.ConnectionSummary:
-    description: >-
-      ConnectionSummary is the summary view of a connection that does not
-      include all the connected keys, only the key with the highest overlap.
-    properties:
-      from_dataset_id:
-        description: The ID of the dataset the connection is from
-        type: string
-      highest_overlap_key:
-        allOf:
-          - $ref: '#/definitions/Collaborations.Key'
-        description: >-
-          The details of the key with the highest overlap between the two
-          datasets
-      id:
-        description: The ID of the connection
-        type: string
-      to_dataset_id:
-        description: The ID of the dataset the connection is to
-        type: string
-    type: object
-  Collaborations.CreateCollaborationMember:
+  Collaboration_Management.CreateCollaborationMember:
     properties:
       company_id:
         description: The company ID of the member to add to the collaboration.
         type: string
       rights:
         allOf:
-          - $ref: '#/definitions/Collaborations.MemberRights'
+          - $ref: '#/definitions/Collaboration_Management.MemberRights'
         description: The member's rights under this collaboration.
     type: object
-  Collaborations.CreateCollaborationRequest:
+  Collaboration_Management.CreateCollaborationRequest:
     properties:
       collaborators:
         description: The companies and rights of the other members in the collaboration.
         items:
-          $ref: '#/definitions/Collaborations.CreateCollaborationMember'
+          $ref: '#/definitions/Collaboration_Management.CreateCollaborationMember'
           type: object
         type: array
       creator_rights:
         allOf:
-          - $ref: '#/definitions/Collaborations.MemberRights'
+          - $ref: '#/definitions/Collaboration_Management.MemberRights'
         description: The rights that you grant yourself under this collaboration.
       description:
         description: >-
@@ -1384,144 +1824,13 @@ definitions:
         description: A name for this collaboration
         type: string
     type: object
-  Collaborations.CreateCollaborationResponse:
+  Collaboration_Management.CreateCollaborationResponse:
     properties:
       collaboration_id:
         description: The ID of the newly created collaboration.
         type: string
     type: object
-  Collaborations.DatasetSummary:
-    description: DatasetSummary is the summary view of a dataset.
-    properties:
-      attributes:
-        description: >-
-          The list of attributes for this dataset. Will only be populated for
-          dataset type 'INSIGHT'
-        items:
-          $ref: '#/definitions/Collaborations.AttributeSummary'
-          type: object
-        type: array
-      collaboration_dataset_name:
-        description: The name of the dataset as used in the collaboration
-        type: string
-      id:
-        description: The ID of the dataset
-        type: string
-      keys:
-        description: The list of keys for this dataset
-        items:
-          $ref: '#/definitions/Collaborations.KeySummary'
-          type: object
-        type: array
-      output_columns:
-        description: >-
-          The list of output columns for this dataset. Will only be populated
-          for dataset type 'IDENTITY'
-        items:
-          type: string
-        type: array
-      owner_id:
-        description: The ID of the dataset's owner
-        type: string
-      public_dataset_name:
-        description: The public name of the dataset
-        type: string
-      row_count:
-        description: The valid row count of the dataset
-        format: int64
-        type: string
-      type:
-        allOf:
-          - $ref: '#/definitions/Collaborations.DatasetType'
-        description: The type of the dataset
-    type: object
-  Collaborations.DatasetType:
-    default: DATASET_TYPE_INVALID
-    description: |-
-      DatasetType gives the dataset type, insight or identity.
-
-       - DATASET_TYPE_INVALID: Invalid is used when no other enum applies.
-       - DATASET_TYPE_INSIGHT: Insight is for insight datasets.
-       - DATASET_TYPE_IDENTITY: Identity is for identity (activation) datasets.
-    enum:
-      - DATASET_TYPE_INVALID
-      - DATASET_TYPE_INSIGHT
-      - DATASET_TYPE_IDENTITY
-    type: string
-  Collaborations.Destination:
-    description: Destination is the information required to define a destination.
-    properties:
-      config:
-        description: The configuration of the destination, all secrets have been removed.
-        type: object
-      created_time:
-        description: The created date time of the destination.
-        format: date-time
-        type: string
-      creator_id:
-        description: The ID of the user who created the destination.
-        type: string
-      description:
-        description: A description of the destination.
-        type: string
-      destination_type_id:
-        description: The type ID of the destination.
-        type: string
-      editable_paths:
-        description: The paths of the fields in the config that can be edited at push time.
-        items:
-          type: string
-        type: array
-      id:
-        description: The ID of the destination.
-        type: string
-      name:
-        description: The name of the destination.
-        type: string
-      owner_id:
-        description: The Company ID of the owner of the destination.
-        type: string
-      updated_time:
-        description: The date time the destination was last updated.
-        format: date-time
-        type: string
-    type: object
-  Collaborations.DestinationOverview:
-    description: DestinationOverview provides an overview of a destination.
-    properties:
-      created_date_time:
-        description: The created date time of the destination.
-        format: date-time
-        readOnly: true
-        type: string
-      creator_id:
-        description: The ID of the user who created the destination.
-        readOnly: true
-        type: string
-      description:
-        description: A description of the destination.
-        type: string
-      destination_type_id:
-        description: The type ID of the destination.
-        type: string
-      id:
-        description: The ID of the destination.
-        readOnly: true
-        type: string
-      name:
-        description: The name of the destination.
-        type: string
-      owner_id:
-        description: The Company ID of the owner of the destination.
-        readOnly: true
-        type: string
-      updated_date_time:
-        description: The date time the destination was last updated.
-        format: date-time
-        readOnly: true
-        type: string
-    type: object
-  Collaborations.EntityType:
+  Collaboration_Management.EntityType:
     default: ENTITY_INVALID
     enum:
       - ENTITY_INVALID
@@ -1532,7 +1841,7 @@ definitions:
       - ENTITY_AUDIENCE
       - ENTITY_SEGMENT
     type: string
-  Collaborations.EventEntity:
+  Collaboration_Management.EventEntity:
     properties:
       company_id:
         description: The company ID associated with the entity.
@@ -1545,10 +1854,10 @@ definitions:
         type: string
       type:
         allOf:
-          - $ref: '#/definitions/Collaborations.EntityType'
+          - $ref: '#/definitions/Collaboration_Management.EntityType'
         description: The type of entity.
     type: object
-  Collaborations.EventType:
+  Collaboration_Management.EventType:
     default: TYPE_INVALID
     enum:
       - TYPE_INVALID
@@ -1570,81 +1879,14 @@ definitions:
       - TYPE_SEGMENT_CREATED
       - TYPE_SEGMENT_DELETED
     type: string
-  Collaborations.GetCollaborationResponse:
+  Collaboration_Management.GetCollaborationResponse:
     properties:
       collaboration:
         allOf:
-          - $ref: '#/definitions/Collaborations.Collaboration'
+          - $ref: '#/definitions/Collaboration_Management.Collaboration'
         description: Details of the requested collaboration.
     type: object
-  Collaborations.GetConnectionResponse:
-    properties:
-      connection:
-        allOf:
-          - $ref: '#/definitions/Collaborations.Connection'
-        description: Details of the requested connection.
-    type: object
-  Collaborations.GetDatasetDetailsResponse:
-    properties:
-      attributes:
-        description: >-
-          Details of each attribute provided by the dataset. Only relevant when
-          `dataset_type` is 'INSIGHT'.
-        items:
-          $ref: '#/definitions/Collaborations.AttributeDetail'
-          type: object
-        type: array
-      collaboration_dataset_name:
-        description: The name of the dataset as used in the collaboration.
-        type: string
-      id:
-        description: The ID of the dataset.
-        type: string
-      keys:
-        description: Details of each key of the dataset.
-        items:
-          $ref: '#/definitions/Collaborations.KeyDetail'
-          type: object
-        type: array
-      output_columns:
-        description: >-
-          List of output columns names which can be selected in activation
-          queries. Only relevant when dataset_type is 'IDENTITY'.
-        items:
-          type: string
-        type: array
-      owner_id:
-        description: The ID of the dataset's owner.
-        type: string
-      public_dataset_name:
-        description: The public name of the dataset.
-        type: string
-      published_date_time:
-        description: The moment the dataset was last published.
-        format: date-time
-        type: string
-      region:
-        allOf:
-          - $ref: '#/definitions/Collaborations.Region'
-        description: The region of the dataset.
-      row_count:
-        description: The valid row count of the dataset.
-        format: int64
-        type: string
-      type:
-        allOf:
-          - $ref: '#/definitions/Collaborations.DatasetType'
-        description: The type of the dataset.
-    title: GetDatasetDetailsRequest _
-    type: object
-  Collaborations.GetDestinationDetailsResponse:
-    properties:
-      destination:
-        allOf:
-          - $ref: '#/definitions/Collaborations.Destination'
-        description: The object containing the details of the requested destination.
-    type: object
-  Collaborations.HttpBody:
+  Collaboration_Management.HttpBody:
     description: >-
       Message that represents an arbitrary HTTP body. It should only be used for
 
@@ -1716,11 +1958,11 @@ definitions:
 
           for streaming APIs.
         items:
-          $ref: '#/definitions/Collaborations.Any'
+          $ref: '#/definitions/Collaboration_Management.Any'
           type: object
         type: array
     type: object
-  Collaborations.InsightDatasetPermission:
+  Collaboration_Management.InsightDatasetPermission:
     properties:
       activation_allowed:
         description: >-
@@ -1757,67 +1999,19 @@ definitions:
         description: The company owning the dataset.
         type: string
     type: object
-  Collaborations.Key:
-    description: >-
-      Key is the representation of the details of connected key between two
-      datasets.
-    properties:
-      id:
-        description: The id number of the key
-        format: int64
-        type: string
-      intersection:
-        description: The number of intersected records with this key
-        format: int64
-        type: string
-      intersection_percentage:
-        description: 'The percentage of intersection records '
-        format: float
-        type: number
-      name:
-        description: The name of the key
-        type: string
+  Collaboration_Management.LeaveCollaborationResponse:
     type: object
-  Collaborations.KeyDetail:
-    properties:
-      fill_rate:
-        description: >-
-          The percentage of valid rows represented as a decimal number between
-          zero and one.
-        format: float
-        type: number
-      id:
-        description: The unique numeric identifier of this key.
-        format: int64
-        type: string
-      label:
-        description: The name of this key.
-        type: string
-    type: object
-  Collaborations.KeySummary:
-    description: AttributeSummary provides summary information about a key.
-    properties:
-      id:
-        description: The ID of the key
-        format: int64
-        type: string
-      label:
-        description: The ID of the key
-        type: string
-    type: object
-  Collaborations.LeaveCollaborationResponse:
-    type: object
-  Collaborations.ListCollaborationEventsResponse:
+  Collaboration_Management.ListCollaborationEventsResponse:
     properties:
       events:
         items:
-          $ref: '#/definitions/Collaborations.CollaborationEvent'
+          $ref: '#/definitions/Collaboration_Management.CollaborationEvent'
           type: object
         type: array
       pagination:
         $ref: '#/definitions/PaginationResponse'
     type: object
-  Collaborations.ListCollaborationsResponse:
+  Collaboration_Management.ListCollaborationsResponse:
     properties:
       collaborations:
         description: >-
@@ -1825,52 +2019,13 @@ definitions:
           member of. The returned data is affected by any filters in the
           original request.
         items:
-          $ref: '#/definitions/Collaborations.CollaborationSummary'
+          $ref: '#/definitions/Collaboration_Management.CollaborationSummary'
           type: object
         type: array
       pagination:
         $ref: '#/definitions/PaginationResponse'
     type: object
-  Collaborations.ListConnectionsResponse:
-    properties:
-      connections:
-        description: >-
-          Summaries of all connections of the given collaboration. The returned
-          data is affected by any filters in the original request.
-        items:
-          $ref: '#/definitions/Collaborations.ConnectionSummary'
-          type: object
-        type: array
-      pagination:
-        $ref: '#/definitions/PaginationResponse'
-    type: object
-  Collaborations.ListDatasetsResponse:
-    properties:
-      datasets:
-        description: >-
-          Summaries of all datasets of the given collaboration. The returned
-          data is affected by any filters in the original request.
-        items:
-          $ref: '#/definitions/Collaborations.DatasetSummary'
-          type: object
-        type: array
-      pagination:
-        $ref: '#/definitions/PaginationResponse'
-    type: object
-  Collaborations.ListDestinationsResponse:
-    properties:
-      destinations:
-        description: >-
-          Summaries of all destinations of the given collaboration. The returned
-          data is affected by any filters in the original request.
-        items:
-          $ref: '#/definitions/Collaborations.DestinationOverview'
-          type: object
-        type: array
-      pagination:
-        $ref: '#/definitions/PaginationResponse'
-    type: object
-  Collaborations.MemberRights:
+  Collaboration_Management.MemberRights:
     properties:
       contributor:
         description: >-
@@ -1889,44 +2044,13 @@ definitions:
           and export to destinations subject to the collaboration rights.
         type: boolean
     type: object
-  Collaborations.NullValue:
-    default: NULL_VALUE
-    description: |-
-      `NullValue` is a singleton enumeration to represent the null value for the
-      `Value` type union.
-
-      The JSON representation for `NullValue` is JSON `null`.
-
-       - NULL_VALUE: Null value.
-    enum:
-      - NULL_VALUE
-    type: string
-  Collaborations.Region:
-    default: UNKNOWN
-    description: |-
-      Region enumerates the supported cloud providers and locations.
-
-       - UNKNOWN: UNKNOWN means the region has not been defined.
-       - AWS_EU_WEST_2: AWS_EU_WEST_2 means AWS Europe (London).
-       - AWS_US_EAST_1: AWS_US_EAST_1 means AWS US East (N. Virginia).
-       - IBM_EU_CENTRAL_1: IBM_EU_CENTRAL_1 means IBM MZR EU Central (Frankfurt).
-       - AWS_EU_CENTRAL_1: AWS_EU_CENTRAL_1 means AWS Europe (Frankfurt).
-       - AWS_AP_SOUTHEAST_2: AWS_AP_SOUTHEAST_2 means AWS Asia Pacific (Sydney)
-    enum:
-      - UNKNOWN
-      - AWS_EU_WEST_2
-      - AWS_US_EAST_1
-      - IBM_EU_CENTRAL_1
-      - AWS_EU_CENTRAL_1
-      - AWS_AP_SOUTHEAST_2
-    type: string
-  Collaborations.RemoveActivationDatasetResponse:
+  Collaboration_Management.RemoveActivationDatasetResponse:
     type: object
-  Collaborations.RemoveDestinationResponse:
+  Collaboration_Management.RemoveDestinationResponse:
     type: object
-  Collaborations.RemoveInsightDatasetResponse:
+  Collaboration_Management.RemoveInsightDatasetResponse:
     type: object
-  Collaborations.v2.Status:
+  Collaboration_Management.v2.Status:
     default: STATUS_INVALID
     description: |-
       Status is the status of the collaboration.
@@ -2024,130 +2148,6 @@ definitions:
     properties:
       config_id:
         description: The config ID used for the recordset creation, if one was used.
-        type: string
-    type: object
-  Dataset_Stats.AttributeColumnStatsResponse:
-    description: >-
-      AttributeColumnStatsResponse is the response returned by
-      AttributeColumnStats method.
-    properties:
-      id_to_representations_stats:
-        additionalProperties:
-          $ref: '#/definitions/Dataset_Stats.RepresentationStatsList'
-        description: >-
-          IdToRepresentationsStats is a map of attribute column ID to a list of
-          their corresponding representations stats.
-        type: object
-    type: object
-  Dataset_Stats.ExportColumnStatsResponse:
-    description: ExportColumnStatsResponse is the response to ExportColumnStats method.
-    properties:
-      label_to_stats:
-        additionalProperties:
-          $ref: '#/definitions/Dataset_Stats.v2.ExportColumnStats'
-        description: ValidValues is the number of valid values for this export column.
-        type: object
-    type: object
-  Dataset_Stats.KeyColumnStatsResponse:
-    description: KeyColumnStatsResponse is the response returned by KeyColumnStats method.
-    properties:
-      key_id_to_stats:
-        additionalProperties:
-          $ref: '#/definitions/Dataset_Stats.v2.KeyColumnStats'
-        description: KeyIdToStats is a map of key column ID to its corresponding stats.
-        type: object
-    type: object
-  Dataset_Stats.RepresentationStats:
-    description: >-
-      RepresentationStats holds stats information for a attribute column
-      representation.
-    properties:
-      distinct_values:
-        description: >-
-          DistinctValues is the number of distinct values for this
-          representation.
-        format: uint64
-        type: string
-      multi_value:
-        description: MultiValue is set to true if this is a multi-value key column.
-        type: boolean
-      representation_id:
-        description: RepresentationId is the ID of the representation.
-        type: string
-      valid_values:
-        description: ValidValues is the number of valid values for this representation.
-        format: uint64
-        type: string
-    type: object
-  Dataset_Stats.RepresentationStatsList:
-    description: >-
-      RepresentationStatsList contains a list of RepresentationStats that can be
-      used in a map field.
-    properties:
-      representations_stats:
-        items:
-          $ref: '#/definitions/Dataset_Stats.RepresentationStats'
-          type: object
-        type: array
-    type: object
-  Dataset_Stats.SummaryStatsResponse:
-    description: SummaryStatsResponse is the response returned by SummaryStats method.
-    properties:
-      attribute_columns:
-        description: AttributeColumns is the number of attributes of the dataset.
-        format: uint64
-        type: string
-      export_columns:
-        description: ExportColumns is the number of export columns of the dataset.
-        format: uint64
-        type: string
-      key_columns:
-        description: KeyColumns is the number of keys of the dataset.
-        format: uint64
-        type: string
-      total_rows:
-        description: TotalRows is the total rows of the dataset.
-        format: uint64
-        type: string
-    type: object
-  Dataset_Stats.v2.ExportColumnStats:
-    properties:
-      distinct_values:
-        description: DistinctValues is the number of distinct values for this key column.
-        format: uint64
-        type: string
-      multi_values:
-        description: MultiValue is set to true if this is a multi-value key column.
-        type: boolean
-      valid_values:
-        description: ValidValues is the number of valid values for this key column.
-        format: uint64
-        type: string
-    title: ExportColumnStats holds stats information for an export column
-    type: object
-  Dataset_Stats.v2.KeyColumnStats:
-    description: KeyColumnStats holds stats information for a key column.
-    properties:
-      distinct_identifiers:
-        description: >-
-          DistinctIdentifiers is the number of distinct identifiers for this key
-          column.
-        format: uint64
-        type: string
-      distinct_values:
-        description: DistinctValues is the number of distinct values for this key column.
-        format: uint64
-        type: string
-      identifiers:
-        description: Identifiers is the number of identifiers for this key column.
-        format: uint64
-        type: string
-      multi_value:
-        description: MultiValue is set to true if this is a multi-value key column.
-        type: boolean
-      valid_values:
-        description: ValidValues is the number of valid values for this key column.
-        format: uint64
         type: string
     type: object
   Datasets.CreateDatasetRequest:
@@ -8408,7 +8408,7 @@ paths:
         '200':
           description: A successful response.
           schema:
-            $ref: '#/definitions/Collaborations.ListCollaborationsResponse'
+            $ref: '#/definitions/Collaboration_Management.ListCollaborationsResponse'
         '401':
           description: Returned when the user could not be authorized.
           schema:
@@ -8429,7 +8429,7 @@ paths:
             $ref: '#/definitions/Error'
       summary: List Collaborations
       tags:
-        - Collaborations
+        - Collaboration Management
     post:
       description: >-
         Creates a new collaboration with the provided company IDs as members.
@@ -8440,12 +8440,12 @@ paths:
           name: body
           required: true
           schema:
-            $ref: '#/definitions/Collaborations.CreateCollaborationRequest'
+            $ref: '#/definitions/Collaboration_Management.CreateCollaborationRequest'
       responses:
         '200':
           description: A successful response.
           schema:
-            $ref: '#/definitions/Collaborations.CreateCollaborationResponse'
+            $ref: '#/definitions/Collaboration_Management.CreateCollaborationResponse'
         '400':
           description: Returned when the request was not valid.
           schema:
@@ -8470,7 +8470,7 @@ paths:
             $ref: '#/definitions/Error'
       summary: Create Collaboration
       tags:
-        - Collaborations
+        - Collaboration Management
   /api/v2/collaborations/{collaboration_id}:
     get:
       description: Returns the details for the requested collaboration ID.
@@ -8485,7 +8485,7 @@ paths:
         '200':
           description: A successful response.
           schema:
-            $ref: '#/definitions/Collaborations.GetCollaborationResponse'
+            $ref: '#/definitions/Collaboration_Management.GetCollaborationResponse'
         '400':
           description: Returned when the request was not valid.
           schema:
@@ -8514,7 +8514,7 @@ paths:
             $ref: '#/definitions/Error'
       summary: Get Collaboration
       tags:
-        - Collaborations
+        - Collaboration Management
   /api/v2/collaborations/{collaboration_id}/activation-datasets:
     post:
       description: Adds an activation dataset to the collaboration.
@@ -8529,12 +8529,13 @@ paths:
           name: body
           required: true
           schema:
-            $ref: '#/definitions/Collaborations.AddActivationDatasetBody'
+            $ref: '#/definitions/Collaboration_Management.AddActivationDatasetBody'
       responses:
         '200':
           description: A successful response.
           schema:
-            $ref: '#/definitions/Collaborations.AddActivationDatasetResponse'
+            $ref: >-
+              #/definitions/Collaboration_Management.AddActivationDatasetResponse
         '400':
           description: Returned when the request was not valid.
           schema:
@@ -8561,7 +8562,7 @@ paths:
             $ref: '#/definitions/Error'
       summary: Add Activation Dataset
       tags:
-        - Collaborations
+        - Collaboration Management
   /api/v2/collaborations/{collaboration_id}/activation-datasets/{dataset_id}:
     delete:
       description: >-
@@ -8585,7 +8586,8 @@ paths:
         '200':
           description: A successful response.
           schema:
-            $ref: '#/definitions/Collaborations.RemoveActivationDatasetResponse'
+            $ref: >-
+              #/definitions/Collaboration_Management.RemoveActivationDatasetResponse
         '400':
           description: Returned when the request was not valid.
           schema:
@@ -8614,7 +8616,7 @@ paths:
             $ref: '#/definitions/Error'
       summary: Remove Activation Dataset
       tags:
-        - Collaborations
+        - Collaboration Management
   /api/v2/collaborations/{collaboration_id}/close:
     post:
       description: >-
@@ -8632,7 +8634,7 @@ paths:
         '200':
           description: A successful response.
           schema:
-            $ref: '#/definitions/Collaborations.CloseCollaborationResponse'
+            $ref: '#/definitions/Collaboration_Management.CloseCollaborationResponse'
         '400':
           description: Returned when the request was not valid.
           schema:
@@ -8661,7 +8663,7 @@ paths:
             $ref: '#/definitions/Error'
       summary: Close Collaboration
       tags:
-        - Collaborations
+        - Collaboration Management
   /api/v2/collaborations/{collaboration_id}/connections:
     get:
       description: >-
@@ -8710,7 +8712,7 @@ paths:
         '200':
           description: A successful response.
           schema:
-            $ref: '#/definitions/Collaborations.ListConnectionsResponse'
+            $ref: '#/definitions/Collaboration_Connections.ListConnectionsResponse'
         '401':
           description: Returned when the user could not be authorized.
           schema:
@@ -8731,7 +8733,7 @@ paths:
             $ref: '#/definitions/Error'
       summary: List Connections
       tags:
-        - Collaborations
+        - Collaboration Connections
   /api/v2/collaborations/{collaboration_id}/connections/{connection_id}:
     get:
       description: Returns the details for the requested connection ID.
@@ -8751,7 +8753,7 @@ paths:
         '200':
           description: A successful response.
           schema:
-            $ref: '#/definitions/Collaborations.GetConnectionResponse'
+            $ref: '#/definitions/Collaboration_Connections.GetConnectionResponse'
         '400':
           description: Returned when the request was not valid.
           schema:
@@ -8780,7 +8782,7 @@ paths:
             $ref: '#/definitions/Error'
       summary: Get Connection
       tags:
-        - Collaborations
+        - Collaboration Connections
   /api/v2/collaborations/{collaboration_id}/datasets:
     get:
       description: >-
@@ -8829,7 +8831,7 @@ paths:
         '200':
           description: A successful response.
           schema:
-            $ref: '#/definitions/Collaborations.ListDatasetsResponse'
+            $ref: '#/definitions/Collaboration_Datasets.ListDatasetsResponse'
         '401':
           description: Returned when the user could not be authorized.
           schema:
@@ -8850,7 +8852,7 @@ paths:
             $ref: '#/definitions/Error'
       summary: List Datasets
       tags:
-        - Collaborations
+        - Collaboration Datasets
   /api/v2/collaborations/{collaboration_id}/datasets/{dataset_id}:
     get:
       description: >-
@@ -8872,7 +8874,7 @@ paths:
         '200':
           description: A successful response.
           schema:
-            $ref: '#/definitions/Collaborations.GetDatasetDetailsResponse'
+            $ref: '#/definitions/Collaboration_Datasets.GetDatasetDetailsResponse'
         '400':
           description: Returned when the request was not valid.
           schema:
@@ -8899,12 +8901,14 @@ paths:
           description: An unexpected error response.
           schema:
             $ref: '#/definitions/Error'
-      summary: Get details of a dataset within this collaboration
+      summary: Get Dataset
       tags:
-        - Collaborations
+        - Collaboration Datasets
   /api/v2/collaborations/{collaboration_id}/datasets/{dataset_id}/stats/attribute_columns:
     get:
-      description: Get stats for all the attribute columns of a dataset.
+      description: >-
+        Get detailed statistics for the attributes in the given dataset in the
+        context of the collaboration.
       operationId: AttributeColumnStats
       parameters:
         - description: The ID of the collaboration to get dataset stats from.
@@ -8921,7 +8925,7 @@ paths:
         '200':
           description: A successful response.
           schema:
-            $ref: '#/definitions/Dataset_Stats.AttributeColumnStatsResponse'
+            $ref: '#/definitions/Collaboration_Datasets.AttributeColumnStatsResponse'
         '400':
           description: Returned when the AttributeColumnStats request was not valid.
           schema:
@@ -8946,12 +8950,14 @@ paths:
           description: An unexpected error response.
           schema:
             $ref: '#/definitions/Error'
-      summary: Get stats for all the attribute columns of a dataset.
+      summary: Get Attribute Stats
       tags:
-        - Dataset Stats
+        - Collaboration Datasets
   /api/v2/collaborations/{collaboration_id}/datasets/{dataset_id}/stats/export_columns:
     get:
-      description: Get stats for all the export columns of a dataset.
+      description: >-
+        Get detailed statistics for the export columns in the given dataset in
+        the context of the collaboration.
       operationId: ExportColumnStats
       parameters:
         - description: The ID of the collaboration to get dataset stats from.
@@ -8968,7 +8974,7 @@ paths:
         '200':
           description: A successful response.
           schema:
-            $ref: '#/definitions/Dataset_Stats.ExportColumnStatsResponse'
+            $ref: '#/definitions/Collaboration_Datasets.ExportColumnStatsResponse'
         '400':
           description: Returned when the ExportColumnStats request was not valid.
           schema:
@@ -8993,12 +8999,14 @@ paths:
           description: An unexpected error response.
           schema:
             $ref: '#/definitions/Error'
-      summary: Get stats for all the export columns of a dataset.
+      summary: Get Export Column Stats
       tags:
-        - Dataset Stats
+        - Collaboration Datasets
   /api/v2/collaborations/{collaboration_id}/datasets/{dataset_id}/stats/key_columns:
     get:
-      description: Get stats for all the key columns of a dataset.
+      description: >-
+        Get detailed statistics for the keys in the given dataset in the context
+        of the collaboration.
       operationId: KeyColumnStats
       parameters:
         - description: The ID of the collaboration to get dataset stats from.
@@ -9015,7 +9023,7 @@ paths:
         '200':
           description: A successful response.
           schema:
-            $ref: '#/definitions/Dataset_Stats.KeyColumnStatsResponse'
+            $ref: '#/definitions/Collaboration_Datasets.KeyColumnStatsResponse'
         '400':
           description: Returned when the KeyColumnStats request was not valid.
           schema:
@@ -9040,12 +9048,14 @@ paths:
           description: An unexpected error response.
           schema:
             $ref: '#/definitions/Error'
-      summary: Get stats for all the key columns of a dataset.
+      summary: Get Key Stats
       tags:
-        - Dataset Stats
+        - Collaboration Datasets
   /api/v2/collaborations/{collaboration_id}/datasets/{dataset_id}/stats/summary:
     get:
-      description: Get summary stats for a dataset.
+      description: >-
+        Get the counts for dataset properties like number of keys, categories or
+        rows in the context of the collaboration.
       operationId: SummaryStats
       parameters:
         - description: The ID of the collaboration to get dataset stats from.
@@ -9062,7 +9072,7 @@ paths:
         '200':
           description: A successful response.
           schema:
-            $ref: '#/definitions/Dataset_Stats.SummaryStatsResponse'
+            $ref: '#/definitions/Collaboration_Datasets.SummaryStatsResponse'
         '400':
           description: Returned when the SummaryStats request was not valid.
           schema:
@@ -9087,9 +9097,9 @@ paths:
           description: An unexpected error response.
           schema:
             $ref: '#/definitions/Error'
-      summary: Get summary stats for a dataset.
+      summary: Get Dataset Stats
       tags:
-        - Dataset Stats
+        - Collaboration Datasets
   /api/v2/collaborations/{collaboration_id}/destinations:
     post:
       description: Adds a destination to the collaboration.
@@ -9104,12 +9114,12 @@ paths:
           name: body
           required: true
           schema:
-            $ref: '#/definitions/Collaborations.AddDestinationBody'
+            $ref: '#/definitions/Collaboration_Management.AddDestinationBody'
       responses:
         '200':
           description: A successful response.
           schema:
-            $ref: '#/definitions/Collaborations.AddDestinationResponse'
+            $ref: '#/definitions/Collaboration_Management.AddDestinationResponse'
         '400':
           description: Returned when the request was not valid.
           schema:
@@ -9136,7 +9146,7 @@ paths:
             $ref: '#/definitions/Error'
       summary: Add Destination
       tags:
-        - Collaborations
+        - Collaboration Management
   /api/v2/collaborations/{collaboration_id}/destinations/{destination_id}:
     delete:
       description: Removes a destination owned by the caller from the collaboration.
@@ -9156,7 +9166,7 @@ paths:
         '200':
           description: A successful response.
           schema:
-            $ref: '#/definitions/Collaborations.RemoveDestinationResponse'
+            $ref: '#/definitions/Collaboration_Management.RemoveDestinationResponse'
         '400':
           description: Returned when the request was not valid.
           schema:
@@ -9185,7 +9195,7 @@ paths:
             $ref: '#/definitions/Error'
       summary: Remove Destination
       tags:
-        - Collaborations
+        - Collaboration Management
   /api/v2/collaborations/{collaboration_id}/events:
     get:
       description: Lists the events associated with this collaboration.
@@ -9228,7 +9238,8 @@ paths:
         '200':
           description: A successful response.
           schema:
-            $ref: '#/definitions/Collaborations.ListCollaborationEventsResponse'
+            $ref: >-
+              #/definitions/Collaboration_Management.ListCollaborationEventsResponse
         '400':
           description: Returned when the request was not valid.
           schema:
@@ -9255,7 +9266,7 @@ paths:
             $ref: '#/definitions/Error'
       summary: List Collaboration Events
       tags:
-        - Collaborations
+        - Collaboration Management
   /api/v2/collaborations/{collaboration_id}/events/export:
     get:
       description: Exports the events associated with this collaboration as a csv file.
@@ -9314,7 +9325,7 @@ paths:
             $ref: '#/definitions/Error'
       summary: Export Collaboration Events
       tags:
-        - Collaborations
+        - Collaboration Management
   /api/v2/collaborations/{collaboration_id}/insight-datasets:
     post:
       description: Adds an insight dataset to the collaboration.
@@ -9329,12 +9340,12 @@ paths:
           name: body
           required: true
           schema:
-            $ref: '#/definitions/Collaborations.AddInsightDatasetBody'
+            $ref: '#/definitions/Collaboration_Management.AddInsightDatasetBody'
       responses:
         '200':
           description: A successful response.
           schema:
-            $ref: '#/definitions/Collaborations.AddInsightDatasetResponse'
+            $ref: '#/definitions/Collaboration_Management.AddInsightDatasetResponse'
         '400':
           description: Returned when the request was not valid.
           schema:
@@ -9361,7 +9372,7 @@ paths:
             $ref: '#/definitions/Error'
       summary: Add Insight Dataset
       tags:
-        - Collaborations
+        - Collaboration Management
   /api/v2/collaborations/{collaboration_id}/insight-datasets/{dataset_id}:
     delete:
       description: Removes an insight dataset owned by the caller from the collaboration.
@@ -9381,7 +9392,8 @@ paths:
         '200':
           description: A successful response.
           schema:
-            $ref: '#/definitions/Collaborations.RemoveInsightDatasetResponse'
+            $ref: >-
+              #/definitions/Collaboration_Management.RemoveInsightDatasetResponse
         '400':
           description: Returned when the request was not valid.
           schema:
@@ -9410,7 +9422,7 @@ paths:
             $ref: '#/definitions/Error'
       summary: Remove Insight Dataset
       tags:
-        - Collaborations
+        - Collaboration Management
   /api/v2/collaborations/{collaboration_id}/leave:
     post:
       description: >-
@@ -9428,7 +9440,7 @@ paths:
         '200':
           description: A successful response.
           schema:
-            $ref: '#/definitions/Collaborations.LeaveCollaborationResponse'
+            $ref: '#/definitions/Collaboration_Management.LeaveCollaborationResponse'
         '400':
           description: Returned when the request was not valid.
           schema:
@@ -9457,7 +9469,7 @@ paths:
             $ref: '#/definitions/Error'
       summary: Leave Collaboration
       tags:
-        - Collaborations
+        - Collaboration Management
   /api/v2/connections/pair/match-rate:
     post:
       description: Calculates the match rate between two PAIR enabled datasets.
@@ -14862,6 +14874,12 @@ x-tagGroups:
     tags:
       - Automation Configs
       - Automation Execution
+  - name: Collaborations
+    tags:
+      - Collaboration Connections
+      - Collaboration Datasets
+      - Collaboration Destinations
+      - Collaboration Management
   - name: Datasets
     tags:
       - Datasets
