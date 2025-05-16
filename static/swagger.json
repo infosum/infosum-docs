@@ -6231,6 +6231,10 @@
 					"format": "int64",
 					"type": "integer"
 				},
+				"config_id": {
+					"title": "ConfigId is the unique identifier of the config if it is not a run time config",
+					"type": "string"
+				},
 				"export_column_count": {
 					"description": "ExportColumnCount is the number of export columns in the config.",
 					"format": "int64",
@@ -6651,6 +6655,10 @@
 					"description": "CategoryColumnCount is the number of category columns in the config.",
 					"format": "int64",
 					"type": "integer"
+				},
+				"config_id": {
+					"title": "ConfigId is the unique identifier of the config if it is not a run time config",
+					"type": "string"
 				},
 				"export_column_count": {
 					"description": "ExportColumnCount is the number of export columns in the config.",
