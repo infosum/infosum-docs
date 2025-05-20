@@ -1965,6 +1965,10 @@
 					],
 					"description": "The collaboration owner."
 				},
+				"private_path_enabled": {
+					"description": "An indication that this collaboratio is Private Path enabled.",
+					"type": "boolean"
+				},
 				"status": {
 					"allOf": [
 						{
