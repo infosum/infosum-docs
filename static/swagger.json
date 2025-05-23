@@ -6238,6 +6238,14 @@
 		"Prepare_Configs.PublishConfigSummary": {
 			"description": "PublishConfigSummary is a Config without the full column selection due to message size limits.",
 			"properties": {
+				"all_categories": {
+					"description": "AllCategories, if set to true, will publish every Category column in the recordset.",
+					"type": "boolean"
+				},
+				"all_keys": {
+					"description": "AllKeys, if set to true, will publish every Key column in the recordset.",
+					"type": "boolean"
+				},
 				"category_column_count": {
 					"description": "CategoryColumnCount is the number of category columns in the config.",
 					"format": "int64",
@@ -6671,6 +6679,14 @@
 		"Publishing.PublishConfigSummary": {
 			"description": "PublishConfigSummary is a Config without the full column selection due to message size limits.",
 			"properties": {
+				"all_categories": {
+					"description": "AllCategories, if set to true, will publish every Category column in the recordset.",
+					"type": "boolean"
+				},
+				"all_keys": {
+					"description": "AllKeys, if set to true, will publish every Key column in the recordset.",
+					"type": "boolean"
+				},
 				"category_column_count": {
 					"description": "CategoryColumnCount is the number of category columns in the config.",
 					"format": "int64",
