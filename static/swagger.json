@@ -1965,6 +1965,10 @@
 					],
 					"description": "The collaboration owner."
 				},
+				"private_path_enabled": {
+					"description": "An indication that this collaboratio is Private Path enabled.",
+					"type": "boolean"
+				},
 				"status": {
 					"allOf": [
 						{
@@ -2095,7 +2099,8 @@
 				"TYPE_AUDIENCE_CREATED",
 				"TYPE_AUDIENCE_DELETED",
 				"TYPE_SEGMENT_CREATED",
-				"TYPE_SEGMENT_DELETED"
+				"TYPE_SEGMENT_DELETED",
+				"TYPE_PRIVATE_PATH_ID_ROTATED"
 			],
 			"type": "string"
 		},
@@ -6023,8 +6028,16 @@
 		"Prepare_Configs.DatasetPublishConfig": {
 			"description": "DatasetPublishConfig configures a prepare task.",
 			"properties": {
+				"all_categories": {
+					"description": "AllCategories, if set to true, will publish every Category column in the recordset.",
+					"type": "boolean"
+				},
+				"all_keys": {
+					"description": "AllKeys, if set to true, will publish every Key column in the recordset.",
+					"type": "boolean"
+				},
 				"category_selection": {
-					"description": "CategorySelection defines a subset of Categories IDs to prepare. If this is not set then all Categories are prepared (up to a predefined limit).",
+					"description": "CategorySelection defines a subset of Categories IDs to prepare.",
 					"items": {
 						"format": "int64",
 						"type": "string"
@@ -6032,7 +6045,7 @@
 					"type": "array"
 				},
 				"export_column_selection": {
-					"description": "ExportColumnSelection defines a subset of Export Column names to prepare. If this is not set then all Export Columns are prepared (up to a predefined limit).",
+					"description": "ExportColumnSelection defines a subset of Export Column names to prepare.",
 					"items": {
 						"type": "string"
 					},
@@ -6043,7 +6056,7 @@
 					"type": "boolean"
 				},
 				"key_selection": {
-					"description": "KeySelection defines a subset of Key IDs to prepare. If this is not set then all Keys are prepared (up to a predefined limit).",
+					"description": "KeySelection defines a subset of Key IDs to prepare. Must be populated if all_keys is not true.",
 					"items": {
 						"format": "int64",
 						"type": "string"
@@ -6225,10 +6238,22 @@
 		"Prepare_Configs.PublishConfigSummary": {
 			"description": "PublishConfigSummary is a Config without the full column selection due to message size limits.",
 			"properties": {
+				"all_categories": {
+					"description": "AllCategories, if set to true, will publish every Category column in the recordset.",
+					"type": "boolean"
+				},
+				"all_keys": {
+					"description": "AllKeys, if set to true, will publish every Key column in the recordset.",
+					"type": "boolean"
+				},
 				"category_column_count": {
 					"description": "CategoryColumnCount is the number of category columns in the config.",
 					"format": "int64",
 					"type": "integer"
+				},
+				"config_id": {
+					"title": "ConfigId is the unique identifier of the config if it is not a run time config",
+					"type": "string"
 				},
 				"export_column_count": {
 					"description": "ExportColumnCount is the number of export columns in the config.",
@@ -6294,8 +6319,16 @@
 		"Publishing.DatasetPublishConfig": {
 			"description": "DatasetPublishConfig configures a prepare task.",
 			"properties": {
+				"all_categories": {
+					"description": "AllCategories, if set to true, will publish every Category column in the recordset.",
+					"type": "boolean"
+				},
+				"all_keys": {
+					"description": "AllKeys, if set to true, will publish every Key column in the recordset.",
+					"type": "boolean"
+				},
 				"category_selection": {
-					"description": "CategorySelection defines a subset of Categories IDs to prepare. If this is not set then all Categories are prepared (up to a predefined limit).",
+					"description": "CategorySelection defines a subset of Categories IDs to prepare.",
 					"items": {
 						"format": "int64",
 						"type": "string"
@@ -6303,7 +6336,7 @@
 					"type": "array"
 				},
 				"export_column_selection": {
-					"description": "ExportColumnSelection defines a subset of Export Column names to prepare. If this is not set then all Export Columns are prepared (up to a predefined limit).",
+					"description": "ExportColumnSelection defines a subset of Export Column names to prepare.",
 					"items": {
 						"type": "string"
 					},
@@ -6314,7 +6347,7 @@
 					"type": "boolean"
 				},
 				"key_selection": {
-					"description": "KeySelection defines a subset of Key IDs to prepare. If this is not set then all Keys are prepared (up to a predefined limit).",
+					"description": "KeySelection defines a subset of Key IDs to prepare. Must be populated if all_keys is not true.",
 					"items": {
 						"format": "int64",
 						"type": "string"
@@ -6646,10 +6679,22 @@
 		"Publishing.PublishConfigSummary": {
 			"description": "PublishConfigSummary is a Config without the full column selection due to message size limits.",
 			"properties": {
+				"all_categories": {
+					"description": "AllCategories, if set to true, will publish every Category column in the recordset.",
+					"type": "boolean"
+				},
+				"all_keys": {
+					"description": "AllKeys, if set to true, will publish every Key column in the recordset.",
+					"type": "boolean"
+				},
 				"category_column_count": {
 					"description": "CategoryColumnCount is the number of category columns in the config.",
 					"format": "int64",
 					"type": "integer"
+				},
+				"config_id": {
+					"title": "ConfigId is the unique identifier of the config if it is not a run time config",
+					"type": "string"
 				},
 				"export_column_count": {
 					"description": "ExportColumnCount is the number of export columns in the config.",
