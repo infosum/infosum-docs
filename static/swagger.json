@@ -1966,7 +1966,7 @@
 					"description": "The collaboration owner."
 				},
 				"private_path_enabled": {
-					"description": "An indication that this collaboratio is Private Path enabled.",
+					"description": "An indication that this collaboration is Private Path enabled.",
 					"type": "boolean"
 				},
 				"status": {
@@ -7403,7 +7403,7 @@
 			"type": "string"
 		},
 		"Recordsets.AttributeColumn": {
-			"description": "AttributeColumn contains metadata about an Insight Column.",
+			"description": "AttributeColumn is populated to describe the column when it is an Attribute.",
 			"properties": {
 				"category_id": {
 					"description": "CategoryId is the category ID in the global schema for the column.",
@@ -7439,6 +7439,7 @@
 			"type": "object"
 		},
 		"Recordsets.Column": {
+			"description": "Column contains details of each column in the recordset.\nOnly one of `key_column`, `attribute_column` or `raw_column` will be not-null per Column.",
 			"properties": {
 				"attribute_column": {
 					"$ref": "#/definitions/Recordsets.AttributeColumn"
@@ -7458,12 +7459,7 @@
 					"$ref": "#/definitions/Recordsets.RawColumn"
 				},
 				"statistics": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Recordsets.ColumnStats"
-						}
-					],
-					"title": "statistics is the stats for a column"
+					"$ref": "#/definitions/Recordsets.ColumnStats"
 				},
 				"value_type": {
 					"allOf": [
@@ -7474,11 +7470,10 @@
 					"title": "value_type is the type of values stored in this column"
 				}
 			},
-			"title": "Column contains details of each column in the recordset.\nFor Raw columns it's sufficient to only define name and value_type",
 			"type": "object"
 		},
 		"Recordsets.ColumnStats": {
-			"description": "ColumnStats is the statistics of a column.",
+			"description": "ColumnStats encapsulates the statistics of a column.",
 			"properties": {
 				"cell_count": {
 					"description": "CellCount of non-null cells in the column.",
@@ -7546,7 +7541,7 @@
 			"type": "object"
 		},
 		"Recordsets.KeyColumn": {
-			"description": "KeyColumn contains metadata about a Key.",
+			"description": "KeyColumn is populated to describe the column when it is a Key.",
 			"properties": {
 				"id": {
 					"description": "Id in the global schema for the Key or a custom ID.",
@@ -7609,7 +7604,7 @@
 			"type": "object"
 		},
 		"Recordsets.Lock": {
-			"description": "Lock is the represenation of a single lock on a recordset.",
+			"description": "Lock is the representation of a single lock on a recordset.",
 			"properties": {
 				"created_date_time": {
 					"description": "CreatedDateTime is the date and time that the lock was created.",
@@ -7666,7 +7661,7 @@
 			"type": "object"
 		},
 		"Recordsets.RawColumn": {
-			"title": "RawColumn is used when the column contains raw data.\nexamples:  transformed columns or normalisation export columns",
+			"description": "RawColumn is set to be not-null to indicate that the column contains raw data which can be used as an export column.",
 			"type": "object"
 		},
 		"Recordsets.Recordset": {
