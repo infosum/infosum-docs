@@ -134,6 +134,13 @@
             "collectionFormat": "multi"
           },
           {
+            "name": "filter.collaboration_id",
+            "description": "Collaboration ID\n\nThe optional Collaboration ID under which the queries were executed.\nNo collaboration queries will be returned otherwise.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "sort.by",
             "description": "By is the field to sort by.",
             "in": "query",
@@ -1756,6 +1763,11 @@
           },
           "description": "The optional list of string literal columns.",
           "title": "StringLiteralColumns"
+        },
+        "collaboration_id": {
+          "type": "string",
+          "description": "The optional Collaboration ID under which the query was executed.",
+          "title": "Collaboration ID"
         }
       },
       "description": "ActivationSummary describes summary information about an activation."
@@ -1814,6 +1826,11 @@
           },
           "description": "Filters queries by the projects that the activation dataset\nbelongs to. Activations whose dataset belongs to any of the specified projects are included in the result.",
           "title": "Project IDs"
+        },
+        "collaboration_id": {
+          "type": "string",
+          "description": "The optional Collaboration ID under which the queries were executed.\nNo collaboration queries will be returned otherwise.",
+          "title": "Collaboration ID"
         }
       },
       "description": "ActivationsFilter contains parameters for filtering Activations\nbased on user visible properties."
@@ -1865,6 +1882,17 @@
       },
       "description": "Aggregation Plan is the top level aggregation of the query plan.",
       "title": "Aggregation Plan"
+    },
+    "tyraelAverageResult": {
+      "type": "object",
+      "properties": {
+        "mean": {
+          "type": "number",
+          "format": "double",
+          "description": "Mean is the arithmetic mean."
+        }
+      },
+      "description": "AverageResult represents the various types of average results.\nBy default mean is populated."
     },
     "tyraelBunkerState": {
       "type": "string",
@@ -2187,6 +2215,9 @@
           },
           "description": "A list of multi-value identity columns to be flattened.",
           "title": "IdentitiesToFlatten"
+        },
+        "collaboration_id": {
+          "type": "string"
         }
       },
       "description": "Used to queue an Activation Query with the CreateActivationQuery endpoint.",
@@ -2222,6 +2253,9 @@
           },
           "description": "A list of dataset IDs with an ordered list of keys to be used when calculating a count on that dataset.",
           "title": "Count Overrides"
+        },
+        "collaboration_id": {
+          "type": "string"
         }
       },
       "description": "Used to create a Query with the CreateQuery method.",
@@ -2861,6 +2895,9 @@
           },
           "description": "A list of instructions on how to connect two datasets, overriding the automatic choices\nmade by the core engine.",
           "title": "Path Overrides"
+        },
+        "collaboration_id": {
+          "type": "string"
         }
       },
       "description": "Used to explain the choices made by the platform before executing a query.",
@@ -3128,6 +3165,12 @@
           "format": "float",
           "description": "This excludes empty bins when calculating the average bin size.",
           "title": "Result Precision Exclude Empty Bins"
+        },
+        "sum_confidence_score": {
+          "type": "number",
+          "format": "float",
+          "description": "This is an indication of how trustworthy the result of a sum query is after differential privacy has been applied.",
+          "title": "Sum Confidence Score"
         }
       },
       "description": "A list of statistics that provide an indication of the quality of the Insight query.",
@@ -3733,6 +3776,19 @@
           },
           "description": "CountMetadata contains details about which Keys were used to produce the resulting counts on a given dataset.",
           "title": "Count Metadata"
+        },
+        "sum": {
+          "type": "number",
+          "format": "double",
+          "description": "Sum is the result of a SUM aggregation, it represents the sum of all the values in the specified field."
+        },
+        "user_average": {
+          "$ref": "#/definitions/tyraelAverageResult",
+          "description": "UserAverage is the result of an AVG aggregation. It is based on the SUM and number of unique users."
+        },
+        "value_average": {
+          "$ref": "#/definitions/tyraelAverageResult",
+          "description": "ValueAverage is the result of an AVG aggregation. It is based on the SUM and number of contributing values."
         }
       },
       "description": "The Result of a Query.",
@@ -4095,6 +4151,9 @@
           },
           "description": "The list of optional string literal output columns for the query",
           "title": "String Literal Columns"
+        },
+        "collaboration_id": {
+          "type": "string"
         }
       },
       "description": "ValidateActivationQueryRequest is the output of the ValidateActivationQuery endpoint.",
@@ -4128,6 +4187,9 @@
           },
           "description": "A list of instructions on how to connect two datasets, overriding the automatic choices\nmade by the core engine.",
           "title": "Path Overrides"
+        },
+        "collaboration_id": {
+          "type": "string"
         }
       },
       "description": "Used to validate a Query before executing it.",

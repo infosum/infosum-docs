@@ -144,6 +144,15 @@ paths:
           items:
             type: string
           collectionFormat: multi
+        - name: filter.collaboration_id
+          description: |-
+            Collaboration ID
+
+            The optional Collaboration ID under which the queries were executed.
+            No collaboration queries will be returned otherwise.
+          in: query
+          required: false
+          type: string
         - name: sort.by
           description: By is the field to sort by.
           in: query
@@ -1964,6 +1973,10 @@ definitions:
           $ref: '#/definitions/tyraelActivationStringLiteral'
         description: The optional list of string literal columns.
         title: StringLiteralColumns
+      collaboration_id:
+        type: string
+        description: The optional Collaboration ID under which the query was executed.
+        title: Collaboration ID
     description: ActivationSummary describes summary information about an activation.
   tyraelActivationsFilter:
     type: object
@@ -2024,6 +2037,12 @@ definitions:
           belongs to. Activations whose dataset belongs to any of the specified
           projects are included in the result.
         title: Project IDs
+      collaboration_id:
+        type: string
+        description: |-
+          The optional Collaboration ID under which the queries were executed.
+          No collaboration queries will be returned otherwise.
+        title: Collaboration ID
     description: |-
       ActivationsFilter contains parameters for filtering Activations
       based on user visible properties.
@@ -2070,6 +2089,16 @@ definitions:
         title: FilterJoins
     description: Aggregation Plan is the top level aggregation of the query plan.
     title: Aggregation Plan
+  tyraelAverageResult:
+    type: object
+    properties:
+      mean:
+        type: number
+        format: double
+        description: Mean is the arithmetic mean.
+    description: |-
+      AverageResult represents the various types of average results.
+      By default mean is populated.
   tyraelBunkerState:
     type: string
     enum:
@@ -2414,6 +2443,8 @@ definitions:
           type: string
         description: A list of multi-value identity columns to be flattened.
         title: IdentitiesToFlatten
+      collaboration_id:
+        type: string
     description: Used to queue an Activation Query with the CreateActivationQuery endpoint.
     title: Create Activation Query Request
   tyraelCreateQueryRequest:
@@ -2457,6 +2488,8 @@ definitions:
           A list of dataset IDs with an ordered list of keys to be used when
           calculating a count on that dataset.
         title: Count Overrides
+      collaboration_id:
+        type: string
     description: Used to create a Query with the CreateQuery method.
     title: Create Query Request
   tyraelCreditShare:
@@ -3138,6 +3171,8 @@ definitions:
 
           made by the core engine.
         title: Path Overrides
+      collaboration_id:
+        type: string
     description: Used to explain the choices made by the platform before executing a query.
     title: Explain Query Request
   tyraelExplainQueryResponse:
@@ -3405,6 +3440,13 @@ definitions:
         format: float
         description: This excludes empty bins when calculating the average bin size.
         title: Result Precision Exclude Empty Bins
+      sum_confidence_score:
+        type: number
+        format: float
+        description: >-
+          This is an indication of how trustworthy the result of a sum query is
+          after differential privacy has been applied.
+        title: Sum Confidence Score
     description: >-
       A list of statistics that provide an indication of the quality of the
       Insight query.
@@ -4012,6 +4054,22 @@ definitions:
           CountMetadata contains details about which Keys were used to produce
           the resulting counts on a given dataset.
         title: Count Metadata
+      sum:
+        type: number
+        format: double
+        description: >-
+          Sum is the result of a SUM aggregation, it represents the sum of all
+          the values in the specified field.
+      user_average:
+        $ref: '#/definitions/tyraelAverageResult'
+        description: >-
+          UserAverage is the result of an AVG aggregation. It is based on the
+          SUM and number of unique users.
+      value_average:
+        $ref: '#/definitions/tyraelAverageResult'
+        description: >-
+          ValueAverage is the result of an AVG aggregation. It is based on the
+          SUM and number of contributing values.
     description: The Result of a Query.
     title: Query Result
   tyraelRedactionThreshold:
@@ -4406,6 +4464,8 @@ definitions:
           $ref: '#/definitions/tyraelActivationStringLiteral'
         description: The list of optional string literal output columns for the query
         title: String Literal Columns
+      collaboration_id:
+        type: string
     description: >-
       ValidateActivationQueryRequest is the output of the
       ValidateActivationQuery endpoint.
@@ -4443,6 +4503,8 @@ definitions:
 
           made by the core engine.
         title: Path Overrides
+      collaboration_id:
+        type: string
     description: Used to validate a Query before executing it.
     title: Validate Request
   tyraelValidateQueryResponse:
