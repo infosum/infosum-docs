@@ -1831,6 +1831,11 @@
 					},
 					"type": "array"
 				},
+				"last_activity_date_time": {
+					"description": "The date and time that the last event occurred which involved this collaboration.",
+					"format": "date-time",
+					"type": "string"
+				},
 				"members": {
 					"description": "The members of the collaboration.",
 					"items": {
@@ -1943,6 +1948,11 @@
 				},
 				"id": {
 					"description": "The ID of the collaboration",
+					"type": "string"
+				},
+				"last_activity_date_time": {
+					"description": "The date and time that the last event occurred which involved this collaboration.",
+					"format": "date-time",
 					"type": "string"
 				},
 				"members": {
