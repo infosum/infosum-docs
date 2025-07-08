@@ -48,16 +48,43 @@ info:
       </tr>
     </table>
 
-    
-    Add some example queries of each function!
-    COUNT()
-    TOPN(field, n)
-    AGGREGATE(field1)
-    AGGREGATE(field1, field2)
-    SUM(field) + avg *add note on privacy budget
-    
-    WHERE statments
 
+    ### Example Insight Queries
+
+
+    Refer to the [InfoSum Query Type Documentation](https://support.infosum.com/hc/en-us/articles/360019063218-Select-query-type) for full details.
+
+
+    **Basic Query Examples:**
+
+
+    - COUNT
+      - `SELECT COUNT() FROM bunker`  
+      - Returns the total number of rows in the specified bunker.
+    - AGGREGATE
+      - `SELECT AGGREGATE(column) FROM bunker`  
+        - Counts the number of values in a specific category.
+      - `SELECT AGGREGATE(bunkerA.column1, bunkerB.column2) FROM bunkerA INTERSECT bunkerB`  
+        - Returns counts of values broken down by two categories from different bunkers.
+    - TOPN
+      - `SELECT TOPN(column, n) FROM bunker`  
+        - Retrieves the top `n` most frequently occurring values in a high-cardinality column, such as job titles or ZIP codes.
+
+    **Advanced Functions:**
+
+
+    - SUM
+      - `SELECT SUM(field), AVG(field) FROM bunker`  
+      - Computes total and average of a numeric field.  
+      - ⚠️ This feature is currently in **Beta** and may not be available to all users.
+        - Learn more in the [SUM and AVG Function Guide](https://support.infosum.com/hc/en-us/articles/25591022914322-Sum-and-Avg-IQL-function).
+    - **Filtering with `WHERE` statements**  
+      - Example: `SELECT AGGREGATE(column) FROM bunker WHERE age > 25`
+      - Learn more in the [Filtering Guide](https://support.infosum.com/hc/en-us/articles/360018943657-Filters).
+    - **Datetime filtering**
+      - Example: `SELECT COUNT() FROM bunker WHERE transaction_date >= '2024-01-01' AND transaction_date <= '2024-06-30'`
+      - Enables filtering by date or datetime columns using standard comparison operators.
+      - Learn more in the [Datetime Filter Guide](https://support.infosum.com/hc/en-us/articles/27203389516818-Using-date-time-filters-in-IQL).
 
 servers:
   - url: http://{{baseurl}}
