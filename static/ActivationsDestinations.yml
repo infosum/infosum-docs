@@ -11,6 +11,7 @@ info:
 
     We highly suggest attempting to activate and push to a destination in the UI first. This way users can confirm they have the correct rights to activate and push to a destination. Additionally, this will allow users to create the destinations and set the configurations before attempting to push via the API. Future versions of the API Playbooks will outline creating a destination and modifying configurations.
 
+
     Task List 
 
 
@@ -202,9 +203,9 @@ paths:
           example: application/json
         - name: query_id
           in: path
+          required: true
           schema:
             type: string
-          required: true
       responses:
         '200':
           description: OK
