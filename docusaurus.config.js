@@ -62,6 +62,11 @@ const config = {
             route: '/api/ActivationDestination'
           },
           {
+            id: 'infosum-openapi-v2-insight',
+            spec: 'static/InsightQueries.yml',
+            route: '/api/InsightQueries'
+          },
+          {
             id: 'infosum-openapi-v2-onboard',
             spec: 'static/Onboarding.yml',
             route: '/api/Onboarding'
@@ -130,6 +135,7 @@ const config = {
           position: 'left',
           items:[
             { to: '/api/Onboarding', label: 'Onboarding Data'},
+            { to: '/api/InsightQueries', label: 'Insight Queries'},
             { to: '/api/ActivationDestination', label: 'Activation Queries & Destinations' },
           ]},
           {
