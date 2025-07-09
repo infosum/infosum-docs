@@ -6044,6 +6044,10 @@
 					"description": "AllCategories, if set to true, will publish every Category column in the recordset.",
 					"type": "boolean"
 				},
+				"all_export_columns": {
+					"description": "AllExportColumns, if set to true, will publish every Export Column in the recordset.",
+					"type": "boolean"
+				},
 				"all_keys": {
 					"description": "AllKeys, if set to true, will publish every Key column in the recordset.",
 					"type": "boolean"
@@ -6254,6 +6258,10 @@
 					"description": "AllCategories, if set to true, will publish every Category column in the recordset.",
 					"type": "boolean"
 				},
+				"all_export_columns": {
+					"description": "AllExportColumns, if set to true, will publish every Export Column in the recordset.",
+					"type": "boolean"
+				},
 				"all_keys": {
 					"description": "AllKeys, if set to true, will publish every Key column in the recordset.",
 					"type": "boolean"
@@ -6333,6 +6341,10 @@
 			"properties": {
 				"all_categories": {
 					"description": "AllCategories, if set to true, will publish every Category column in the recordset.",
+					"type": "boolean"
+				},
+				"all_export_columns": {
+					"description": "AllExportColumns, if set to true, will publish every Export Column in the recordset.",
 					"type": "boolean"
 				},
 				"all_keys": {
@@ -6693,6 +6705,10 @@
 			"properties": {
 				"all_categories": {
 					"description": "AllCategories, if set to true, will publish every Category column in the recordset.",
+					"type": "boolean"
+				},
+				"all_export_columns": {
+					"description": "AllExportColumns, if set to true, will publish every Export Column in the recordset.",
 					"type": "boolean"
 				},
 				"all_keys": {
