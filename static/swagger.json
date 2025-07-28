@@ -359,7 +359,176 @@
 			},
 			"type": "object"
 		},
-		"Automation_Configs.Config": {
+		"Automation_Configs.CreateConfigRequest": {
+			"description": "CreateConfigRequest is the information provided when creating an Automation Config.",
+			"properties": {
+				"cloud_vault_id": {
+					"description": "The ID of the Cloud Vault to be used for reading and writing data during Automation Execution.",
+					"type": "string"
+				},
+				"cron_timer": {
+					"description": "The execution schedule of the Automation in UNIX CRON format as described in https://man7.org/linux/man-pages/man5/crontab.5.html. The schedule is executed relative to the supplied `timezone_identifier` for the Automation.",
+					"example": "0 12 * * *",
+					"type": "string"
+				},
+				"description": {
+					"description": "The user-friendly description of the Automation Config.",
+					"type": "string"
+				},
+				"enabled": {
+					"description": "The 'enabled' flag allows Automation Execution triggers to be paused and resumed without adjusting the rest of the config or schedule.",
+					"type": "boolean"
+				},
+				"end_date_time": {
+					"description": "Optional date-time to cease triggering Automation Executions. Format is RFC3339 which defaults to UTC. Offsets relative to Zulu time must be provided to convey local times. This parameter is unaffected by `timezone_identifier`. An empty value indicates that the schedule should never cease.",
+					"example": "2019-11-23T18:30:00-04:00",
+					"format": "date-time",
+					"type": "string"
+				},
+				"name": {
+					"description": "The user-friendly name of the Automation Config. Valid characters are alphanumeric, '_', '-' and spaces.",
+					"type": "string"
+				},
+				"start_date_time": {
+					"description": "Optional date-time to begin triggering Automation Executions based on the CRON schedule. Format is RFC3339 which defaults to UTC. Offsets relative to Zulu time must be provided to convey local times. This parameter is unaffected by `timezone_identifier`. An empty value indicates that the schedule should begin as soon as possible.",
+					"example": "2019-11-22T18:30:00-04:00",
+					"format": "date-time",
+					"type": "string"
+				},
+				"steps": {
+					"description": "The sequence of tasks which constitute an Execution of this Automation Config.",
+					"items": {
+						"$ref": "#/definitions/Automation_Configs.AutomationStep",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"timezone_identifier": {
+					"description": "The Timezone Identifier to schedule Automation Executions relative to using the `cron_timer`. This parameter does not affect the start or end times for scheduling. The format is from the IANA TZ database: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones. Be aware that scheduling near the lost or gained hour in a timezone which implements daylight savings time (DST) can lead to schedule disruption during transitions.",
+					"example": "Europe/London",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Automation_Configs.CreateConfigResponse": {
+			"description": "CreateConfigResponse is the response from creating an Automation Config.",
+			"properties": {
+				"config": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Automation_Configs.automations.external.v2.Config"
+						}
+					],
+					"description": "The new Automation Config.",
+					"title": "The returned automation config"
+				}
+			},
+			"type": "object"
+		},
+		"Automation_Configs.DeleteConfigResponse": {
+			"description": "Success returns an empty response body.",
+			"type": "object"
+		},
+		"Automation_Configs.GetConfigResponse": {
+			"description": "GetConfigResponse returns the requested Automation Config.",
+			"properties": {
+				"config": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Automation_Configs.automations.external.v2.Config"
+						}
+					],
+					"description": "Details of the requested Automation Config."
+				},
+				"last_execution_id": {
+					"description": "The ID of the last Execution triggered by the Automation Config, if one exists.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Automation_Configs.ImportConfig": {
+			"description": "A config used to define an Import as an Automation Step.",
+			"properties": {
+				"config_id": {
+					"description": "The Importer ID to execute for the Automation Step.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Automation_Configs.ListConfigsResponse": {
+			"description": "ListConfigsResponse returns the Automation Configs which matched the request parameters.",
+			"properties": {
+				"configs": {
+					"description": "Array of Automation Configs based on the request filters and sorting.",
+					"items": {
+						"$ref": "#/definitions/Automation_Configs.automations.external.v2.Config",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"pagination": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/PaginationResponse"
+						}
+					],
+					"description": "Pagination information for returned Configs."
+				}
+			},
+			"type": "object"
+		},
+		"Automation_Configs.NormalizationConfig": {
+			"description": "A config to define Normalization as an Automation Step.",
+			"properties": {
+				"config_id": {
+					"description": "The Normalization Config ID to execute for the Automation Step.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Automation_Configs.PublishConfig": {
+			"description": "A config to define Preparation and Publishing as an Automation Step.",
+			"properties": {
+				"config_id": {
+					"description": "The Dataset Prepare Config ID to execute for the Automation Step.",
+					"type": "string"
+				},
+				"dataset_id": {
+					"description": "The ID of the dataset to publish the prepared data to.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Automation_Configs.RecordsetCreationConfig": {
+			"description": "A config to define Recordset Creation as an Automation Step.",
+			"properties": {
+				"config_id": {
+					"description": "The Recordset Creation Config ID to execute for the Automation Step.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Automation_Configs.UpdateConfigResponse": {
+			"description": "UpdateConfigResponse is the response from updating an Automation.",
+			"properties": {
+				"config": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Automation_Configs.automations.external.v2.Config"
+						}
+					],
+					"description": "The updated Automation Config."
+				}
+			},
+			"type": "object"
+		},
+		"Automation_Configs.automations.external.v2.Config": {
 			"description": "The information required to define an Automation Config.",
 			"properties": {
 				"automation_steps": {
@@ -425,175 +594,6 @@
 					"description": "The UTC date-time the Automation Config was last updated in RFC3339 format. Output Only.",
 					"format": "date-time",
 					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Automation_Configs.CreateConfigRequest": {
-			"description": "CreateConfigRequest is the information provided when creating an Automation Config.",
-			"properties": {
-				"cloud_vault_id": {
-					"description": "The ID of the Cloud Vault to be used for reading and writing data during Automation Execution.",
-					"type": "string"
-				},
-				"cron_timer": {
-					"description": "The execution schedule of the Automation in UNIX CRON format as described in https://man7.org/linux/man-pages/man5/crontab.5.html. The schedule is executed relative to the supplied `timezone_identifier` for the Automation.",
-					"example": "0 12 * * *",
-					"type": "string"
-				},
-				"description": {
-					"description": "The user-friendly description of the Automation Config.",
-					"type": "string"
-				},
-				"enabled": {
-					"description": "The 'enabled' flag allows Automation Execution triggers to be paused and resumed without adjusting the rest of the config or schedule.",
-					"type": "boolean"
-				},
-				"end_date_time": {
-					"description": "Optional date-time to cease triggering Automation Executions. Format is RFC3339 which defaults to UTC. Offsets relative to Zulu time must be provided to convey local times. This parameter is unaffected by `timezone_identifier`. An empty value indicates that the schedule should never cease.",
-					"example": "2019-11-23T18:30:00-04:00",
-					"format": "date-time",
-					"type": "string"
-				},
-				"name": {
-					"description": "The user-friendly name of the Automation Config. Valid characters are alphanumeric, '_', '-' and spaces.",
-					"type": "string"
-				},
-				"start_date_time": {
-					"description": "Optional date-time to begin triggering Automation Executions based on the CRON schedule. Format is RFC3339 which defaults to UTC. Offsets relative to Zulu time must be provided to convey local times. This parameter is unaffected by `timezone_identifier`. An empty value indicates that the schedule should begin as soon as possible.",
-					"example": "2019-11-22T18:30:00-04:00",
-					"format": "date-time",
-					"type": "string"
-				},
-				"steps": {
-					"description": "The sequence of tasks which constitute an Execution of this Automation Config.",
-					"items": {
-						"$ref": "#/definitions/Automation_Configs.AutomationStep",
-						"type": "object"
-					},
-					"type": "array"
-				},
-				"timezone_identifier": {
-					"description": "The Timezone Identifier to schedule Automation Executions relative to using the `cron_timer`. This parameter does not affect the start or end times for scheduling. The format is from the IANA TZ database: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones. Be aware that scheduling near the lost or gained hour in a timezone which implements daylight savings time (DST) can lead to schedule disruption during transitions.",
-					"example": "Europe/London",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Automation_Configs.CreateConfigResponse": {
-			"description": "CreateConfigResponse is the response from creating an Automation Config.",
-			"properties": {
-				"config": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Automation_Configs.Config"
-						}
-					],
-					"description": "The new Automation Config.",
-					"title": "The returned automation config"
-				}
-			},
-			"type": "object"
-		},
-		"Automation_Configs.DeleteConfigResponse": {
-			"description": "Success returns an empty response body.",
-			"type": "object"
-		},
-		"Automation_Configs.GetConfigResponse": {
-			"description": "GetConfigResponse returns the requested Automation Config.",
-			"properties": {
-				"config": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Automation_Configs.Config"
-						}
-					],
-					"description": "Details of the requested Automation Config."
-				},
-				"last_execution_id": {
-					"description": "The ID of the last Execution triggered by the Automation Config, if one exists.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Automation_Configs.ImportConfig": {
-			"description": "A config used to define an Import as an Automation Step.",
-			"properties": {
-				"config_id": {
-					"description": "The Importer ID to execute for the Automation Step.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Automation_Configs.ListConfigsResponse": {
-			"description": "ListConfigsResponse returns the Automation Configs which matched the request parameters.",
-			"properties": {
-				"configs": {
-					"description": "Array of Automation Configs based on the request filters and sorting.",
-					"items": {
-						"$ref": "#/definitions/Automation_Configs.Config",
-						"type": "object"
-					},
-					"type": "array"
-				},
-				"pagination": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/PaginationResponse"
-						}
-					],
-					"description": "Pagination information for returned Configs."
-				}
-			},
-			"type": "object"
-		},
-		"Automation_Configs.NormalizationConfig": {
-			"description": "A config to define Normalization as an Automation Step.",
-			"properties": {
-				"config_id": {
-					"description": "The Normalization Config ID to execute for the Automation Step.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Automation_Configs.PublishConfig": {
-			"description": "A config to define Preparation and Publishing as an Automation Step.",
-			"properties": {
-				"config_id": {
-					"description": "The Dataset Prepare Config ID to execute for the Automation Step.",
-					"type": "string"
-				},
-				"dataset_id": {
-					"description": "The ID of the dataset to publish the prepared data to.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Automation_Configs.RecordsetCreationConfig": {
-			"description": "A config to define Recordset Creation as an Automation Step.",
-			"properties": {
-				"config_id": {
-					"description": "The Recordset Creation Config ID to execute for the Automation Step.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Automation_Configs.UpdateConfigResponse": {
-			"description": "UpdateConfigResponse is the response from updating an Automation.",
-			"properties": {
-				"config": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Automation_Configs.Config"
-						}
-					],
-					"description": "The updated Automation Config."
 				}
 			},
 			"type": "object"
@@ -810,7 +810,8 @@
 				"TASK_TYPE_RECORDSET",
 				"TASK_TYPE_NORMALIZATION",
 				"TASK_TYPE_PREPARE",
-				"TASK_TYPE_PUBLISH"
+				"TASK_TYPE_PUBLISH",
+				"TASK_TYPE_TRANSFORMATION"
 			],
 			"type": "string"
 		},
@@ -847,6 +848,10 @@
 			"description": "CloudVaultMetadata is the data about a Cloud Vault.",
 			"properties": {
 				"aws_kms_key_arn": {
+					"type": "string"
+				},
+				"aws_region": {
+					"description": "AWSRegion is the aws region for any cloud vault access, this is separate to the InfoSum bunker region.",
 					"type": "string"
 				},
 				"bucket_name": {
