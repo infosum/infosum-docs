@@ -1268,11 +1268,12 @@
 		},
 		"Collaboration_Datasets.DatasetType": {
 			"default": "DATASET_TYPE_INVALID",
-			"description": "DatasetType gives the dataset type, insight or identity.\n\n - DATASET_TYPE_INVALID: Invalid is used when no other enum applies.\n - DATASET_TYPE_INSIGHT: Insight is for insight datasets.\n - DATASET_TYPE_IDENTITY: Identity is for identity (activation) datasets.",
+			"description": "DatasetType gives the dataset type, insight or identity.\n\n - DATASET_TYPE_INVALID: Invalid is used when no other enum applies.\n - DATASET_TYPE_INSIGHT: Insight is for insight datasets.\n - DATASET_TYPE_IDENTITY: Identity is for identity (activation) datasets.\n - DATASET_TYPE_UNIFIED: Unified is for unified datasets which support activation and insight queries.",
 			"enum": [
 				"DATASET_TYPE_INVALID",
 				"DATASET_TYPE_INSIGHT",
-				"DATASET_TYPE_IDENTITY"
+				"DATASET_TYPE_IDENTITY",
+				"DATASET_TYPE_UNIFIED"
 			],
 			"type": "string"
 		},
@@ -1735,6 +1736,59 @@
 			"type": "object"
 		},
 		"Collaboration_Management.AddActivationDatasetResponse": {
+			"type": "object"
+		},
+		"Collaboration_Management.AddDatasetBody": {
+			"properties": {
+				"activation_allowed": {
+					"description": "If true, allows the dataset to be used in activation queries within the collaboration. If exportable_to_members is empty then this setting allows the dataset to be used in the audience to activate data from a different dataset.",
+					"type": "boolean"
+				},
+				"allowed_attributes": {
+					"description": "A list of the attributes in the dataset that can be queried against.",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				},
+				"allowed_destination_types": {
+					"description": "The destination type IDs that are authorized to be exported to from this dataset, they must be owned by the `exportable_to_members`. This field can only be set if `destination_type_restriction` is set to true.",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				},
+				"attribute_restriction": {
+					"description": "If true, restricts the allowed attributes to only those in the `allowed_attributes` list. If false, then all attributes (present and future) will be allowed.",
+					"type": "boolean"
+				},
+				"collaboration_dataset_name": {
+					"description": "A name, unique within this collaboration, used to refer to the dataset in queries, audience builder, etc. Note: the value should between 1 and 17 characters long and alphanumeric only",
+					"type": "string"
+				},
+				"dataset_id": {
+					"description": "The ID of the dataset to be added to the collaboration.",
+					"type": "string"
+				},
+				"destination_type_restriction": {
+					"description": "If true, restricts the type of destinations which can be targeted by an export to those in `allowed_destination_types`.",
+					"type": "boolean"
+				},
+				"exportable_to_members": {
+					"description": "The collaboration members whose destinations can be used as a target to export activation query results to from this dataset. If this field is empty then no activation queries can target this dataset so that no data from this dataset can be exported.",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				},
+				"intersection_only": {
+					"description": "Whether the dataset should only allow intersection queries.",
+					"type": "boolean"
+				}
+			},
+			"type": "object"
+		},
+		"Collaboration_Management.AddDatasetResponse": {
 			"type": "object"
 		},
 		"Collaboration_Management.AddDestinationBody": {
@@ -2247,6 +2301,9 @@
 		"Collaboration_Management.RemoveActivationDatasetResponse": {
 			"type": "object"
 		},
+		"Collaboration_Management.RemoveDatasetResponse": {
+			"type": "object"
+		},
 		"Collaboration_Management.RemoveDestinationResponse": {
 			"type": "object"
 		},
@@ -2524,11 +2581,12 @@
 		},
 		"Datasets.DatasetType": {
 			"default": "DATASET_TYPE_INVALID",
-			"description": "DatasetType gives the dataset type, insight or identity.\n\n - DATASET_TYPE_INVALID: Invalid is used when no other enum applies.\n - DATASET_TYPE_INSIGHT: Insight is for insight datasets.\n - DATASET_TYPE_IDENTITY: Identity is for identity (activation) datasets.",
+			"description": "DatasetType gives the dataset type, insight or identity.\n\n - DATASET_TYPE_INVALID: Invalid is used when no other enum applies.\n - DATASET_TYPE_INSIGHT: Insight is for insight datasets.\n - DATASET_TYPE_IDENTITY: Identity is for identity (activation) datasets.\n - DATASET_TYPE_UNIFIED: Unified is for unified datasets which support activation and insight queries.",
 			"enum": [
 				"DATASET_TYPE_INVALID",
 				"DATASET_TYPE_INSIGHT",
-				"DATASET_TYPE_IDENTITY"
+				"DATASET_TYPE_IDENTITY",
+				"DATASET_TYPE_UNIFIED"
 			],
 			"type": "string"
 		},
@@ -10418,111 +10476,31 @@
 			}
 		},
 		"/api/v2/collaborations/{collaboration_id}/datasets": {
-			"get": {
-				"description": "Returns a list of datasets between datasets in the given collaboration. The output is affected by provided filters.",
-				"operationId": "ListDatasets",
+			"post": {
+				"description": "Adds a dataset to the collaboration.",
+				"operationId": "AddDataset",
 				"parameters": [
 					{
-						"description": "The ID of the collaboration to get dataset details from.",
+						"description": "The ID of the collaboration the dataset should be added to.",
 						"in": "path",
 						"name": "collaboration_id",
 						"required": true,
 						"type": "string"
 					},
 					{
-						"description": "The requested page of records. Default is 1.",
-						"format": "int32",
-						"in": "query",
-						"name": "pagination.page",
-						"required": false,
-						"type": "integer"
-					},
-					{
-						"description": "The number of records to return per page. Maximum is 500. Default is 100.",
-						"format": "int32",
-						"in": "query",
-						"name": "pagination.per_page",
-						"required": false,
-						"type": "integer"
-					},
-					{
-						"description": "OrderBy is a comma seperated value to define sorting.\ne.g 'created_time,name DESC'\nThe values are seperated by space, '{column} {ASC/DESC}'\nValid columns: `created_date_time`, `updated_date_time`, `owner`, `name`",
-						"in": "query",
-						"name": "order_by",
-						"required": false,
-						"type": "string"
-					},
-					{
-						"description": "Supported filters are `dataset_id`, `owner_id`",
-						"in": "query",
-						"name": "filter",
-						"required": false,
-						"type": "string"
+						"in": "body",
+						"name": "body",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Collaboration_Management.AddDatasetBody"
+						}
 					}
 				],
 				"responses": {
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Collaboration_Datasets.ListDatasetsResponse"
-						}
-					},
-					"401": {
-						"description": "Returned when the user could not be authorized.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"403": {
-						"description": "Returned when the user does not have the right to list collaboration datasets.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"500": {
-						"description": "Internal Server Error",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"default": {
-						"description": "An unexpected error response.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					}
-				},
-				"summary": "List Datasets",
-				"tags": [
-					"Collaboration Datasets"
-				]
-			}
-		},
-		"/api/v2/collaborations/{collaboration_id}/datasets/{dataset_id}": {
-			"get": {
-				"description": "Returns the details for the requested dataset within given collaboration.",
-				"operationId": "GetDatasetDetails",
-				"parameters": [
-					{
-						"description": "The ID of the collaboration the dataset belongs to.",
-						"in": "path",
-						"name": "collaboration_id",
-						"required": true,
-						"type": "string"
-					},
-					{
-						"description": "The ID of the dataset you want information about.",
-						"in": "path",
-						"name": "dataset_id",
-						"required": true,
-						"type": "string"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "A successful response.",
-						"schema": {
-							"$ref": "#/definitions/Collaboration_Datasets.GetDatasetDetailsResponse"
+							"$ref": "#/definitions/Collaboration_Management.AddDatasetResponse"
 						}
 					},
 					"400": {
@@ -10538,13 +10516,13 @@
 						}
 					},
 					"403": {
-						"description": "Returned when the user does not have the right to view details of a dataset in this collaboration.",
+						"description": "Returned when the user does not have the right to add the resource.",
 						"schema": {
 							"$ref": "#/definitions/Error"
 						}
 					},
 					"404": {
-						"description": "Returned when the collaboration or dataset could not be found.",
+						"description": "Returned when the collaboration could not be found.",
 						"schema": {
 							"$ref": "#/definitions/Error"
 						}
@@ -10562,9 +10540,79 @@
 						}
 					}
 				},
-				"summary": "Get Dataset",
+				"summary": "Add Dataset",
 				"tags": [
-					"Collaboration Datasets"
+					"Collaboration Management"
+				]
+			}
+		},
+		"/api/v2/collaborations/{collaboration_id}/datasets/{dataset_id}": {
+			"delete": {
+				"description": "Removes a dataset owned by the caller from the collaboration.",
+				"operationId": "RemoveDataset",
+				"parameters": [
+					{
+						"description": "The ID of the collaboration the dataset should be removed from.",
+						"in": "path",
+						"name": "collaboration_id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"description": "The ID of the dataset to be removed from the collaboration.",
+						"in": "path",
+						"name": "dataset_id",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Collaboration_Management.RemoveDatasetResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the right to remove the resource.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"404": {
+						"description": "Returned when the collaboration could not be found.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Remove Dataset",
+				"tags": [
+					"Collaboration Management"
 				]
 			}
 		},
