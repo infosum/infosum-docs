@@ -284,7 +284,158 @@ definitions:
           - $ref: '#/definitions/Automation_Configs.RecordsetCreationConfig'
         description: The Recordset Creation Config to execute for this Automation Step.
     type: object
-  Automation_Configs.Config:
+  Automation_Configs.CreateConfigRequest:
+    description: >-
+      CreateConfigRequest is the information provided when creating an
+      Automation Config.
+    properties:
+      cloud_vault_id:
+        description: >-
+          The ID of the Cloud Vault to be used for reading and writing data
+          during Automation Execution.
+        type: string
+      cron_timer:
+        description: >-
+          The execution schedule of the Automation in UNIX CRON format as
+          described in https://man7.org/linux/man-pages/man5/crontab.5.html. The
+          schedule is executed relative to the supplied `timezone_identifier`
+          for the Automation.
+        example: 0 12 * * *
+        type: string
+      description:
+        description: The user-friendly description of the Automation Config.
+        type: string
+      enabled:
+        description: >-
+          The 'enabled' flag allows Automation Execution triggers to be paused
+          and resumed without adjusting the rest of the config or schedule.
+        type: boolean
+      end_date_time:
+        description: >-
+          Optional date-time to cease triggering Automation Executions. Format
+          is RFC3339 which defaults to UTC. Offsets relative to Zulu time must
+          be provided to convey local times. This parameter is unaffected by
+          `timezone_identifier`. An empty value indicates that the schedule
+          should never cease.
+        example: '2019-11-23T18:30:00-04:00'
+        format: date-time
+        type: string
+      name:
+        description: >-
+          The user-friendly name of the Automation Config. Valid characters are
+          alphanumeric, '_', '-' and spaces.
+        type: string
+      start_date_time:
+        description: >-
+          Optional date-time to begin triggering Automation Executions based on
+          the CRON schedule. Format is RFC3339 which defaults to UTC. Offsets
+          relative to Zulu time must be provided to convey local times. This
+          parameter is unaffected by `timezone_identifier`. An empty value
+          indicates that the schedule should begin as soon as possible.
+        example: '2019-11-22T18:30:00-04:00'
+        format: date-time
+        type: string
+      steps:
+        description: >-
+          The sequence of tasks which constitute an Execution of this Automation
+          Config.
+        items:
+          $ref: '#/definitions/Automation_Configs.AutomationStep'
+          type: object
+        type: array
+      timezone_identifier:
+        description: >-
+          The Timezone Identifier to schedule Automation Executions relative to
+          using the `cron_timer`. This parameter does not affect the start or
+          end times for scheduling. The format is from the IANA TZ database:
+          https://en.wikipedia.org/wiki/List_of_tz_database_time_zones. Be aware
+          that scheduling near the lost or gained hour in a timezone which
+          implements daylight savings time (DST) can lead to schedule disruption
+          during transitions.
+        example: Europe/London
+        type: string
+    type: object
+  Automation_Configs.CreateConfigResponse:
+    description: CreateConfigResponse is the response from creating an Automation Config.
+    properties:
+      config:
+        allOf:
+          - $ref: '#/definitions/Automation_Configs.automations.external.v2.Config'
+        description: The new Automation Config.
+        title: The returned automation config
+    type: object
+  Automation_Configs.DeleteConfigResponse:
+    description: Success returns an empty response body.
+    type: object
+  Automation_Configs.GetConfigResponse:
+    description: GetConfigResponse returns the requested Automation Config.
+    properties:
+      config:
+        allOf:
+          - $ref: '#/definitions/Automation_Configs.automations.external.v2.Config'
+        description: Details of the requested Automation Config.
+      last_execution_id:
+        description: >-
+          The ID of the last Execution triggered by the Automation Config, if
+          one exists.
+        type: string
+    type: object
+  Automation_Configs.ImportConfig:
+    description: A config used to define an Import as an Automation Step.
+    properties:
+      config_id:
+        description: The Importer ID to execute for the Automation Step.
+        type: string
+    type: object
+  Automation_Configs.ListConfigsResponse:
+    description: >-
+      ListConfigsResponse returns the Automation Configs which matched the
+      request parameters.
+    properties:
+      configs:
+        description: Array of Automation Configs based on the request filters and sorting.
+        items:
+          $ref: '#/definitions/Automation_Configs.automations.external.v2.Config'
+          type: object
+        type: array
+      pagination:
+        allOf:
+          - $ref: '#/definitions/PaginationResponse'
+        description: Pagination information for returned Configs.
+    type: object
+  Automation_Configs.NormalizationConfig:
+    description: A config to define Normalization as an Automation Step.
+    properties:
+      config_id:
+        description: The Normalization Config ID to execute for the Automation Step.
+        type: string
+    type: object
+  Automation_Configs.PublishConfig:
+    description: A config to define Preparation and Publishing as an Automation Step.
+    properties:
+      config_id:
+        description: The Dataset Prepare Config ID to execute for the Automation Step.
+        type: string
+      dataset_id:
+        description: The ID of the dataset to publish the prepared data to.
+        type: string
+    type: object
+  Automation_Configs.RecordsetCreationConfig:
+    description: A config to define Recordset Creation as an Automation Step.
+    properties:
+      config_id:
+        description: The Recordset Creation Config ID to execute for the Automation Step.
+        type: string
+    type: object
+  Automation_Configs.UpdateConfigResponse:
+    description: UpdateConfigResponse is the response from updating an Automation.
+    properties:
+      config:
+        allOf:
+          - $ref: '#/definitions/Automation_Configs.automations.external.v2.Config'
+        description: The updated Automation Config.
+    type: object
+  Automation_Configs.automations.external.v2.Config:
     description: The information required to define an Automation Config.
     properties:
       automation_steps:
@@ -371,157 +522,6 @@ definitions:
           format. Output Only.
         format: date-time
         type: string
-    type: object
-  Automation_Configs.CreateConfigRequest:
-    description: >-
-      CreateConfigRequest is the information provided when creating an
-      Automation Config.
-    properties:
-      cloud_vault_id:
-        description: >-
-          The ID of the Cloud Vault to be used for reading and writing data
-          during Automation Execution.
-        type: string
-      cron_timer:
-        description: >-
-          The execution schedule of the Automation in UNIX CRON format as
-          described in https://man7.org/linux/man-pages/man5/crontab.5.html. The
-          schedule is executed relative to the supplied `timezone_identifier`
-          for the Automation.
-        example: 0 12 * * *
-        type: string
-      description:
-        description: The user-friendly description of the Automation Config.
-        type: string
-      enabled:
-        description: >-
-          The 'enabled' flag allows Automation Execution triggers to be paused
-          and resumed without adjusting the rest of the config or schedule.
-        type: boolean
-      end_date_time:
-        description: >-
-          Optional date-time to cease triggering Automation Executions. Format
-          is RFC3339 which defaults to UTC. Offsets relative to Zulu time must
-          be provided to convey local times. This parameter is unaffected by
-          `timezone_identifier`. An empty value indicates that the schedule
-          should never cease.
-        example: '2019-11-23T18:30:00-04:00'
-        format: date-time
-        type: string
-      name:
-        description: >-
-          The user-friendly name of the Automation Config. Valid characters are
-          alphanumeric, '_', '-' and spaces.
-        type: string
-      start_date_time:
-        description: >-
-          Optional date-time to begin triggering Automation Executions based on
-          the CRON schedule. Format is RFC3339 which defaults to UTC. Offsets
-          relative to Zulu time must be provided to convey local times. This
-          parameter is unaffected by `timezone_identifier`. An empty value
-          indicates that the schedule should begin as soon as possible.
-        example: '2019-11-22T18:30:00-04:00'
-        format: date-time
-        type: string
-      steps:
-        description: >-
-          The sequence of tasks which constitute an Execution of this Automation
-          Config.
-        items:
-          $ref: '#/definitions/Automation_Configs.AutomationStep'
-          type: object
-        type: array
-      timezone_identifier:
-        description: >-
-          The Timezone Identifier to schedule Automation Executions relative to
-          using the `cron_timer`. This parameter does not affect the start or
-          end times for scheduling. The format is from the IANA TZ database:
-          https://en.wikipedia.org/wiki/List_of_tz_database_time_zones. Be aware
-          that scheduling near the lost or gained hour in a timezone which
-          implements daylight savings time (DST) can lead to schedule disruption
-          during transitions.
-        example: Europe/London
-        type: string
-    type: object
-  Automation_Configs.CreateConfigResponse:
-    description: CreateConfigResponse is the response from creating an Automation Config.
-    properties:
-      config:
-        allOf:
-          - $ref: '#/definitions/Automation_Configs.Config'
-        description: The new Automation Config.
-        title: The returned automation config
-    type: object
-  Automation_Configs.DeleteConfigResponse:
-    description: Success returns an empty response body.
-    type: object
-  Automation_Configs.GetConfigResponse:
-    description: GetConfigResponse returns the requested Automation Config.
-    properties:
-      config:
-        allOf:
-          - $ref: '#/definitions/Automation_Configs.Config'
-        description: Details of the requested Automation Config.
-      last_execution_id:
-        description: >-
-          The ID of the last Execution triggered by the Automation Config, if
-          one exists.
-        type: string
-    type: object
-  Automation_Configs.ImportConfig:
-    description: A config used to define an Import as an Automation Step.
-    properties:
-      config_id:
-        description: The Importer ID to execute for the Automation Step.
-        type: string
-    type: object
-  Automation_Configs.ListConfigsResponse:
-    description: >-
-      ListConfigsResponse returns the Automation Configs which matched the
-      request parameters.
-    properties:
-      configs:
-        description: Array of Automation Configs based on the request filters and sorting.
-        items:
-          $ref: '#/definitions/Automation_Configs.Config'
-          type: object
-        type: array
-      pagination:
-        allOf:
-          - $ref: '#/definitions/PaginationResponse'
-        description: Pagination information for returned Configs.
-    type: object
-  Automation_Configs.NormalizationConfig:
-    description: A config to define Normalization as an Automation Step.
-    properties:
-      config_id:
-        description: The Normalization Config ID to execute for the Automation Step.
-        type: string
-    type: object
-  Automation_Configs.PublishConfig:
-    description: A config to define Preparation and Publishing as an Automation Step.
-    properties:
-      config_id:
-        description: The Dataset Prepare Config ID to execute for the Automation Step.
-        type: string
-      dataset_id:
-        description: The ID of the dataset to publish the prepared data to.
-        type: string
-    type: object
-  Automation_Configs.RecordsetCreationConfig:
-    description: A config to define Recordset Creation as an Automation Step.
-    properties:
-      config_id:
-        description: The Recordset Creation Config ID to execute for the Automation Step.
-        type: string
-    type: object
-  Automation_Configs.UpdateConfigResponse:
-    description: UpdateConfigResponse is the response from updating an Automation.
-    properties:
-      config:
-        allOf:
-          - $ref: '#/definitions/Automation_Configs.Config'
-        description: The updated Automation Config.
     type: object
   Automation_Configs.v2.UpdateConfig:
     description: The mutable fields of an Automation.
@@ -700,6 +700,7 @@ definitions:
       - TASK_TYPE_NORMALIZATION
       - TASK_TYPE_PREPARE
       - TASK_TYPE_PUBLISH
+      - TASK_TYPE_TRANSFORMATION
     type: string
   Automation_Execution.v1.Status:
     default: NO_STATUS
@@ -732,6 +733,11 @@ definitions:
     description: CloudVaultMetadata is the data about a Cloud Vault.
     properties:
       aws_kms_key_arn:
+        type: string
+      aws_region:
+        description: >-
+          AWSRegion is the aws region for any cloud vault access, this is
+          separate to the InfoSum bunker region.
         type: string
       bucket_name:
         type: string
@@ -1074,10 +1080,12 @@ definitions:
        - DATASET_TYPE_INVALID: Invalid is used when no other enum applies.
        - DATASET_TYPE_INSIGHT: Insight is for insight datasets.
        - DATASET_TYPE_IDENTITY: Identity is for identity (activation) datasets.
+       - DATASET_TYPE_UNIFIED: Unified is for unified datasets which support activation and insight queries.
     enum:
       - DATASET_TYPE_INVALID
       - DATASET_TYPE_INSIGHT
       - DATASET_TYPE_IDENTITY
+      - DATASET_TYPE_UNIFIED
     type: string
   Collaboration_Datasets.ExportColumnStatsResponse:
     description: ExportColumnStatsResponse is the response to ExportColumnStats method.
@@ -1459,6 +1467,64 @@ definitions:
     type: object
   Collaboration_Management.AddActivationDatasetResponse:
     type: object
+  Collaboration_Management.AddDatasetBody:
+    properties:
+      activation_allowed:
+        description: >-
+          If true, allows the dataset to be used in activation queries within
+          the collaboration. If exportable_to_members is empty then this setting
+          allows the dataset to be used in the audience to activate data from a
+          different dataset.
+        type: boolean
+      allowed_attributes:
+        description: A list of the attributes in the dataset that can be queried against.
+        items:
+          type: string
+        type: array
+      allowed_destination_types:
+        description: >-
+          The destination type IDs that are authorized to be exported to from
+          this dataset, they must be owned by the `exportable_to_members`. This
+          field can only be set if `destination_type_restriction` is set to
+          true.
+        items:
+          type: string
+        type: array
+      attribute_restriction:
+        description: >-
+          If true, restricts the allowed attributes to only those in the
+          `allowed_attributes` list. If false, then all attributes (present and
+          future) will be allowed.
+        type: boolean
+      collaboration_dataset_name:
+        description: >-
+          A name, unique within this collaboration, used to refer to the dataset
+          in queries, audience builder, etc. Note: the value should between 1
+          and 17 characters long and alphanumeric only
+        type: string
+      dataset_id:
+        description: The ID of the dataset to be added to the collaboration.
+        type: string
+      destination_type_restriction:
+        description: >-
+          If true, restricts the type of destinations which can be targeted by
+          an export to those in `allowed_destination_types`.
+        type: boolean
+      exportable_to_members:
+        description: >-
+          The collaboration members whose destinations can be used as a target
+          to export activation query results to from this dataset. If this field
+          is empty then no activation queries can target this dataset so that no
+          data from this dataset can be exported.
+        items:
+          type: string
+        type: array
+      intersection_only:
+        description: Whether the dataset should only allow intersection queries.
+        type: boolean
+    type: object
+  Collaboration_Management.AddDatasetResponse:
+    type: object
   Collaboration_Management.AddDestinationBody:
     properties:
       destination_id:
@@ -1692,6 +1758,12 @@ definitions:
           $ref: '#/definitions/Collaboration_Management.InsightDatasetPermission'
           type: object
         type: array
+      last_activity_date_time:
+        description: >-
+          The date and time that the last event occurred which involved this
+          collaboration.
+        format: date-time
+        type: string
       members:
         description: The members of the collaboration.
         items:
@@ -1770,6 +1842,12 @@ definitions:
       id:
         description: The ID of the collaboration
         type: string
+      last_activity_date_time:
+        description: >-
+          The date and time that the last event occurred which involved this
+          collaboration.
+        format: date-time
+        type: string
       members:
         description: The members of the collaboration.
         items:
@@ -1784,7 +1862,7 @@ definitions:
           - $ref: '#/definitions/Collaboration_Management.CollaborationMember'
         description: The collaboration owner.
       private_path_enabled:
-        description: An indication that this collaboratio is Private Path enabled.
+        description: An indication that this collaboration is Private Path enabled.
         type: boolean
       status:
         allOf:
@@ -1882,6 +1960,8 @@ definitions:
       - TYPE_SEGMENT_CREATED
       - TYPE_SEGMENT_DELETED
       - TYPE_PRIVATE_PATH_ID_ROTATED
+      - TYPE_DATASET_ADDED
+      - TYPE_DATASET_REMOVED
     type: string
   Collaboration_Management.GetCollaborationResponse:
     properties:
@@ -2049,6 +2129,8 @@ definitions:
         type: boolean
     type: object
   Collaboration_Management.RemoveActivationDatasetResponse:
+    type: object
+  Collaboration_Management.RemoveDatasetResponse:
     type: object
   Collaboration_Management.RemoveDestinationResponse:
     type: object
@@ -2281,10 +2363,12 @@ definitions:
        - DATASET_TYPE_INVALID: Invalid is used when no other enum applies.
        - DATASET_TYPE_INSIGHT: Insight is for insight datasets.
        - DATASET_TYPE_IDENTITY: Identity is for identity (activation) datasets.
+       - DATASET_TYPE_UNIFIED: Unified is for unified datasets which support activation and insight queries.
     enum:
       - DATASET_TYPE_INVALID
       - DATASET_TYPE_INSIGHT
       - DATASET_TYPE_IDENTITY
+      - DATASET_TYPE_UNIFIED
     type: string
   Datasets.DeleteDatasetResponse:
     description: DeleteDatasetResponse is the response for DeleteDataset rpc.
@@ -5294,6 +5378,11 @@ definitions:
           AllCategories, if set to true, will publish every Category column in
           the recordset.
         type: boolean
+      all_export_columns:
+        description: >-
+          AllExportColumns, if set to true, will publish every Export Column in
+          the recordset.
+        type: boolean
       all_keys:
         description: >-
           AllKeys, if set to true, will publish every Key column in the
@@ -5500,6 +5589,11 @@ definitions:
           AllCategories, if set to true, will publish every Category column in
           the recordset.
         type: boolean
+      all_export_columns:
+        description: >-
+          AllExportColumns, if set to true, will publish every Export Column in
+          the recordset.
+        type: boolean
       all_keys:
         description: >-
           AllKeys, if set to true, will publish every Key column in the
@@ -5587,6 +5681,11 @@ definitions:
       all_categories:
         description: >-
           AllCategories, if set to true, will publish every Category column in
+          the recordset.
+        type: boolean
+      all_export_columns:
+        description: >-
+          AllExportColumns, if set to true, will publish every Export Column in
           the recordset.
         type: boolean
       all_keys:
@@ -5900,6 +5999,11 @@ definitions:
       all_categories:
         description: >-
           AllCategories, if set to true, will publish every Category column in
+          the recordset.
+        type: boolean
+      all_export_columns:
+        description: >-
+          AllExportColumns, if set to true, will publish every Export Column in
           the recordset.
         type: boolean
       all_keys:
@@ -6532,7 +6636,9 @@ definitions:
       - PARTIALLY_COMPLETED
     type: string
   Recordsets.AttributeColumn:
-    description: AttributeColumn contains metadata about an Insight Column.
+    description: >-
+      AttributeColumn is populated to describe the column when it is an
+      Attribute.
     properties:
       category_id:
         description: CategoryId is the category ID in the global schema for the column.
@@ -6565,6 +6671,11 @@ definitions:
         type: string
     type: object
   Recordsets.Column:
+    description: >-
+      Column contains details of each column in the recordset.
+
+      Only one of `key_column`, `attribute_column` or `raw_column` will be
+      not-null per Column.
     properties:
       attribute_column:
         $ref: '#/definitions/Recordsets.AttributeColumn'
@@ -6583,19 +6694,14 @@ definitions:
       raw_column:
         $ref: '#/definitions/Recordsets.RawColumn'
       statistics:
-        allOf:
-          - $ref: '#/definitions/Recordsets.ColumnStats'
-        title: statistics is the stats for a column
+        $ref: '#/definitions/Recordsets.ColumnStats'
       value_type:
         allOf:
           - $ref: '#/definitions/Recordsets.ValueType'
         title: value_type is the type of values stored in this column
-    title: |-
-      Column contains details of each column in the recordset.
-      For Raw columns it's sufficient to only define name and value_type
     type: object
   Recordsets.ColumnStats:
-    description: ColumnStats is the statistics of a column.
+    description: ColumnStats encapsulates the statistics of a column.
     properties:
       cell_count:
         description: CellCount of non-null cells in the column.
@@ -6666,7 +6772,7 @@ definitions:
         type: string
     type: object
   Recordsets.KeyColumn:
-    description: KeyColumn contains metadata about a Key.
+    description: KeyColumn is populated to describe the column when it is a Key.
     properties:
       id:
         description: Id in the global schema for the Key or a custom ID.
@@ -6712,7 +6818,7 @@ definitions:
         type: array
     type: object
   Recordsets.Lock:
-    description: Lock is the represenation of a single lock on a recordset.
+    description: Lock is the representation of a single lock on a recordset.
     properties:
       created_date_time:
         description: CreatedDateTime is the date and time that the lock was created.
@@ -6756,9 +6862,9 @@ definitions:
     readOnly: true
     type: object
   Recordsets.RawColumn:
-    title: |-
-      RawColumn is used when the column contains raw data.
-      examples:  transformed columns or normalisation export columns
+    description: >-
+      RawColumn is set to be not-null to indicate that the column contains raw
+      data which can be used as an export column.
     type: object
   Recordsets.Recordset:
     description: Recordset contains an overview of the recordset, without column details.
@@ -8830,62 +8936,39 @@ paths:
       tags:
         - Collaboration Connections
   /api/v2/collaborations/{collaboration_id}/datasets:
-    get:
-      description: >-
-        Returns a list of datasets between datasets in the given collaboration.
-        The output is affected by provided filters.
-      operationId: ListDatasets
+    post:
+      description: Adds a dataset to the collaboration.
+      operationId: AddDataset
       parameters:
-        - description: The ID of the collaboration to get dataset details from.
+        - description: The ID of the collaboration the dataset should be added to.
           in: path
           name: collaboration_id
           required: true
           type: string
-        - description: The requested page of records. Default is 1.
-          format: int32
-          in: query
-          name: pagination.page
-          required: false
-          type: integer
-        - description: >-
-            The number of records to return per page. Maximum is 500. Default is
-            100.
-          format: int32
-          in: query
-          name: pagination.per_page
-          required: false
-          type: integer
-        - description: >-
-            OrderBy is a comma seperated value to define sorting.
-
-            e.g 'created_time,name DESC'
-
-            The values are seperated by space, '{column} {ASC/DESC}'
-
-            Valid columns: `created_date_time`, `updated_date_time`, `owner`,
-            `name`
-          in: query
-          name: order_by
-          required: false
-          type: string
-        - description: Supported filters are `dataset_id`, `owner_id`
-          in: query
-          name: filter
-          required: false
-          type: string
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/Collaboration_Management.AddDatasetBody'
       responses:
         '200':
           description: A successful response.
           schema:
-            $ref: '#/definitions/Collaboration_Datasets.ListDatasetsResponse'
+            $ref: '#/definitions/Collaboration_Management.AddDatasetResponse'
+        '400':
+          description: Returned when the request was not valid.
+          schema:
+            $ref: '#/definitions/Error'
         '401':
           description: Returned when the user could not be authorized.
           schema:
             $ref: '#/definitions/Error'
         '403':
-          description: >-
-            Returned when the user does not have the right to list collaboration
-            datasets.
+          description: Returned when the user does not have the right to add the resource.
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Returned when the collaboration could not be found.
           schema:
             $ref: '#/definitions/Error'
         '500':
@@ -8896,22 +8979,20 @@ paths:
           description: An unexpected error response.
           schema:
             $ref: '#/definitions/Error'
-      summary: List Datasets
+      summary: Add Dataset
       tags:
-        - Collaboration Datasets
+        - Collaboration Management
   /api/v2/collaborations/{collaboration_id}/datasets/{dataset_id}:
-    get:
-      description: >-
-        Returns the details for the requested dataset within given
-        collaboration.
-      operationId: GetDatasetDetails
+    delete:
+      description: Removes a dataset owned by the caller from the collaboration.
+      operationId: RemoveDataset
       parameters:
-        - description: The ID of the collaboration the dataset belongs to.
+        - description: The ID of the collaboration the dataset should be removed from.
           in: path
           name: collaboration_id
           required: true
           type: string
-        - description: The ID of the dataset you want information about.
+        - description: The ID of the dataset to be removed from the collaboration.
           in: path
           name: dataset_id
           required: true
@@ -8920,7 +9001,7 @@ paths:
         '200':
           description: A successful response.
           schema:
-            $ref: '#/definitions/Collaboration_Datasets.GetDatasetDetailsResponse'
+            $ref: '#/definitions/Collaboration_Management.RemoveDatasetResponse'
         '400':
           description: Returned when the request was not valid.
           schema:
@@ -8931,12 +9012,12 @@ paths:
             $ref: '#/definitions/Error'
         '403':
           description: >-
-            Returned when the user does not have the right to view details of a
-            dataset in this collaboration.
+            Returned when the user does not have the right to remove the
+            resource.
           schema:
             $ref: '#/definitions/Error'
         '404':
-          description: Returned when the collaboration or dataset could not be found.
+          description: Returned when the collaboration could not be found.
           schema:
             $ref: '#/definitions/Error'
         '500':
@@ -8947,9 +9028,9 @@ paths:
           description: An unexpected error response.
           schema:
             $ref: '#/definitions/Error'
-      summary: Get Dataset
+      summary: Remove Dataset
       tags:
-        - Collaboration Datasets
+        - Collaboration Management
   /api/v2/collaborations/{collaboration_id}/datasets/{dataset_id}/stats/attribute_columns:
     get:
       description: >-
