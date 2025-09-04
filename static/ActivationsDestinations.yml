@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Activation Queries & Destinations
-  version: AD 1.0
+  version: AD 1.1
   description: >-
     This page contains the essential endpoints of the InfoSum API that help users securely manage data throughout the activation process, allowing them to activate and push data for analysis from InfoSum to [one of our destinations](https://support.infosum.com/hc/en-us/articles/12128356485778-Supported-Destinations-for-Activation). You can download the swagger file above or email solutions@infosum.com to share a Postman Collection.
 
