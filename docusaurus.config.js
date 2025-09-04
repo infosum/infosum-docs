@@ -70,6 +70,11 @@ const config = {
             id: 'infosum-openapi-v2-onboard',
             spec: 'static/Onboarding.yml',
             route: '/api/Onboarding'
+          },
+          {
+            id: 'infosum-openapi-v2-collab',
+            spec: 'static/Collaborations.yml',
+            route: '/api/Collaborations'
           }
         ],
       },
@@ -135,8 +140,9 @@ const config = {
           position: 'left',
           items:[
             { to: '/api/Onboarding', label: 'Onboarding Data'},
+            { to: '/api/Collaborations', label: 'Collaborations'},
             { to: '/api/InsightQueries', label: 'Insight Queries'},
-            { to: '/api/ActivationDestination', label: 'Activation Queries & Destinations' },
+            { to: '/api/ActivationDestination', label: 'Activation Queries & Destinations'},
           ]},
           {
             href: 'https://github.com/infosum',
