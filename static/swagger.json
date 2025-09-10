@@ -9325,8 +9325,7 @@
 						"name": "config",
 						"required": true,
 						"schema": {
-							"$ref": "#/definitions/Automation_Configs.v2.UpdateConfig",
-							"description": "The Automation Config."
+							"$ref": "#/definitions/Automation_Configs.v2.UpdateConfig"
 						}
 					}
 				],
@@ -13059,8 +13058,7 @@
 						"name": "destination",
 						"required": true,
 						"schema": {
-							"$ref": "#/definitions/Destination_Instances.DestinationInstanceUpdate",
-							"description": "Destination instance details."
+							"$ref": "#/definitions/Destination_Instances.DestinationInstanceUpdate"
 						}
 					}
 				],
