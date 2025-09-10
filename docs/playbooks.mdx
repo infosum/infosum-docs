@@ -8,10 +8,18 @@ InfoSum currently supports a collection of their APIs packaged for new & advance
 
 We currently offer the following playbooks:
 - Onboarding Data
+- Collaboration Management
+- Insight Queries
 - Activation Queries & Pushing to a Destination
 
 ### [Onboarding Data](https://infosum.github.io/infosum-docs/api/Onboarding)
 The goal of data onboarding is publishing a standardized and encrypted version of your data to a Bunker (called dataset in the platform), an isolated cloud instance that can be permissioned for collaboration. Onboarding happens in a file management staging environment called Cloud Vault. Once all onboarding tasks are completed, the data will be available in your Bunker. The onboarding API reuses saved configurations across each onboarding task to perform the import on a set schedule. This means that data onboarding always needs to happen manually first. **We ask that your team performs the initial end-to-end data onboarding via the UI to set up the configurations, as this will provide clear context and significantly simplify the automated API setup.** 
+
+### [Collaboration Management](https://infosum.github.io/infosum-docs/api/Collaborations)
+The goal of collaboration management is to ensure who can join, leave, and close collaborations. You can add and remove datasets and destinations. You can get the event log and download it. For data analysis, check out the Querying playbooks.
+
+### [Insight Queries](https://infosum.github.io/infosum-docs/api/InsightQueries)
+The goal of insight queries is to create meaningful insights that might influence planning or future operations. You can run any type of insight query here and recieve the data table in return.
 
 ### [Activation Queries & Pushing to a Destination](https://infosum.github.io/infosum-docs/api/ActivationDestination)
 The goal of activating data and pushing to a destination is to recieve (or send) intersected data outside of InfoSum. You will run an activation query and then push the result to any one of our destinations. These include: [DV360, Amazon Ads, TikTok, The Trade Desk, and more!](https://support.infosum.com/hc/en-us/articles/12128356485778-Supported-Destinations-for-Activation)

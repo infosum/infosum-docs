@@ -140,7 +140,7 @@ const config = {
           position: 'left',
           items:[
             { to: '/api/Onboarding', label: 'Onboarding Data'},
-            { to: '/api/Collaborations', label: 'Collaborations'},
+            { to: '/api/Collaborations', label: 'Collaborations Management'},
             { to: '/api/InsightQueries', label: 'Insight Queries'},
             { to: '/api/ActivationDestination', label: 'Activation Queries & Destinations'},
           ]},
