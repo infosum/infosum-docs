@@ -111,13 +111,73 @@ paths:
         Queue a Query for execution. Returns immediately with an ID of the Query
         created.
       requestBody:
+        required: true
         content:
           application/json:
             schema:
               type: object
-              example:
-                query: Query
-                campaign_name: Campaign Name
+              description: Used to queue an Activation Query with the CreateActivationQuery endpoint.
+              properties:
+                query:
+                  type: string
+                  title: Query
+                  description: >
+                    The Query that should be executed. This takes the
+                    format of an InfoSum Activation Query. See
+                    the documentation of the InfoSum Activation Query Language
+                    for more information.
+                path_overrides:
+                  type: array
+                  title: Path Overrides
+                  description: >
+                    A list of instructions on how to connect two datasets, overriding the automatic choices
+                    made by the core engine.
+                  items:
+                    type: object
+                    properties:
+                      from_dataset_id:
+                        type: string
+                      to_dataset_id:
+                        type: string
+                      path_instructions:
+                        type: string
+                campaign_name:
+                  type: string
+                  title: CampaignName
+                  description: A name that a user can associate with an activation query.
+                column_separator:
+                  type: string
+                  title: Column Separator
+                  description: The separator to be used to delimit activation data columns.
+                header_overrides:
+                  type: object
+                  title: HeaderOverrides
+                  description: An optional map of query output column to header override.
+                  additionalProperties:
+                    type: string
+                string_literal_columns:
+                  type: array
+                  title: StringLiteralColumns
+                  description: The optional list of string literal columns.
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      value:
+                        type: string
+                multi_value_delimiter:
+                  type: string
+                  title: MultiValueDelimiter
+                  description: The delimiter for multi-value columns.
+                identities_to_flatten:
+                  type: array
+                  title: IdentitiesToFlatten
+                  description: A list of multi-value identity columns to be flattened.
+                  items:
+                    type: string
+                collaboration_id:
+                  type: string
       parameters:
         - name: Content-Type
           in: header
@@ -142,8 +202,16 @@ paths:
               schema:
                 type: object
               example:
-                query_id: <string>
-                done: <boolean>
+                activation_id: <string>
+                query_completed: true
+                query_error:
+                  code: 0
+                  message: <string>
+                  details: []
+                query_response:
+                  identities: []
+                  total_rows: 0
+                  quality_measures: {}
         '400':
           description: Bad Request
           headers:
@@ -523,7 +591,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
+              type: query
               example: 
                 push_config": {
                   filename: filename
