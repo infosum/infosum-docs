@@ -217,6 +217,11 @@
 					"description": "The ID of the query that has been pushed.",
 					"type": "string"
 				},
+				"rejected_rows": {
+					"description": "The number of rows of data excluded based on data quality or rejected by the destination.",
+					"format": "int64",
+					"type": "string"
+				},
 				"started_at_date_time": {
 					"description": "The date and time when this activation push was started.",
 					"format": "date-time",
@@ -263,6 +268,11 @@
 				},
 				"query_id": {
 					"description": "The ID of the query that has been pushed.",
+					"type": "string"
+				},
+				"rejected_rows": {
+					"description": "The number of rows of data excluded based on data quality or rejected by the destination.",
+					"format": "int64",
 					"type": "string"
 				},
 				"started_at_date_time": {
