@@ -417,13 +417,22 @@ components:
           type: string
           enum:
             - TYPE_INVALID
-            - TYPE_DATASET_ADDED
-            - TYPE_DATASET_REMOVED
+            - TYPE_COLLABORATION_CREATED
             - TYPE_DESTINATION_ADDED
             - TYPE_DESTINATION_REMOVED
-            - TYPE_COLLABORATION_CREATED
             - TYPE_COLLABORATION_CLOSED
-            - TYPE_MEMBER_LEFT
+            - TYPE_COLLABORATION_LEFT
+            - TYPE_ACTIVATION_QUERY_RESULTS_EXPORTED
+            - TYPE_ACTIVATION_QUERY_SUCCESSFUL
+            - TYPE_INSIGHT_QUERY_SUCCESSFUL
+            - TYPE_DATASET_PUBLISHED
+            - TYPE_AUDIENCE_CREATED
+            - TYPE_AUDIENCE_DELETED
+            - TYPE_SEGMENT_CREATED
+            - TYPE_SEGMENT_DELETED
+            - TYPE_PRIVATE_PATH_ID_ROTATED
+            - TYPE_DATASET_ADDED
+            - TYPE_DATASET_REMOVED
 security:
   - apikeyAuth: []
 tags:
