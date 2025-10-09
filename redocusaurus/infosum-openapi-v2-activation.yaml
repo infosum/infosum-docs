@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Activation Queries & Destinations
-  version: AD 1.0
+  version: AD 1.1
   description: >-
     This page contains the essential endpoints of the InfoSum API that help
     users securely manage data throughout the activation process, allowing them
@@ -11,17 +11,14 @@ info:
     share a Postman Collection.
 
 
-    InfoSum Support: support@infosum.com | [Terms of
+    [InfoSum Support](mailto:support@infosum.com) | [Terms of
     Service](https://www.infosum.com/legals/website-terms) | [Official
     Documentation](https://support.infosum.com/)
 
 
-    We highly suggest attempting to activate and push to a destination in the UI
-    first. This way users can confirm they have the correct rights to activate
-    and push to a destination. Additionally, this will allow users to create the
-    destinations and set the configurations before attempting to push via the
-    API. Future versions of the API Playbooks will outline creating a
-    destination and modifying configurations.
+    **About Destinations**
+        Destinations are locations outside the InfoSum platform such as media platforms, walled gardens, SSPs, DSPs, CDPs, ad servers, or cloud environments. Once created, you only need runtime variables to push an activation file. Destinations are available to all users in your company and can be reused indefinitely.
+
 
     Task List 
 
@@ -39,62 +36,66 @@ info:
     4. Push query results to Destination
 
 
-    <h3>Parameter Reference Table</h3> <table>
-      <tbody>
-        <tr>
-          <th>Postman Step Number</th>
-          <th>Parameter Name</th>
-          <th>Parameter Structure</th>
-          <th>Where to find it</th>
-          <th>When to collect</th>
-        </tr>
-      </tbody>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>Query</td>
-          <td>"SELECT self.ID FROM self INTERSECT them"</td>
-          <td>Write it in <strong>Query Tool</strong> or find in <strong>Activations</strong> Page.</td>
-          <td>Have ready before hand</td>
-        </tr>
-        <tr>
-          <td>1</td>
-          <td>Campaign Name</td>
-          <td><em>text</em></td>
-          <td><strong>This is user generated.</strong> This will be the name InfoSum uses to reference the activation result.</td>
-          <td>Have ready before hand</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Query ID</td>
-          <td>xx</td>
-          <td>Response from step 1</td>
-          <td>Can be grabbed from output of step 1</td>
-        </tr>
-        <tr>
-          <td>3, 4</td>
-          <td>Destination ID</td>
-          <td>DST.xx</td>
-          <td>in URL of <strong>Destinations</strong> page</td>
-          <td>Have ready before hand</td>
-        </tr>
-        <tr> 
-          <td>4</td>
-          <td>Destination Push Config</td>
-          <td>JSON config</td>
-          <td>Response from step 3</td>
-          <td>Can be grabbed from output of step 3</td>
-        </tr>
-        <tr> 
-          <td>4</td>
-          <td>Destination Filename</td>
-          <td><em>text</em>.csv (or another file type)</td>
-          <td><strong>This is user generated.</strong> This will be the name InfoSum gives to the file in the destination.</td>
-          <td>Have ready before hand</td>
-        </tr>
-        <tr> </tr>
-      </tbody>
-    </table>
+    <h3>Parameter Reference Table</h3>
+        <table border="1" style="border-collapse: collapse; width: 100%;">
+          <tr style="background-color: #f2f2f2;">
+            <th style="padding: 8px; text-align: center; border: 3px solid #ddd;">Step Number</th>
+            <th style="padding: 8px; text-align: center; border: 3px solid #ddd;">Parameter Name</th>
+            <th style="padding: 8px; text-align: center; border: 3px solid #ddd;">Parameter Structure</th>
+            <th style="padding: 8px; text-align: center; border: 3px solid #ddd;">Where to find it</th>
+            <th style="padding: 8px; text-align: center; border: 3px solid #ddd;">When to collect</th>
+          </tr>
+          <tr>
+            <td style="padding: 8px; border: 1px solid #ddd;">1</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">Query</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">"SELECT self.ID FROM self INTERSECT them"</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">Write it in <strong>Query Tool</strong> or find in <strong>Activations</strong> Page.</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">Have ready before hand</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px; border: 1px solid #ddd;">1</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">Campaign Name</td>
+            <td style="padding: 8px; border: 1px solid #ddd;"><em>text</em></td>
+            <td style="padding: 8px; border: 1px solid #ddd;"><strong>This is user generated.</strong> This will be the name InfoSum uses to reference the activation result.</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">Have ready before hand</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px; border: 1px solid #ddd;">2</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">Query ID</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">xx</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">Response from step 1</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">Can be grabbed from output of step 1</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px; border: 1px solid #ddd;">3, 4</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">Destination ID</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">DST.xx</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">in URL of <strong>Destinations</strong> page</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">Have ready before hand</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px; border: 1px solid #ddd;">4</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">Destination Push Config</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">JSON config</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">Response from step 3</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">Can be grabbed from output of step 3</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px; border: 1px solid #ddd;">4</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">Destination Filename</td>
+            <td style="padding: 8px; border: 1px solid #ddd;"><em>text</em>.csv (or another file type)</td>
+            <td style="padding: 8px; border: 1px solid #ddd;"><strong>This is user generated.</strong> This will be the name InfoSum gives to the file in the destination.</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">Have ready before hand</td>
+          </tr>
+        </table>
+
+
+     **Best Practices**
+      - Ensure your Bunker has **Export Columns** enabled or use a partner’s Bunker.
+      - Verify the destination accepts the identifier types you plan to export (e.g., email, MAID, IP).
+      - Limit to a maximum of 15 key types in your dataset.
+      - Use the UI first to confirm setup before automating via API.
+      - Saved destinations can be reused indefinitely across your company.
 servers:
   - url: http://{{baseurl}}
   - url: https://api.infosum.com
@@ -118,13 +119,74 @@ paths:
         Queue a Query for execution. Returns immediately with an ID of the Query
         created.
       requestBody:
+        required: true
         content:
           application/json:
             schema:
               type: object
-              example:
-                query: Query
-                campaign_name: Campaign Name
+              description: >-
+                Used to queue an Activation Query with the CreateActivationQuery
+                endpoint.
+              properties:
+                query:
+                  type: string
+                  title: Query
+                  description: >
+                    The Query that should be executed. This takes the format of
+                    an InfoSum Activation Query. See the documentation of the
+                    InfoSum Activation Query Language for more information.
+                path_overrides:
+                  type: array
+                  title: Path Overrides
+                  description: >
+                    A list of instructions on how to connect two datasets,
+                    overriding the automatic choices made by the core engine.
+                  items:
+                    type: object
+                    properties:
+                      from_dataset_id:
+                        type: string
+                      to_dataset_id:
+                        type: string
+                      path_instructions:
+                        type: string
+                campaign_name:
+                  type: string
+                  title: CampaignName
+                  description: A name that a user can associate with an activation query.
+                column_separator:
+                  type: string
+                  title: Column Separator
+                  description: The separator to be used to delimit activation data columns.
+                header_overrides:
+                  type: object
+                  title: HeaderOverrides
+                  description: An optional map of query output column to header override.
+                  additionalProperties:
+                    type: string
+                string_literal_columns:
+                  type: array
+                  title: StringLiteralColumns
+                  description: The optional list of string literal columns.
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      value:
+                        type: string
+                multi_value_delimiter:
+                  type: string
+                  title: MultiValueDelimiter
+                  description: The delimiter for multi-value columns.
+                identities_to_flatten:
+                  type: array
+                  title: IdentitiesToFlatten
+                  description: A list of multi-value identity columns to be flattened.
+                  items:
+                    type: string
+                collaboration_id:
+                  type: string
       parameters:
         - name: Content-Type
           in: header
@@ -149,8 +211,16 @@ paths:
               schema:
                 type: object
               example:
-                query_id: <string>
-                done: <boolean>
+                activation_id: <string>
+                query_completed: true
+                query_error:
+                  code: 0
+                  message: <string>
+                  details: []
+                query_response:
+                  identities: []
+                  total_rows: 0
+                  quality_measures: {}
         '400':
           description: Bad Request
           headers:
@@ -213,9 +283,9 @@ paths:
           example: application/json
         - name: query_id
           in: path
+          required: true
           schema:
             type: string
-          required: true
       responses:
         '200':
           description: OK
@@ -530,7 +600,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
+              type: query
               example:
                 push_config":
                   filename: filename

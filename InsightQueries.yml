@@ -1,0 +1,406 @@
+openapi: 3.0.0
+info:
+  title: Insight Queries
+  version: IQ 1.0
+  description: >-
+    This page contains the essential endpoints of the InfoSum API that help users securely analysize data via insight queries, allowing the user to plan and provide insights based on data. You can download the swagger file above or email solutions@infosum.com to share a Postman Collection.
+
+
+    [InfoSum Support](mailto:support@infosum.com) | [Terms of Service](https://www.infosum.com/legals/website-terms) | [Official Documentation](https://support.infosum.com/)
+
+    ### Insight Queries
+
+    Insight Queries allow you to analyze connected data across multiple Bunkers in the InfoSum Platform while preserving privacy. Using InfoSum’s Insight Query Language (IQL), a syntax loosely based on SQL, you can securely intersect, filter, and enrich datasets you own as well as those you have permission to query inside collaborations.
+
+    Unlike activation queries, which return individual identifiers, insight queries always generate anonymized aggregated statistical results. This means you can explore overlaps, audience definitions, and category breakdowns without moving or exposing raw data.
+
+
+    With insight queries you can:
+    
+    - Reference one or more Bunkers, which are automatically joined where
+      common keys exist.
+
+    - Apply filters to focus on specific audiences or subsets of data.
+
+    - Enrich analyses by incorporating categories from additional Bunkers.
+    
+    - Use functions such as counts, aggregations, or top-N lookups to build
+      detailed reports.
+
+    Task List
+
+
+    1. Create a insight query
+
+
+    2. Optional: Check if query ran successfully
+
+
+    3. Get results of query
+
+    <h3>Parameter Reference Table</h3>
+    <table border="1" style="border-collapse: collapse; width: 100%;">
+      <tr style="background-color: #f2f2f2;">
+        <th style="padding: 8px; text-align: center; border: 3px solid #ddd;">Step Number</th>
+        <th style="padding: 8px; text-align: center; border: 3px solid #ddd;">Parameter Name</th>
+        <th style="padding: 8px; text-align: center; border: 3px solid #ddd;">Parameter Structure</th>
+        <th style="padding: 8px; text-align: center; border: 3px solid #ddd;">Where to find it</th>
+        <th style="padding: 8px; text-align: center; border: 3px solid #ddd;">When to collect</th>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #ddd;">1</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Query</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">"SELECT self.ID FROM self INTERSECT them"</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Write it in <strong>Query Tool</strong></td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Have ready before hand.</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #ddd;">2, 3</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Query ID</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">xx</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Response from step 1</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Can be grabbed from output of step 1</td>
+      </tr>
+    </table>
+
+
+    ### Example Insight Queries
+
+
+    Refer to the [InfoSum Query Type Documentation](https://support.infosum.com/hc/en-us/articles/360019063218-Select-query-type) for full details.
+
+
+    **Basic Query Examples:**
+
+
+    - COUNT
+      - `SELECT COUNT() FROM bunker`  
+      - Returns the total number of rows in the specified bunker.
+    - AGGREGATE
+      - `SELECT AGGREGATE(column) FROM bunker`  
+        - Counts the number of values in a specific category.
+      - `SELECT AGGREGATE(bunkerA.column1, bunkerB.column2) FROM bunkerA INTERSECT bunkerB`  
+        - Returns counts of values broken down by two categories from different bunkers.
+    - TOPN
+      - `SELECT TOPN(column, n) FROM bunker`  
+        - Retrieves the top `n` most frequently occurring values in a high-cardinality column, such as job titles or ZIP codes.
+
+    **Advanced Functions:**
+
+
+    - SUM
+      - `SELECT SUM(field), AVG(field) FROM bunker`  
+      - Computes total and average of a numeric field.  
+      - ⚠️ This feature is currently in **Beta** and may not be available to all users.
+        - Learn more in the [SUM and AVG Function Guide](https://support.infosum.com/hc/en-us/articles/25591022914322-Sum-and-Avg-IQL-function).
+    - **Filtering with `WHERE` statements**  
+      - Example: `SELECT AGGREGATE(column) FROM bunker WHERE age > 25`
+      - Learn more in the [Filtering Guide](https://support.infosum.com/hc/en-us/articles/360018943657-Filters).
+    - **Datetime filtering**
+      - Example: `SELECT COUNT() FROM bunker WHERE transaction_date >= '2024-01-01' AND transaction_date <= '2024-06-30'`
+      - Enables filtering by date or datetime columns using standard comparison operators.
+      - Learn more in the [Datetime Filter Guide](https://support.infosum.com/hc/en-us/articles/27203389516818-Using-date-time-filters-in-IQL).
+
+servers:
+  - url: http://{{baseurl}}
+  - url: https://api.infosum.com
+components:
+  securitySchemes:
+    apikeyAuth:
+      type: http
+      scheme: apikey
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+        code:
+          type: string
+          description: Error code
+      required:
+        - error
+    DetailedError:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+        code:
+          type: string
+          description: Error code
+        details:
+          type: object
+          description: Additional error details
+        timestamp:
+          type: string
+          format: date-time
+          description: When the error occurred
+      required:
+        - error
+    InsightResult:
+      type: object
+      properties:
+        query_id:
+          type: string
+          description: The ID of the executed query
+        status:
+          type: string
+          enum: [completed]
+          description: Status of the query
+        results:
+          type: array
+          items:
+            type: object
+          description: The query results data
+        metadata:
+          type: object
+          properties:
+            total_rows:
+              type: integer
+              description: Total number of result rows
+            execution_time_ms:
+              type: integer
+              description: Query execution time in milliseconds
+      required:
+        - query_id
+        - status
+        - results
+security:
+  - apikeyAuth: []
+tags:
+  - name: Insight Queries
+paths:
+  /api/v1/insights:
+    post:
+      tags:
+        - Insight Queries
+      summary: 1. Create an Insight Query
+      description: >-
+        Queue an Insight Query for execution. Returns immediately with an ID of the Query
+        created.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - query
+              properties:
+                query:
+                  type: string
+                  description: The IQL query to execute
+                  example: "SELECT COUNT() FROM dataset"
+                collaboration_id:
+                  type: string
+                  description: Optional collaboration ID to run the query within
+      parameters:
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  query_id:
+                    type: string
+                  done:
+                    type: boolean
+        '400':
+          description: Bad Request
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DetailedError'
+  /api/v1/insights/{query_id}:
+    get:
+      tags:
+        - Insight Queries
+      summary: 2. Check Query Status
+      description: Check if an insight query has completed processing.
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: query_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the query to check
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  done:
+                    type: boolean
+                    description: Whether the query has completed
+                  status:
+                    type: string
+                    enum: [pending, running, completed, failed]
+                    description: The current status of the query
+                  error:
+                    type: string
+                    description: Error message if the query failed
+        '401':
+          description: Unauthorized
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DetailedError'
+  /api/v1/insights/{query_id}/results:
+    get:
+      tags:
+        - Insight Queries
+      summary: 3. Get Query Results
+      description: Get the results of a completed insight query.
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: query_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the query to get results for
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InsightResult'
+        '401':
+          description: Unauthorized
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Conflict - Query not yet completed
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DetailedError'

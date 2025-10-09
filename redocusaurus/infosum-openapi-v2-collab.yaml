@@ -1,0 +1,1402 @@
+openapi: 3.0.0
+info:
+  title: Collaboration Management Playbook
+  description: >
+    The Collaborations Playbook introduces a new set of controls that act as a
+    data clean room command center, allowing you to coordinate projects with
+    ease and transparency. Collaborations replace legacy permissions and provide
+    additional project management options and visibility across clean room
+    operations. Please note, this playbook is for Collaboration management only.
+    For details on managing Bunkers, Datasets, Destinations, and Queries, please
+    refer to the respective playbooks.
+
+
+    [InfoSum Support](mailto:support@infosum.com) | 
+
+    [Terms of Service](https://www.infosum.com/legals/website-terms) | 
+
+    [Official Documentation](https://support.infosum.com/)
+
+
+    **About Collaborations:** A Collaboration is a structured project space that
+    brings together multiple companies, their shared assets (such as Bunkers and
+    Destinations), and role-based access to execute a use case. Collaborations
+    are designed to simplify project setup, provide transparency with event
+    logs, and allow members to coordinate operations in a data clean room with
+    confidence.
+
+
+    **Collaboration Roles**
+      * *Owner:* Creates and closes collaborations, adds members and assigns roles. Any user with the correct user roles can assume this role.
+      * *Operator:* Can run queries and activations. Must be assigned by owner at collaboration creation.
+      * *Contributor:* Can add and modify assets within the collaboration. Must be assigned by owner at collaboration creation.
+      * *Viewer:* Can view collaboration assets and activity logs. Must be assigned by owner at collaboration creation.
+
+    **Owner Task List:**
+
+    1. Create Collaboration
+
+    2. List Collaborations
+
+    3. Get Collaboration
+
+    4. Leave Collaboration
+
+    5. Close Collaboration
+
+
+    **Operator Task List:**
+
+    1. See the [Insight Queries
+    Playbook](https://infosum.github.io/infosum-docs/api/InsightQueries) for
+    additional details on creating insight queries.
+
+    2. See the [Activation & Destination
+    Playbook](https://infosum.github.io/infosum-docs/api/ActivationDestination)
+    for additional details on creating activation queries and exporting them to
+    destinations.
+
+
+    **Contributor Task List:**
+
+    1. Add Dataset
+
+    2. Remove Dataset
+
+    3. Add Destination
+
+    4. Remove Destination
+
+
+    **Detailed Log Viewer Tasks:**
+
+    1. Get Dataset Stats
+
+    2. Get Key Stats
+
+    3. Get Attribute Stats
+
+    4. Get Export Column Stats
+
+    5. List Collaborations Events
+
+    6. Export Collaborations Event Log
+
+
+    <h3>Parameter Reference Table</h3>
+
+    <table border="1" style="border-collapse: collapse; width: 100%;">
+      <tr style="background-color: #f2f2f2;">
+        <th style="padding: 8px; text-align: center; border: 3px solid #ddd;">Role Type</th>
+        <th style="padding: 8px; text-align: center; border: 3px solid #ddd;">Step Number</th>
+        <th style="padding: 8px; text-align: center; border: 3px solid #ddd;">Parameter Name</th>
+        <th style="padding: 8px; text-align: center; border: 3px solid #ddd;">Parameter Structure</th>
+        <th style="padding: 8px; text-align: center; border: 3px solid #ddd;">Where to find it</th>
+        <th style="padding: 8px; text-align: center; border: 3px solid #ddd;">When to collect</th>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #ddd;">Owner</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">3, 4, 5</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Collaboration ID</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">CLB.xxx</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Output of previous steps, or in URL of <strong>Collaboration</strong> page</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Have ready before hand or pull from previous steps.</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #ddd;">Contributor</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">1, 2</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Dataset ID</td>
+        <td style="padding: 8px; border: 1px solid #ddd;"><em>AWS_REGION</em>.xxx</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">In URL of <strong>Bunkers</strong> page</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Have ready before hand.</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #ddd;">Contributor</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">3, 4</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Destination ID</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">DST.xx</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">in URL of <strong>Destinations</strong> page</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Have ready before hand</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #ddd;">Detailed Log Viewer</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">1, 2, 3, 4</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Dataset ID</td>
+        <td style="padding: 8px; border: 1px solid #ddd;"><em>AWS_REGION</em>.xxx</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">In URL of <strong>Bunkers</strong> page</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Have ready before hand.</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #ddd;">Detailed Log Viewer</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">1, 2, 3, 4, 5, 6</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Collaboration ID</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">CLB.xxx</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Output of previous steps, or in URL of <strong>Collaboration</strong> page</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Have ready before hand or pull from previous steps.</td>
+      </tr>
+    </table>
+  version: CM 1.0
+servers:
+  - url: http://{{baseurl}}
+  - url: https://api.infosum.com
+components:
+  securitySchemes:
+    apikeyAuth:
+      type: http
+      scheme: apikey
+  schemas:
+    Rights:
+      type: object
+      properties:
+        contributor:
+          type: boolean
+          description: Whether the user has contributor rights
+        detailed_logs:
+          type: boolean
+          description: Whether the user can view detailed logs
+        operator:
+          type: boolean
+          description: Whether the user has operator rights
+    Error:
+      type: object
+      properties:
+        details:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+        help_url:
+          type: string
+        request_id:
+          type: string
+        time:
+          type: string
+          format: date-time
+    CollaborationMember:
+      type: object
+      properties:
+        display_name:
+          type: string
+        id:
+          type: string
+        rights:
+          $ref: '#/components/schemas/Rights'
+    CollaborationSummary:
+      type: object
+      properties:
+        created_date_time:
+          type: string
+          format: date-time
+        description:
+          type: string
+        id:
+          type: string
+        last_activity_date_time:
+          type: string
+          format: date-time
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/CollaborationMember'
+        name:
+          type: string
+        owner:
+          $ref: '#/components/schemas/CollaborationMember'
+        private_path_enabled:
+          type: boolean
+        status:
+          type: string
+          enum:
+            - STATUS_INVALID
+            - STATUS_ACTIVE
+            - STATUS_CLOSED
+        updated_date_time:
+          type: string
+          format: date-time
+    Pagination:
+      type: object
+      properties:
+        next_page:
+          type: integer
+        results:
+          type: integer
+        total_results:
+          type: integer
+    CollaborationDataset:
+      type: object
+      properties:
+        activation_allowed:
+          type: boolean
+        allowed_attributes:
+          type: array
+          items:
+            type: string
+        attribute_restriction:
+          type: boolean
+        collaboration_dataset_name:
+          type: string
+        dataset_id:
+          type: string
+        intersection_only:
+          type: boolean
+        owner_id:
+          type: string
+    ActivationDataset:
+      type: object
+      properties:
+        collaboration_dataset_name:
+          type: string
+        dataset_id:
+          type: string
+        exportable_to_members:
+          type: array
+          items:
+            type: string
+        intersection_only:
+          type: boolean
+        owner_id:
+          type: string
+    CollaborationDetail:
+      type: object
+      properties:
+        activation_datasets:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActivationDataset'
+        created_date_time:
+          type: string
+          format: date-time
+        description:
+          type: string
+        destination_ids:
+          type: array
+          items:
+            type: string
+        id:
+          type: string
+        insight_datasets:
+          type: array
+          items:
+            $ref: '#/components/schemas/CollaborationDataset'
+        last_activity_date_time:
+          type: string
+          format: date-time
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/CollaborationMember'
+        name:
+          type: string
+        owner:
+          $ref: '#/components/schemas/CollaborationMember'
+        status:
+          type: string
+          enum:
+            - STATUS_INVALID
+            - STATUS_ACTIVE
+            - STATUS_CLOSED
+        updated_date_time:
+          type: string
+          format: date-time
+    SummaryStats:
+      type: object
+      properties:
+        attribute_columns:
+          type: string
+        export_columns:
+          type: string
+        key_columns:
+          type: string
+        total_rows:
+          type: string
+    KeyColumnStats:
+      type: object
+      properties:
+        distinct_identifiers:
+          type: string
+        distinct_values:
+          type: string
+        identifiers:
+          type: string
+        multi_value:
+          type: boolean
+        valid_values:
+          type: string
+    KeyStats:
+      type: object
+      properties:
+        key_id_to_stats:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/KeyColumnStats'
+    RepresentationStats:
+      type: object
+      properties:
+        distinct_values:
+          type: string
+        multi_value:
+          type: boolean
+        representation_id:
+          type: string
+        valid_values:
+          type: string
+    AttributeRepresentationsStats:
+      type: object
+      properties:
+        representations_stats:
+          type: array
+          items:
+            $ref: '#/components/schemas/RepresentationStats'
+    AttributeStats:
+      type: object
+      properties:
+        id_to_representations_stats:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/AttributeRepresentationsStats'
+    ExportColumnStats:
+      type: object
+      properties:
+        distinct_values:
+          type: string
+        multi_values:
+          type: boolean
+        valid_values:
+          type: string
+    ExportStats:
+      type: object
+      properties:
+        label_to_stats:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ExportColumnStats'
+    Entity:
+      type: object
+      properties:
+        company_id:
+          type: string
+        id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+            - ENTITY_INVALID
+            - ENTITY_DATASET
+            - ENTITY_DESTINATION
+            - ENTITY_QUERY
+    Event:
+      type: object
+      properties:
+        company_id:
+          type: string
+        entities:
+          type: array
+          items:
+            $ref: '#/components/schemas/Entity'
+        event_date_time:
+          type: string
+          format: date-time
+        message:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+        type:
+          type: string
+          enum:
+            - TYPE_INVALID
+            - TYPE_DATASET_ADDED
+            - TYPE_DATASET_REMOVED
+            - TYPE_DESTINATION_ADDED
+            - TYPE_DESTINATION_REMOVED
+            - TYPE_COLLABORATION_CREATED
+            - TYPE_COLLABORATION_CLOSED
+            - TYPE_MEMBER_LEFT
+security:
+  - apikeyAuth: []
+tags:
+  - name: Owner
+    description: >-
+      Creates and closes collaborations, adds members and assigns roles. Any
+      user with the correct user roles can assume this role.
+  - name: Operator
+    description: >
+      Operators can run queries and activations. 
+
+      * See the [Insight Queries
+      Playbook](https://infosum.github.io/infosum-docs/api/InsightQueries) for
+      additional details on creating insight queries. 
+
+      * See the [Activation & Destination
+      Playbook](https://infosum.github.io/infosum-docs/api/ActivationDestination)
+      for additional details on creating activation queries and exporting them
+      to destinations.
+  - name: Contributor
+    description: >-
+      Contributors can add and remove datasets and destinations within a
+      collaboration.
+  - name: Detail Log Viewer
+    description: Detail Log Viewers can view the collaboration's logs and audit trails.
+paths:
+  /api/v2/collaborations:
+    post:
+      summary: Create Collaboration
+      description: >-
+        Creates a new collaboration with the provided company IDs as members.
+        Members cannot be added after the collaboration is created.
+      tags:
+        - Owner
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                collaborators:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      company_id:
+                        type: string
+                      rights:
+                        $ref: '#/components/schemas/Rights'
+                creator_rights:
+                  $ref: '#/components/schemas/Rights'
+                description:
+                  type: string
+                name:
+                  type: string
+              required:
+                - collaborators
+                - name
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  collaboration_id:
+                    type: string
+        '400':
+          description: Returned when the request was not valid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Returned when the user could not be authorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: >-
+            Returned when the user does not have the right to create a
+            collaboration.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    get:
+      summary: List Collaborations
+      description: >-
+        Returns a list of collaboration summaries where the requesting users
+        company is the owner or a member. The output is affected by provided
+        filters.
+      tags:
+        - Owner
+      parameters:
+        - name: pagination.page
+          in: query
+          description: The requested page of records. Default is 1.
+          schema:
+            type: integer
+        - name: pagination.per_page
+          in: query
+          description: >-
+            The number of records to return per page. Maximum is 500. Default is
+            100.
+          schema:
+            type: integer
+        - name: order_by
+          in: query
+          description: >-
+            OrderBy is a comma seperated value to define sorting.
+
+            e.g 'created_time,name DESC'
+
+            The values are seperated by space, '{column} {ASC/DESC}'
+
+            Valid columns: `created_date_time`, `updated_date_time`, `owner`,
+            `status`, `name`
+          schema:
+            type: string
+        - name: filter
+          in: query
+          description: >-
+            Supported filters are `id`, `name`, `description`,
+            `created_date_time`, `updated_date_time`, `owner`, `members`,
+            `status`
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  collaborations:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CollaborationSummary'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+        '401':
+          description: Returned when the user could not be authorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: >-
+            Returned when the user does not have the right to list
+            collaborations.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v2/collaborations/{collaboration_id}:
+    get:
+      summary: Get Collaboration
+      description: Returns the details for the requested collaboration ID.
+      tags:
+        - Owner
+      parameters:
+        - name: collaboration_id
+          in: path
+          required: true
+          description: The ID of the collaboration to get details about.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  collaboration:
+                    $ref: '#/components/schemas/CollaborationDetail'
+        '400':
+          description: Returned when the request was not valid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Returned when the user could not be authorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: >-
+            Returned when the user does not have the right to view details of a
+            collaboration.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Returned when the collaboration could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v2/collaborations/{collaboration_id}/datasets:
+    post:
+      summary: Add Dataset
+      description: Adds a dataset to the collaboration.
+      tags:
+        - Contributor
+      parameters:
+        - name: collaboration_id
+          in: path
+          required: true
+          description: The ID of the collaboration the dataset should be added to.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                activation_allowed:
+                  type: boolean
+                allowed_attributes:
+                  type: array
+                  items:
+                    type: string
+                allowed_destination_types:
+                  type: array
+                  items:
+                    type: string
+                attribute_restriction:
+                  type: boolean
+                collaboration_dataset_name:
+                  type: string
+                dataset_id:
+                  type: string
+                destination_type_restriction:
+                  type: boolean
+                exportable_to_members:
+                  type: array
+                  items:
+                    type: string
+                intersection_only:
+                  type: boolean
+              required:
+                - dataset_id
+                - collaboration_dataset_name
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Returned when the request was not valid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Returned when the user could not be authorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Returned when the user does not have the right to add the resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Returned when the collaboration could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v2/collaborations/{collaboration_id}/datasets/{dataset_id}:
+    delete:
+      summary: Remove Dataset
+      description: Removes a dataset owned by the caller from the collaboration.
+      tags:
+        - Contributor
+      parameters:
+        - name: collaboration_id
+          in: path
+          required: true
+          description: The ID of the collaboration the dataset should be removed from.
+          schema:
+            type: string
+        - name: dataset_id
+          in: path
+          required: true
+          description: The ID of the dataset to be removed from the collaboration.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Returned when the request was not valid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Returned when the user could not be authorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: >-
+            Returned when the user does not have the right to remove the
+            resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Returned when the collaboration could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v2/collaborations/{collaboration_id}/destinations:
+    post:
+      summary: Add Destination
+      description: Adds a destination to the collaboration.
+      tags:
+        - Contributor
+      parameters:
+        - name: collaboration_id
+          in: path
+          required: true
+          description: The ID of the collaboration the destination should be added to.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                destination_id:
+                  type: string
+              required:
+                - destination_id
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Returned when the request was not valid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Returned when the user could not be authorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Returned when the user does not have the right to add the resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Returned when the collaboration could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v2/collaborations/{collaboration_id}/destinations/{destination_id}:
+    delete:
+      summary: Remove Destination
+      description: Removes a destination owned by the caller from the collaboration.
+      tags:
+        - Contributor
+      parameters:
+        - name: collaboration_id
+          in: path
+          required: true
+          description: The ID of the collaboration the destination should be removed from.
+          schema:
+            type: string
+        - name: destination_id
+          in: path
+          required: true
+          description: The ID of the destination to remove.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Returned when the request was not valid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Returned when the user could not be authorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: >-
+            Returned when the user does not have the right to remove the
+            resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Returned when the collaboration could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v2/collaborations/{collaboration_id}/datasets/{dataset_id}/stats/summary:
+    get:
+      summary: Get Dataset Stats
+      description: >-
+        Get the counts for dataset properties like number of keys, categories or
+        rows in the context of the collaboration.
+      tags:
+        - Detail Log Viewer
+      parameters:
+        - name: collaboration_id
+          in: path
+          required: true
+          description: The ID of the collaboration to get dataset stats from.
+          schema:
+            type: string
+        - name: dataset_id
+          in: path
+          required: true
+          description: The id of the dataset to get summary stats for.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SummaryStats'
+        '400':
+          description: Returned when the SummaryStats request was not valid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Returned when the user could not be authorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Returned when the user does not have the required permission.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Returned when the dataset ID isn't found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v2/collaborations/{collaboration_id}/datasets/{dataset_id}/stats/key_columns:
+    get:
+      summary: Get Key Stats
+      description: >-
+        Get detailed statistics for the keys in the given dataset in the context
+        of the collaboration.
+      tags:
+        - Detail Log Viewer
+      parameters:
+        - name: collaboration_id
+          in: path
+          required: true
+          description: The ID of the collaboration to get dataset stats from.
+          schema:
+            type: string
+        - name: dataset_id
+          in: path
+          required: true
+          description: The id of the dataset to get summary stats for.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KeyStats'
+        '400':
+          description: Returned when the KeyColumnStats request was not valid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Returned when the user could not be authorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Returned when the user does not have the required permission.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Returned when the dataset ID isn't found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v2/collaborations/{collaboration_id}/datasets/{dataset_id}/stats/attribute_columns:
+    get:
+      summary: Get Attribute Stats
+      description: >-
+        Get detailed statistics for the attributes in the given dataset in the
+        context of the collaboration.
+      tags:
+        - Detail Log Viewer
+      parameters:
+        - name: collaboration_id
+          in: path
+          required: true
+          description: The ID of the collaboration to get dataset stats from.
+          schema:
+            type: string
+        - name: dataset_id
+          in: path
+          required: true
+          description: The id of the dataset to get summary stats for.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttributeStats'
+        '400':
+          description: Returned when the AttributeColumnStats request was not valid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Returned when the user could not be authorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Returned when the user does not have the required permission.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Returned when the dataset ID isn't found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v2/collaborations/{collaboration_id}/datasets/{dataset_id}/stats/export_columns:
+    get:
+      summary: Get Export Column Stats
+      description: >-
+        Get detailed statistics for the export columns in the given dataset in
+        the context of the collaboration.
+      tags:
+        - Detail Log Viewer
+      parameters:
+        - name: collaboration_id
+          in: path
+          required: true
+          description: The ID of the collaboration to get dataset stats from.
+          schema:
+            type: string
+        - name: dataset_id
+          in: path
+          required: true
+          description: The id of the dataset to get export column stats for.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExportStats'
+        '400':
+          description: Returned when the ExportColumnStats request was not valid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Returned when the user could not be authorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Returned when the user does not have the required permission.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Returned when the dataset ID isn't found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v2/collaborations/{collaboration_id}/events:
+    get:
+      summary: List Collaboration Events
+      description: Lists the events associated with this collaboration.
+      tags:
+        - Detail Log Viewer
+      parameters:
+        - name: collaboration_id
+          in: path
+          required: true
+          description: The ID of the collaboration to fetch events for.
+          schema:
+            type: string
+        - name: pagination.page
+          in: query
+          description: The requested page of records. Default is 1.
+          schema:
+            type: integer
+        - name: pagination.per_page
+          in: query
+          description: >-
+            The number of records to return per page. Maximum is 500. Default is
+            100.
+          schema:
+            type: integer
+        - name: order_by
+          in: query
+          description: |-
+            OrderBy is a comma seperated value to define sorting.
+            e.g 'created_time,name DESC'
+            The values are seperated by space, '{column} {ASC/DESC}'
+            Valid columns: `event_date_time`
+          schema:
+            type: string
+        - name: filter
+          in: query
+          description: Supported filters are `event_type` and `company_id`
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  events:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Event'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+        '400':
+          description: Returned when the request was not valid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Returned when the user could not be authorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Returned when the user does not have the right to list the events.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Returned when the collaboration could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v2/collaborations/{collaboration_id}/events/export:
+    get:
+      summary: Export Collaboration Events
+      description: Exports the events associated with this collaboration as a csv file.
+      tags:
+        - Detail Log Viewer
+      parameters:
+        - name: collaboration_id
+          in: path
+          required: true
+          description: The ID of the collaboration to export events for.
+          schema:
+            type: string
+        - name: order_by
+          in: query
+          description: |-
+            OrderBy is a comma seperated value to define sorting.
+            e.g 'created_time,name DESC'
+            The values are seperated by space, '{column} {ASC/DESC}'
+            Valid columns: `event_date_time`
+          schema:
+            type: string
+        - name: filter
+          in: query
+          description: Supported filters are `event_type` and `company_id`
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A successful response (streaming responses).
+          content:
+            application/json:
+              schema:
+                type: string
+        '400':
+          description: Returned when the request was not valid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Returned when the user could not be authorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Returned when the user does not have the right to list the events.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Returned when the collaboration could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v2/collaborations/{collaboration_id}/close:
+    post:
+      summary: Close Collaboration
+      description: >-
+        Closes a collaboration you own. Irreversible. This means that the
+        collaboration can no longer be used for new queries or exports but
+        previous activity can still be seen.
+      tags:
+        - Owner
+      parameters:
+        - name: collaboration_id
+          in: path
+          required: true
+          description: The ID of the collaboration to close.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Returned when the request was not valid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Returned when the user could not be authorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: >-
+            Returned when the user does not have the right to close the
+            collaboration.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Returned when the collaboration could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v2/collaborations/{collaboration_id}/leave:
+    post:
+      summary: Leave Collaboration
+      description: >-
+        Leaving the collaboration will mean the leaving company will no longer
+        be able to see any details about the collaboration including the event
+        logs.
+      tags:
+        - Owner
+      parameters:
+        - name: collaboration_id
+          in: path
+          required: true
+          description: The ID of the collaboration to leave.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Returned when the request was not valid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Returned when the user could not be authorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: >-
+            Returned when the owner of the collaboration tries to leave, they
+            must close the collaboration.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Returned when the collaboration could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
