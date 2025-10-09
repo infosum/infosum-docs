@@ -26,4 +26,6 @@ InfoSum currently supports a collection of their APIs packaged for new & advance
 We currently offer the following playbooks:
 
 - [Onboarding Data](https://infosum.github.io/infosum-docs/api/Onboarding)
-- [Activation Queries & Pushing to a Destination](https://infosum.github.io/infosum-docs/api/ActivationDestination)
+- [Collaboration Management](https://infosum.github.io/infosum-docs/api/Collaborations)
+- [Insight Queries](https://infosum.github.io/infosum-docs/api/InsightQueries)
+- [Activation Queries &amp; Pushing to a Destination](https://infosum.github.io/infosum-docs/api/ActivationDestination)
