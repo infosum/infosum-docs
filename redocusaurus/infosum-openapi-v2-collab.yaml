@@ -96,6 +96,14 @@ info:
       </tr>
       <tr>
         <td style="padding: 8px; border: 1px solid #ddd;">Owner</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">1</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Company ID</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">xxx</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Must be requested from any collaboration partners</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Have ready before hand or pull from previous steps.</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #ddd;">Owner</td>
         <td style="padding: 8px; border: 1px solid #ddd;">3, 4, 5</td>
         <td style="padding: 8px; border: 1px solid #ddd;">Collaboration ID</td>
         <td style="padding: 8px; border: 1px solid #ddd;">CLB.xxx</td>
@@ -461,7 +469,7 @@ tags:
 paths:
   /api/v2/collaborations:
     post:
-      summary: Create Collaboration
+      summary: 1. Create Collaboration
       description: >-
         Creates a new collaboration with the provided company IDs as members.
         Members cannot be added after the collaboration is created.
@@ -529,7 +537,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
     get:
-      summary: List Collaborations
+      summary: 2. List Collaborations
       description: >-
         Returns a list of collaboration summaries where the requesting users
         company is the owner or a member. The output is affected by provided
@@ -606,7 +614,7 @@ paths:
                 $ref: '#/components/schemas/Error'
   /api/v2/collaborations/{collaboration_id}:
     get:
-      summary: Get Collaboration
+      summary: 3. Get Collaboration
       description: Returns the details for the requested collaboration ID.
       tags:
         - Owner
@@ -661,7 +669,7 @@ paths:
                 $ref: '#/components/schemas/Error'
   /api/v2/collaborations/{collaboration_id}/datasets:
     post:
-      summary: Add Dataset
+      summary: 1. Add Dataset
       description: Adds a dataset to the collaboration.
       tags:
         - Contributor
@@ -745,7 +753,7 @@ paths:
                 $ref: '#/components/schemas/Error'
   /api/v2/collaborations/{collaboration_id}/datasets/{dataset_id}:
     delete:
-      summary: Remove Dataset
+      summary: 2. Remove Dataset
       description: Removes a dataset owned by the caller from the collaboration.
       tags:
         - Contributor
@@ -803,7 +811,7 @@ paths:
                 $ref: '#/components/schemas/Error'
   /api/v2/collaborations/{collaboration_id}/destinations:
     post:
-      summary: Add Destination
+      summary: 3. Add Destination
       description: Adds a destination to the collaboration.
       tags:
         - Contributor
@@ -864,7 +872,7 @@ paths:
                 $ref: '#/components/schemas/Error'
   /api/v2/collaborations/{collaboration_id}/destinations/{destination_id}:
     delete:
-      summary: Remove Destination
+      summary: 4. Remove Destination
       description: Removes a destination owned by the caller from the collaboration.
       tags:
         - Contributor
@@ -922,7 +930,7 @@ paths:
                 $ref: '#/components/schemas/Error'
   /api/v2/collaborations/{collaboration_id}/datasets/{dataset_id}/stats/summary:
     get:
-      summary: Get Dataset Stats
+      summary: 1. Get Dataset Stats
       description: >-
         Get the counts for dataset properties like number of keys, categories or
         rows in the context of the collaboration.
@@ -980,7 +988,7 @@ paths:
                 $ref: '#/components/schemas/Error'
   /api/v2/collaborations/{collaboration_id}/datasets/{dataset_id}/stats/key_columns:
     get:
-      summary: Get Key Stats
+      summary: 2. Get Key Stats
       description: >-
         Get detailed statistics for the keys in the given dataset in the context
         of the collaboration.
@@ -1038,7 +1046,7 @@ paths:
                 $ref: '#/components/schemas/Error'
   /api/v2/collaborations/{collaboration_id}/datasets/{dataset_id}/stats/attribute_columns:
     get:
-      summary: Get Attribute Stats
+      summary: 3. Get Attribute Stats
       description: >-
         Get detailed statistics for the attributes in the given dataset in the
         context of the collaboration.
@@ -1096,7 +1104,7 @@ paths:
                 $ref: '#/components/schemas/Error'
   /api/v2/collaborations/{collaboration_id}/datasets/{dataset_id}/stats/export_columns:
     get:
-      summary: Get Export Column Stats
+      summary: 4. Get Export Column Stats
       description: >-
         Get detailed statistics for the export columns in the given dataset in
         the context of the collaboration.
@@ -1154,7 +1162,7 @@ paths:
                 $ref: '#/components/schemas/Error'
   /api/v2/collaborations/{collaboration_id}/events:
     get:
-      summary: List Collaboration Events
+      summary: 5. List Collaboration Events
       description: Lists the events associated with this collaboration.
       tags:
         - Detail Log Viewer
@@ -1237,7 +1245,7 @@ paths:
                 $ref: '#/components/schemas/Error'
   /api/v2/collaborations/{collaboration_id}/events/export:
     get:
-      summary: Export Collaboration Events
+      summary: 6. Export Collaboration Events
       description: Exports the events associated with this collaboration as a csv file.
       tags:
         - Detail Log Viewer
@@ -1301,7 +1309,7 @@ paths:
                 $ref: '#/components/schemas/Error'
   /api/v2/collaborations/{collaboration_id}/close:
     post:
-      summary: Close Collaboration
+      summary: 4. Close Collaboration
       description: >-
         Closes a collaboration you own. Irreversible. This means that the
         collaboration can no longer be used for new queries or exports but
@@ -1356,7 +1364,7 @@ paths:
                 $ref: '#/components/schemas/Error'
   /api/v2/collaborations/{collaboration_id}/leave:
     post:
-      summary: Leave Collaboration
+      summary: 5. Leave Collaboration
       description: >-
         Leaving the collaboration will mean the leaving company will no longer
         be able to see any details about the collaboration including the event
