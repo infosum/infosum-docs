@@ -17906,7 +17906,7 @@
 						"type": "string"
 					},
 					{
-						"description": "Filter is a string containing logic that can specify a restricted set of\nreports to be returned. e.g. `name co 'Test' or name co 'Acme'`\n\nA string containing logic that can specify a restricted set of insight reports to be returned. e.g. `name eq 'Test' or name co 'Acme'`",
+						"description": "A string containing logic that can specify a restricted set of insight reports to be returned. e.g. `name eq 'Test' or name co 'Acme'`",
 						"in": "query",
 						"name": "filter",
 						"required": false,
