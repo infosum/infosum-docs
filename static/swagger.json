@@ -1326,7 +1326,8 @@
 				"TASK_TYPE_NORMALIZATION",
 				"TASK_TYPE_PREPARE",
 				"TASK_TYPE_PUBLISH",
-				"TASK_TYPE_TRANSFORMATION"
+				"TASK_TYPE_TRANSFORMATION",
+				"TASK_TYPE_ACTIVATION"
 			],
 			"type": "string"
 		},
@@ -14809,7 +14810,8 @@
 				"TASK_TYPE_NORMALIZATION",
 				"TASK_TYPE_PREPARE",
 				"TASK_TYPE_PUBLISH",
-				"TASK_TYPE_TRANSFORMATION"
+				"TASK_TYPE_TRANSFORMATION",
+				"TASK_TYPE_ACTIVATION"
 			],
 			"type": "string"
 		},
@@ -17836,7 +17838,7 @@
 				},
 				"summary": "Get Attribute Stats",
 				"tags": [
-					"Collaboration Management"
+					"Collaboration Datasets"
 				]
 			}
 		},
@@ -17906,7 +17908,7 @@
 				},
 				"summary": "Get Export Column Stats",
 				"tags": [
-					"Collaboration Management"
+					"Collaboration Datasets"
 				]
 			}
 		},
