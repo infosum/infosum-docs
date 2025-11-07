@@ -260,414 +260,6 @@
 			},
 			"type": "object"
 		},
-		"ActivationSegment": {
-			"description": "ActivationSegment is complete information for an activation segment.",
-			"properties": {
-				"collaboration_id": {
-					"description": "The ID of the collaboration this activation segment is linked to.",
-					"type": "string"
-				},
-				"column_separator": {
-					"description": "The separator to be used to delimit activation segment data columns when writing to file based destinations.",
-					"type": "string"
-				},
-				"created_by": {
-					"description": "The ID of the user who created the activation segment.",
-					"type": "string"
-				},
-				"created_date_time": {
-					"description": "The date and time the activation segment was created.",
-					"format": "date-time",
-					"type": "string"
-				},
-				"error": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Error"
-						}
-					],
-					"description": "Error details if the activation segment size could not be calculated and the status is ERRORED."
-				},
-				"exported_columns": {
-					"description": "A list of the export columns exported by the activation segment.",
-					"items": {
-						"type": "string"
-					},
-					"type": "array"
-				},
-				"header_overrides": {
-					"additionalProperties": {
-						"type": "string"
-					},
-					"description": "An optional map of column headers to override when exporting the activation segment to file based destinations.",
-					"type": "object"
-				},
-				"id": {
-					"description": "The globally unique ID of the activation segment.",
-					"type": "string"
-				},
-				"identity_flattening": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Activation_Segments.IdentityFlattening"
-						}
-					],
-					"description": "The settings for flattening multi-value output columns into multiple rows when exporting the activation segment."
-				},
-				"inaccuracy_proportion": {
-					"description": "The proportion of rows to be added to the results that did not match the original query.",
-					"format": "float",
-					"type": "number"
-				},
-				"last_calculated_date_time": {
-					"description": "The timestamp when the size of the activation segment was last calculated.",
-					"format": "date-time",
-					"type": "string"
-				},
-				"multi_value_delimiter": {
-					"description": "The delimiter to use for multi-valid columns when exporting the activation segment to file based destinations.",
-					"type": "string"
-				},
-				"name": {
-					"description": "The name of the activation segment.",
-					"type": "string"
-				},
-				"path_overrides": {
-					"description": "A list of instructions on how to connect any two datasets in the query, overriding the automatic choices made by the core engine.",
-					"items": {
-						"$ref": "#/definitions/Activation_Segments.PathOverride",
-						"type": "object"
-					},
-					"type": "array"
-				},
-				"query": {
-					"description": "The InfoSum Query Language (IQL) query that defines the activation segment.",
-					"type": "string"
-				},
-				"redaction_threshold": {
-					"description": "The minimum number of records required to produce an output which can be exported.",
-					"format": "int64",
-					"type": "string"
-				},
-				"rounding_multiple": {
-					"description": "The rounding value that the result row count is adjusted downward to the nearest multiple of.",
-					"format": "int64",
-					"type": "string"
-				},
-				"row_count": {
-					"description": "The size of the activation segment.",
-					"format": "int64",
-					"type": "string"
-				},
-				"segment_history": {
-					"description": "The history of segment sizes over time, sorted by date, newest first, including the current size.",
-					"items": {
-						"$ref": "#/definitions/Activation_Segments.SegmentHistory",
-						"type": "object"
-					},
-					"type": "array"
-				},
-				"status": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Activation_Segments.ActivationSegmentStatus"
-						}
-					],
-					"description": "The current status of the activation segment."
-				},
-				"string_literal_columns": {
-					"description": "A list of the optional string literal columns to append to an activation segment export.",
-					"items": {
-						"$ref": "#/definitions/Activation_Segments.StringLiteralColumn",
-						"type": "object"
-					},
-					"type": "array"
-				},
-				"synthetic_exported_columns": {
-					"description": "A list of the synthetic export columns exported by the activation segment via private path.",
-					"items": {
-						"type": "string"
-					},
-					"type": "array"
-				},
-				"target_dataset_id": {
-					"description": "The ID of the dataset targeted by the Activation Segment Query.",
-					"type": "string"
-				},
-				"updated_date_time": {
-					"description": "The date and time the activation segment was last updated.",
-					"format": "date-time",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"ActivationSegmentDestinationOverview": {
-			"description": "ActivationSegmentDestinationOverview provides an overview of a Destination instance for pushing activation segments.",
-			"properties": {
-				"created_time": {
-					"description": "CreatedTime is the date and time the destination was created.",
-					"format": "date-time",
-					"type": "string"
-				},
-				"description": {
-					"description": "Description is an optional description given to this destination.",
-					"type": "string"
-				},
-				"destination_type_id": {
-					"description": "DestinationTypeId is the InfoSum type ID of this destination.",
-					"type": "string"
-				},
-				"id": {
-					"description": "ID is the globally unique ID of the destination.",
-					"type": "string"
-				},
-				"name": {
-					"description": "Name is the display name given to this destination.",
-					"type": "string"
-				},
-				"owner_id": {
-					"description": "OwnerId is the company ID of the owner of the destination.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"ActivationSegmentExportDetails": {
-			"description": "ActivationSegmentExportDetails is the details of a specific activation segment export.",
-			"properties": {
-				"activation_segment_id": {
-					"description": "The ID of the activation segment that has been exported.",
-					"type": "string"
-				},
-				"collaboration_id": {
-					"description": "The ID of the collaboration.",
-					"type": "string"
-				},
-				"completed_at_date_time": {
-					"description": "The date and time when this activation segment export was completed, either successfully or not.",
-					"format": "date-time",
-					"type": "string"
-				},
-				"destination_id": {
-					"description": "The Destination ID used for the activation segment export.",
-					"type": "string"
-				},
-				"destination_type_id": {
-					"description": "The ID of the Destination type used for the activation segment export.",
-					"type": "string"
-				},
-				"export_error": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Error"
-						}
-					],
-					"description": "The activation segment export error in case of failures."
-				},
-				"export_id": {
-					"description": "The ID of the activation segment export.",
-					"type": "string"
-				},
-				"push_config": {
-					"description": "The redacted push time config. It is the full redacted config if the user owns the destination.",
-					"type": "object"
-				},
-				"rejected_rows": {
-					"description": "The number of rows of data excluded based on data quality or rejected by the destination.",
-					"format": "int64",
-					"type": "string"
-				},
-				"row_count": {
-					"description": "The number of rows attempted to be exported in this activation segment export.",
-					"format": "int64",
-					"type": "string"
-				},
-				"started_at_date_time": {
-					"description": "The date and time when this activation segment export was started.",
-					"format": "date-time",
-					"type": "string"
-				},
-				"status": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Activation_Segment_Exports.ExportStatus"
-						}
-					],
-					"description": "The status of the activation segment export"
-				}
-			},
-			"type": "object"
-		},
-		"ActivationSegmentExportOverview": {
-			"description": "ActivationSegmentExportOverview is the overview of a specific activation segment export.",
-			"properties": {
-				"activation_segment_id": {
-					"description": "The ID of the activation that has been exported.",
-					"type": "string"
-				},
-				"collaboration_id": {
-					"description": "The ID of the collaboration.",
-					"type": "string"
-				},
-				"completed_at_date_time": {
-					"description": "The date and time when this activation segment export was completed, either successfully or not.",
-					"format": "date-time",
-					"type": "string"
-				},
-				"destination_id": {
-					"description": "The Destination ID used for the activation segment export.",
-					"type": "string"
-				},
-				"destination_type_id": {
-					"description": "The ID of the Destination type used for the activation segment export.",
-					"type": "string"
-				},
-				"export_error": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Error"
-						}
-					],
-					"description": "The activation segment export error in case of failures."
-				},
-				"export_id": {
-					"description": "The ID of the activation segment export.",
-					"type": "string"
-				},
-				"rejected_rows": {
-					"description": "The number of rows of data excluded based on data quality or rejected by the destination.",
-					"format": "int64",
-					"type": "string"
-				},
-				"row_count": {
-					"description": "The number of rows attempted to be exported in this activation segment export.",
-					"format": "int64",
-					"type": "string"
-				},
-				"started_at_date_time": {
-					"description": "The date and time when this activation segment export was started.",
-					"format": "date-time",
-					"type": "string"
-				},
-				"status": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Activation_Segment_Exports.ExportStatus"
-						}
-					],
-					"description": "The status of the activation segment export"
-				}
-			},
-			"type": "object"
-		},
-		"ActivationSegmentOverview": {
-			"description": "ActivationSegmentOverview provides an overview of an activation segment.",
-			"properties": {
-				"collaboration_id": {
-					"description": "The ID of the collaboration this activation segment is linked to.",
-					"type": "string"
-				},
-				"created_by": {
-					"description": "The ID of the user who created the activation segment.",
-					"type": "string"
-				},
-				"created_date_time": {
-					"description": "The date and time the activation segment was created.",
-					"format": "date-time",
-					"type": "string"
-				},
-				"id": {
-					"description": "The globally unique ID of the activation segment.",
-					"type": "string"
-				},
-				"last_calculated_date_time": {
-					"description": "The timestamp when the size of the activation segment was last calculated.",
-					"format": "date-time",
-					"type": "string"
-				},
-				"name": {
-					"description": "The name of the activation segment.",
-					"type": "string"
-				},
-				"row_count": {
-					"description": "The size of the activation segment.",
-					"format": "int64",
-					"type": "string"
-				},
-				"status": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Activation_Segments.ActivationSegmentStatus"
-						}
-					],
-					"description": "The current status of the activation segment."
-				},
-				"target_dataset_id": {
-					"description": "The ID of the dataset targeted by the Activation Segment Query.",
-					"type": "string"
-				},
-				"updated_date_time": {
-					"description": "The date and time the activation segment was last updated.",
-					"format": "date-time",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"ActivationSegmentStatus": {
-			"default": "ACTIVATION_SEGMENT_STATUS_INVALID",
-			"description": "ActivationSegmentStatus represents the current status of an activation segment.\n\n - ACTIVATION_SEGMENT_STATUS_INVALID: ACTIVATION_SEGMENT_STATUS_INVALID is the default value and should not be used.\n - ACTIVATION_SEGMENT_STATUS_READY: ACTIVATION_SEGMENT_STATUS_READY indicates the activation segment audience has been calculated and is ready to use.\n - ACTIVATION_SEGMENT_STATUS_CALCULATING: ACTIVATION_SEGMENT_STATUS_CALCULATING indicates the activation segment audience is currently being calculated.\n - ACTIVATION_SEGMENT_STATUS_ERRORED: ACTIVATION_SEGMENT_STATUS_ERRORED indicates the activation segment audience calculation failed.",
-			"enum": [
-				"ACTIVATION_SEGMENT_STATUS_INVALID",
-				"ACTIVATION_SEGMENT_STATUS_READY",
-				"ACTIVATION_SEGMENT_STATUS_CALCULATING",
-				"ACTIVATION_SEGMENT_STATUS_ERRORED"
-			],
-			"type": "string"
-		},
-		"ActivationSegmentUpdate": {
-			"description": "ActivationSegmentUpdate contains the mutable fields of an activation segment that can be updated.",
-			"properties": {
-				"column_separator": {
-					"description": "The separator to be used to delimit activation segment data columns when writing to file based destinations.",
-					"type": "string"
-				},
-				"header_overrides": {
-					"additionalProperties": {
-						"type": "string"
-					},
-					"description": "An optional map of column headers to override when exporting the activation segment to file based destinations.",
-					"type": "object"
-				},
-				"identity_flattening": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Activation_Segments.IdentityFlattening"
-						}
-					],
-					"description": "The settings for flattening multi-value output columns into multiple rows when exporting the activation segment."
-				},
-				"inaccuracy_proportion": {
-					"description": "The proportion of rows to be added to the results that did not match the original query. Valid values are 0 - 1.0.",
-					"format": "float",
-					"type": "number"
-				},
-				"multi_value_delimiter": {
-					"description": "The delimiter to react to for multi-valid columns when flattening multivalue columns.",
-					"type": "string"
-				},
-				"string_literal_columns": {
-					"description": "A list of the optional string literal columns to append to an activation segment export.",
-					"items": {
-						"$ref": "#/definitions/Activation_Segments.StringLiteralColumn",
-						"type": "object"
-					},
-					"type": "array"
-				}
-			},
-			"type": "object"
-		},
 		"Activation_Destinations.ActivationDestinationOverview": {
 			"description": "ActivationDestinationInstanceOverview provides an overview of a Destination instance for pushing activation queries.",
 			"properties": {
@@ -908,710 +500,6 @@
 			],
 			"type": "string"
 		},
-		"Activation_Segment_Exports.ActivationSegmentDestinationOverview": {
-			"description": "ActivationSegmentDestinationOverview provides an overview of a Destination instance for pushing activation segments.",
-			"properties": {
-				"created_time": {
-					"description": "CreatedTime is the date and time the destination was created.",
-					"format": "date-time",
-					"type": "string"
-				},
-				"description": {
-					"description": "Description is an optional description given to this destination.",
-					"type": "string"
-				},
-				"destination_type_id": {
-					"description": "DestinationTypeId is the InfoSum type ID of this destination.",
-					"type": "string"
-				},
-				"id": {
-					"description": "ID is the globally unique ID of the destination.",
-					"type": "string"
-				},
-				"name": {
-					"description": "Name is the display name given to this destination.",
-					"type": "string"
-				},
-				"owner_id": {
-					"description": "OwnerId is the company ID of the owner of the destination.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Activation_Segment_Exports.ActivationSegmentExportDetails": {
-			"description": "ActivationSegmentExportDetails is the details of a specific activation segment export.",
-			"properties": {
-				"activation_segment_id": {
-					"description": "The ID of the activation segment that has been exported.",
-					"type": "string"
-				},
-				"collaboration_id": {
-					"description": "The ID of the collaboration.",
-					"type": "string"
-				},
-				"completed_at_date_time": {
-					"description": "The date and time when this activation segment export was completed, either successfully or not.",
-					"format": "date-time",
-					"type": "string"
-				},
-				"destination_id": {
-					"description": "The Destination ID used for the activation segment export.",
-					"type": "string"
-				},
-				"destination_type_id": {
-					"description": "The ID of the Destination type used for the activation segment export.",
-					"type": "string"
-				},
-				"export_error": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Error"
-						}
-					],
-					"description": "The activation segment export error in case of failures."
-				},
-				"export_id": {
-					"description": "The ID of the activation segment export.",
-					"type": "string"
-				},
-				"push_config": {
-					"description": "The redacted push time config. It is the full redacted config if the user owns the destination.",
-					"type": "object"
-				},
-				"rejected_rows": {
-					"description": "The number of rows of data excluded based on data quality or rejected by the destination.",
-					"format": "int64",
-					"type": "string"
-				},
-				"row_count": {
-					"description": "The number of rows attempted to be exported in this activation segment export.",
-					"format": "int64",
-					"type": "string"
-				},
-				"started_at_date_time": {
-					"description": "The date and time when this activation segment export was started.",
-					"format": "date-time",
-					"type": "string"
-				},
-				"status": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Activation_Segment_Exports.ExportStatus"
-						}
-					],
-					"description": "The status of the activation segment export"
-				}
-			},
-			"type": "object"
-		},
-		"Activation_Segment_Exports.ActivationSegmentExportOverview": {
-			"description": "ActivationSegmentExportOverview is the overview of a specific activation segment export.",
-			"properties": {
-				"activation_segment_id": {
-					"description": "The ID of the activation that has been exported.",
-					"type": "string"
-				},
-				"collaboration_id": {
-					"description": "The ID of the collaboration.",
-					"type": "string"
-				},
-				"completed_at_date_time": {
-					"description": "The date and time when this activation segment export was completed, either successfully or not.",
-					"format": "date-time",
-					"type": "string"
-				},
-				"destination_id": {
-					"description": "The Destination ID used for the activation segment export.",
-					"type": "string"
-				},
-				"destination_type_id": {
-					"description": "The ID of the Destination type used for the activation segment export.",
-					"type": "string"
-				},
-				"export_error": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Error"
-						}
-					],
-					"description": "The activation segment export error in case of failures."
-				},
-				"export_id": {
-					"description": "The ID of the activation segment export.",
-					"type": "string"
-				},
-				"rejected_rows": {
-					"description": "The number of rows of data excluded based on data quality or rejected by the destination.",
-					"format": "int64",
-					"type": "string"
-				},
-				"row_count": {
-					"description": "The number of rows attempted to be exported in this activation segment export.",
-					"format": "int64",
-					"type": "string"
-				},
-				"started_at_date_time": {
-					"description": "The date and time when this activation segment export was started.",
-					"format": "date-time",
-					"type": "string"
-				},
-				"status": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Activation_Segment_Exports.ExportStatus"
-						}
-					],
-					"description": "The status of the activation segment export"
-				}
-			},
-			"type": "object"
-		},
-		"Activation_Segment_Exports.ExportActivationSegmentResultsBody": {
-			"properties": {
-				"destination_id": {
-					"description": "Destination instance ID.",
-					"type": "string"
-				},
-				"push_config": {
-					"description": "Configuration following the push time schema for the destination instance. Default values from the underlying instance can be found in the push schema `default` annotations. Defaults will not be used unless they are re-submitted as part of this config. Submit the `X-INFOSUM-REDACTED` keyword for `x-infosum-secret` properties to retain their default value from the underlying destination instance.",
-					"type": "object"
-				}
-			},
-			"type": "object"
-		},
-		"Activation_Segment_Exports.ExportActivationSegmentResultsResponse": {
-			"properties": {
-				"export_id": {
-					"description": "ID for the requested export.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Activation_Segment_Exports.ExportStatus": {
-			"default": "EXPORT_STATUS_INVALID",
-			"description": "ExportStatus is an enum of all the potential export statuses.",
-			"enum": [
-				"EXPORT_STATUS_INVALID",
-				"EXPORT_STATUS_RUNNING",
-				"EXPORT_STATUS_FAILED",
-				"EXPORT_STATUS_SUCCESSFUL"
-			],
-			"type": "string"
-		},
-		"Activation_Segment_Exports.GetActivationSegmentDestinationPushSchemaResponse": {
-			"description": "GetActivationSegmentDestinationPushSchemaResponse is the output of the GetActivationSegmentDestinationPushSchema method.",
-			"properties": {
-				"push_schema": {
-					"description": "The push time schema for the requested destination instance. The `push_config` on export requests to this destination must satisfy this schema.",
-					"type": "object"
-				}
-			},
-			"type": "object"
-		},
-		"Activation_Segment_Exports.GetActivationSegmentExportResponse": {
-			"properties": {
-				"export_details": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Activation_Segment_Exports.ActivationSegmentExportDetails"
-						}
-					],
-					"description": "Details of the requested activation segment export."
-				}
-			},
-			"type": "object"
-		},
-		"Activation_Segment_Exports.ListActivationSegmentDestinationsResponse": {
-			"description": "ListActivationSegmentDestinationsResponse is the output of the ListActivationSegmentDestinations method.",
-			"properties": {
-				"destinations": {
-					"description": "Activation Segment Destination overviews.",
-					"items": {
-						"$ref": "#/definitions/Activation_Segment_Exports.ActivationSegmentDestinationOverview",
-						"type": "object"
-					},
-					"type": "array"
-				},
-				"pagination": {
-					"$ref": "#/definitions/PaginationResponse"
-				}
-			},
-			"type": "object"
-		},
-		"Activation_Segment_Exports.ListActivationSegmentExportsResponse": {
-			"properties": {
-				"activation_exports": {
-					"description": "A list of activation segment export overviews.",
-					"items": {
-						"$ref": "#/definitions/Activation_Segment_Exports.ActivationSegmentExportOverview",
-						"type": "object"
-					},
-					"type": "array"
-				},
-				"pagination": {
-					"$ref": "#/definitions/PaginationResponse"
-				}
-			},
-			"type": "object"
-		},
-		"Activation_Segment_Exports.NullValue": {
-			"default": "NULL_VALUE",
-			"description": "`NullValue` is a singleton enumeration to represent the null value for the\n`Value` type union.\n\nThe JSON representation for `NullValue` is JSON `null`.\n\n - NULL_VALUE: Null value.",
-			"enum": [
-				"NULL_VALUE"
-			],
-			"type": "string"
-		},
-		"Activation_Segments.ActivationSegment": {
-			"description": "ActivationSegment is complete information for an activation segment.",
-			"properties": {
-				"collaboration_id": {
-					"description": "The ID of the collaboration this activation segment is linked to.",
-					"type": "string"
-				},
-				"column_separator": {
-					"description": "The separator to be used to delimit activation segment data columns when writing to file based destinations.",
-					"type": "string"
-				},
-				"created_by": {
-					"description": "The ID of the user who created the activation segment.",
-					"type": "string"
-				},
-				"created_date_time": {
-					"description": "The date and time the activation segment was created.",
-					"format": "date-time",
-					"type": "string"
-				},
-				"error": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Error"
-						}
-					],
-					"description": "Error details if the activation segment size could not be calculated and the status is ERRORED."
-				},
-				"exported_columns": {
-					"description": "A list of the export columns exported by the activation segment.",
-					"items": {
-						"type": "string"
-					},
-					"type": "array"
-				},
-				"header_overrides": {
-					"additionalProperties": {
-						"type": "string"
-					},
-					"description": "An optional map of column headers to override when exporting the activation segment to file based destinations.",
-					"type": "object"
-				},
-				"id": {
-					"description": "The globally unique ID of the activation segment.",
-					"type": "string"
-				},
-				"identity_flattening": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Activation_Segments.IdentityFlattening"
-						}
-					],
-					"description": "The settings for flattening multi-value output columns into multiple rows when exporting the activation segment."
-				},
-				"inaccuracy_proportion": {
-					"description": "The proportion of rows to be added to the results that did not match the original query.",
-					"format": "float",
-					"type": "number"
-				},
-				"last_calculated_date_time": {
-					"description": "The timestamp when the size of the activation segment was last calculated.",
-					"format": "date-time",
-					"type": "string"
-				},
-				"multi_value_delimiter": {
-					"description": "The delimiter to use for multi-valid columns when exporting the activation segment to file based destinations.",
-					"type": "string"
-				},
-				"name": {
-					"description": "The name of the activation segment.",
-					"type": "string"
-				},
-				"path_overrides": {
-					"description": "A list of instructions on how to connect any two datasets in the query, overriding the automatic choices made by the core engine.",
-					"items": {
-						"$ref": "#/definitions/Activation_Segments.PathOverride",
-						"type": "object"
-					},
-					"type": "array"
-				},
-				"query": {
-					"description": "The InfoSum Query Language (IQL) query that defines the activation segment.",
-					"type": "string"
-				},
-				"redaction_threshold": {
-					"description": "The minimum number of records required to produce an output which can be exported.",
-					"format": "int64",
-					"type": "string"
-				},
-				"rounding_multiple": {
-					"description": "The rounding value that the result row count is adjusted downward to the nearest multiple of.",
-					"format": "int64",
-					"type": "string"
-				},
-				"row_count": {
-					"description": "The size of the activation segment.",
-					"format": "int64",
-					"type": "string"
-				},
-				"segment_history": {
-					"description": "The history of segment sizes over time, sorted by date, newest first, including the current size.",
-					"items": {
-						"$ref": "#/definitions/Activation_Segments.SegmentHistory",
-						"type": "object"
-					},
-					"type": "array"
-				},
-				"status": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Activation_Segments.ActivationSegmentStatus"
-						}
-					],
-					"description": "The current status of the activation segment."
-				},
-				"string_literal_columns": {
-					"description": "A list of the optional string literal columns to append to an activation segment export.",
-					"items": {
-						"$ref": "#/definitions/Activation_Segments.StringLiteralColumn",
-						"type": "object"
-					},
-					"type": "array"
-				},
-				"synthetic_exported_columns": {
-					"description": "A list of the synthetic export columns exported by the activation segment via private path.",
-					"items": {
-						"type": "string"
-					},
-					"type": "array"
-				},
-				"target_dataset_id": {
-					"description": "The ID of the dataset targeted by the Activation Segment Query.",
-					"type": "string"
-				},
-				"updated_date_time": {
-					"description": "The date and time the activation segment was last updated.",
-					"format": "date-time",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Activation_Segments.ActivationSegmentOverview": {
-			"description": "ActivationSegmentOverview provides an overview of an activation segment.",
-			"properties": {
-				"collaboration_id": {
-					"description": "The ID of the collaboration this activation segment is linked to.",
-					"type": "string"
-				},
-				"created_by": {
-					"description": "The ID of the user who created the activation segment.",
-					"type": "string"
-				},
-				"created_date_time": {
-					"description": "The date and time the activation segment was created.",
-					"format": "date-time",
-					"type": "string"
-				},
-				"id": {
-					"description": "The globally unique ID of the activation segment.",
-					"type": "string"
-				},
-				"last_calculated_date_time": {
-					"description": "The timestamp when the size of the activation segment was last calculated.",
-					"format": "date-time",
-					"type": "string"
-				},
-				"name": {
-					"description": "The name of the activation segment.",
-					"type": "string"
-				},
-				"row_count": {
-					"description": "The size of the activation segment.",
-					"format": "int64",
-					"type": "string"
-				},
-				"status": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Activation_Segments.ActivationSegmentStatus"
-						}
-					],
-					"description": "The current status of the activation segment."
-				},
-				"target_dataset_id": {
-					"description": "The ID of the dataset targeted by the Activation Segment Query.",
-					"type": "string"
-				},
-				"updated_date_time": {
-					"description": "The date and time the activation segment was last updated.",
-					"format": "date-time",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Activation_Segments.ActivationSegmentStatus": {
-			"default": "ACTIVATION_SEGMENT_STATUS_INVALID",
-			"description": "ActivationSegmentStatus represents the current status of an activation segment.\n\n - ACTIVATION_SEGMENT_STATUS_INVALID: ACTIVATION_SEGMENT_STATUS_INVALID is the default value and should not be used.\n - ACTIVATION_SEGMENT_STATUS_READY: ACTIVATION_SEGMENT_STATUS_READY indicates the activation segment audience has been calculated and is ready to use.\n - ACTIVATION_SEGMENT_STATUS_CALCULATING: ACTIVATION_SEGMENT_STATUS_CALCULATING indicates the activation segment audience is currently being calculated.\n - ACTIVATION_SEGMENT_STATUS_ERRORED: ACTIVATION_SEGMENT_STATUS_ERRORED indicates the activation segment audience calculation failed.",
-			"enum": [
-				"ACTIVATION_SEGMENT_STATUS_INVALID",
-				"ACTIVATION_SEGMENT_STATUS_READY",
-				"ACTIVATION_SEGMENT_STATUS_CALCULATING",
-				"ACTIVATION_SEGMENT_STATUS_ERRORED"
-			],
-			"type": "string"
-		},
-		"Activation_Segments.ActivationSegmentUpdate": {
-			"description": "ActivationSegmentUpdate contains the mutable fields of an activation segment that can be updated.",
-			"properties": {
-				"column_separator": {
-					"description": "The separator to be used to delimit activation segment data columns when writing to file based destinations.",
-					"type": "string"
-				},
-				"header_overrides": {
-					"additionalProperties": {
-						"type": "string"
-					},
-					"description": "An optional map of column headers to override when exporting the activation segment to file based destinations.",
-					"type": "object"
-				},
-				"identity_flattening": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Activation_Segments.IdentityFlattening"
-						}
-					],
-					"description": "The settings for flattening multi-value output columns into multiple rows when exporting the activation segment."
-				},
-				"inaccuracy_proportion": {
-					"description": "The proportion of rows to be added to the results that did not match the original query. Valid values are 0 - 1.0.",
-					"format": "float",
-					"type": "number"
-				},
-				"multi_value_delimiter": {
-					"description": "The delimiter to react to for multi-valid columns when flattening multivalue columns.",
-					"type": "string"
-				},
-				"string_literal_columns": {
-					"description": "A list of the optional string literal columns to append to an activation segment export.",
-					"items": {
-						"$ref": "#/definitions/Activation_Segments.StringLiteralColumn",
-						"type": "object"
-					},
-					"type": "array"
-				}
-			},
-			"type": "object"
-		},
-		"Activation_Segments.CalculateActivationSegmentResponse": {
-			"properties": {
-				"query_id": {
-					"description": "ID for the calculate query.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Activation_Segments.CreateActivationSegmentBody": {
-			"properties": {
-				"column_separator": {
-					"description": "The separator to be used to delimit activation segment data columns when writing to file based destinations.",
-					"type": "string"
-				},
-				"header_overrides": {
-					"additionalProperties": {
-						"type": "string"
-					},
-					"description": "An optional map of column headers to override when exporting the activation segment to file based destinations.",
-					"type": "object"
-				},
-				"identity_flattening": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Activation_Segments.IdentityFlattening"
-						}
-					],
-					"description": "The settings for flattening multi-value output columns into multiple rows when exporting the activation segment."
-				},
-				"inaccuracy_proportion": {
-					"description": "The proportion of rows to be added to the results that did not match the original query. Valid values are 0 - 1.0.",
-					"format": "float",
-					"type": "number"
-				},
-				"multi_value_delimiter": {
-					"description": "The delimiter to use for multi-valid columns when exporting the activation segment to file based destinations.",
-					"type": "string"
-				},
-				"name": {
-					"description": "The name of the activation segment.",
-					"type": "string"
-				},
-				"path_overrides": {
-					"description": "A list of instructions on how to connect any two datasets in the query, overriding the automatic choices made by the core engine.",
-					"items": {
-						"$ref": "#/definitions/Activation_Segments.PathOverride",
-						"type": "object"
-					},
-					"type": "array"
-				},
-				"query": {
-					"description": "The InfoSum Query Language (IQL) query string that defines the activation segment.",
-					"type": "string"
-				},
-				"string_literal_columns": {
-					"description": "A list of the optional string literal columns to append to an activation segment export.",
-					"items": {
-						"$ref": "#/definitions/Activation_Segments.StringLiteralColumn",
-						"type": "object"
-					},
-					"type": "array"
-				}
-			},
-			"type": "object"
-		},
-		"Activation_Segments.CreateActivationSegmentResponse": {
-			"properties": {
-				"activation_segment": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Activation_Segments.ActivationSegment"
-						}
-					],
-					"description": "The created activation segment."
-				}
-			},
-			"type": "object"
-		},
-		"Activation_Segments.DatasetWithKeys": {
-			"description": "DatasetWithKeys is a dataset ID with the associated list keys used when joining the dataset.",
-			"properties": {
-				"dataset_id": {
-					"description": "The dataset ID.",
-					"type": "string"
-				},
-				"keys": {
-					"description": "Priority list of keys used when joining this dataset to another dataset.",
-					"items": {
-						"type": "string"
-					},
-					"type": "array"
-				}
-			},
-			"type": "object"
-		},
-		"Activation_Segments.DeleteActivationSegmentResponse": {
-			"type": "object"
-		},
-		"Activation_Segments.GetActivationSegmentResponse": {
-			"properties": {
-				"activation_segment": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Activation_Segments.ActivationSegment"
-						}
-					],
-					"description": "The object containing the details of the requested activation segment."
-				}
-			},
-			"type": "object"
-		},
-		"Activation_Segments.IdentityFlattening": {
-			"description": "IdentityFlattening contains settings for flattening multi-value identity columns in activation segment output.",
-			"properties": {
-				"identity_to_flatten": {
-					"description": "The name of the multi-value identity column to flatten.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Activation_Segments.ListActivationSegmentsResponse": {
-			"properties": {
-				"activation_segments": {
-					"description": "Summaries of all activation segments of the given collaboration. The returned data is affected by any filters in the original request.",
-					"items": {
-						"$ref": "#/definitions/Activation_Segments.ActivationSegmentOverview",
-						"type": "object"
-					},
-					"type": "array"
-				},
-				"pagination": {
-					"$ref": "#/definitions/PaginationResponse"
-				}
-			},
-			"type": "object"
-		},
-		"Activation_Segments.PathOverride": {
-			"description": "PathOverride contains instructions on how to join two datasets, overriding the automatic choices\nmade by the core engine when calculating the segment size.",
-			"properties": {
-				"destination_dataset": {
-					"description": "The dataset ID that the query path ends at.",
-					"type": "string"
-				},
-				"source_dataset": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Activation_Segments.DatasetWithKeys"
-						}
-					],
-					"description": "The dataset that the query path starts from, specifying which keys to use."
-				}
-			},
-			"type": "object"
-		},
-		"Activation_Segments.SegmentHistory": {
-			"description": "SegmentHistory contains the history of segment sizes over time.",
-			"properties": {
-				"calculated_date_time": {
-					"description": "The timestamp when the size of the activation segment was calculated.",
-					"format": "date-time",
-					"type": "string"
-				},
-				"row_count": {
-					"description": "The size of the activation segment at the time of calculation.",
-					"format": "int64",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Activation_Segments.StringLiteralColumn": {
-			"description": "StringLiteralColumn contains information about a string literal column appended to an activation segment export.",
-			"properties": {
-				"column_literal": {
-					"description": "The string literal value to be written for every row of the exported activation segment data.",
-					"type": "string"
-				},
-				"column_name": {
-					"description": "The name of the column to output.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"Activation_Segments.UpdateActivationSegmentResponse": {
-			"properties": {
-				"activation_segment": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Activation_Segments.ActivationSegment"
-						}
-					],
-					"description": "The updated activation segment."
-				}
-			},
-			"type": "object"
-		},
 		"AddActivationDatasetBody": {
 			"properties": {
 				"collaboration_dataset_name": {
@@ -1803,6 +691,27 @@
 			},
 			"type": "object"
 		},
+		"AttachToPermissionBody": {
+			"properties": {
+				"permission_id": {
+					"description": "Permission ID to attach to.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"AttachToPermissionResponse": {
+			"properties": {
+				"permission_ids": {
+					"description": "Modified list of Permissions the Destination Instance is attached to.",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				}
+			},
+			"type": "object"
+		},
 		"AttributeColumn": {
 			"description": "AttributeColumn is populated to describe the column when it is an Attribute.",
 			"properties": {
@@ -1842,14 +751,6 @@
 		"AttributeColumnStatsResponse": {
 			"description": "AttributeColumnStatsResponse is the response returned by AttributeColumnStats method.",
 			"properties": {
-				"attribute_stats": {
-					"description": "AttributeStats is a list of all attribute columns in the dataset.",
-					"items": {
-						"$ref": "#/definitions/Collaboration_Datasets.RepresentationStats",
-						"type": "object"
-					},
-					"type": "array"
-				},
 				"id_to_representations_stats": {
 					"additionalProperties": {
 						"$ref": "#/definitions/Collaboration_Datasets.RepresentationStatsList"
@@ -2426,8 +1327,7 @@
 				"TASK_TYPE_PREPARE",
 				"TASK_TYPE_PUBLISH",
 				"TASK_TYPE_TRANSFORMATION",
-				"TASK_TYPE_ACTIVATION",
-				"TASK_TYPE_ACTIVATION_CALCULATION"
+				"TASK_TYPE_ACTIVATION"
 			],
 			"type": "string"
 		},
@@ -2475,15 +1375,6 @@
 				"BYOB"
 			],
 			"type": "string"
-		},
-		"CalculateActivationSegmentResponse": {
-			"properties": {
-				"query_id": {
-					"description": "ID for the calculate query.",
-					"type": "string"
-				}
-			},
-			"type": "object"
 		},
 		"CalculateMatchRateRequest": {
 			"description": "CalculateMatchRateRequest is the input to the CalculateMatchRate method.",
@@ -3109,19 +2000,6 @@
 			},
 			"type": "object"
 		},
-		"CollaborationMemberSummary": {
-			"properties": {
-				"display_name": {
-					"description": "The company display name of the collaboration member.",
-					"type": "string"
-				},
-				"id": {
-					"description": "The company ID of the collaboration member.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
 		"CollaborationSummary": {
 			"properties": {
 				"created_date_time": {
@@ -3145,7 +2023,7 @@
 				"members": {
 					"description": "The members of the collaboration.",
 					"items": {
-						"$ref": "#/definitions/Collaboration_Management.CollaborationMemberSummary",
+						"$ref": "#/definitions/Collaboration_Management.CollaborationMember",
 						"type": "object"
 					},
 					"type": "array"
@@ -3157,7 +2035,7 @@
 				"owner": {
 					"allOf": [
 						{
-							"$ref": "#/definitions/Collaboration_Management.CollaborationMemberSummary"
+							"$ref": "#/definitions/Collaboration_Management.CollaborationMember"
 						}
 					],
 					"description": "The collaboration owner."
@@ -3300,14 +2178,6 @@
 		"Collaboration_Datasets.AttributeColumnStatsResponse": {
 			"description": "AttributeColumnStatsResponse is the response returned by AttributeColumnStats method.",
 			"properties": {
-				"attribute_stats": {
-					"description": "AttributeStats is a list of all attribute columns in the dataset.",
-					"items": {
-						"$ref": "#/definitions/Collaboration_Datasets.RepresentationStats",
-						"type": "object"
-					},
-					"type": "array"
-				},
 				"id_to_representations_stats": {
 					"additionalProperties": {
 						"$ref": "#/definitions/Collaboration_Datasets.RepresentationStatsList"
@@ -3427,14 +2297,6 @@
 		"Collaboration_Datasets.ExportColumnStatsResponse": {
 			"description": "ExportColumnStatsResponse is the response to ExportColumnStats method.",
 			"properties": {
-				"export_column_stats": {
-					"description": "ExportColumnStats is a list of all export columns in the dataset.",
-					"items": {
-						"$ref": "#/definitions/Collaboration_Datasets.v2.ExportColumnStats",
-						"type": "object"
-					},
-					"type": "array"
-				},
 				"label_to_stats": {
 					"additionalProperties": {
 						"$ref": "#/definitions/Collaboration_Datasets.v2.ExportColumnStats"
@@ -3525,14 +2387,6 @@
 					},
 					"description": "KeyIdToStats is a map of key column ID to its corresponding stats.",
 					"type": "object"
-				},
-				"key_stats": {
-					"description": "KeyColumnStats is a list of all key columns in the dataset.",
-					"items": {
-						"$ref": "#/definitions/Collaboration_Datasets.v2.KeyColumnStats",
-						"type": "object"
-					},
-					"type": "array"
 				}
 			},
 			"type": "object"
@@ -3612,17 +2466,8 @@
 					"description": "MultiValue is set to true if this is a multi-value key column.",
 					"type": "boolean"
 				},
-				"null_fraction": {
-					"description": "NullFraction is the fill rate for the representation. Calculated by total rows in dataset - valid values in representation, as a percentage of the total rows.",
-					"format": "double",
-					"type": "number"
-				},
 				"representation_id": {
 					"description": "RepresentationId is the ID of the representation.",
-					"type": "string"
-				},
-				"representation_label": {
-					"description": "RepresentationLabel is the name of the representation.",
 					"type": "string"
 				},
 				"valid_values": {
@@ -3674,10 +2519,6 @@
 		},
 		"Collaboration_Datasets.v2.ExportColumnStats": {
 			"properties": {
-				"column_label": {
-					"description": "ColumnLabel is the column label to which the export stats belong to.",
-					"type": "string"
-				},
 				"distinct_values": {
 					"description": "DistinctValues is the number of distinct values for this key column.",
 					"format": "uint64",
@@ -3686,11 +2527,6 @@
 				"multi_values": {
 					"description": "MultiValue is set to true if this is a multi-value key column.",
 					"type": "boolean"
-				},
-				"null_fraction": {
-					"description": "NullFraction is the fill rate for the representation. Calculated by total rows in dataset - valid values in export column, as a percentage of the total rows.",
-					"format": "double",
-					"type": "number"
 				},
 				"valid_values": {
 					"description": "ValidValues is the number of valid values for this key column.",
@@ -3719,22 +2555,9 @@
 					"format": "uint64",
 					"type": "string"
 				},
-				"key_id": {
-					"description": "KeyId is the ID of the key to which the stats belong.",
-					"type": "string"
-				},
-				"key_label": {
-					"description": "KeyLabel is the name of the key to which the stats belong.",
-					"type": "string"
-				},
 				"multi_value": {
 					"description": "MultiValue is set to true if this is a multi-value key column.",
 					"type": "boolean"
-				},
-				"null_fraction": {
-					"description": "NullFraction is the fill rate for the key. Calculated by total rows in dataset - valid values in column, as a percentage of the total rows.",
-					"format": "double",
-					"type": "number"
 				},
 				"valid_values": {
 					"description": "ValidValues is the number of valid values for this key column.",
@@ -4196,19 +3019,6 @@
 			},
 			"type": "object"
 		},
-		"Collaboration_Management.CollaborationMemberSummary": {
-			"properties": {
-				"display_name": {
-					"description": "The company display name of the collaboration member.",
-					"type": "string"
-				},
-				"id": {
-					"description": "The company ID of the collaboration member.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
 		"Collaboration_Management.CollaborationSummary": {
 			"properties": {
 				"created_date_time": {
@@ -4232,7 +3042,7 @@
 				"members": {
 					"description": "The members of the collaboration.",
 					"items": {
-						"$ref": "#/definitions/Collaboration_Management.CollaborationMemberSummary",
+						"$ref": "#/definitions/Collaboration_Management.CollaborationMember",
 						"type": "object"
 					},
 					"type": "array"
@@ -4244,7 +3054,7 @@
 				"owner": {
 					"allOf": [
 						{
-							"$ref": "#/definitions/Collaboration_Management.CollaborationMemberSummary"
+							"$ref": "#/definitions/Collaboration_Management.CollaborationMember"
 						}
 					],
 					"description": "The collaboration owner."
@@ -4876,76 +3686,6 @@
 			],
 			"type": "string"
 		},
-		"CreateActivationSegmentBody": {
-			"properties": {
-				"column_separator": {
-					"description": "The separator to be used to delimit activation segment data columns when writing to file based destinations.",
-					"type": "string"
-				},
-				"header_overrides": {
-					"additionalProperties": {
-						"type": "string"
-					},
-					"description": "An optional map of column headers to override when exporting the activation segment to file based destinations.",
-					"type": "object"
-				},
-				"identity_flattening": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Activation_Segments.IdentityFlattening"
-						}
-					],
-					"description": "The settings for flattening multi-value output columns into multiple rows when exporting the activation segment."
-				},
-				"inaccuracy_proportion": {
-					"description": "The proportion of rows to be added to the results that did not match the original query. Valid values are 0 - 1.0.",
-					"format": "float",
-					"type": "number"
-				},
-				"multi_value_delimiter": {
-					"description": "The delimiter to use for multi-valid columns when exporting the activation segment to file based destinations.",
-					"type": "string"
-				},
-				"name": {
-					"description": "The name of the activation segment.",
-					"type": "string"
-				},
-				"path_overrides": {
-					"description": "A list of instructions on how to connect any two datasets in the query, overriding the automatic choices made by the core engine.",
-					"items": {
-						"$ref": "#/definitions/Activation_Segments.PathOverride",
-						"type": "object"
-					},
-					"type": "array"
-				},
-				"query": {
-					"description": "The InfoSum Query Language (IQL) query string that defines the activation segment.",
-					"type": "string"
-				},
-				"string_literal_columns": {
-					"description": "A list of the optional string literal columns to append to an activation segment export.",
-					"items": {
-						"$ref": "#/definitions/Activation_Segments.StringLiteralColumn",
-						"type": "object"
-					},
-					"type": "array"
-				}
-			},
-			"type": "object"
-		},
-		"CreateActivationSegmentResponse": {
-			"properties": {
-				"activation_segment": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Activation_Segments.ActivationSegment"
-						}
-					],
-					"description": "The created activation segment."
-				}
-			},
-			"type": "object"
-		},
 		"CreateCollaborationMember": {
 			"properties": {
 				"company_id": {
@@ -5154,6 +3894,39 @@
 			"properties": {
 				"destination_id": {
 					"description": "Destination instance ID.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"CreateDestinationShareRequest": {
+			"properties": {
+				"comment": {
+					"description": "An optional comment explaining why sharing this destination.",
+					"type": "string"
+				},
+				"destination_id": {
+					"description": "ID of the Destination Instance to be shared.",
+					"type": "string"
+				},
+				"other_permitted_companies": {
+					"description": "The ID of other companies that the sender of this share allows the recipient to send permissions to, with the shared destination associated. Currently these must be InfoSum company IDs. Using this field is currently only available where the sender and recipient of the destination share are managed service customers.",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				},
+				"recipient_email_address": {
+					"description": "Recipient email address to be used to find company to share Destination Instance to.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"CreateDestinationShareResponse": {
+			"properties": {
+				"share_id": {
+					"description": "ID of the created Destination Share entity.",
 					"type": "string"
 				}
 			},
@@ -5692,23 +4465,6 @@
 			],
 			"type": "string"
 		},
-		"DatasetWithKeys": {
-			"description": "DatasetWithKeys is a dataset ID with the associated list keys used when joining the dataset.",
-			"properties": {
-				"dataset_id": {
-					"description": "The dataset ID.",
-					"type": "string"
-				},
-				"keys": {
-					"description": "Priority list of keys used when joining this dataset to another dataset.",
-					"items": {
-						"type": "string"
-					},
-					"type": "array"
-				}
-			},
-			"type": "object"
-		},
 		"Dataset_Lineage.GetPublishResponse": {
 			"description": "GetPublishResponse is the information returned when getting a published dataset lineage.",
 			"properties": {
@@ -6127,9 +4883,6 @@
 			},
 			"type": "object"
 		},
-		"DeleteActivationSegmentResponse": {
-			"type": "object"
-		},
 		"DeleteConfigCategoriesResponse": {
 			"description": "DeleteConfigCategoriesResponse is the empty response for DeleteConfigCategoriesRequest rpc.",
 			"type": "object"
@@ -6259,6 +5012,13 @@
 					"description": "Name is the display name given to this destination.",
 					"type": "string"
 				},
+				"outgoing_share_ids": {
+					"description": "OutgoingShareIDs are the IDs of destination shares you have created to share an owned destination with others.",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				},
 				"owner_id": {
 					"description": "OwnerId is the user or company ID of the owner of the destination.",
 					"type": "string"
@@ -6316,6 +5076,13 @@
 				"name": {
 					"description": "Name is the display name given to this destination.",
 					"type": "string"
+				},
+				"outgoing_share_ids": {
+					"description": "OutgoingShareIDs are the IDs of destination shares you have created to share an owned destination with others.",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
 				},
 				"owner_id": {
 					"description": "OwnerId is the user or company ID of the owner of the destination. Output only.",
@@ -6420,6 +5187,44 @@
 			},
 			"type": "object"
 		},
+		"DestinationShare": {
+			"properties": {
+				"comment": {
+					"description": "A comment describing the purpose of this Share by the Destination owner.",
+					"type": "string"
+				},
+				"destination_id": {
+					"description": "The destination ID of the shared instance.",
+					"type": "string"
+				},
+				"other_permitted_companies": {
+					"description": "The ID of other companies that the sender of this share allows the recipient to send permissions to, with the shared destination associated.",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				},
+				"recipient_email_address": {
+					"description": "The email address of the user that was used to locate the recipient company.",
+					"type": "string"
+				},
+				"sender_company_id": {
+					"description": "The owner of the destination and granter of the share.",
+					"type": "string"
+				},
+				"share_id": {
+					"description": "The Share ID.",
+					"type": "string"
+				},
+				"shared_at_date_time": {
+					"description": "The date and time that the Destination Instance was shared.",
+					"format": "date-time",
+					"type": "string"
+				}
+			},
+			"title": "DestinationShare contains details of a destination share",
+			"type": "object"
+		},
 		"DestinationTypeOverview": {
 			"description": "DestinationTypeOverview contains the identifier of the type and a human readable name.",
 			"properties": {
@@ -6430,6 +5235,27 @@
 				"name": {
 					"description": "Human friendly name of the Destination type.",
 					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Destination_Instances.AttachToPermissionBody": {
+			"properties": {
+				"permission_id": {
+					"description": "Permission ID to attach to.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Destination_Instances.AttachToPermissionResponse": {
+			"properties": {
+				"permission_ids": {
+					"description": "Modified list of Permissions the Destination Instance is attached to.",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
 				}
 			},
 			"type": "object"
@@ -6520,6 +5346,13 @@
 					"description": "Name is the display name given to this destination.",
 					"type": "string"
 				},
+				"outgoing_share_ids": {
+					"description": "OutgoingShareIDs are the IDs of destination shares you have created to share an owned destination with others.",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				},
 				"owner_id": {
 					"description": "OwnerId is the user or company ID of the owner of the destination.",
 					"type": "string"
@@ -6577,6 +5410,13 @@
 				"name": {
 					"description": "Name is the display name given to this destination.",
 					"type": "string"
+				},
+				"outgoing_share_ids": {
+					"description": "OutgoingShareIDs are the IDs of destination shares you have created to share an owned destination with others.",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
 				},
 				"owner_id": {
 					"description": "OwnerId is the user or company ID of the owner of the destination. Output only.",
@@ -6646,6 +5486,27 @@
 				"name": {
 					"description": "Human friendly name of the Destination type.",
 					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Destination_Instances.DetachFromPermissionBody": {
+			"properties": {
+				"permission_id": {
+					"description": "Permission ID to detach from.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Destination_Instances.DetachFromPermissionResponse": {
+			"properties": {
+				"permission_ids": {
+					"description": "Modified list of Permissions the Destination Instance is attached to.",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
 				}
 			},
 			"type": "object"
@@ -6745,6 +5606,130 @@
 						}
 					],
 					"description": "Destination instance details."
+				}
+			},
+			"type": "object"
+		},
+		"Destination_Shares.CreateDestinationShareRequest": {
+			"properties": {
+				"comment": {
+					"description": "An optional comment explaining why sharing this destination.",
+					"type": "string"
+				},
+				"destination_id": {
+					"description": "ID of the Destination Instance to be shared.",
+					"type": "string"
+				},
+				"other_permitted_companies": {
+					"description": "The ID of other companies that the sender of this share allows the recipient to send permissions to, with the shared destination associated. Currently these must be InfoSum company IDs. Using this field is currently only available where the sender and recipient of the destination share are managed service customers.",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				},
+				"recipient_email_address": {
+					"description": "Recipient email address to be used to find company to share Destination Instance to.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Destination_Shares.CreateDestinationShareResponse": {
+			"properties": {
+				"share_id": {
+					"description": "ID of the created Destination Share entity.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Destination_Shares.DestinationShare": {
+			"properties": {
+				"comment": {
+					"description": "A comment describing the purpose of this Share by the Destination owner.",
+					"type": "string"
+				},
+				"destination_id": {
+					"description": "The destination ID of the shared instance.",
+					"type": "string"
+				},
+				"other_permitted_companies": {
+					"description": "The ID of other companies that the sender of this share allows the recipient to send permissions to, with the shared destination associated.",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				},
+				"recipient_email_address": {
+					"description": "The email address of the user that was used to locate the recipient company.",
+					"type": "string"
+				},
+				"sender_company_id": {
+					"description": "The owner of the destination and granter of the share.",
+					"type": "string"
+				},
+				"share_id": {
+					"description": "The Share ID.",
+					"type": "string"
+				},
+				"shared_at_date_time": {
+					"description": "The date and time that the Destination Instance was shared.",
+					"format": "date-time",
+					"type": "string"
+				}
+			},
+			"title": "DestinationShare contains details of a destination share",
+			"type": "object"
+		},
+		"Destination_Shares.GetDestinationShareResponse": {
+			"properties": {
+				"destination_share": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Destination_Shares.DestinationShare"
+						}
+					],
+					"description": "Details of the requested Destination Share."
+				}
+			},
+			"type": "object"
+		},
+		"Destination_Shares.ListDestinationSharesResponse": {
+			"properties": {
+				"destination_shares": {
+					"description": "List of all Destination Shares both sent or received by the company of the requesting user subject to the supplied filters.",
+					"items": {
+						"$ref": "#/definitions/Destination_Shares.DestinationShare",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"pagination": {
+					"$ref": "#/definitions/PaginationResponse"
+				}
+			},
+			"type": "object"
+		},
+		"Destination_Shares.RemoveDestinationShareResponse": {
+			"type": "object"
+		},
+		"DetachFromPermissionBody": {
+			"properties": {
+				"permission_id": {
+					"description": "Permission ID to detach from.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"DetachFromPermissionResponse": {
+			"properties": {
+				"permission_ids": {
+					"description": "Modified list of Permissions the Destination Instance is attached to.",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
 				}
 			},
 			"type": "object"
@@ -7213,28 +6198,6 @@
 			},
 			"type": "object"
 		},
-		"ExportActivationSegmentResultsBody": {
-			"properties": {
-				"destination_id": {
-					"description": "Destination instance ID.",
-					"type": "string"
-				},
-				"push_config": {
-					"description": "Configuration following the push time schema for the destination instance. Default values from the underlying instance can be found in the push schema `default` annotations. Defaults will not be used unless they are re-submitted as part of this config. Submit the `X-INFOSUM-REDACTED` keyword for `x-infosum-secret` properties to retain their default value from the underlying destination instance.",
-					"type": "object"
-				}
-			},
-			"type": "object"
-		},
-		"ExportActivationSegmentResultsResponse": {
-			"properties": {
-				"export_id": {
-					"description": "ID for the requested export.",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
 		"ExportColumn": {
 			"description": "ExportColumn is the definition for creating a column of activation data from an input column.",
 			"properties": {
@@ -7259,14 +6222,6 @@
 		"ExportColumnStatsResponse": {
 			"description": "ExportColumnStatsResponse is the response to ExportColumnStats method.",
 			"properties": {
-				"export_column_stats": {
-					"description": "ExportColumnStats is a list of all export columns in the dataset.",
-					"items": {
-						"$ref": "#/definitions/Collaboration_Datasets.v2.ExportColumnStats",
-						"type": "object"
-					},
-					"type": "array"
-				},
 				"label_to_stats": {
 					"additionalProperties": {
 						"$ref": "#/definitions/Collaboration_Datasets.v2.ExportColumnStats"
@@ -7276,17 +6231,6 @@
 				}
 			},
 			"type": "object"
-		},
-		"ExportStatus": {
-			"default": "EXPORT_STATUS_INVALID",
-			"description": "ExportStatus is an enum of all the potential export statuses.",
-			"enum": [
-				"EXPORT_STATUS_INVALID",
-				"EXPORT_STATUS_RUNNING",
-				"EXPORT_STATUS_FAILED",
-				"EXPORT_STATUS_SUCCESSFUL"
-			],
-			"type": "string"
 		},
 		"File": {
 			"description": "File is the entity that is the combination of file attributes and file metadata.",
@@ -7600,42 +6544,6 @@
 			},
 			"type": "object"
 		},
-		"GetActivationSegmentDestinationPushSchemaResponse": {
-			"description": "GetActivationSegmentDestinationPushSchemaResponse is the output of the GetActivationSegmentDestinationPushSchema method.",
-			"properties": {
-				"push_schema": {
-					"description": "The push time schema for the requested destination instance. The `push_config` on export requests to this destination must satisfy this schema.",
-					"type": "object"
-				}
-			},
-			"type": "object"
-		},
-		"GetActivationSegmentExportResponse": {
-			"properties": {
-				"export_details": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Activation_Segment_Exports.ActivationSegmentExportDetails"
-						}
-					],
-					"description": "Details of the requested activation segment export."
-				}
-			},
-			"type": "object"
-		},
-		"GetActivationSegmentResponse": {
-			"properties": {
-				"activation_segment": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Activation_Segments.ActivationSegment"
-						}
-					],
-					"description": "The object containing the details of the requested activation segment."
-				}
-			},
-			"type": "object"
-		},
 		"GetCloudVaultResponse": {
 			"properties": {
 				"cloud_vault": {
@@ -7894,6 +6802,19 @@
 						}
 					],
 					"description": "Destination instance details."
+				}
+			},
+			"type": "object"
+		},
+		"GetDestinationShareResponse": {
+			"properties": {
+				"destination_share": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Destination_Shares.DestinationShare"
+						}
+					],
+					"description": "Details of the requested Destination Share."
 				}
 			},
 			"type": "object"
@@ -8408,16 +7329,6 @@
 						"type": "object"
 					},
 					"type": "array"
-				}
-			},
-			"type": "object"
-		},
-		"IdentityFlattening": {
-			"description": "IdentityFlattening contains settings for flattening multi-value identity columns in activation segment output.",
-			"properties": {
-				"identity_to_flatten": {
-					"description": "The name of the multi-value identity column to flatten.",
-					"type": "string"
 				}
 			},
 			"type": "object"
@@ -10040,14 +8951,6 @@
 					},
 					"description": "KeyIdToStats is a map of key column ID to its corresponding stats.",
 					"type": "object"
-				},
-				"key_stats": {
-					"description": "KeyColumnStats is a list of all key columns in the dataset.",
-					"items": {
-						"$ref": "#/definitions/Collaboration_Datasets.v2.KeyColumnStats",
-						"type": "object"
-					},
-					"type": "array"
 				}
 			},
 			"type": "object"
@@ -10184,55 +9087,6 @@
 						}
 					],
 					"description": "The pagination response which can tell whether more results are available or not."
-				}
-			},
-			"type": "object"
-		},
-		"ListActivationSegmentDestinationsResponse": {
-			"description": "ListActivationSegmentDestinationsResponse is the output of the ListActivationSegmentDestinations method.",
-			"properties": {
-				"destinations": {
-					"description": "Activation Segment Destination overviews.",
-					"items": {
-						"$ref": "#/definitions/Activation_Segment_Exports.ActivationSegmentDestinationOverview",
-						"type": "object"
-					},
-					"type": "array"
-				},
-				"pagination": {
-					"$ref": "#/definitions/PaginationResponse"
-				}
-			},
-			"type": "object"
-		},
-		"ListActivationSegmentExportsResponse": {
-			"properties": {
-				"activation_exports": {
-					"description": "A list of activation segment export overviews.",
-					"items": {
-						"$ref": "#/definitions/Activation_Segment_Exports.ActivationSegmentExportOverview",
-						"type": "object"
-					},
-					"type": "array"
-				},
-				"pagination": {
-					"$ref": "#/definitions/PaginationResponse"
-				}
-			},
-			"type": "object"
-		},
-		"ListActivationSegmentsResponse": {
-			"properties": {
-				"activation_segments": {
-					"description": "Summaries of all activation segments of the given collaboration. The returned data is affected by any filters in the original request.",
-					"items": {
-						"$ref": "#/definitions/Activation_Segments.ActivationSegmentOverview",
-						"type": "object"
-					},
-					"type": "array"
-				},
-				"pagination": {
-					"$ref": "#/definitions/PaginationResponse"
 				}
 			},
 			"type": "object"
@@ -10414,6 +9268,22 @@
 					"description": "Destinations instances overviews.",
 					"items": {
 						"$ref": "#/definitions/Destination_Instances.DestinationInstanceOverview",
+						"type": "object"
+					},
+					"type": "array"
+				},
+				"pagination": {
+					"$ref": "#/definitions/PaginationResponse"
+				}
+			},
+			"type": "object"
+		},
+		"ListDestinationSharesResponse": {
+			"properties": {
+				"destination_shares": {
+					"description": "List of all Destination Shares both sent or received by the company of the requesting user subject to the supplied filters.",
+					"items": {
+						"$ref": "#/definitions/Destination_Shares.DestinationShare",
 						"type": "object"
 					},
 					"type": "array"
@@ -12481,24 +11351,6 @@
 				"PAIR_COLUMN_TYPE_EMAIL"
 			],
 			"type": "string"
-		},
-		"PathOverride": {
-			"description": "PathOverride contains instructions on how to join two datasets, overriding the automatic choices\nmade by the core engine when calculating the segment size.",
-			"properties": {
-				"destination_dataset": {
-					"description": "The dataset ID that the query path ends at.",
-					"type": "string"
-				},
-				"source_dataset": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Activation_Segments.DatasetWithKeys"
-						}
-					],
-					"description": "The dataset that the query path starts from, specifying which keys to use."
-				}
-			},
-			"type": "object"
 		},
 		"PossibleValues": {
 			"description": "PossibleValues is the list of values the Property can have. It only applies if the Property\nis not a column, i.e. IsColumn is false.",
@@ -15104,6 +13956,9 @@
 		"RemoveDestinationResponse": {
 			"type": "object"
 		},
+		"RemoveDestinationShareResponse": {
+			"type": "object"
+		},
 		"RemoveInsightDatasetResponse": {
 			"type": "object"
 		},
@@ -15554,17 +14409,8 @@
 					"description": "MultiValue is set to true if this is a multi-value key column.",
 					"type": "boolean"
 				},
-				"null_fraction": {
-					"description": "NullFraction is the fill rate for the representation. Calculated by total rows in dataset - valid values in representation, as a percentage of the total rows.",
-					"format": "double",
-					"type": "number"
-				},
 				"representation_id": {
 					"description": "RepresentationId is the ID of the representation.",
-					"type": "string"
-				},
-				"representation_label": {
-					"description": "RepresentationLabel is the name of the representation.",
 					"type": "string"
 				},
 				"valid_values": {
@@ -15802,22 +14648,6 @@
 			},
 			"type": "object"
 		},
-		"SegmentHistory": {
-			"description": "SegmentHistory contains the history of segment sizes over time.",
-			"properties": {
-				"calculated_date_time": {
-					"description": "The timestamp when the size of the activation segment was calculated.",
-					"format": "date-time",
-					"type": "string"
-				},
-				"row_count": {
-					"description": "The size of the activation segment at the time of calculation.",
-					"format": "int64",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
 		"SingleCategoryResult": {
 			"properties": {
 				"baseline_background": {
@@ -15877,20 +14707,6 @@
 						"type": "string"
 					},
 					"type": "array"
-				}
-			},
-			"type": "object"
-		},
-		"StringLiteralColumn": {
-			"description": "StringLiteralColumn contains information about a string literal column appended to an activation segment export.",
-			"properties": {
-				"column_literal": {
-					"description": "The string literal value to be written for every row of the exported activation segment data.",
-					"type": "string"
-				},
-				"column_name": {
-					"description": "The name of the column to output.",
-					"type": "string"
 				}
 			},
 			"type": "object"
@@ -15995,8 +14811,7 @@
 				"TASK_TYPE_PREPARE",
 				"TASK_TYPE_PUBLISH",
 				"TASK_TYPE_TRANSFORMATION",
-				"TASK_TYPE_ACTIVATION",
-				"TASK_TYPE_ACTIVATION_CALCULATION"
+				"TASK_TYPE_ACTIVATION"
 			],
 			"type": "string"
 		},
@@ -16061,19 +14876,6 @@
 				"zipcode_column": {
 					"description": "ZipcodeColumn is the name of the column containing the address's zipcode.",
 					"type": "string"
-				}
-			},
-			"type": "object"
-		},
-		"UpdateActivationSegmentResponse": {
-			"properties": {
-				"activation_segment": {
-					"allOf": [
-						{
-							"$ref": "#/definitions/Activation_Segments.ActivationSegment"
-						}
-					],
-					"description": "The updated activation segment."
 				}
 			},
 			"type": "object"
@@ -16469,10 +15271,6 @@
 		},
 		"v2.ExportColumnStats": {
 			"properties": {
-				"column_label": {
-					"description": "ColumnLabel is the column label to which the export stats belong to.",
-					"type": "string"
-				},
 				"distinct_values": {
 					"description": "DistinctValues is the number of distinct values for this key column.",
 					"format": "uint64",
@@ -16481,11 +15279,6 @@
 				"multi_values": {
 					"description": "MultiValue is set to true if this is a multi-value key column.",
 					"type": "boolean"
-				},
-				"null_fraction": {
-					"description": "NullFraction is the fill rate for the representation. Calculated by total rows in dataset - valid values in export column, as a percentage of the total rows.",
-					"format": "double",
-					"type": "number"
 				},
 				"valid_values": {
 					"description": "ValidValues is the number of valid values for this key column.",
@@ -16514,22 +15307,9 @@
 					"format": "uint64",
 					"type": "string"
 				},
-				"key_id": {
-					"description": "KeyId is the ID of the key to which the stats belong.",
-					"type": "string"
-				},
-				"key_label": {
-					"description": "KeyLabel is the name of the key to which the stats belong.",
-					"type": "string"
-				},
 				"multi_value": {
 					"description": "MultiValue is set to true if this is a multi-value key column.",
 					"type": "boolean"
-				},
-				"null_fraction": {
-					"description": "NullFraction is the fill rate for the key. Calculated by total rows in dataset - valid values in column, as a percentage of the total rows.",
-					"format": "double",
-					"type": "number"
 				},
 				"valid_values": {
 					"description": "ValidValues is the number of valid values for this key column.",
@@ -17308,14 +16088,14 @@
 					},
 					{
 						"default": "updated_date_time DESC",
-						"description": "Comma separated list of sorting parameters and ordering in the form of `{sort_column} {ASC/DESC}`. Supported sort fields are: `name`, `description`, `created_by`, `start_date_time`, `end_date_time`, `enabled`, `created_date_time`, `updated_date_time`, `next_run_date_time`, `cloud_vault_id`, `automation_steps`.",
+						"description": "Comma separated list of sorting parameters and ordering in the form of `{sort_column} {ASC/DESC}`. Supported sort fields are: `id`, `config_id`, `executed_by`, `started_date_time`, `last_updated_date_time`, `current_step`, `current_step_status`, `cloud_vault_id`.",
 						"in": "query",
 						"name": "order_by",
 						"required": false,
 						"type": "string"
 					},
 					{
-						"description": "Filter string as per the [docs](https://infosum.github.io/infosum-docs/docs/v2%20API/filtering). Supported filter fields are: `id`, `name`, `description`, `created_by`, `cron_timer`, `start_date_time`, `end_date_time`, `enabled`, `created_date_time`, `updated_date_time`, `next_run_date_time`, `last_execution_id`, `cloud_vault_id`, `dataset_id`, `automation_steps`, `automation_steps.import.config_id`, `automation_steps.recordset_creation.config_id`, `automation_steps.normalization.config_id`, `automation_steps.publish.config_id`, `automation_steps.transformation.config.template_id`.",
+						"description": "Filter string as per the [docs](https://infosum.github.io/infosum-docs/docs/v2%20API/filtering). Supported filter fields are: `id`, `config_id`, `executed_by`, `started_date_time`, `last_updated_date_time`, `current_step`, `current_step_status`, `cloud_vault_id`.",
 						"in": "query",
 						"name": "filter",
 						"required": false,
@@ -17696,15 +16476,14 @@
 						"type": "integer"
 					},
 					{
-						"default": "updated_date_time DESC",
-						"description": "Comma separated list of sorting parameters and ordering in the form of `{sort_column} {ASC/DESC}`. Supported sort fields are: `id`, `config_id`, `executed_by`, `started_date_time`, `last_updated_date_time`, `current_step`, `current_step_status`, `cloud_vault_id`.",
+						"description": "OrderBy is a comma separated value to define sorting.\ne.g 'name,created_time DESC'.\nThe values are separated by space, '{column} {ASC/DESC}'.\nThese are the values that are sortable:\n  none",
 						"in": "query",
 						"name": "order_by",
 						"required": false,
 						"type": "string"
 					},
 					{
-						"description": "Filter string as per the [docs](https://infosum.github.io/infosum-docs/docs/v2%20API/filtering). Supported filter fields are: `id`, `config_id`, `executed_by`, `started_date_time`, `last_updated_date_time`, `current_step_type`, `current_step_status`, `cloud_vault_id`, `dataset_id`.",
+						"description": "Filter is a string containing logic that can specify a restricted set of\nRecordsets to be returned. e.g. `name co 'Test' or name co 'Acme'`. These are\nthe supported fields for filtering:\n  none",
 						"in": "query",
 						"name": "filter",
 						"required": false,
@@ -18488,860 +17267,6 @@
 				"summary": "Remove Activation Dataset",
 				"tags": [
 					"Collaboration Management"
-				]
-			}
-		},
-		"/api/v2/collaborations/{collaboration_id}/activation-segments": {
-			"get": {
-				"description": "Returns a list of activation segments in the given collaboration. The output is affected by provided filters.",
-				"operationId": "ListActivationSegments",
-				"parameters": [
-					{
-						"description": "The ID of the collaboration to get activation segment details from.",
-						"in": "path",
-						"name": "collaboration_id",
-						"required": true,
-						"type": "string"
-					},
-					{
-						"description": "The requested page of records. Default is 1.",
-						"format": "int32",
-						"in": "query",
-						"name": "pagination.page",
-						"required": false,
-						"type": "integer"
-					},
-					{
-						"description": "The number of records to return per page. Maximum is 500. Default is 100.",
-						"format": "int32",
-						"in": "query",
-						"name": "pagination.per_page",
-						"required": false,
-						"type": "integer"
-					},
-					{
-						"description": "OrderBy is a comma seperated value to define sorting.\ne.g 'created_date_time,name DESC'\nThe values are seperated by space, '{column} {ASC/DESC}'\nValid columns: `created_date_time`, `updated_date_time`, `name`",
-						"in": "query",
-						"name": "order_by",
-						"required": false,
-						"type": "string"
-					},
-					{
-						"description": "Supported filters are `activation_segment_id`, `creator_id`, `name`",
-						"in": "query",
-						"name": "filter",
-						"required": false,
-						"type": "string"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "A successful response.",
-						"schema": {
-							"$ref": "#/definitions/Activation_Segments.ListActivationSegmentsResponse"
-						}
-					},
-					"401": {
-						"description": "Returned when the user could not be authorized.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"403": {
-						"description": "Returned when the user does not have the right to list collaboration activation segments.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"500": {
-						"description": "Internal Server Error",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"default": {
-						"description": "An unexpected error response.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					}
-				},
-				"summary": "List Activation Segments",
-				"tags": [
-					"Activation Segments"
-				]
-			},
-			"post": {
-				"description": "Creates a new activation segment in the given collaboration.",
-				"operationId": "CreateActivationSegment",
-				"parameters": [
-					{
-						"description": "The ID of the collaboration to create the activation segment in.",
-						"in": "path",
-						"name": "collaboration_id",
-						"required": true,
-						"type": "string"
-					},
-					{
-						"in": "body",
-						"name": "body",
-						"required": true,
-						"schema": {
-							"$ref": "#/definitions/Activation_Segments.CreateActivationSegmentBody"
-						}
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "A successful response.",
-						"schema": {
-							"$ref": "#/definitions/Activation_Segments.CreateActivationSegmentResponse"
-						}
-					},
-					"400": {
-						"description": "Returned when the request was not valid.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"401": {
-						"description": "Returned when the user could not be authorized.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"403": {
-						"description": "Returned when the user does not have the right to create activation segments in this collaboration.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"500": {
-						"description": "Internal Server Error",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"default": {
-						"description": "An unexpected error response.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					}
-				},
-				"summary": "Create Activation Segment",
-				"tags": [
-					"Activation Segments"
-				]
-			}
-		},
-		"/api/v2/collaborations/{collaboration_id}/activation-segments/{activation_segment_id}": {
-			"delete": {
-				"description": "Deletes an activation segment from the given collaboration.",
-				"operationId": "DeleteActivationSegment",
-				"parameters": [
-					{
-						"description": "The ID of the collaboration the activation segment belongs to.",
-						"in": "path",
-						"name": "collaboration_id",
-						"required": true,
-						"type": "string"
-					},
-					{
-						"description": "The ID of the activation segment to delete.",
-						"in": "path",
-						"name": "activation_segment_id",
-						"required": true,
-						"type": "string"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "A successful response.",
-						"schema": {
-							"$ref": "#/definitions/Activation_Segments.DeleteActivationSegmentResponse"
-						}
-					},
-					"400": {
-						"description": "Returned when the request was not valid.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"401": {
-						"description": "Returned when the user could not be authorized.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"403": {
-						"description": "Returned when the user does not have the right to delete activation segments in this collaboration.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"404": {
-						"description": "Returned when the collaboration or activation segment could not be found.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"500": {
-						"description": "Internal Server Error",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"default": {
-						"description": "An unexpected error response.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					}
-				},
-				"summary": "Delete Activation Segment",
-				"tags": [
-					"Activation Segments"
-				]
-			},
-			"get": {
-				"description": "Returns the details for the requested activation segment from a given collaboration.",
-				"operationId": "GetActivationSegment",
-				"parameters": [
-					{
-						"description": "The ID of the collaboration the activation segment belongs to.",
-						"in": "path",
-						"name": "collaboration_id",
-						"required": true,
-						"type": "string"
-					},
-					{
-						"description": "The ID of the activation segment you want information about.",
-						"in": "path",
-						"name": "activation_segment_id",
-						"required": true,
-						"type": "string"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "A successful response.",
-						"schema": {
-							"$ref": "#/definitions/Activation_Segments.GetActivationSegmentResponse"
-						}
-					},
-					"400": {
-						"description": "Returned when the request was not valid.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"401": {
-						"description": "Returned when the user could not be authorized.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"403": {
-						"description": "Returned when the user does not have the right to view details of an activation segment in this collaboration.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"404": {
-						"description": "Returned when the collaboration or activation segment could not be found.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"500": {
-						"description": "Internal Server Error",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"default": {
-						"description": "An unexpected error response.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					}
-				},
-				"summary": "Get Activation Segment",
-				"tags": [
-					"Activation Segments"
-				]
-			},
-			"patch": {
-				"description": "Updates an existing activation segment in the given collaboration. The collaboration_id is immutable and cannot be changed.",
-				"operationId": "UpdateActivationSegment",
-				"parameters": [
-					{
-						"description": "The ID of the collaboration the activation segment belongs to. This field is immutable.",
-						"in": "path",
-						"name": "collaboration_id",
-						"required": true,
-						"type": "string"
-					},
-					{
-						"description": "The ID of the activation segment to update.",
-						"in": "path",
-						"name": "activation_segment_id",
-						"required": true,
-						"type": "string"
-					},
-					{
-						"in": "body",
-						"name": "activation_segment",
-						"required": true,
-						"schema": {
-							"$ref": "#/definitions/Activation_Segments.ActivationSegmentUpdate"
-						}
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "A successful response.",
-						"schema": {
-							"$ref": "#/definitions/Activation_Segments.UpdateActivationSegmentResponse"
-						}
-					},
-					"400": {
-						"description": "Returned when the request was not valid.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"401": {
-						"description": "Returned when the user could not be authorized.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"403": {
-						"description": "Returned when the user does not have the right to update activation segments in this collaboration.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"404": {
-						"description": "Returned when the collaboration or activation segment could not be found.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"500": {
-						"description": "Internal Server Error",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"default": {
-						"description": "An unexpected error response.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					}
-				},
-				"summary": "Update Activation Segment",
-				"tags": [
-					"Activation Segments"
-				]
-			}
-		},
-		"/api/v2/collaborations/{collaboration_id}/activation-segments/{activation_segment_id}/calculate": {
-			"post": {
-				"description": "Recalculates the audience size based on the activation segment query and collaboration.",
-				"operationId": "CalculateActivationSegment",
-				"parameters": [
-					{
-						"description": "The ID of the collaboration the activation segment belongs to.",
-						"in": "path",
-						"name": "collaboration_id",
-						"required": true,
-						"type": "string"
-					},
-					{
-						"description": "The ID of the activation segment to calculate.",
-						"in": "path",
-						"name": "activation_segment_id",
-						"required": true,
-						"type": "string"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "A successful response.",
-						"schema": {
-							"$ref": "#/definitions/Activation_Segments.CalculateActivationSegmentResponse"
-						}
-					},
-					"400": {
-						"description": "Returned when the request was not valid.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"401": {
-						"description": "Returned when the user could not be authorized.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"403": {
-						"description": "Returned when the user does not have the right to calculate activation segments in this collaboration.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"404": {
-						"description": "Returned when the collaboration or activation segment could not be found.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"500": {
-						"description": "Internal Server Error",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"default": {
-						"description": "An unexpected error response.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					}
-				},
-				"summary": "Calculate Activation Segment",
-				"tags": [
-					"Activation Segments"
-				]
-			}
-		},
-		"/api/v2/collaborations/{collaboration_id}/activation-segments/{activation_segment_id}/destinations": {
-			"get": {
-				"description": "List the destinations which can be used for the provided activation segment.",
-				"operationId": "ListActivationSegmentDestinations",
-				"parameters": [
-					{
-						"description": "The ID of the collaboration.",
-						"in": "path",
-						"name": "collaboration_id",
-						"required": true,
-						"type": "string"
-					},
-					{
-						"description": "The ID of the activation segment.",
-						"in": "path",
-						"name": "activation_segment_id",
-						"required": true,
-						"type": "string"
-					},
-					{
-						"description": "The requested page of records. Default is 1.",
-						"format": "int32",
-						"in": "query",
-						"name": "pagination.page",
-						"required": false,
-						"type": "integer"
-					},
-					{
-						"description": "The number of records to return per page. Maximum is 500. Default is 100.",
-						"format": "int32",
-						"in": "query",
-						"name": "pagination.per_page",
-						"required": false,
-						"type": "integer"
-					},
-					{
-						"description": "OrderBy is a comma seperated value to define sorting.\nValid parameters are: name, created_time, destination_type_id. Default: created_time DESC",
-						"in": "query",
-						"name": "order_by",
-						"required": false,
-						"type": "string"
-					},
-					{
-						"description": "Filter is a string containing logic that can specify a restricted set of destinations to be returned.\nSupported filters are `owner_id`, `destination_type_id`",
-						"in": "query",
-						"name": "filter",
-						"required": false,
-						"type": "string"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "A successful response.",
-						"schema": {
-							"$ref": "#/definitions/Activation_Segment_Exports.ListActivationSegmentDestinationsResponse"
-						}
-					},
-					"400": {
-						"description": "Returned when the request was not valid.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"401": {
-						"description": "Returned when the user could not be authorized.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"403": {
-						"description": "Returned when the user does not have the required permission.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"500": {
-						"description": "Internal Server Error",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"default": {
-						"description": "An unexpected error response.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					}
-				},
-				"summary": "List Activation Segment Destinations",
-				"tags": [
-					"Activation Segment Exports"
-				]
-			}
-		},
-		"/api/v2/collaborations/{collaboration_id}/activation-segments/{activation_segment_id}/destinations/{destination_id}/push-schema": {
-			"get": {
-				"description": "Returns the push time schema for a specific destination instance subject to constraints defined in the destination instance.",
-				"operationId": "GetActivationSegmentDestinationPushSchema",
-				"parameters": [
-					{
-						"description": "The ID of the collaboration.",
-						"in": "path",
-						"name": "collaboration_id",
-						"required": true,
-						"type": "string"
-					},
-					{
-						"description": "The ID of the activation segment ID to export.",
-						"in": "path",
-						"name": "activation_segment_id",
-						"required": true,
-						"type": "string"
-					},
-					{
-						"description": "The ID of the destination instance to export to.",
-						"in": "path",
-						"name": "destination_id",
-						"required": true,
-						"type": "string"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "A successful response.",
-						"schema": {
-							"$ref": "#/definitions/Activation_Segment_Exports.GetActivationSegmentDestinationPushSchemaResponse"
-						}
-					},
-					"400": {
-						"description": "Returned when the request was not valid.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"401": {
-						"description": "Returned when the user could not be authorized.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"403": {
-						"description": "Returned when the user does not have the right to view Destinations.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"404": {
-						"description": "Returned when the Destination instance or Activation Segment could not be found.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"500": {
-						"description": "Internal Server Error",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"default": {
-						"description": "An unexpected error response.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					}
-				},
-				"summary": "Get Activation Segment Destination Push Schema",
-				"tags": [
-					"Activation Segment Exports"
-				]
-			}
-		},
-		"/api/v2/collaborations/{collaboration_id}/activation-segments/{activation_segment_id}/export": {
-			"post": {
-				"description": "Exports results of an activation segment to a specific destination instance.",
-				"operationId": "ExportActivationSegmentResults",
-				"parameters": [
-					{
-						"description": "The ID of the collaboration.",
-						"in": "path",
-						"name": "collaboration_id",
-						"required": true,
-						"type": "string"
-					},
-					{
-						"description": "The ID of the activation segment to export.",
-						"in": "path",
-						"name": "activation_segment_id",
-						"required": true,
-						"type": "string"
-					},
-					{
-						"in": "body",
-						"name": "body",
-						"required": true,
-						"schema": {
-							"$ref": "#/definitions/Activation_Segment_Exports.ExportActivationSegmentResultsBody"
-						}
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "A successful response.",
-						"schema": {
-							"$ref": "#/definitions/Activation_Segment_Exports.ExportActivationSegmentResultsResponse"
-						}
-					},
-					"400": {
-						"description": "Returned when the request is invalid.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"401": {
-						"description": "Returned when the user could not be authorized.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"403": {
-						"description": "Returned when the user does not have the right to export to the destination instance.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"404": {
-						"description": "Returned when the collaboration, activation segment or destination instance does not exist.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"500": {
-						"description": "Internal Server Error",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"default": {
-						"description": "An unexpected error response.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					}
-				},
-				"summary": "Export Activation Segment Results",
-				"tags": [
-					"Activation Segment Exports"
-				]
-			}
-		},
-		"/api/v2/collaborations/{collaboration_id}/activation-segments/{activation_segment_id}/exports": {
-			"get": {
-				"description": "Returns a list of exports for the specified activation segment.",
-				"operationId": "ListActivationSegmentExports",
-				"parameters": [
-					{
-						"description": "The ID of the collaboration.",
-						"in": "path",
-						"name": "collaboration_id",
-						"required": true,
-						"type": "string"
-					},
-					{
-						"description": "The activation segment ID.",
-						"in": "path",
-						"name": "activation_segment_id",
-						"required": true,
-						"type": "string"
-					},
-					{
-						"description": "OrderBy is a comma seperated value to define sorting.\ne.g 'destination_type_id,started_at_date_time DESC'\nThe values are seperated by space, '{column} {ASC/DESC}'nValid columns: `destination_type_id`, `destination_id`, `status`, `started_at_date_time`, `completed_at_date_time`",
-						"in": "query",
-						"name": "order_by",
-						"required": false,
-						"type": "string"
-					},
-					{
-						"description": "Filter is a string containing logic that can specify a restricted set of Exports to be returned.\ne.g. 'destination_id eq a_specific_destination_id' or 'status eq EXPORT_STATUS_SUCCESSFUL'\nSupported filters are `destination_type_id`, `destination_id`, `status`, `started_at_date_time`, `completed_at_date_time`",
-						"in": "query",
-						"name": "filter",
-						"required": false,
-						"type": "string"
-					},
-					{
-						"description": "The requested page of records. Default is 1.",
-						"format": "int32",
-						"in": "query",
-						"name": "pagination.page",
-						"required": false,
-						"type": "integer"
-					},
-					{
-						"description": "The number of records to return per page. Maximum is 500. Default is 100.",
-						"format": "int32",
-						"in": "query",
-						"name": "pagination.per_page",
-						"required": false,
-						"type": "integer"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "A successful response.",
-						"schema": {
-							"$ref": "#/definitions/Activation_Segment_Exports.ListActivationSegmentExportsResponse"
-						}
-					},
-					"400": {
-						"description": "Returned when the request was not valid.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"401": {
-						"description": "Returned when the user could not be authorized.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"403": {
-						"description": "Returned when the user does not have the right to view activation segment exports.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"404": {
-						"description": "Returned when the collaboration or activation segment is not found.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"500": {
-						"description": "Internal Server Error",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"default": {
-						"description": "An unexpected error response.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					}
-				},
-				"summary": "List Activation Segment Exports",
-				"tags": [
-					"Activation Segment Exports"
-				]
-			}
-		},
-		"/api/v2/collaborations/{collaboration_id}/activation-segments/{activation_segment_id}/exports/{export_id}": {
-			"get": {
-				"description": "Returns the details for a specific activation segment export.",
-				"operationId": "GetActivationSegmentExport",
-				"parameters": [
-					{
-						"description": "The ID of the collaboration.",
-						"in": "path",
-						"name": "collaboration_id",
-						"required": true,
-						"type": "string"
-					},
-					{
-						"description": "The ID of the activation segment that has been exported.",
-						"in": "path",
-						"name": "activation_segment_id",
-						"required": true,
-						"type": "string"
-					},
-					{
-						"description": "The ID of the activation export.",
-						"in": "path",
-						"name": "export_id",
-						"required": true,
-						"type": "string"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "A successful response.",
-						"schema": {
-							"$ref": "#/definitions/Activation_Segment_Exports.GetActivationSegmentExportResponse"
-						}
-					},
-					"400": {
-						"description": "Returned when the request was not valid.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"401": {
-						"description": "Returned when the user could not be authorized.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"403": {
-						"description": "Returned when the user does not have the right to view activation segment exports.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"404": {
-						"description": "Returned when the collaboration, activation segment or export cannot be found.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"500": {
-						"description": "Internal Server Error",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					},
-					"default": {
-						"description": "An unexpected error response.",
-						"schema": {
-							"$ref": "#/definitions/Error"
-						}
-					}
-				},
-				"summary": "Get Activation Segment Export",
-				"tags": [
-					"Activation Segment Exports"
 				]
 			}
 		},
@@ -22491,6 +20416,142 @@
 				]
 			}
 		},
+		"/api/v2/destinations/instances/{destination_id}/attach": {
+			"post": {
+				"description": "Attach the specified Destination Instance to the given Permission. The destination must be either owned by, or shared with your company.",
+				"operationId": "AttachToPermission",
+				"parameters": [
+					{
+						"description": "Destination Instance ID to attach.",
+						"in": "path",
+						"name": "destination_id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"in": "body",
+						"name": "body",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Destination_Instances.AttachToPermissionBody"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Destination_Instances.AttachToPermissionResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the right to attach a Destination Instance",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"404": {
+						"description": "Returned when the Permission ID cannot be found.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Attach Destination Instance to Permission",
+				"tags": [
+					"Destination Instances"
+				]
+			}
+		},
+		"/api/v2/destinations/instances/{destination_id}/detach": {
+			"post": {
+				"description": "Removes the link between the specified Destination Instance and the given Permission. The destination must be either owned by, or shared with your company.",
+				"operationId": "DetachFromPermission",
+				"parameters": [
+					{
+						"description": "Destination Instance ID to detach.",
+						"in": "path",
+						"name": "destination_id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"in": "body",
+						"name": "body",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Destination_Instances.DetachFromPermissionBody"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Destination_Instances.DetachFromPermissionResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the right to detach the Destination Instance from a Permission.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Detach Destination Instance from Permission",
+				"tags": [
+					"Destination Instances"
+				]
+			}
+		},
 		"/api/v2/destinations/instances/{destination_id}/duplicate": {
 			"post": {
 				"description": "Creates a new copy of the specified, owned destination instance.Returns Destination ID.",
@@ -22559,6 +20620,260 @@
 				"summary": "Duplicate Destination Instance",
 				"tags": [
 					"Destination Instances"
+				]
+			}
+		},
+		"/api/v2/destinations/shares": {
+			"get": {
+				"description": "Returns a list of Destinations shared by or with the company of the user.",
+				"operationId": "ListDestinationShares",
+				"parameters": [
+					{
+						"description": "The requested page of records. Default is 1.",
+						"format": "int32",
+						"in": "query",
+						"name": "pagination.page",
+						"required": false,
+						"type": "integer"
+					},
+					{
+						"description": "The number of records to return per page. Maximum is 500. Default is 100.",
+						"format": "int32",
+						"in": "query",
+						"name": "pagination.per_page",
+						"required": false,
+						"type": "integer"
+					},
+					{
+						"description": "OrderBy is a comma seperated value to define sorting.\ne.g 'created_time,name DESC'\nThe values are seperated by space, '{column} {ASC/DESC}'\nValid columns: name, created_time",
+						"in": "query",
+						"name": "order_by",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"description": "Supported filters are `owner_id`, `recipient_company_id`, `destination_id`",
+						"in": "query",
+						"name": "filter",
+						"required": false,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Destination_Shares.ListDestinationSharesResponse"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the right to list Shared Destinations.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "List Destination Shares",
+				"tags": [
+					"Destination Shares"
+				]
+			},
+			"post": {
+				"description": "Accepts a Destination Instance ID and email to share the Destination Instance with. Sharing a Destination allows the recipient to attach it on a dataset permission back to you.",
+				"operationId": "CreateDestinationShare",
+				"parameters": [
+					{
+						"in": "body",
+						"name": "body",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Destination_Shares.CreateDestinationShareRequest"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Destination_Shares.CreateDestinationShareResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the right to share a Destination Instance",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"404": {
+						"description": "Returned when the Destination Instance ID cannot be found.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Create Destination Share",
+				"tags": [
+					"Destination Shares"
+				]
+			}
+		},
+		"/api/v2/destinations/shares/{share_id}": {
+			"delete": {
+				"description": "Stops sharing a Destination to a single company.",
+				"operationId": "RemoveDestinationShare",
+				"parameters": [
+					{
+						"description": "ID of the Share that should be removed.",
+						"in": "path",
+						"name": "share_id",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Destination_Shares.RemoveDestinationShareResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the right to stop sharing a Destination.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Remove Destination Share",
+				"tags": [
+					"Destination Shares"
+				]
+			},
+			"get": {
+				"description": "Returns the shared destination for a specific share ID.",
+				"operationId": "GetDestinationShare",
+				"parameters": [
+					{
+						"description": "The ID of the Destination Share to get details about.",
+						"in": "path",
+						"name": "share_id",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A successful response.",
+						"schema": {
+							"$ref": "#/definitions/Destination_Shares.GetDestinationShareResponse"
+						}
+					},
+					"400": {
+						"description": "Returned when the request was not valid.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"401": {
+						"description": "Returned when the user could not be authorized.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"403": {
+						"description": "Returned when the user does not have the right to view details of the sharing of a Destination Instance.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"404": {
+						"description": "Returned when the Destination Instance Share could not be found.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"default": {
+						"description": "An unexpected error response.",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					}
+				},
+				"summary": "Get Destination Share",
+				"tags": [
+					"Destination Shares"
 				]
 			}
 		},
@@ -27534,10 +25849,10 @@
 		{
 			"name": "Collaborations",
 			"tags": [
-				"Collaboration Management",
+				"Collaboration Connections",
 				"Collaboration Datasets",
 				"Collaboration Destinations",
-				"Collaboration Connections"
+				"Collaboration Management"
 			]
 		},
 		{
@@ -27552,8 +25867,7 @@
 			"name": "Export",
 			"tags": [
 				"Destination Instances",
-				"Activation Segments",
-				"Activation Segment Exports",
+				"Destination Shares",
 				"Activation Destinations",
 				"Activation Pushes"
 			]
