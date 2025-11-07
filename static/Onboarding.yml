@@ -1,21 +1,21 @@
 openapi: 3.0.0
 info:
-  title: Onboarding Playbook
-  version: OB 1.0
+  title: Onboarding your Bunker Playbook
+  version: OB 1.1
   description: >-
-    This page contains the essential endpoints of the InfoSum API that help users securely manage data throughout the onboarding process, allowing them to import, normalize, prepare, and publish data for analysis from cloud vaults to datasets. You can download the swagger file above or email solutions@infosum.com to share a Postman Collection.
+    The "Onboarding your Bunker" Playbook provides the essential endpoints of the InfoSum API to securely manage data throughout the onboarding process. It allows you to import, normalize, prepare, and publish data for analysis, moving from cloud vaults to datasets while maintaining strong privacy protections.
 
 
-    InfoSum Support: support@infosum.com | [Terms of Service](https://www.infosum.com/legals/website-terms) | [Official Documentation](https://support.infosum.com/)
+    [InfoSum Support](mailto:support@infosum.com) | [Terms of Service](https://www.infosum.com/legals/website-terms) | [Official Documentation](https://support.infosum.com/)
 
 
-    We highly suggest that you complete your initial data onboarding in the UI first. Please contact your InfoSum representative to organize data onboarding training if this hasn’t happened yet. You will be able to create the setup together and have all the configurations you need to leverage the API. You can get an [overview of data onboarding](https://support.infosum.com/hc/en-us/articles/9858951946513-Overview-of-Data-Onboarding) in the linked article.
+    **About Bunkers:** A Bunker is a secure private environment that stores a dataset. Only you control access to your Bunker. Collaborators can be granted permission to query your Bunker, but they will only ever see anonymized, aggregated results, never raw data. Each Bunker is hosted on its own private virtual server, encrypted and region-locked to its Cloud Vault. You may publish several datasets to different Bunkers and refresh or replace them as needed.
 
 
-    **Note on local file imports:** We can support local file onboarding via the API but we discourage the use as it provides less flexibility, it’s harder to manage, and it has lower data privacy protections. If you wish to use local file imports via API please reach out to your InfoSum representative to discuss your setup.
+    **Tip!** We recommend completing your initial onboarding in the UI first. If you have not already, please contact your InfoSum representative to arrange training. Once the setup is complete, you will be able to replicate the same steps using the API.
 
 
-    Task List 
+    Task List
 
 
     1. Identify your server via an import connector configuration or ICC
@@ -58,118 +58,130 @@ info:
 
 
     <h3>Parameter Reference Table</h3>
-    <table>
-      <tbody>
-        <tr>
-          <th>Postman Step Number</th>
-          <th>ID Name</th>
-          <th>ID Structure</th>
-          <th>Where to find it</th>
-          <th>When to collect</th>
-        </tr>
-      </tbody>
-      <tbody>
-        <tr>
-          <td>1, 4, 7, 10</td>
-          <td>Cloud Vault ID</td>
-          <td>CLV.<em>AWS_Region_selected</em>.xx</td>
-          <td>in URL of <strong>Cloud Vaults</strong> page</td>
-          <td>Have ready before hand</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Import ID</td>
-          <td>IMP.xx</td>
-          <td>in URL of <strong>Importing</strong> page, when an Importer has been selected</td>
-          <td>Have ready before hand</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>Import Execution ID</td>
-          <td>IMT.xx</td>
-          <td>Response from step 2</td>
-          <td>Can be grabbed from output of step 2</td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td>Recordset Config ID</td>
-          <td>RSC.xx</td>
-          <td>Go <strong>Recordset Configs</strong> on the <strong>Cloud Vault</strong> in URL of <strong>Recordset Configs</strong>, when a config has been selected</td>
-          <td>Have ready before hand</td>
-        </tr>
-        <tr>
-          <td>5</td>
-          <td>Recordset Execution ID</td>
-          <td>MRC.xx</td>
-          <td>Response from step 4</td>
-          <td>Can be grabbed from output of step 4</td>
-        </tr>
-        <tr>
-          <td>7</td>
-          <td>Recordset ID</td>
-          <td>RSC.xx</td>
-          <td>Response from step 5</td>
-          <td>Can be grabbed from output of step 5</td>
-        </tr>
-        <tr>
-          <td>6</td>
-          <td>Normalization Config Name</td>
-          <td><em>text</em>
-          <td>Dropdown <strong>Normalization Config</strong> on the Normalize page</td>
-          <td>Have ready before hand</td>
-        </tr>
-        <tr>
-          <td>7</td>
-          <td>Normalization Config ID</td>
-          <td>NMC.xx</td>
-          <td>Response from step 5</td>
-          <td>Can be grabbed from output of step 6</td>
-        </tr>
-        <tr>
-          <td>8</td>
-          <td>Normalization Execution ID</td>
-          <td>NMZ.xx</td>
-          <td>Response from step 7</td>
-          <td>Can be grabbed from output of step 7</td>
-        </tr>
-        <tr>
-          <td>9</td>
-          <td>Dataset Prepare Config Name</td>
-          <td><em>text-DD MMM YYYY - HH:MM</em></td>
-          <td>Automations page</td>
-          <td>When creating a dataset config, save the name Have ready before hand</td>
-        </tr>
-        <tr>
-          <td>10</td>
-          <td>Normalized Recordset ID</td>
-          <td>RCS.xx</td>
-          <td>Response from step 8</td>
-          <td>Can be grabbed from output of step 8</td>
-        </tr>
-        <tr>
-          <td>10</td>
-          <td>Dataset Prepare ID</td>
-          <td><em>AWS_Region_selected</em>.xx</td>
-          <td>in URL of <strong>Datasets</strong> page, when a dataset is selected</td>
-          <td>Have ready before hand</td>
-        </tr>
-        <tr>
-          <td>10</td>
-          <td>Dataset Prepare Config ID</td>
-          <td>DPC.xx</td>
-          <td>Response from step 9</td>
-          <td>Can be grabbed from output of step 9</td>
-        </tr>
-        <tr>
-          <td>11, 12, 13 </td>
-          <td>Prepare/Publish Execution ID</td>
-          <td>PUB.xx</td>
-          <td>Response from step 10</td>
-          <td>Can be grabbed from output of step 10</td>
-        </tr>
-        <tr> </tr>
-      </tbody>
+    <table border="1" style="border-collapse: collapse; width: 100%;">
+      <tr style="background-color: #f2f2f2;">
+        <th style="padding: 8px; text-align: center; border: 3px solid #ddd;">Step Number</th>
+        <th style="padding: 8px; text-align: center; border: 3px solid #ddd;">Parameter Name</th>
+        <th style="padding: 8px; text-align: center; border: 3px solid #ddd;">Parameter Structure</th>
+        <th style="padding: 8px; text-align: center; border: 3px solid #ddd;">Where to find it</th>
+        <th style="padding: 8px; text-align: center; border: 3px solid #ddd;">When to collect</th>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #ddd;">1, 4, 7, 10</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Cloud Vault ID</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">CLV.<em>AWS_Region_selected</em>.xx</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">in URL of <strong>Cloud Vaults</strong> page</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Have ready before hand</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #ddd;">2</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Import ID</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">IMP.xx</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">in URL of <strong>Importing</strong> page, when an Importer has been selected</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Have ready before hand</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #ddd;">3</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Import Execution ID</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">IMT.xx</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Response from step 2</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Can be grabbed from output of step 2</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #ddd;">4</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Recordset Config ID</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">RSC.xx</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Go <strong>Recordset Configs</strong> on the <strong>Cloud Vault</strong> in URL of <strong>Recordset Configs</strong>, when a config has been selected</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Have ready before hand</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #ddd;">5</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Recordset Execution ID</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">MRC.xx</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Response from step 4</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Can be grabbed from output of step 4</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #ddd;">7</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Recordset ID</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">RSC.xx</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Response from step 5</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Can be grabbed from output of step 5</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #ddd;">6</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Normalization Config Name</td>
+        <td style="padding: 8px; border: 1px solid #ddd;"><em>text</em></td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Dropdown <strong>Normalization Config</strong> on the Normalize page</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Have ready before hand</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #ddd;">7</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Normalization Config ID</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">NMC.xx</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Response from step 5</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Can be grabbed from output of step 6</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #ddd;">8</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Normalization Execution ID</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">NMZ.xx</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Response from step 7</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Can be grabbed from output of step 7</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #ddd;">9</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Dataset Prepare Config Name</td>
+        <td style="padding: 8px; border: 1px solid #ddd;"><em>text-DD MMM YYYY - HH:MM</em></td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Automations page</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">When creating a dataset config, save the name Have ready before hand</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #ddd;">10</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Normalized Recordset ID</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">RCS.xx</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Response from step 8</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Can be grabbed from output of step 8</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #ddd;">10</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Dataset Prepare ID</td>
+        <td style="padding: 8px; border: 1px solid #ddd;"><em>AWS_Region_selected</em>.xx</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">in URL of <strong>Datasets</strong> page, when a dataset is selected</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Have ready before hand</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #ddd;">10</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Dataset Prepare Config ID</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">DPC.xx</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Response from step 9</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Can be grabbed from output of step 9</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #ddd;">11, 12, 13</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Prepare/Publish Execution ID</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">PUB.xx</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Response from step 10</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">Can be grabbed from output of step 10</td>
+      </tr>
     </table>
+
+
+    **Retention:** Cloud Vaults serve as secure staging areas for your data and are subject to a 30-day retention policy for unpublished files. All files are encrypted at rest in AWS and must remain in the same region as their associated Bunkers.
+
+
+    **Best Practices**
+    
+    - Use Cloud Vault imports rather than local file uploads where possible for stronger privacy and easier management.
+      - If you wish to use local file imports via API please reach out to your InfoSum representative to discuss your setup.
+    - Assign the correct user rights, including all “Bunker Operations” rights, before onboarding data.
+    
+    - Normalize using the Global Schema to ensure consistent joins across collaborations.
+    
+    - Automate imports only after completing a successful manual onboarding.
+
+
+
 servers:
   - url: http://{{baseurl}}
 components:

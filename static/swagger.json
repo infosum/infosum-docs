@@ -17836,7 +17836,7 @@
 				},
 				"summary": "Get Attribute Stats",
 				"tags": [
-					"Collaboration Datasets"
+					"Collaboration Management"
 				]
 			}
 		},
@@ -17906,7 +17906,7 @@
 				},
 				"summary": "Get Export Column Stats",
 				"tags": [
-					"Collaboration Datasets"
+					"Collaboration Management"
 				]
 			}
 		},

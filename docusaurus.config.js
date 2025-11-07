@@ -62,9 +62,19 @@ const config = {
             route: '/api/ActivationDestination'
           },
           {
+            id: 'infosum-openapi-v2-insight',
+            spec: 'static/InsightQueries.yml',
+            route: '/api/InsightQueries'
+          },
+          {
             id: 'infosum-openapi-v2-onboard',
             spec: 'static/Onboarding.yml',
             route: '/api/Onboarding'
+          },
+          {
+            id: 'infosum-openapi-v2-collab',
+            spec: 'static/Collaborations.yml',
+            route: '/api/Collaborations'
           }
         ],
       },
@@ -130,7 +140,9 @@ const config = {
           position: 'left',
           items:[
             { to: '/api/Onboarding', label: 'Onboarding Data'},
-            { to: '/api/ActivationDestination', label: 'Activation Queries & Destinations' },
+            { to: '/api/Collaborations', label: 'Collaborations Management'},
+            { to: '/api/InsightQueries', label: 'Insight Queries'},
+            { to: '/api/ActivationDestination', label: 'Activation Queries & Destinations'},
           ]},
           {
             href: 'https://github.com/infosum',
