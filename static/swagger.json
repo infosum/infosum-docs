@@ -1326,7 +1326,8 @@
 				"TASK_TYPE_NORMALIZATION",
 				"TASK_TYPE_PREPARE",
 				"TASK_TYPE_PUBLISH",
-				"TASK_TYPE_TRANSFORMATION"
+				"TASK_TYPE_TRANSFORMATION",
+				"TASK_TYPE_ACTIVATION"
 			],
 			"type": "string"
 		},
@@ -1999,6 +2000,19 @@
 			},
 			"type": "object"
 		},
+		"CollaborationMemberSummary": {
+			"properties": {
+				"display_name": {
+					"description": "The company display name of the collaboration member.",
+					"type": "string"
+				},
+				"id": {
+					"description": "The company ID of the collaboration member.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
 		"CollaborationSummary": {
 			"properties": {
 				"created_date_time": {
@@ -2022,7 +2036,7 @@
 				"members": {
 					"description": "The members of the collaboration.",
 					"items": {
-						"$ref": "#/definitions/Collaboration_Management.CollaborationMember",
+						"$ref": "#/definitions/Collaboration_Management.CollaborationMemberSummary",
 						"type": "object"
 					},
 					"type": "array"
@@ -2034,7 +2048,7 @@
 				"owner": {
 					"allOf": [
 						{
-							"$ref": "#/definitions/Collaboration_Management.CollaborationMember"
+							"$ref": "#/definitions/Collaboration_Management.CollaborationMemberSummary"
 						}
 					],
 					"description": "The collaboration owner."
@@ -3018,6 +3032,19 @@
 			},
 			"type": "object"
 		},
+		"Collaboration_Management.CollaborationMemberSummary": {
+			"properties": {
+				"display_name": {
+					"description": "The company display name of the collaboration member.",
+					"type": "string"
+				},
+				"id": {
+					"description": "The company ID of the collaboration member.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
 		"Collaboration_Management.CollaborationSummary": {
 			"properties": {
 				"created_date_time": {
@@ -3041,7 +3068,7 @@
 				"members": {
 					"description": "The members of the collaboration.",
 					"items": {
-						"$ref": "#/definitions/Collaboration_Management.CollaborationMember",
+						"$ref": "#/definitions/Collaboration_Management.CollaborationMemberSummary",
 						"type": "object"
 					},
 					"type": "array"
@@ -3053,7 +3080,7 @@
 				"owner": {
 					"allOf": [
 						{
-							"$ref": "#/definitions/Collaboration_Management.CollaborationMember"
+							"$ref": "#/definitions/Collaboration_Management.CollaborationMemberSummary"
 						}
 					],
 					"description": "The collaboration owner."
@@ -14809,7 +14836,8 @@
 				"TASK_TYPE_NORMALIZATION",
 				"TASK_TYPE_PREPARE",
 				"TASK_TYPE_PUBLISH",
-				"TASK_TYPE_TRANSFORMATION"
+				"TASK_TYPE_TRANSFORMATION",
+				"TASK_TYPE_ACTIVATION"
 			],
 			"type": "string"
 		},
@@ -17836,7 +17864,7 @@
 				},
 				"summary": "Get Attribute Stats",
 				"tags": [
-					"Collaboration Management"
+					"Collaboration Datasets"
 				]
 			}
 		},
@@ -17906,7 +17934,7 @@
 				},
 				"summary": "Get Export Column Stats",
 				"tags": [
-					"Collaboration Management"
+					"Collaboration Datasets"
 				]
 			}
 		},
