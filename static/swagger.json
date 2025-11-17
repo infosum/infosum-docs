@@ -4909,21 +4909,6 @@
 			},
 			"type": "object"
 		},
-		"DatetimeStamper": {
-			"description": "DatetimeStamper contains the config required for stamping records with a datetime column during normalization.",
-			"properties": {
-				"custom_datetime": {
-					"description": "CustomDatetime is an optional custom datetime value entered by the user to use for all records.\nIf not provided, the current datetime will be used.",
-					"type": "string"
-				},
-				"time_offset_seconds": {
-					"description": "TimeOffsetSeconds is an optional offset in seconds to apply to the datetime.\nPositive values add time, negative values subtract time.\nOnly applies when custom_datetime is not provided (i.e., when using current datetime).",
-					"format": "int64",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
 		"DeleteConfigCategoriesResponse": {
 			"description": "DeleteConfigCategoriesResponse is the empty response for DeleteConfigCategoriesRequest rpc.",
 			"type": "object"
@@ -5849,9 +5834,6 @@
 		"EnrichmentConfig": {
 			"description": "EnrichmentConfig can be provided as part of a normalisation config to determine how to enrich the imported data\nduring the normalisation process.",
 			"properties": {
-				"datetime_stamper": {
-					"$ref": "#/definitions/Normalization_Config.DatetimeStamper"
-				},
 				"uk_addr_mapper": {
 					"$ref": "#/definitions/Normalization_Config.UKAddrMapper"
 				},
@@ -10377,21 +10359,6 @@
 			],
 			"type": "string"
 		},
-		"Normalization_Config.DatetimeStamper": {
-			"description": "DatetimeStamper contains the config required for stamping records with a datetime column during normalization.",
-			"properties": {
-				"custom_datetime": {
-					"description": "CustomDatetime is an optional custom datetime value entered by the user to use for all records.\nIf not provided, the current datetime will be used.",
-					"type": "string"
-				},
-				"time_offset_seconds": {
-					"description": "TimeOffsetSeconds is an optional offset in seconds to apply to the datetime.\nPositive values add time, negative values subtract time.\nOnly applies when custom_datetime is not provided (i.e., when using current datetime).",
-					"format": "int64",
-					"type": "string"
-				}
-			},
-			"type": "object"
-		},
 		"Normalization_Config.DeleteConfigResponse": {
 			"description": "DeleteConfigResponse is the empty response of the DeleteConfig rpc.",
 			"type": "object"
@@ -10399,9 +10366,6 @@
 		"Normalization_Config.EnrichmentConfig": {
 			"description": "EnrichmentConfig can be provided as part of a normalisation config to determine how to enrich the imported data\nduring the normalisation process.",
 			"properties": {
-				"datetime_stamper": {
-					"$ref": "#/definitions/Normalization_Config.DatetimeStamper"
-				},
 				"uk_addr_mapper": {
 					"$ref": "#/definitions/Normalization_Config.UKAddrMapper"
 				},
