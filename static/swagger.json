@@ -751,6 +751,14 @@
 		"AttributeColumnStatsResponse": {
 			"description": "AttributeColumnStatsResponse is the response returned by AttributeColumnStats method.",
 			"properties": {
+				"attribute_stats": {
+					"description": "AttributeStats is a list of all attribute columns in the dataset.",
+					"items": {
+						"$ref": "#/definitions/Collaboration_Datasets.RepresentationStats",
+						"type": "object"
+					},
+					"type": "array"
+				},
 				"id_to_representations_stats": {
 					"additionalProperties": {
 						"$ref": "#/definitions/Collaboration_Datasets.RepresentationStatsList"
@@ -2191,6 +2199,14 @@
 		"Collaboration_Datasets.AttributeColumnStatsResponse": {
 			"description": "AttributeColumnStatsResponse is the response returned by AttributeColumnStats method.",
 			"properties": {
+				"attribute_stats": {
+					"description": "AttributeStats is a list of all attribute columns in the dataset.",
+					"items": {
+						"$ref": "#/definitions/Collaboration_Datasets.RepresentationStats",
+						"type": "object"
+					},
+					"type": "array"
+				},
 				"id_to_representations_stats": {
 					"additionalProperties": {
 						"$ref": "#/definitions/Collaboration_Datasets.RepresentationStatsList"
@@ -2310,6 +2326,14 @@
 		"Collaboration_Datasets.ExportColumnStatsResponse": {
 			"description": "ExportColumnStatsResponse is the response to ExportColumnStats method.",
 			"properties": {
+				"export_column_stats": {
+					"description": "ExportColumnStats is a list of all export columns in the dataset.",
+					"items": {
+						"$ref": "#/definitions/Collaboration_Datasets.v2.ExportColumnStats",
+						"type": "object"
+					},
+					"type": "array"
+				},
 				"label_to_stats": {
 					"additionalProperties": {
 						"$ref": "#/definitions/Collaboration_Datasets.v2.ExportColumnStats"
@@ -2400,6 +2424,14 @@
 					},
 					"description": "KeyIdToStats is a map of key column ID to its corresponding stats.",
 					"type": "object"
+				},
+				"key_stats": {
+					"description": "KeyColumnStats is a list of all key columns in the dataset.",
+					"items": {
+						"$ref": "#/definitions/Collaboration_Datasets.v2.KeyColumnStats",
+						"type": "object"
+					},
+					"type": "array"
 				}
 			},
 			"type": "object"
@@ -2479,8 +2511,17 @@
 					"description": "MultiValue is set to true if this is a multi-value key column.",
 					"type": "boolean"
 				},
+				"null_fraction": {
+					"description": "NullFraction is the fill rate for the representation. Calculated by total rows in dataset - valid values in representation, as a percentage of the total rows.",
+					"format": "double",
+					"type": "number"
+				},
 				"representation_id": {
 					"description": "RepresentationId is the ID of the representation.",
+					"type": "string"
+				},
+				"representation_label": {
+					"description": "RepresentationLabel is the name of the representation.",
 					"type": "string"
 				},
 				"valid_values": {
@@ -2532,6 +2573,10 @@
 		},
 		"Collaboration_Datasets.v2.ExportColumnStats": {
 			"properties": {
+				"column_label": {
+					"description": "ColumnLabel is the column label to which the export stats belong to.",
+					"type": "string"
+				},
 				"distinct_values": {
 					"description": "DistinctValues is the number of distinct values for this key column.",
 					"format": "uint64",
@@ -2540,6 +2585,11 @@
 				"multi_values": {
 					"description": "MultiValue is set to true if this is a multi-value key column.",
 					"type": "boolean"
+				},
+				"null_fraction": {
+					"description": "NullFraction is the fill rate for the representation. Calculated by total rows in dataset - valid values in export column, as a percentage of the total rows.",
+					"format": "double",
+					"type": "number"
 				},
 				"valid_values": {
 					"description": "ValidValues is the number of valid values for this key column.",
@@ -2568,9 +2618,22 @@
 					"format": "uint64",
 					"type": "string"
 				},
+				"key_id": {
+					"description": "KeyId is the ID of the key to which the stats belong.",
+					"type": "string"
+				},
+				"key_label": {
+					"description": "KeyLabel is the name of the key to which the stats belong.",
+					"type": "string"
+				},
 				"multi_value": {
 					"description": "MultiValue is set to true if this is a multi-value key column.",
 					"type": "boolean"
+				},
+				"null_fraction": {
+					"description": "NullFraction is the fill rate for the key. Calculated by total rows in dataset - valid values in column, as a percentage of the total rows.",
+					"format": "double",
+					"type": "number"
 				},
 				"valid_values": {
 					"description": "ValidValues is the number of valid values for this key column.",
@@ -6248,6 +6311,14 @@
 		"ExportColumnStatsResponse": {
 			"description": "ExportColumnStatsResponse is the response to ExportColumnStats method.",
 			"properties": {
+				"export_column_stats": {
+					"description": "ExportColumnStats is a list of all export columns in the dataset.",
+					"items": {
+						"$ref": "#/definitions/Collaboration_Datasets.v2.ExportColumnStats",
+						"type": "object"
+					},
+					"type": "array"
+				},
 				"label_to_stats": {
 					"additionalProperties": {
 						"$ref": "#/definitions/Collaboration_Datasets.v2.ExportColumnStats"
@@ -8977,6 +9048,14 @@
 					},
 					"description": "KeyIdToStats is a map of key column ID to its corresponding stats.",
 					"type": "object"
+				},
+				"key_stats": {
+					"description": "KeyColumnStats is a list of all key columns in the dataset.",
+					"items": {
+						"$ref": "#/definitions/Collaboration_Datasets.v2.KeyColumnStats",
+						"type": "object"
+					},
+					"type": "array"
 				}
 			},
 			"type": "object"
@@ -14435,8 +14514,17 @@
 					"description": "MultiValue is set to true if this is a multi-value key column.",
 					"type": "boolean"
 				},
+				"null_fraction": {
+					"description": "NullFraction is the fill rate for the representation. Calculated by total rows in dataset - valid values in representation, as a percentage of the total rows.",
+					"format": "double",
+					"type": "number"
+				},
 				"representation_id": {
 					"description": "RepresentationId is the ID of the representation.",
+					"type": "string"
+				},
+				"representation_label": {
+					"description": "RepresentationLabel is the name of the representation.",
 					"type": "string"
 				},
 				"valid_values": {
@@ -15297,6 +15385,10 @@
 		},
 		"v2.ExportColumnStats": {
 			"properties": {
+				"column_label": {
+					"description": "ColumnLabel is the column label to which the export stats belong to.",
+					"type": "string"
+				},
 				"distinct_values": {
 					"description": "DistinctValues is the number of distinct values for this key column.",
 					"format": "uint64",
@@ -15305,6 +15397,11 @@
 				"multi_values": {
 					"description": "MultiValue is set to true if this is a multi-value key column.",
 					"type": "boolean"
+				},
+				"null_fraction": {
+					"description": "NullFraction is the fill rate for the representation. Calculated by total rows in dataset - valid values in export column, as a percentage of the total rows.",
+					"format": "double",
+					"type": "number"
 				},
 				"valid_values": {
 					"description": "ValidValues is the number of valid values for this key column.",
@@ -15333,9 +15430,22 @@
 					"format": "uint64",
 					"type": "string"
 				},
+				"key_id": {
+					"description": "KeyId is the ID of the key to which the stats belong.",
+					"type": "string"
+				},
+				"key_label": {
+					"description": "KeyLabel is the name of the key to which the stats belong.",
+					"type": "string"
+				},
 				"multi_value": {
 					"description": "MultiValue is set to true if this is a multi-value key column.",
 					"type": "boolean"
+				},
+				"null_fraction": {
+					"description": "NullFraction is the fill rate for the key. Calculated by total rows in dataset - valid values in column, as a percentage of the total rows.",
+					"format": "double",
+					"type": "number"
 				},
 				"valid_values": {
 					"description": "ValidValues is the number of valid values for this key column.",
