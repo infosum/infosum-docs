@@ -16224,14 +16224,14 @@
 					},
 					{
 						"default": "updated_date_time DESC",
-						"description": "Comma separated list of sorting parameters and ordering in the form of `{sort_column} {ASC/DESC}`. Supported sort fields are: `id`, `config_id`, `executed_by`, `started_date_time`, `last_updated_date_time`, `current_step`, `current_step_status`, `cloud_vault_id`.",
+						"description": "Comma separated list of sorting parameters and ordering in the form of `{sort_column} {ASC/DESC}`. Supported sort fields are: `name`, `description`, `created_by`, `start_date_time`, `end_date_time`, `enabled`, `created_date_time`, `updated_date_time`, `next_run_date_time`, `cloud_vault_id`, `automation_steps`.",
 						"in": "query",
 						"name": "order_by",
 						"required": false,
 						"type": "string"
 					},
 					{
-						"description": "Filter string as per the [docs](https://infosum.github.io/infosum-docs/docs/v2%20API/filtering). Supported filter fields are: `id`, `config_id`, `executed_by`, `started_date_time`, `last_updated_date_time`, `current_step`, `current_step_status`, `cloud_vault_id`.",
+						"description": "Filter string as per the [docs](https://infosum.github.io/infosum-docs/docs/v2%20API/filtering). Supported filter fields are: `id`, `name`, `description`, `created_by`, `cron_timer`, `start_date_time`, `end_date_time`, `enabled`, `created_date_time`, `updated_date_time`, `next_run_date_time`, `last_execution_id`, `cloud_vault_id`, `dataset_id`, `automation_steps`, `automation_steps.import.config_id`, `automation_steps.recordset_creation.config_id`, `automation_steps.normalization.config_id`, `automation_steps.publish.config_id`, `automation_steps.transformation.config.template_id`.",
 						"in": "query",
 						"name": "filter",
 						"required": false,
@@ -16612,14 +16612,15 @@
 						"type": "integer"
 					},
 					{
-						"description": "OrderBy is a comma separated value to define sorting.\ne.g 'name,created_time DESC'.\nThe values are separated by space, '{column} {ASC/DESC}'.\nThese are the values that are sortable:\n  none",
+						"default": "updated_date_time DESC",
+						"description": "Comma separated list of sorting parameters and ordering in the form of `{sort_column} {ASC/DESC}`. Supported sort fields are: `id`, `config_id`, `executed_by`, `started_date_time`, `last_updated_date_time`, `current_step`, `current_step_status`, `cloud_vault_id`.",
 						"in": "query",
 						"name": "order_by",
 						"required": false,
 						"type": "string"
 					},
 					{
-						"description": "Filter is a string containing logic that can specify a restricted set of\nRecordsets to be returned. e.g. `name co 'Test' or name co 'Acme'`. These are\nthe supported fields for filtering:\n  none",
+						"description": "Filter string as per the [docs](https://infosum.github.io/infosum-docs/docs/v2%20API/filtering). Supported filter fields are: `id`, `config_id`, `executed_by`, `started_date_time`, `last_updated_date_time`, `current_step_type`, `current_step_status`, `cloud_vault_id`, `dataset_id`.",
 						"in": "query",
 						"name": "filter",
 						"required": false,
