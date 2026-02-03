@@ -91,6 +91,42 @@
 			},
 			"type": "object"
 		},
+		"ActivationCalculationConfig": {
+			"description": "A config to define Activation Calculation as an Automation Step.",
+			"properties": {
+				"activation_segment_id": {
+					"description": "The Activation Segment ID that should be recalculated in this Automation Step.",
+					"type": "string"
+				},
+				"collaboration_id": {
+					"description": "The Collaboration ID of the collaboration that the Activation Segment being calculated is in.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"ActivationConfig": {
+			"description": "A config to define Activation as an Automation Step.",
+			"properties": {
+				"activation_segment_id": {
+					"description": "The Activation Segment ID that should be exported in this Automation Step.",
+					"type": "string"
+				},
+				"collaboration_id": {
+					"description": "The Collaboration ID of the collaboration that the Activation Segment being exported is in.",
+					"type": "string"
+				},
+				"destination_id": {
+					"description": "The Destination ID that the Activation Segment will be exported to in this Automation Step.",
+					"type": "string"
+				},
+				"push_config": {
+					"description": "Fields which satisfy the push schema for the given destination instance against the activation segment. Default values from the underlying instance can be found in the push schema `default` annotations. Defaults will not be used unless they are re-submitted as part of this config. Use [Get Activation Segment Destination Push Schema](https://infosum.github.io/infosum-docs/api/v2/#tag/Activation-Segment-Exports/operation/GetActivationSegmentDestinationPushSchema) to fetch the push schema.",
+					"type": "object"
+				}
+			},
+			"type": "object"
+		},
 		"ActivationDatasetPermission": {
 			"properties": {
 				"collaboration_dataset_name": {
@@ -668,7 +704,7 @@
 			},
 			"type": "object"
 		},
-		"Activation_Destinations.ActivationDestinationOverview": {
+		"Activation_Destinations_(Deprecated).ActivationDestinationOverview": {
 			"description": "ActivationDestinationInstanceOverview provides an overview of a Destination instance for pushing activation queries.",
 			"properties": {
 				"created_time": {
@@ -699,7 +735,7 @@
 			},
 			"type": "object"
 		},
-		"Activation_Destinations.GetActivationDestinationPushSchemaResponse": {
+		"Activation_Destinations_(Deprecated).GetActivationDestinationPushSchemaResponse": {
 			"description": "GetActivationDestinationPushSchemaResponse is the output of the GetActivationDestinationPushSchema method.",
 			"properties": {
 				"push_schema": {
@@ -709,13 +745,13 @@
 			},
 			"type": "object"
 		},
-		"Activation_Destinations.ListActivationDestinationsResponse": {
+		"Activation_Destinations_(Deprecated).ListActivationDestinationsResponse": {
 			"description": "ListActivationDestinationsResponse is the output of the ListActivationDestinations method.",
 			"properties": {
 				"destinations": {
 					"description": "Activation Destination overviews.",
 					"items": {
-						"$ref": "#/definitions/Activation_Destinations.ActivationDestinationOverview",
+						"$ref": "#/definitions/Activation_Destinations_(Deprecated).ActivationDestinationOverview",
 						"type": "object"
 					},
 					"type": "array"
@@ -726,7 +762,7 @@
 			},
 			"type": "object"
 		},
-		"Activation_Destinations.NullValue": {
+		"Activation_Destinations_(Deprecated).NullValue": {
 			"default": "NULL_VALUE",
 			"description": "`NullValue` is a singleton enumeration to represent the null value for the\n`Value` type union.\n\nThe JSON representation for `NullValue` is JSON `null`.\n\n - NULL_VALUE: Null value.",
 			"enum": [
@@ -734,7 +770,7 @@
 			],
 			"type": "string"
 		},
-		"Activation_Destinations.PushActivationResultsBody": {
+		"Activation_Destinations_(Deprecated).PushActivationResultsBody": {
 			"description": "PushActivationResultsRequest is input to the ExportResult request.",
 			"properties": {
 				"push_config": {
@@ -744,7 +780,7 @@
 			},
 			"type": "object"
 		},
-		"Activation_Destinations.PushActivationResultsResponse": {
+		"Activation_Destinations_(Deprecated).PushActivationResultsResponse": {
 			"description": "PushActivationResultsResponse is the output of the PushActivationResults request.",
 			"properties": {
 				"push_id": {
@@ -754,7 +790,7 @@
 			},
 			"type": "object"
 		},
-		"Activation_Pushes.ActivationPushDetails": {
+		"Activation_Pushes_(Deprecated).ActivationPushDetails": {
 			"description": "ActivationPushDetails is the details of a specific activation push.",
 			"properties": {
 				"completed_at_date_time": {
@@ -811,7 +847,7 @@
 			},
 			"type": "object"
 		},
-		"Activation_Pushes.ActivationPushOverview": {
+		"Activation_Pushes_(Deprecated).ActivationPushOverview": {
 			"description": "ActivationPushOverview is the overview of a specific activation push.",
 			"properties": {
 				"completed_at_date_time": {
@@ -864,13 +900,13 @@
 			},
 			"type": "object"
 		},
-		"Activation_Pushes.GetActivationPushResponse": {
+		"Activation_Pushes_(Deprecated).GetActivationPushResponse": {
 			"description": "GetActivationPushResponse is the output of the GetActivationPush method.",
 			"properties": {
 				"push_details": {
 					"allOf": [
 						{
-							"$ref": "#/definitions/Activation_Pushes.ActivationPushDetails"
+							"$ref": "#/definitions/Activation_Pushes_(Deprecated).ActivationPushDetails"
 						}
 					],
 					"description": "Details of the requested activation push."
@@ -878,13 +914,13 @@
 			},
 			"type": "object"
 		},
-		"Activation_Pushes.ListActivationPushesResponse": {
+		"Activation_Pushes_(Deprecated).ListActivationPushesResponse": {
 			"description": "ListActivationPushesResponse is the response of the ListActivationPushes method.",
 			"properties": {
 				"activation_pushes": {
 					"description": "A list of activation push overviews.",
 					"items": {
-						"$ref": "#/definitions/Activation_Pushes.ActivationPushOverview",
+						"$ref": "#/definitions/Activation_Pushes_(Deprecated).ActivationPushOverview",
 						"type": "object"
 					},
 					"type": "array"
@@ -900,7 +936,7 @@
 			},
 			"type": "object"
 		},
-		"Activation_Pushes.NullValue": {
+		"Activation_Pushes_(Deprecated).NullValue": {
 			"default": "NULL_VALUE",
 			"description": "`NullValue` is a singleton enumeration to represent the null value for the\n`Value` type union.\n\nThe JSON representation for `NullValue` is JSON `null`.\n\n - NULL_VALUE: Null value.",
 			"enum": [
@@ -1900,6 +1936,22 @@
 		"AutomationStep": {
 			"description": "The information required to define an Automation Step. Provide only one config per Automation Step.",
 			"properties": {
+				"activation": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Automation_Configs.ActivationConfig"
+						}
+					],
+					"description": "The Activation Config to execute for this Automation Step."
+				},
+				"activation_calculation": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Automation_Configs.ActivationCalculationConfig"
+						}
+					],
+					"description": "The Activation Calculation Config to execute for this Automation Step."
+				},
 				"import": {
 					"allOf": [
 						{
@@ -1935,9 +1987,61 @@
 			},
 			"type": "object"
 		},
+		"Automation_Configs.ActivationCalculationConfig": {
+			"description": "A config to define Activation Calculation as an Automation Step.",
+			"properties": {
+				"activation_segment_id": {
+					"description": "The Activation Segment ID that should be recalculated in this Automation Step.",
+					"type": "string"
+				},
+				"collaboration_id": {
+					"description": "The Collaboration ID of the collaboration that the Activation Segment being calculated is in.",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Automation_Configs.ActivationConfig": {
+			"description": "A config to define Activation as an Automation Step.",
+			"properties": {
+				"activation_segment_id": {
+					"description": "The Activation Segment ID that should be exported in this Automation Step.",
+					"type": "string"
+				},
+				"collaboration_id": {
+					"description": "The Collaboration ID of the collaboration that the Activation Segment being exported is in.",
+					"type": "string"
+				},
+				"destination_id": {
+					"description": "The Destination ID that the Activation Segment will be exported to in this Automation Step.",
+					"type": "string"
+				},
+				"push_config": {
+					"description": "Fields which satisfy the push schema for the given destination instance against the activation segment. Default values from the underlying instance can be found in the push schema `default` annotations. Defaults will not be used unless they are re-submitted as part of this config. Use [Get Activation Segment Destination Push Schema](https://infosum.github.io/infosum-docs/api/v2/#tag/Activation-Segment-Exports/operation/GetActivationSegmentDestinationPushSchema) to fetch the push schema.",
+					"type": "object"
+				}
+			},
+			"type": "object"
+		},
 		"Automation_Configs.AutomationStep": {
 			"description": "The information required to define an Automation Step. Provide only one config per Automation Step.",
 			"properties": {
+				"activation": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Automation_Configs.ActivationConfig"
+						}
+					],
+					"description": "The Activation Config to execute for this Automation Step."
+				},
+				"activation_calculation": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Automation_Configs.ActivationCalculationConfig"
+						}
+					],
+					"description": "The Activation Calculation Config to execute for this Automation Step."
+				},
 				"import": {
 					"allOf": [
 						{
@@ -2103,6 +2207,14 @@
 				}
 			},
 			"type": "object"
+		},
+		"Automation_Configs.NullValue": {
+			"default": "NULL_VALUE",
+			"description": "`NullValue` is a singleton enumeration to represent the null value for the\n`Value` type union.\n\nThe JSON representation for `NullValue` is JSON `null`.\n\n - NULL_VALUE: Null value.",
+			"enum": [
+				"NULL_VALUE"
+			],
+			"type": "string"
 		},
 		"Automation_Configs.PublishConfig": {
 			"description": "A config to define Preparation and Publishing as an Automation Step.",
@@ -7592,7 +7704,7 @@
 				"push_details": {
 					"allOf": [
 						{
-							"$ref": "#/definitions/Activation_Pushes.ActivationPushDetails"
+							"$ref": "#/definitions/Activation_Pushes_(Deprecated).ActivationPushDetails"
 						}
 					],
 					"description": "Details of the requested activation push."
@@ -10155,7 +10267,7 @@
 				"destinations": {
 					"description": "Activation Destination overviews.",
 					"items": {
-						"$ref": "#/definitions/Activation_Destinations.ActivationDestinationOverview",
+						"$ref": "#/definitions/Activation_Destinations_(Deprecated).ActivationDestinationOverview",
 						"type": "object"
 					},
 					"type": "array"
@@ -10172,7 +10284,7 @@
 				"activation_pushes": {
 					"description": "A list of activation push overviews.",
 					"items": {
-						"$ref": "#/definitions/Activation_Pushes.ActivationPushOverview",
+						"$ref": "#/definitions/Activation_Pushes_(Deprecated).ActivationPushOverview",
 						"type": "object"
 					},
 					"type": "array"
@@ -16889,7 +17001,7 @@
 		},
 		"/api/v2/activations/queries/{query_id}/destinations": {
 			"get": {
-				"description": "List the destinations which can be used for the provided activation query.",
+				"description": "List the destinations which can be used for the provided activation query. Deprecated. Please use Activation Segment Exports APIs to activate data.",
 				"operationId": "ListActivationDestinations",
 				"parameters": [
 					{
@@ -16934,7 +17046,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Activation_Destinations.ListActivationDestinationsResponse"
+							"$ref": "#/definitions/Activation_Destinations_(Deprecated).ListActivationDestinationsResponse"
 						}
 					},
 					"400": {
@@ -16970,13 +17082,13 @@
 				},
 				"summary": "List Activation Destinations",
 				"tags": [
-					"Activation Destinations"
+					"Activation Destinations (Deprecated)"
 				]
 			}
 		},
 		"/api/v2/activations/queries/{query_id}/destinations/{destination_id}/push": {
 			"post": {
-				"description": "Pushes results of a query to a specific destination instance.",
+				"description": "Pushes results of a query to a specific destination instance. Deprecated. Please use Activation Segment Exports APIs to activate data.",
 				"operationId": "PushActivationResults",
 				"parameters": [
 					{
@@ -16998,7 +17110,7 @@
 						"name": "body",
 						"required": true,
 						"schema": {
-							"$ref": "#/definitions/Activation_Destinations.PushActivationResultsBody"
+							"$ref": "#/definitions/Activation_Destinations_(Deprecated).PushActivationResultsBody"
 						}
 					}
 				],
@@ -17006,7 +17118,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Activation_Destinations.PushActivationResultsResponse"
+							"$ref": "#/definitions/Activation_Destinations_(Deprecated).PushActivationResultsResponse"
 						}
 					},
 					"400": {
@@ -17048,13 +17160,13 @@
 				},
 				"summary": "Push Activation Result to Destination",
 				"tags": [
-					"Activation Destinations"
+					"Activation Destinations (Deprecated)"
 				]
 			}
 		},
 		"/api/v2/activations/queries/{query_id}/destinations/{destination_id}/push-schema": {
 			"get": {
-				"description": "Returns the push time schema for a specific destination instance subject to constraints (like query ID).",
+				"description": "Returns the push time schema for a specific destination instance subject to constraints (like query ID). Deprecated. Please use Activation Segment Exports APIs to activate data.",
 				"operationId": "GetActivationDestinationPushSchema",
 				"parameters": [
 					{
@@ -17076,7 +17188,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Activation_Destinations.GetActivationDestinationPushSchemaResponse"
+							"$ref": "#/definitions/Activation_Destinations_(Deprecated).GetActivationDestinationPushSchemaResponse"
 						}
 					},
 					"400": {
@@ -17118,13 +17230,13 @@
 				},
 				"summary": "Get Activation Destination Push Schema",
 				"tags": [
-					"Activation Destinations"
+					"Activation Destinations (Deprecated)"
 				]
 			}
 		},
 		"/api/v2/activations/queries/{query_id}/pushes": {
 			"get": {
-				"description": "Returns a list of pushes for the specified activation query.",
+				"description": "Returns a list of pushes for the specified activation query. Deprecated. Please use Activation Segment Exports APIs to activate data.",
 				"operationId": "ListActivationPushes",
 				"parameters": [
 					{
@@ -17169,7 +17281,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Activation_Pushes.ListActivationPushesResponse"
+							"$ref": "#/definitions/Activation_Pushes_(Deprecated).ListActivationPushesResponse"
 						}
 					},
 					"400": {
@@ -17211,13 +17323,13 @@
 				},
 				"summary": "List Activation Query Pushes",
 				"tags": [
-					"Activation Pushes"
+					"Activation Pushes (Deprecated)"
 				]
 			}
 		},
 		"/api/v2/activations/queries/{query_id}/pushes/{push_id}": {
 			"get": {
-				"description": "Returns the details for a specific activation push subject to constraints (like query ID).",
+				"description": "Returns the details for a specific activation push subject to constraints (like query ID). Deprecated. Please use Activation Segment Exports APIs to activate data.",
 				"operationId": "GetActivationPush",
 				"parameters": [
 					{
@@ -17239,7 +17351,7 @@
 					"200": {
 						"description": "A successful response.",
 						"schema": {
-							"$ref": "#/definitions/Activation_Pushes.GetActivationPushResponse"
+							"$ref": "#/definitions/Activation_Pushes_(Deprecated).GetActivationPushResponse"
 						}
 					},
 					"400": {
@@ -17281,7 +17393,7 @@
 				},
 				"summary": "Get Activation Query Push",
 				"tags": [
-					"Activation Pushes"
+					"Activation Pushes (Deprecated)"
 				]
 			}
 		},
@@ -27554,8 +27666,8 @@
 				"Destination Instances",
 				"Activation Segments",
 				"Activation Segment Exports",
-				"Activation Destinations",
-				"Activation Pushes"
+				"Activation Destinations (Deprecated)",
+				"Activation Pushes (Deprecated)"
 			]
 		},
 		{
