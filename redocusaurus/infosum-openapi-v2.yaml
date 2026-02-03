@@ -4149,6 +4149,7 @@ definitions:
       - ENTITY_DESTINATION
       - ENTITY_AUDIENCE
       - ENTITY_SEGMENT
+      - ENTITY_ACTIVATION_SEGMENT
     type: string
   Collaboration_Management.EventEntity:
     properties:
@@ -4190,6 +4191,9 @@ definitions:
       - TYPE_PRIVATE_PATH_ID_ROTATED
       - TYPE_DATASET_ADDED
       - TYPE_DATASET_REMOVED
+      - TYPE_ACTIVATION_SEGMENT_CALCULATED
+      - TYPE_ACTIVATION_SEGMENT_EXPORTED
+      - TYPE_ACTIVATION_SEGMENT_EXPORT_AUTOMATED
     type: string
   Collaboration_Management.GetCollaborationResponse:
     properties:
@@ -6438,6 +6442,7 @@ definitions:
       - ENTITY_DESTINATION
       - ENTITY_AUDIENCE
       - ENTITY_SEGMENT
+      - ENTITY_ACTIVATION_SEGMENT
     type: string
   Error:
     description: Error is used to define an error from an InfoSum API.
@@ -6526,6 +6531,9 @@ definitions:
       - TYPE_PRIVATE_PATH_ID_ROTATED
       - TYPE_DATASET_ADDED
       - TYPE_DATASET_REMOVED
+      - TYPE_ACTIVATION_SEGMENT_CALCULATED
+      - TYPE_ACTIVATION_SEGMENT_EXPORTED
+      - TYPE_ACTIVATION_SEGMENT_EXPORT_AUTOMATED
     type: string
   ExecuteImportResponse:
     description: the response from the ExecuteImport method.
