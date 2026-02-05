@@ -5301,6 +5301,10 @@
 					},
 					"type": "array"
 				},
+				"include_subfolders": {
+					"description": "Whether to include files in subfolders of the folder. Only applies when `folder` is set.",
+					"type": "boolean"
+				},
 				"recordset_name": {
 					"description": "The name given to the recordset that will be created.",
 					"type": "string"
@@ -14356,6 +14360,10 @@
 						"type": "string"
 					},
 					"type": "array"
+				},
+				"include_subfolders": {
+					"description": "Whether to include files in subfolders of the folder. Only applies when `folder` is set.",
+					"type": "boolean"
 				},
 				"recordset_name": {
 					"description": "The name given to the recordset that will be created.",
