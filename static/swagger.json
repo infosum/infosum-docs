@@ -1879,7 +1879,7 @@
 			"description": "AttributeColumnStatsResponse is the response returned by AttributeColumnStats method.",
 			"properties": {
 				"attribute_stats": {
-					"description": "AttributeStats is a list of all attribute columns in the dataset.",
+					"description": "A list of all attribute columns in the dataset.",
 					"items": {
 						"$ref": "#/definitions/Collaboration_Datasets.RepresentationStats",
 						"type": "object"
@@ -3413,7 +3413,7 @@
 			"description": "AttributeColumnStatsResponse is the response returned by AttributeColumnStats method.",
 			"properties": {
 				"attribute_stats": {
-					"description": "AttributeStats is a list of all attribute columns in the dataset.",
+					"description": "A list of all attribute columns in the dataset.",
 					"items": {
 						"$ref": "#/definitions/Collaboration_Datasets.RepresentationStats",
 						"type": "object"
@@ -3536,11 +3536,24 @@
 			],
 			"type": "string"
 		},
+		"Collaboration_Datasets.Doubles": {
+			"description": "Doubles are repeated double.",
+			"properties": {
+				"values": {
+					"items": {
+						"format": "double",
+						"type": "number"
+					},
+					"type": "array"
+				}
+			},
+			"type": "object"
+		},
 		"Collaboration_Datasets.ExportColumnStatsResponse": {
 			"description": "ExportColumnStatsResponse is the response to ExportColumnStats method.",
 			"properties": {
 				"export_column_stats": {
-					"description": "ExportColumnStats is a list of all export columns in the dataset.",
+					"description": "A list of all export columns in the dataset.",
 					"items": {
 						"$ref": "#/definitions/Collaboration_Datasets.v2.ExportColumnStats",
 						"type": "object"
@@ -3628,6 +3641,22 @@
 			"title": "GetDatasetDetailsRequest _",
 			"type": "object"
 		},
+		"Collaboration_Datasets.Int64Range": {
+			"description": "Int64Range represents an int64 range value.",
+			"properties": {
+				"lower": {
+					"description": "The inclusive lower bound of the range.",
+					"format": "int64",
+					"type": "string"
+				},
+				"upper": {
+					"description": "The exclusive upper bound of the range.",
+					"format": "int64",
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
 		"Collaboration_Datasets.KeyColumnStatsResponse": {
 			"description": "KeyColumnStatsResponse is the response returned by KeyColumnStats method.",
 			"properties": {
@@ -3639,7 +3668,7 @@
 					"type": "object"
 				},
 				"key_stats": {
-					"description": "KeyColumnStats is a list of all key columns in the dataset.",
+					"description": "A list of all key columns in the dataset.",
 					"items": {
 						"$ref": "#/definitions/Collaboration_Datasets.v2.KeyColumnStats",
 						"type": "object"
@@ -3699,6 +3728,40 @@
 			},
 			"type": "object"
 		},
+		"Collaboration_Datasets.Occurrence": {
+			"description": "Occurrence is a pair of value and frequency.",
+			"properties": {
+				"frequency": {
+					"description": "The decimal fraction of the frequency of this value in the column.",
+					"format": "double",
+					"type": "number"
+				},
+				"int_range": {
+					"$ref": "#/definitions/Collaboration_Datasets.Int64Range"
+				},
+				"int_value": {
+					"format": "int64",
+					"type": "string"
+				},
+				"string_value": {
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Collaboration_Datasets.Occurrences": {
+			"description": "Occurrences are repeated Occurrence.",
+			"properties": {
+				"occurrences": {
+					"items": {
+						"$ref": "#/definitions/Collaboration_Datasets.Occurrence",
+						"type": "object"
+					},
+					"type": "array"
+				}
+			},
+			"type": "object"
+		},
 		"Collaboration_Datasets.Region": {
 			"default": "UNKNOWN",
 			"description": "Region enumerates the supported cloud providers and locations.\n\n - UNKNOWN: UNKNOWN means the region has not been defined.\n - AWS_EU_WEST_2: AWS_EU_WEST_2 means AWS Europe (London).\n - AWS_US_EAST_1: AWS_US_EAST_1 means AWS US East (N. Virginia).\n - IBM_EU_CENTRAL_1: IBM_EU_CENTRAL_1 means IBM MZR EU Central (Frankfurt).\n - AWS_EU_CENTRAL_1: AWS_EU_CENTRAL_1 means AWS Europe (Frankfurt).\n - AWS_AP_SOUTHEAST_2: AWS_AP_SOUTHEAST_2 means AWS Asia Pacific (Sydney)",
@@ -3716,29 +3779,49 @@
 			"description": "RepresentationStats holds stats information for a attribute column representation.",
 			"properties": {
 				"distinct_values": {
-					"description": "DistinctValues is the number of distinct values for this representation.",
+					"description": "The number of distinct values for this representation.",
 					"format": "uint64",
 					"type": "string"
 				},
+				"most_common": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Collaboration_Datasets.Occurrences"
+						}
+					],
+					"description": "An array of the most common values in the column, together with their accompanying frequencies."
+				},
 				"multi_value": {
-					"description": "MultiValue is set to true if this is a multi-value key column.",
+					"description": "Set to true if this is a multi-value key column.",
 					"type": "boolean"
 				},
 				"null_fraction": {
-					"description": "NullFraction is the fill rate for the representation. Calculated by total rows in dataset - valid values in representation, as a percentage of the total rows.",
+					"description": "The fill rate for the representation. Calculated by total rows in dataset - valid values in representation, as a percentage of the total rows.",
 					"format": "double",
 					"type": "number"
 				},
+				"percentiles": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Collaboration_Datasets.Doubles"
+						}
+					],
+					"description": "Percentiles from 0 to 100 with stepsize 1. The 0%-percentile is the Minimum, the 100%-percentile the Maximum."
+				},
 				"representation_id": {
-					"description": "RepresentationId is the ID of the representation.",
+					"description": "The ID of the representation.",
 					"type": "string"
 				},
 				"representation_label": {
-					"description": "RepresentationLabel is the name of the representation.",
+					"description": "The name of the representation.",
+					"type": "string"
+				},
+				"type": {
+					"description": "The type of this attribute",
 					"type": "string"
 				},
 				"valid_values": {
-					"description": "ValidValues is the number of valid values for this representation.",
+					"description": "The number of valid values for this representation.",
 					"format": "uint64",
 					"type": "string"
 				}
@@ -3762,22 +3845,22 @@
 			"description": "SummaryStatsResponse is the response returned by SummaryStats method.",
 			"properties": {
 				"attribute_columns": {
-					"description": "AttributeColumns is the number of attributes of the dataset.",
+					"description": "The number of attributes in the dataset.",
 					"format": "uint64",
 					"type": "string"
 				},
 				"export_columns": {
-					"description": "ExportColumns is the number of export columns of the dataset.",
+					"description": "The number of export columns in the dataset.",
 					"format": "uint64",
 					"type": "string"
 				},
 				"key_columns": {
-					"description": "KeyColumns is the number of keys of the dataset.",
+					"description": "The number of keys in the dataset.",
 					"format": "uint64",
 					"type": "string"
 				},
 				"total_rows": {
-					"description": "TotalRows is the total rows of the dataset.",
+					"description": "The total number of rows in the dataset.",
 					"format": "uint64",
 					"type": "string"
 				}
@@ -3787,25 +3870,25 @@
 		"Collaboration_Datasets.v2.ExportColumnStats": {
 			"properties": {
 				"column_label": {
-					"description": "ColumnLabel is the column label to which the export stats belong to.",
+					"description": "The column label to which the export stats belong to.",
 					"type": "string"
 				},
 				"distinct_values": {
-					"description": "DistinctValues is the number of distinct values for this key column.",
+					"description": "The number of distinct values for this key column.",
 					"format": "uint64",
 					"type": "string"
 				},
 				"multi_values": {
-					"description": "MultiValue is set to true if this is a multi-value key column.",
+					"description": "Set to true if this is a multi-value key column.",
 					"type": "boolean"
 				},
 				"null_fraction": {
-					"description": "NullFraction is the fill rate for the representation. Calculated by total rows in dataset - valid values in export column, as a percentage of the total rows.",
+					"description": "The fill rate for the representation. Calculated by total rows in dataset - valid values in export column, as a percentage of the total rows.",
 					"format": "double",
 					"type": "number"
 				},
 				"valid_values": {
-					"description": "ValidValues is the number of valid values for this key column.",
+					"description": "The number of valid values for this key column.",
 					"format": "uint64",
 					"type": "string"
 				}
@@ -3817,39 +3900,39 @@
 			"description": "KeyColumnStats holds stats information for a key column.",
 			"properties": {
 				"distinct_identifiers": {
-					"description": "DistinctIdentifiers is the number of distinct identifiers for this key column.",
+					"description": "The number of distinct identifiers for this key column.",
 					"format": "uint64",
 					"type": "string"
 				},
 				"distinct_values": {
-					"description": "DistinctValues is the number of distinct values for this key column.",
+					"description": "The number of distinct values for this key column.",
 					"format": "uint64",
 					"type": "string"
 				},
 				"identifiers": {
-					"description": "Identifiers is the number of identifiers for this key column.",
+					"description": "The number of identifiers for this key column.",
 					"format": "uint64",
 					"type": "string"
 				},
 				"key_id": {
-					"description": "KeyId is the ID of the key to which the stats belong.",
+					"description": "The ID of the key to which the stats belong.",
 					"type": "string"
 				},
 				"key_label": {
-					"description": "KeyLabel is the name of the key to which the stats belong.",
+					"description": "The name of the key to which the stats belong.",
 					"type": "string"
 				},
 				"multi_value": {
-					"description": "MultiValue is set to true if this is a multi-value key column.",
+					"description": "Set to true if this is a multi-value key column.",
 					"type": "boolean"
 				},
 				"null_fraction": {
-					"description": "NullFraction is the fill rate for the key. Calculated by total rows in dataset - valid values in column, as a percentage of the total rows.",
+					"description": "The fill rate for the key. Calculated by total rows in dataset - valid values in column, as a percentage of the total rows.",
 					"format": "double",
 					"type": "number"
 				},
 				"valid_values": {
-					"description": "ValidValues is the number of valid values for this key column.",
+					"description": "The number of valid values for this key column.",
 					"format": "uint64",
 					"type": "string"
 				}
@@ -6928,6 +7011,19 @@
 			},
 			"type": "object"
 		},
+		"Doubles": {
+			"description": "Doubles are repeated double.",
+			"properties": {
+				"values": {
+					"items": {
+						"format": "double",
+						"type": "number"
+					},
+					"type": "array"
+				}
+			},
+			"type": "object"
+		},
 		"DuplicateDestinationInstanceBody": {
 			"type": "object"
 		},
@@ -7384,7 +7480,7 @@
 			"description": "ExportColumnStatsResponse is the response to ExportColumnStats method.",
 			"properties": {
 				"export_column_stats": {
-					"description": "ExportColumnStats is a list of all export columns in the dataset.",
+					"description": "A list of all export columns in the dataset.",
 					"items": {
 						"$ref": "#/definitions/Collaboration_Datasets.v2.ExportColumnStats",
 						"type": "object"
@@ -10021,12 +10117,12 @@
 			"description": "Int64Range represents an int64 range value.",
 			"properties": {
 				"lower": {
-					"description": "lower represents the inclusive lower bound of the range.",
+					"description": "The inclusive lower bound of the range.",
 					"format": "int64",
 					"type": "string"
 				},
 				"upper": {
-					"description": "upper represents the exclusive upper bound of the range.",
+					"description": "The exclusive upper bound of the range.",
 					"format": "int64",
 					"type": "string"
 				}
@@ -10166,7 +10262,7 @@
 					"type": "object"
 				},
 				"key_stats": {
-					"description": "KeyColumnStats is a list of all key columns in the dataset.",
+					"description": "A list of all key columns in the dataset.",
 					"items": {
 						"$ref": "#/definitions/Collaboration_Datasets.v2.KeyColumnStats",
 						"type": "object"
@@ -12491,6 +12587,40 @@
 				"NULL_VALUE"
 			],
 			"type": "string"
+		},
+		"Occurrence": {
+			"description": "Occurrence is a pair of value and frequency.",
+			"properties": {
+				"frequency": {
+					"description": "The decimal fraction of the frequency of this value in the column.",
+					"format": "double",
+					"type": "number"
+				},
+				"int_range": {
+					"$ref": "#/definitions/Collaboration_Datasets.Int64Range"
+				},
+				"int_value": {
+					"format": "int64",
+					"type": "string"
+				},
+				"string_value": {
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Occurrences": {
+			"description": "Occurrences are repeated Occurrence.",
+			"properties": {
+				"occurrences": {
+					"items": {
+						"$ref": "#/definitions/Collaboration_Datasets.Occurrence",
+						"type": "object"
+					},
+					"type": "array"
+				}
+			},
+			"type": "object"
 		},
 		"Origin": {
 			"description": "Origin is the entity that contains information about the origin of a file.",
@@ -15674,29 +15804,49 @@
 			"description": "RepresentationStats holds stats information for a attribute column representation.",
 			"properties": {
 				"distinct_values": {
-					"description": "DistinctValues is the number of distinct values for this representation.",
+					"description": "The number of distinct values for this representation.",
 					"format": "uint64",
 					"type": "string"
 				},
+				"most_common": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Collaboration_Datasets.Occurrences"
+						}
+					],
+					"description": "An array of the most common values in the column, together with their accompanying frequencies."
+				},
 				"multi_value": {
-					"description": "MultiValue is set to true if this is a multi-value key column.",
+					"description": "Set to true if this is a multi-value key column.",
 					"type": "boolean"
 				},
 				"null_fraction": {
-					"description": "NullFraction is the fill rate for the representation. Calculated by total rows in dataset - valid values in representation, as a percentage of the total rows.",
+					"description": "The fill rate for the representation. Calculated by total rows in dataset - valid values in representation, as a percentage of the total rows.",
 					"format": "double",
 					"type": "number"
 				},
+				"percentiles": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Collaboration_Datasets.Doubles"
+						}
+					],
+					"description": "Percentiles from 0 to 100 with stepsize 1. The 0%-percentile is the Minimum, the 100%-percentile the Maximum."
+				},
 				"representation_id": {
-					"description": "RepresentationId is the ID of the representation.",
+					"description": "The ID of the representation.",
 					"type": "string"
 				},
 				"representation_label": {
-					"description": "RepresentationLabel is the name of the representation.",
+					"description": "The name of the representation.",
+					"type": "string"
+				},
+				"type": {
+					"description": "The type of this attribute",
 					"type": "string"
 				},
 				"valid_values": {
-					"description": "ValidValues is the number of valid values for this representation.",
+					"description": "The number of valid values for this representation.",
 					"format": "uint64",
 					"type": "string"
 				}
@@ -16090,22 +16240,22 @@
 			"description": "SummaryStatsResponse is the response returned by SummaryStats method.",
 			"properties": {
 				"attribute_columns": {
-					"description": "AttributeColumns is the number of attributes of the dataset.",
+					"description": "The number of attributes in the dataset.",
 					"format": "uint64",
 					"type": "string"
 				},
 				"export_columns": {
-					"description": "ExportColumns is the number of export columns of the dataset.",
+					"description": "The number of export columns in the dataset.",
 					"format": "uint64",
 					"type": "string"
 				},
 				"key_columns": {
-					"description": "KeyColumns is the number of keys of the dataset.",
+					"description": "The number of keys in the dataset.",
 					"format": "uint64",
 					"type": "string"
 				},
 				"total_rows": {
-					"description": "TotalRows is the total rows of the dataset.",
+					"description": "The total number of rows in the dataset.",
 					"format": "uint64",
 					"type": "string"
 				}
@@ -16598,25 +16748,25 @@
 		"v2.ExportColumnStats": {
 			"properties": {
 				"column_label": {
-					"description": "ColumnLabel is the column label to which the export stats belong to.",
+					"description": "The column label to which the export stats belong to.",
 					"type": "string"
 				},
 				"distinct_values": {
-					"description": "DistinctValues is the number of distinct values for this key column.",
+					"description": "The number of distinct values for this key column.",
 					"format": "uint64",
 					"type": "string"
 				},
 				"multi_values": {
-					"description": "MultiValue is set to true if this is a multi-value key column.",
+					"description": "Set to true if this is a multi-value key column.",
 					"type": "boolean"
 				},
 				"null_fraction": {
-					"description": "NullFraction is the fill rate for the representation. Calculated by total rows in dataset - valid values in export column, as a percentage of the total rows.",
+					"description": "The fill rate for the representation. Calculated by total rows in dataset - valid values in export column, as a percentage of the total rows.",
 					"format": "double",
 					"type": "number"
 				},
 				"valid_values": {
-					"description": "ValidValues is the number of valid values for this key column.",
+					"description": "The number of valid values for this key column.",
 					"format": "uint64",
 					"type": "string"
 				}
@@ -16628,39 +16778,39 @@
 			"description": "KeyColumnStats holds stats information for a key column.",
 			"properties": {
 				"distinct_identifiers": {
-					"description": "DistinctIdentifiers is the number of distinct identifiers for this key column.",
+					"description": "The number of distinct identifiers for this key column.",
 					"format": "uint64",
 					"type": "string"
 				},
 				"distinct_values": {
-					"description": "DistinctValues is the number of distinct values for this key column.",
+					"description": "The number of distinct values for this key column.",
 					"format": "uint64",
 					"type": "string"
 				},
 				"identifiers": {
-					"description": "Identifiers is the number of identifiers for this key column.",
+					"description": "The number of identifiers for this key column.",
 					"format": "uint64",
 					"type": "string"
 				},
 				"key_id": {
-					"description": "KeyId is the ID of the key to which the stats belong.",
+					"description": "The ID of the key to which the stats belong.",
 					"type": "string"
 				},
 				"key_label": {
-					"description": "KeyLabel is the name of the key to which the stats belong.",
+					"description": "The name of the key to which the stats belong.",
 					"type": "string"
 				},
 				"multi_value": {
-					"description": "MultiValue is set to true if this is a multi-value key column.",
+					"description": "Set to true if this is a multi-value key column.",
 					"type": "boolean"
 				},
 				"null_fraction": {
-					"description": "NullFraction is the fill rate for the key. Calculated by total rows in dataset - valid values in column, as a percentage of the total rows.",
+					"description": "The fill rate for the key. Calculated by total rows in dataset - valid values in column, as a percentage of the total rows.",
 					"format": "double",
 					"type": "number"
 				},
 				"valid_values": {
-					"description": "ValidValues is the number of valid values for this key column.",
+					"description": "The number of valid values for this key column.",
 					"format": "uint64",
 					"type": "string"
 				}
