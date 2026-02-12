@@ -3816,14 +3816,19 @@
 					"description": "The name of the representation.",
 					"type": "string"
 				},
-				"type": {
-					"description": "The type of this attribute",
-					"type": "string"
-				},
 				"valid_values": {
 					"description": "The number of valid values for this representation.",
 					"format": "uint64",
 					"type": "string"
+				},
+				"value_type": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Collaboration_Datasets.ValueType"
+						}
+					],
+					"description": "The type of this attribute",
+					"title": "value_type is the type of values stored in this column"
 				}
 			},
 			"type": "object"
@@ -3866,6 +3871,28 @@
 				}
 			},
 			"type": "object"
+		},
+		"Collaboration_Datasets.ValueType": {
+			"default": "VALUE_TYPE_INVALID",
+			"description": "ValueType is the type of data stored in each column.",
+			"enum": [
+				"VALUE_TYPE_INVALID",
+				"BYTES",
+				"STRING",
+				"INTEGER",
+				"FLOAT",
+				"BOOL",
+				"BYTES_SET",
+				"INTEGER_ARRAY",
+				"INTEGER_RANGE",
+				"INTEGER_SET",
+				"STRING_ARRAY",
+				"STRING_SET",
+				"FLOAT_ARRAY",
+				"TIMESTAMP",
+				"TIMESTAMP_ARRAY"
+			],
+			"type": "string"
 		},
 		"Collaboration_Datasets.v2.ExportColumnStats": {
 			"properties": {
@@ -15841,14 +15868,19 @@
 					"description": "The name of the representation.",
 					"type": "string"
 				},
-				"type": {
-					"description": "The type of this attribute",
-					"type": "string"
-				},
 				"valid_values": {
 					"description": "The number of valid values for this representation.",
 					"format": "uint64",
 					"type": "string"
+				},
+				"value_type": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Collaboration_Datasets.ValueType"
+						}
+					],
+					"description": "The type of this attribute",
+					"title": "value_type is the type of values stored in this column"
 				}
 			},
 			"type": "object"
