@@ -14351,6 +14351,10 @@
 					"readOnly": true,
 					"type": "string"
 				},
+				"include_subfolders": {
+					"description": "Whether to include files in subfolders when processing.",
+					"type": "boolean"
+				},
 				"name": {
 					"description": "Name is a unique name to help identify the config. Valid characters are alphanumeric, '_', '-', ' '.",
 					"type": "string"
@@ -14396,6 +14400,10 @@
 				},
 				"header_row": {
 					"description": "Indicates whether or not the input files have a header row.",
+					"type": "boolean"
+				},
+				"include_subfolders": {
+					"description": "Whether to include files in subfolders when processing.",
 					"type": "boolean"
 				},
 				"name": {
@@ -26400,6 +26408,10 @@
 								},
 								"header_row": {
 									"description": "HeaderRow indicates whether the files have a header row.",
+									"type": "boolean"
+								},
+								"include_subfolders": {
+									"description": "Whether to include files in subfolders when processing.",
 									"type": "boolean"
 								},
 								"name": {
