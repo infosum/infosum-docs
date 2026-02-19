@@ -7292,6 +7292,10 @@
 					"description": "HeaderRow indicates whether the input files contain a header row.",
 					"type": "boolean"
 				},
+				"include_subfolders": {
+					"description": "Whether to include files in subfolders when processing.",
+					"type": "boolean"
+				},
 				"primary_delimiter": {
 					"description": "PrimaryDelimiter is the primary delimiter of the input files.",
 					"type": "string"
@@ -14623,6 +14627,10 @@
 				},
 				"header_row": {
 					"description": "HeaderRow indicates whether the input files contain a header row.",
+					"type": "boolean"
+				},
+				"include_subfolders": {
+					"description": "Whether to include files in subfolders when processing.",
 					"type": "boolean"
 				},
 				"primary_delimiter": {
