@@ -1915,6 +1915,14 @@
 				"type": {
 					"description": "The type of this attribute",
 					"type": "string"
+				},
+				"value_type": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Collaboration_Datasets.ValueType"
+						}
+					],
+					"description": "The type of this attribute"
 				}
 			},
 			"type": "object"
@@ -1929,6 +1937,14 @@
 				"type": {
 					"description": "The type of this attribute",
 					"type": "string"
+				},
+				"value_type": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Collaboration_Datasets.ValueType"
+						}
+					],
+					"description": "The type of this attribute"
 				}
 			},
 			"type": "object"
@@ -3449,6 +3465,14 @@
 				"type": {
 					"description": "The type of this attribute",
 					"type": "string"
+				},
+				"value_type": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Collaboration_Datasets.ValueType"
+						}
+					],
+					"description": "The type of this attribute"
 				}
 			},
 			"type": "object"
@@ -3463,6 +3487,14 @@
 				"type": {
 					"description": "The type of this attribute",
 					"type": "string"
+				},
+				"value_type": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Collaboration_Datasets.ValueType"
+						}
+					],
+					"description": "The type of this attribute"
 				}
 			},
 			"type": "object"
