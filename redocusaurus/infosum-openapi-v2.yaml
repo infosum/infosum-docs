@@ -1802,7 +1802,7 @@ definitions:
       AttributeColumnStats method.
     properties:
       attribute_stats:
-        description: AttributeStats is a list of all attribute columns in the dataset.
+        description: A list of all attribute columns in the dataset.
         items:
           $ref: '#/definitions/Collaboration_Datasets.RepresentationStats'
           type: object
@@ -1833,6 +1833,10 @@ definitions:
       type:
         description: The type of this attribute
         type: string
+      value_type:
+        allOf:
+          - $ref: '#/definitions/Collaboration_Datasets.ValueType'
+        description: The type of this attribute
     type: object
   AttributeSummary:
     description: AttributeSummary provides summary information about an attribute.
@@ -1843,6 +1847,10 @@ definitions:
       type:
         description: The type of this attribute
         type: string
+      value_type:
+        allOf:
+          - $ref: '#/definitions/Collaboration_Datasets.ValueType'
+        description: The type of this attribute
     type: object
   AutomationStep:
     description: >-
@@ -3095,7 +3103,7 @@ definitions:
       AttributeColumnStats method.
     properties:
       attribute_stats:
-        description: AttributeStats is a list of all attribute columns in the dataset.
+        description: A list of all attribute columns in the dataset.
         items:
           $ref: '#/definitions/Collaboration_Datasets.RepresentationStats'
           type: object
@@ -3126,6 +3134,10 @@ definitions:
       type:
         description: The type of this attribute
         type: string
+      value_type:
+        allOf:
+          - $ref: '#/definitions/Collaboration_Datasets.ValueType'
+        description: The type of this attribute
     type: object
   Collaboration_Datasets.AttributeSummary:
     description: AttributeSummary provides summary information about an attribute.
@@ -3136,6 +3148,10 @@ definitions:
       type:
         description: The type of this attribute
         type: string
+      value_type:
+        allOf:
+          - $ref: '#/definitions/Collaboration_Datasets.ValueType'
+        description: The type of this attribute
     type: object
   Collaboration_Datasets.DatasetSummary:
     description: DatasetSummary is the summary view of a dataset.
@@ -3197,11 +3213,20 @@ definitions:
       - DATASET_TYPE_IDENTITY
       - DATASET_TYPE_UNIFIED
     type: string
+  Collaboration_Datasets.Doubles:
+    description: Doubles are repeated double.
+    properties:
+      values:
+        items:
+          format: double
+          type: number
+        type: array
+    type: object
   Collaboration_Datasets.ExportColumnStatsResponse:
     description: ExportColumnStatsResponse is the response to ExportColumnStats method.
     properties:
       export_column_stats:
-        description: ExportColumnStats is a list of all export columns in the dataset.
+        description: A list of all export columns in the dataset.
         items:
           $ref: '#/definitions/Collaboration_Datasets.v2.ExportColumnStats'
           type: object
@@ -3265,6 +3290,18 @@ definitions:
         description: The type of the dataset.
     title: GetDatasetDetailsRequest _
     type: object
+  Collaboration_Datasets.Int64Range:
+    description: Int64Range represents an int64 range value.
+    properties:
+      lower:
+        description: The inclusive lower bound of the range.
+        format: int64
+        type: string
+      upper:
+        description: The exclusive upper bound of the range.
+        format: int64
+        type: string
+    type: object
   Collaboration_Datasets.KeyColumnStatsResponse:
     description: KeyColumnStatsResponse is the response returned by KeyColumnStats method.
     properties:
@@ -3274,7 +3311,7 @@ definitions:
         description: KeyIdToStats is a map of key column ID to its corresponding stats.
         type: object
       key_stats:
-        description: KeyColumnStats is a list of all key columns in the dataset.
+        description: A list of all key columns in the dataset.
         items:
           $ref: '#/definitions/Collaboration_Datasets.v2.KeyColumnStats'
           type: object
@@ -3320,6 +3357,30 @@ definitions:
       pagination:
         $ref: '#/definitions/PaginationResponse'
     type: object
+  Collaboration_Datasets.Occurrence:
+    description: Occurrence is a pair of value and frequency.
+    properties:
+      frequency:
+        description: The decimal fraction of the frequency of this value in the column.
+        format: double
+        type: number
+      int_range:
+        $ref: '#/definitions/Collaboration_Datasets.Int64Range'
+      int_value:
+        format: int64
+        type: string
+      string_value:
+        type: string
+    type: object
+  Collaboration_Datasets.Occurrences:
+    description: Occurrences are repeated Occurrence.
+    properties:
+      occurrences:
+        items:
+          $ref: '#/definitions/Collaboration_Datasets.Occurrence'
+          type: object
+        type: array
+    type: object
   Collaboration_Datasets.Region:
     default: UNKNOWN
     description: |-
@@ -3345,31 +3406,46 @@ definitions:
       representation.
     properties:
       distinct_values:
-        description: >-
-          DistinctValues is the number of distinct values for this
-          representation.
+        description: The number of distinct values for this representation.
         format: uint64
         type: string
+      most_common:
+        allOf:
+          - $ref: '#/definitions/Collaboration_Datasets.Occurrences'
+        description: >-
+          An array of the most common values in the column, together with their
+          accompanying frequencies.
       multi_value:
-        description: MultiValue is set to true if this is a multi-value key column.
+        description: Set to true if this is a multi-value key column.
         type: boolean
       null_fraction:
         description: >-
-          NullFraction is the fill rate for the representation. Calculated by
-          total rows in dataset - valid values in representation, as a
-          percentage of the total rows.
+          The fill rate for the representation. Calculated by total rows in
+          dataset - valid values in representation, as a percentage of the total
+          rows.
         format: double
         type: number
+      percentiles:
+        allOf:
+          - $ref: '#/definitions/Collaboration_Datasets.Doubles'
+        description: >-
+          Percentiles from 0 to 100 with stepsize 1. The 0%-percentile is the
+          Minimum, the 100%-percentile the Maximum.
       representation_id:
-        description: RepresentationId is the ID of the representation.
+        description: The ID of the representation.
         type: string
       representation_label:
-        description: RepresentationLabel is the name of the representation.
+        description: The name of the representation.
         type: string
       valid_values:
-        description: ValidValues is the number of valid values for this representation.
+        description: The number of valid values for this representation.
         format: uint64
         type: string
+      value_type:
+        allOf:
+          - $ref: '#/definitions/Collaboration_Datasets.ValueType'
+        description: The type of this attribute
+        title: value_type is the type of values stored in this column
     type: object
   Collaboration_Datasets.RepresentationStatsList:
     description: >-
@@ -3386,43 +3462,63 @@ definitions:
     description: SummaryStatsResponse is the response returned by SummaryStats method.
     properties:
       attribute_columns:
-        description: AttributeColumns is the number of attributes of the dataset.
+        description: The number of attributes in the dataset.
         format: uint64
         type: string
       export_columns:
-        description: ExportColumns is the number of export columns of the dataset.
+        description: The number of export columns in the dataset.
         format: uint64
         type: string
       key_columns:
-        description: KeyColumns is the number of keys of the dataset.
+        description: The number of keys in the dataset.
         format: uint64
         type: string
       total_rows:
-        description: TotalRows is the total rows of the dataset.
+        description: The total number of rows in the dataset.
         format: uint64
         type: string
     type: object
+  Collaboration_Datasets.ValueType:
+    default: VALUE_TYPE_INVALID
+    description: ValueType is the type of data stored in each column.
+    enum:
+      - VALUE_TYPE_INVALID
+      - BYTES
+      - STRING
+      - INTEGER
+      - FLOAT
+      - BOOL
+      - BYTES_SET
+      - INTEGER_ARRAY
+      - INTEGER_RANGE
+      - INTEGER_SET
+      - STRING_ARRAY
+      - STRING_SET
+      - FLOAT_ARRAY
+      - TIMESTAMP
+      - TIMESTAMP_ARRAY
+    type: string
   Collaboration_Datasets.v2.ExportColumnStats:
     properties:
       column_label:
-        description: ColumnLabel is the column label to which the export stats belong to.
+        description: The column label to which the export stats belong to.
         type: string
       distinct_values:
-        description: DistinctValues is the number of distinct values for this key column.
+        description: The number of distinct values for this key column.
         format: uint64
         type: string
       multi_values:
-        description: MultiValue is set to true if this is a multi-value key column.
+        description: Set to true if this is a multi-value key column.
         type: boolean
       null_fraction:
         description: >-
-          NullFraction is the fill rate for the representation. Calculated by
-          total rows in dataset - valid values in export column, as a percentage
-          of the total rows.
+          The fill rate for the representation. Calculated by total rows in
+          dataset - valid values in export column, as a percentage of the total
+          rows.
         format: double
         type: number
       valid_values:
-        description: ValidValues is the number of valid values for this key column.
+        description: The number of valid values for this key column.
         format: uint64
         type: string
     title: ExportColumnStats holds stats information for an export column
@@ -3431,36 +3527,34 @@ definitions:
     description: KeyColumnStats holds stats information for a key column.
     properties:
       distinct_identifiers:
-        description: >-
-          DistinctIdentifiers is the number of distinct identifiers for this key
-          column.
+        description: The number of distinct identifiers for this key column.
         format: uint64
         type: string
       distinct_values:
-        description: DistinctValues is the number of distinct values for this key column.
+        description: The number of distinct values for this key column.
         format: uint64
         type: string
       identifiers:
-        description: Identifiers is the number of identifiers for this key column.
+        description: The number of identifiers for this key column.
         format: uint64
         type: string
       key_id:
-        description: KeyId is the ID of the key to which the stats belong.
+        description: The ID of the key to which the stats belong.
         type: string
       key_label:
-        description: KeyLabel is the name of the key to which the stats belong.
+        description: The name of the key to which the stats belong.
         type: string
       multi_value:
-        description: MultiValue is set to true if this is a multi-value key column.
+        description: Set to true if this is a multi-value key column.
         type: boolean
       null_fraction:
         description: >-
-          NullFraction is the fill rate for the key. Calculated by total rows in
-          dataset - valid values in column, as a percentage of the total rows.
+          The fill rate for the key. Calculated by total rows in dataset - valid
+          values in column, as a percentage of the total rows.
         format: double
         type: number
       valid_values:
-        description: ValidValues is the number of valid values for this key column.
+        description: The number of valid values for this key column.
         format: uint64
         type: string
     type: object
@@ -4970,6 +5064,11 @@ definitions:
         items:
           type: string
         type: array
+      include_subfolders:
+        description: >-
+          Whether to include files in subfolders of the folder. Only applies
+          when `folder` is set.
+        type: boolean
       recordset_name:
         description: The name given to the recordset that will be created.
         type: string
@@ -6412,6 +6511,15 @@ definitions:
         format: int64
         type: string
     type: object
+  Doubles:
+    description: Doubles are repeated double.
+    properties:
+      values:
+        items:
+          format: double
+          type: number
+        type: array
+    type: object
   DuplicateDestinationInstanceBody:
     type: object
   DuplicateDestinationInstanceResponse:
@@ -6612,6 +6720,9 @@ definitions:
       header_row:
         description: HeaderRow indicates whether the input files contain a header row.
         type: boolean
+      include_subfolders:
+        description: Whether to include files in subfolders when processing.
+        type: boolean
       primary_delimiter:
         description: PrimaryDelimiter is the primary delimiter of the input files.
         type: string
@@ -6797,7 +6908,7 @@ definitions:
     description: ExportColumnStatsResponse is the response to ExportColumnStats method.
     properties:
       export_column_stats:
-        description: ExportColumnStats is a list of all export columns in the dataset.
+        description: A list of all export columns in the dataset.
         items:
           $ref: '#/definitions/Collaboration_Datasets.v2.ExportColumnStats'
           type: object
@@ -8901,11 +9012,11 @@ definitions:
     description: Int64Range represents an int64 range value.
     properties:
       lower:
-        description: lower represents the inclusive lower bound of the range.
+        description: The inclusive lower bound of the range.
         format: int64
         type: string
       upper:
-        description: upper represents the exclusive upper bound of the range.
+        description: The exclusive upper bound of the range.
         format: int64
         type: string
     type: object
@@ -9030,7 +9141,7 @@ definitions:
         description: KeyIdToStats is a map of key column ID to its corresponding stats.
         type: object
       key_stats:
-        description: KeyColumnStats is a list of all key columns in the dataset.
+        description: A list of all key columns in the dataset.
         items:
           $ref: '#/definitions/Collaboration_Datasets.v2.KeyColumnStats'
           type: object
@@ -11040,6 +11151,30 @@ definitions:
     enum:
       - NULL_VALUE
     type: string
+  Occurrence:
+    description: Occurrence is a pair of value and frequency.
+    properties:
+      frequency:
+        description: The decimal fraction of the frequency of this value in the column.
+        format: double
+        type: number
+      int_range:
+        $ref: '#/definitions/Collaboration_Datasets.Int64Range'
+      int_value:
+        format: int64
+        type: string
+      string_value:
+        type: string
+    type: object
+  Occurrences:
+    description: Occurrences are repeated Occurrence.
+    properties:
+      occurrences:
+        items:
+          $ref: '#/definitions/Collaboration_Datasets.Occurrence'
+          type: object
+        type: array
+    type: object
   Origin:
     description: Origin is the entity that contains information about the origin of a file.
     properties:
@@ -12572,6 +12707,9 @@ definitions:
         description: Output only. id is the config ID.
         readOnly: true
         type: string
+      include_subfolders:
+        description: Whether to include files in subfolders when processing.
+        type: boolean
       name:
         description: >-
           Name is a unique name to help identify the config. Valid characters
@@ -12616,6 +12754,9 @@ definitions:
         type: array
       header_row:
         description: Indicates whether or not the input files have a header row.
+        type: boolean
+      include_subfolders:
+        description: Whether to include files in subfolders when processing.
         type: boolean
       name:
         description: The unique name to identify the config.
@@ -12713,6 +12854,11 @@ definitions:
         items:
           type: string
         type: array
+      include_subfolders:
+        description: >-
+          Whether to include files in subfolders of the folder. Only applies
+          when `folder` is set.
+        type: boolean
       recordset_name:
         description: The name given to the recordset that will be created.
         type: string
@@ -12789,6 +12935,9 @@ definitions:
         type: array
       header_row:
         description: HeaderRow indicates whether the input files contain a header row.
+        type: boolean
+      include_subfolders:
+        description: Whether to include files in subfolders when processing.
         type: boolean
       primary_delimiter:
         description: PrimaryDelimiter is the primary delimiter of the input files.
@@ -13767,31 +13916,46 @@ definitions:
       representation.
     properties:
       distinct_values:
-        description: >-
-          DistinctValues is the number of distinct values for this
-          representation.
+        description: The number of distinct values for this representation.
         format: uint64
         type: string
+      most_common:
+        allOf:
+          - $ref: '#/definitions/Collaboration_Datasets.Occurrences'
+        description: >-
+          An array of the most common values in the column, together with their
+          accompanying frequencies.
       multi_value:
-        description: MultiValue is set to true if this is a multi-value key column.
+        description: Set to true if this is a multi-value key column.
         type: boolean
       null_fraction:
         description: >-
-          NullFraction is the fill rate for the representation. Calculated by
-          total rows in dataset - valid values in representation, as a
-          percentage of the total rows.
+          The fill rate for the representation. Calculated by total rows in
+          dataset - valid values in representation, as a percentage of the total
+          rows.
         format: double
         type: number
+      percentiles:
+        allOf:
+          - $ref: '#/definitions/Collaboration_Datasets.Doubles'
+        description: >-
+          Percentiles from 0 to 100 with stepsize 1. The 0%-percentile is the
+          Minimum, the 100%-percentile the Maximum.
       representation_id:
-        description: RepresentationId is the ID of the representation.
+        description: The ID of the representation.
         type: string
       representation_label:
-        description: RepresentationLabel is the name of the representation.
+        description: The name of the representation.
         type: string
       valid_values:
-        description: ValidValues is the number of valid values for this representation.
+        description: The number of valid values for this representation.
         format: uint64
         type: string
+      value_type:
+        allOf:
+          - $ref: '#/definitions/Collaboration_Datasets.ValueType'
+        description: The type of this attribute
+        title: value_type is the type of values stored in this column
     type: object
   RepresentationStatsList:
     description: >-
@@ -14136,19 +14300,19 @@ definitions:
     description: SummaryStatsResponse is the response returned by SummaryStats method.
     properties:
       attribute_columns:
-        description: AttributeColumns is the number of attributes of the dataset.
+        description: The number of attributes in the dataset.
         format: uint64
         type: string
       export_columns:
-        description: ExportColumns is the number of export columns of the dataset.
+        description: The number of export columns in the dataset.
         format: uint64
         type: string
       key_columns:
-        description: KeyColumns is the number of keys of the dataset.
+        description: The number of keys in the dataset.
         format: uint64
         type: string
       total_rows:
-        description: TotalRows is the total rows of the dataset.
+        description: The total number of rows in the dataset.
         format: uint64
         type: string
     type: object
@@ -14591,24 +14755,24 @@ definitions:
   v2.ExportColumnStats:
     properties:
       column_label:
-        description: ColumnLabel is the column label to which the export stats belong to.
+        description: The column label to which the export stats belong to.
         type: string
       distinct_values:
-        description: DistinctValues is the number of distinct values for this key column.
+        description: The number of distinct values for this key column.
         format: uint64
         type: string
       multi_values:
-        description: MultiValue is set to true if this is a multi-value key column.
+        description: Set to true if this is a multi-value key column.
         type: boolean
       null_fraction:
         description: >-
-          NullFraction is the fill rate for the representation. Calculated by
-          total rows in dataset - valid values in export column, as a percentage
-          of the total rows.
+          The fill rate for the representation. Calculated by total rows in
+          dataset - valid values in export column, as a percentage of the total
+          rows.
         format: double
         type: number
       valid_values:
-        description: ValidValues is the number of valid values for this key column.
+        description: The number of valid values for this key column.
         format: uint64
         type: string
     title: ExportColumnStats holds stats information for an export column
@@ -14617,36 +14781,34 @@ definitions:
     description: KeyColumnStats holds stats information for a key column.
     properties:
       distinct_identifiers:
-        description: >-
-          DistinctIdentifiers is the number of distinct identifiers for this key
-          column.
+        description: The number of distinct identifiers for this key column.
         format: uint64
         type: string
       distinct_values:
-        description: DistinctValues is the number of distinct values for this key column.
+        description: The number of distinct values for this key column.
         format: uint64
         type: string
       identifiers:
-        description: Identifiers is the number of identifiers for this key column.
+        description: The number of identifiers for this key column.
         format: uint64
         type: string
       key_id:
-        description: KeyId is the ID of the key to which the stats belong.
+        description: The ID of the key to which the stats belong.
         type: string
       key_label:
-        description: KeyLabel is the name of the key to which the stats belong.
+        description: The name of the key to which the stats belong.
         type: string
       multi_value:
-        description: MultiValue is set to true if this is a multi-value key column.
+        description: Set to true if this is a multi-value key column.
         type: boolean
       null_fraction:
         description: >-
-          NullFraction is the fill rate for the key. Calculated by total rows in
-          dataset - valid values in column, as a percentage of the total rows.
+          The fill rate for the key. Calculated by total rows in dataset - valid
+          values in column, as a percentage of the total rows.
         format: double
         type: number
       valid_values:
-        description: ValidValues is the number of valid values for this key column.
+        description: The number of valid values for this key column.
         format: uint64
         type: string
     type: object
@@ -21928,6 +22090,9 @@ paths:
                 type: array
               header_row:
                 description: HeaderRow indicates whether the files have a header row.
+                type: boolean
+              include_subfolders:
+                description: Whether to include files in subfolders when processing.
                 type: boolean
               name:
                 description: >-
