@@ -385,6 +385,11 @@
 					"format": "int64",
 					"type": "string"
 				},
+				"results_expiry_date_time": {
+					"description": "The date and time the activation segment results expire.",
+					"format": "date-time",
+					"type": "string"
+				},
 				"rounding_multiple": {
 					"description": "The rounding value that the result row count is adjusted downward to the nearest multiple of.",
 					"format": "int64",
@@ -624,6 +629,11 @@
 				},
 				"name": {
 					"description": "The name of the activation segment.",
+					"type": "string"
+				},
+				"results_expiry_date_time": {
+					"description": "The date and time the activation segment results expire.",
+					"format": "date-time",
 					"type": "string"
 				},
 				"row_count": {
@@ -1289,6 +1299,11 @@
 					"format": "int64",
 					"type": "string"
 				},
+				"results_expiry_date_time": {
+					"description": "The date and time the activation segment results expire.",
+					"format": "date-time",
+					"type": "string"
+				},
 				"rounding_multiple": {
 					"description": "The rounding value that the result row count is adjusted downward to the nearest multiple of.",
 					"format": "int64",
@@ -1369,6 +1384,11 @@
 				},
 				"name": {
 					"description": "The name of the activation segment.",
+					"type": "string"
+				},
+				"results_expiry_date_time": {
+					"description": "The date and time the activation segment results expire.",
+					"format": "date-time",
 					"type": "string"
 				},
 				"row_count": {
