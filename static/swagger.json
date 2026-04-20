@@ -5349,6 +5349,10 @@
 		"CreateDatasetRequest": {
 			"description": "CreateDatasetRequest is the input used by the CreateDataset rpc.",
 			"properties": {
+				"cloud_vault_id": {
+					"title": "CloudVaultId is the cloud vault id to be associated with the dataset",
+					"type": "string"
+				},
 				"dataset_type": {
 					"allOf": [
 						{
@@ -5700,6 +5704,10 @@
 		"Dataset": {
 			"description": "Dataset is the summary of a dataset returned when getting a dataset.",
 			"properties": {
+				"cloud_vault_id": {
+					"description": "The ID of the cloud vault associated with the dataset.",
+					"type": "string"
+				},
 				"created_by": {
 					"description": "The ID of the user who created the dataset.",
 					"type": "string"
@@ -6090,6 +6098,10 @@
 		"Datasets.CreateDatasetRequest": {
 			"description": "CreateDatasetRequest is the input used by the CreateDataset rpc.",
 			"properties": {
+				"cloud_vault_id": {
+					"title": "CloudVaultId is the cloud vault id to be associated with the dataset",
+					"type": "string"
+				},
 				"dataset_type": {
 					"allOf": [
 						{
@@ -6142,6 +6154,10 @@
 		"Datasets.Dataset": {
 			"description": "Dataset is the summary of a dataset returned when getting a dataset.",
 			"properties": {
+				"cloud_vault_id": {
+					"description": "The ID of the cloud vault associated with the dataset.",
+					"type": "string"
+				},
 				"created_by": {
 					"description": "The ID of the user who created the dataset.",
 					"type": "string"
@@ -6279,6 +6295,10 @@
 		"Datasets.ListedDataset": {
 			"description": "ListedDataset is the summary of a dataset returned when listing datasets.",
 			"properties": {
+				"cloud_vault_id": {
+					"description": "The ID of the cloud vault associated with the dataset.",
+					"type": "string"
+				},
 				"created_by": {
 					"description": "The ID of the user who created the dataset.",
 					"type": "string"
@@ -11018,6 +11038,10 @@
 		"ListedDataset": {
 			"description": "ListedDataset is the summary of a dataset returned when listing datasets.",
 			"properties": {
+				"cloud_vault_id": {
+					"description": "The ID of the cloud vault associated with the dataset.",
+					"type": "string"
+				},
 				"created_by": {
 					"description": "The ID of the user who created the dataset.",
 					"type": "string"
@@ -22246,14 +22270,14 @@
 						"type": "integer"
 					},
 					{
-						"description": "OrderBy is a comma seperated value to define sorting.\ne.g 'name,created_time DESC'\nThe values are seperated by space, '{column} {ASC/DESC}'\nThe values that are sortable are:\ndataset_id\npublic_name\nprivate_id\ndescription\nowner_id\ncreated_by\ndataset_type (DATASET_TYPE_INSIGHT / DATASET_TYPE_IDENTITY)\nregion\nrecordset_id\nexecution_id\npublish_date_time (in RFC3339 format)\ncreated_date_time (in RFC3339 format)\nexpiration_date_time (in RFC3339 format)",
+						"description": "OrderBy is a comma seperated value to define sorting.\ne.g 'name,created_time DESC'\nThe values are seperated by space, '{column} {ASC/DESC}'\nThe values that are sortable are:\ndataset_id\npublic_name\nprivate_id\ndescription\nowner_id\ncreated_by\ndataset_type (DATASET_TYPE_INSIGHT / DATASET_TYPE_IDENTITY)\nregion\nrecordset_id\nexecution_id\npublish_date_time (in RFC3339 format)\ncreated_date_time (in RFC3339 format)\nexpiration_date_time (in RFC3339 format)\ncloud_vault_id",
 						"in": "query",
 						"name": "order_by",
 						"required": false,
 						"type": "string"
 					},
 					{
-						"description": "Filter is a string containing logic that can specify a restricted set of\nCloud Vaults to be returned. e.g. `name co 'Test' or name co 'Acme'`\nThe filterable fields are:\ndataset_id\npublic_name\nprivate_id\ndescription\nowner_id\ncreated_by\ndataset_type (DATASET_TYPE_INSIGHT / DATASET_TYPE_IDENTITY)\nregion\nexecution_id\nrecordset_id\ncreated_date_time (in RFC3339 format)\nexpiration_date_time (in RFC3339 format)\npublish_date_time (in RFC3339 format)",
+						"description": "Filter is a string containing logic that can specify a restricted set of\nCloud Vaults to be returned. e.g. `name co 'Test' or name co 'Acme'`\nThe filterable fields are:\ndataset_id\npublic_name\nprivate_id\ndescription\nowner_id\ncreated_by\ndataset_type (DATASET_TYPE_INSIGHT / DATASET_TYPE_IDENTITY)\nregion\nexecution_id\nrecordset_id\ncreated_date_time (in RFC3339 format)\nexpiration_date_time (in RFC3339 format)\npublish_date_time (in RFC3339 format)\ncloud_vault_id",
 						"in": "query",
 						"name": "filter",
 						"required": false,
