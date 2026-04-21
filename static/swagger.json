@@ -5704,10 +5704,6 @@
 		"Dataset": {
 			"description": "Dataset is the summary of a dataset returned when getting a dataset.",
 			"properties": {
-				"cloud_vault_id": {
-					"description": "The ID of the cloud vault associated with the dataset.",
-					"type": "string"
-				},
 				"created_by": {
 					"description": "The ID of the user who created the dataset.",
 					"type": "string"
@@ -6154,10 +6150,6 @@
 		"Datasets.Dataset": {
 			"description": "Dataset is the summary of a dataset returned when getting a dataset.",
 			"properties": {
-				"cloud_vault_id": {
-					"description": "The ID of the cloud vault associated with the dataset.",
-					"type": "string"
-				},
 				"created_by": {
 					"description": "The ID of the user who created the dataset.",
 					"type": "string"
@@ -6295,10 +6287,6 @@
 		"Datasets.ListedDataset": {
 			"description": "ListedDataset is the summary of a dataset returned when listing datasets.",
 			"properties": {
-				"cloud_vault_id": {
-					"description": "The ID of the cloud vault associated with the dataset.",
-					"type": "string"
-				},
 				"created_by": {
 					"description": "The ID of the user who created the dataset.",
 					"type": "string"
@@ -11038,10 +11026,6 @@
 		"ListedDataset": {
 			"description": "ListedDataset is the summary of a dataset returned when listing datasets.",
 			"properties": {
-				"cloud_vault_id": {
-					"description": "The ID of the cloud vault associated with the dataset.",
-					"type": "string"
-				},
 				"created_by": {
 					"description": "The ID of the user who created the dataset.",
 					"type": "string"
