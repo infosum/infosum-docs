@@ -14,7 +14,7 @@ info:
       * *Owner:* Creates and closes collaborations, adds members and assigns roles. Any user with the correct user roles can assume this role.
       * *Operator:* Can run queries and activations. Must be assigned by owner at collaboration creation.
       * *Contributor:* Can add and modify assets within the collaboration. Must be assigned by owner at collaboration creation.
-      * *Viewer:* Can view collaboration assets and activity logs. Must be assigned by owner at collaboration creation.
+      * *Detailed Log Viewer:* Can view collaboration assets and activity logs. Must be assigned by owner at collaboration creation.
 
     **Owner Task List:**
     1. Create Collaboration
