@@ -5350,7 +5350,7 @@
 			"description": "CreateDatasetRequest is the input used by the CreateDataset rpc.",
 			"properties": {
 				"cloud_vault_id": {
-					"title": "CloudVaultId is the cloud vault id to be associated with the dataset",
+					"title": "CloudVaultId identifies the cloud vault (and region) to be associated with the dataset",
 					"type": "string"
 				},
 				"dataset_type": {
@@ -5387,7 +5387,7 @@
 							"$ref": "#/definitions/Datasets.Region"
 						}
 					],
-					"description": "Region is the cloud vault region the dataset can accept input data from."
+					"title": "Deprecated: Use `CloudVaultId`"
 				}
 			},
 			"type": "object"
@@ -6095,7 +6095,7 @@
 			"description": "CreateDatasetRequest is the input used by the CreateDataset rpc.",
 			"properties": {
 				"cloud_vault_id": {
-					"title": "CloudVaultId is the cloud vault id to be associated with the dataset",
+					"title": "CloudVaultId identifies the cloud vault (and region) to be associated with the dataset",
 					"type": "string"
 				},
 				"dataset_type": {
@@ -6132,7 +6132,7 @@
 							"$ref": "#/definitions/Datasets.Region"
 						}
 					],
-					"description": "Region is the cloud vault region the dataset can accept input data from."
+					"title": "Deprecated: Use `CloudVaultId`"
 				}
 			},
 			"type": "object"
