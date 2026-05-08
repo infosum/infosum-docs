@@ -5015,7 +5015,20 @@
 					"type": "string"
 				},
 				"normalization_config": {
-					"$ref": "#/definitions/Normalization_Config.Config"
+					"allOf": [
+						{
+							"$ref": "#/definitions/Normalization_Config.Config"
+						}
+					],
+					"description": "normalization_config is Deprecated. Use normalizer_config."
+				},
+				"normalizer_config": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Normalization_Config.NormalizerConfig"
+						}
+					],
+					"description": "normalizer_config is the normalization configuration defined by the user."
 				},
 				"updated_date_time": {
 					"description": "UpdatedDateTime is the last time that this Config was updated and stored.",
@@ -11644,7 +11657,20 @@
 					"type": "string"
 				},
 				"normalization_config": {
-					"$ref": "#/definitions/Normalization_Config.Config"
+					"allOf": [
+						{
+							"$ref": "#/definitions/Normalization_Config.Config"
+						}
+					],
+					"description": "normalization_config is Deprecated. Use normalizer_config."
+				},
+				"normalizer_config": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Normalization_Config.NormalizerConfig"
+						}
+					],
+					"description": "normalizer_config is the normalization configuration defined by the user."
 				},
 				"updated_date_time": {
 					"description": "UpdatedDateTime is the last time that this Config was updated and stored.",
@@ -11702,7 +11728,15 @@
 							"$ref": "#/definitions/Normalization_Config.Config"
 						}
 					],
-					"description": "Config is the normalization configuration defined by the user."
+					"description": "normalization_config is deprecated. Use normalizer_config instead."
+				},
+				"normalizer_config": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Normalization_Config.NormalizerConfig"
+						}
+					],
+					"description": "normalizer_config is the normalization configuration defined by the user."
 				}
 			},
 			"title": "CreateConfigRequest creates a new config",
@@ -17222,7 +17256,7 @@
 						"type": "integer"
 					},
 					{
-						"description": "The filter to restrict the list of returned users.",
+						"description": "Filter is a string containing logic that can specify a restricted set of users\n\nRequired. User IDs must be provided when listing display names. Multiple `user_id eq` statements with OR conditions is the only supported filter format.",
 						"in": "query",
 						"name": "filter",
 						"required": false,
