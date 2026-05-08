@@ -330,6 +330,10 @@ definitions:
           be exported.
         format: int64
         type: string
+      results_expiry_date_time:
+        description: The date and time the activation segment results expire.
+        format: date-time
+        type: string
       rounding_multiple:
         description: >-
           The rounding value that the result row count is adjusted downward to
@@ -531,6 +535,10 @@ definitions:
         type: string
       name:
         description: The name of the activation segment.
+        type: string
+      results_expiry_date_time:
+        description: The date and time the activation segment results expire.
+        format: date-time
         type: string
       row_count:
         description: The size of the activation segment.
@@ -1125,6 +1133,10 @@ definitions:
           be exported.
         format: int64
         type: string
+      results_expiry_date_time:
+        description: The date and time the activation segment results expire.
+        format: date-time
+        type: string
       rounding_multiple:
         description: >-
           The rounding value that the result row count is adjusted downward to
@@ -1194,6 +1206,10 @@ definitions:
         type: string
       name:
         description: The name of the activation segment.
+        type: string
+      results_expiry_date_time:
+        description: The date and time the activation segment results expire.
+        format: date-time
         type: string
       row_count:
         description: The size of the activation segment.
@@ -4654,7 +4670,15 @@ definitions:
         description: Name is the name given to the config.
         type: string
       normalization_config:
-        $ref: '#/definitions/Normalization_Config.Config'
+        allOf:
+          - $ref: '#/definitions/Normalization_Config.Config'
+        description: normalization_config is Deprecated. Use normalizer_config.
+      normalizer_config:
+        allOf:
+          - $ref: '#/definitions/Normalization_Config.NormalizerConfig'
+        description: >-
+          normalizer_config is the normalization configuration defined by the
+          user.
       updated_date_time:
         description: >-
           UpdatedDateTime is the last time that this Config was updated and
@@ -4957,6 +4981,11 @@ definitions:
   CreateDatasetRequest:
     description: CreateDatasetRequest is the input used by the CreateDataset rpc.
     properties:
+      cloud_vault_id:
+        title: >-
+          CloudVaultId identifies the cloud vault (and region) to be associated
+          with the dataset
+        type: string
       dataset_type:
         allOf:
           - $ref: '#/definitions/Datasets.DatasetType'
@@ -4994,9 +5023,7 @@ definitions:
       region:
         allOf:
           - $ref: '#/definitions/Datasets.Region'
-        description: >-
-          Region is the cloud vault region the dataset can accept input data
-          from.
+        title: 'Deprecated: Use `CloudVaultId`'
     type: object
   CreateDatasetResponse:
     description: CreateDatasetResponse is the response for CreateDataset rpc.
@@ -5614,6 +5641,11 @@ definitions:
   Datasets.CreateDatasetRequest:
     description: CreateDatasetRequest is the input used by the CreateDataset rpc.
     properties:
+      cloud_vault_id:
+        title: >-
+          CloudVaultId identifies the cloud vault (and region) to be associated
+          with the dataset
+        type: string
       dataset_type:
         allOf:
           - $ref: '#/definitions/Datasets.DatasetType'
@@ -5651,9 +5683,7 @@ definitions:
       region:
         allOf:
           - $ref: '#/definitions/Datasets.Region'
-        description: >-
-          Region is the cloud vault region the dataset can accept input data
-          from.
+        title: 'Deprecated: Use `CloudVaultId`'
     type: object
   Datasets.CreateDatasetResponse:
     description: CreateDatasetResponse is the response for CreateDataset rpc.
@@ -10200,7 +10230,15 @@ definitions:
         description: Name is the name given to the config.
         type: string
       normalization_config:
-        $ref: '#/definitions/Normalization_Config.Config'
+        allOf:
+          - $ref: '#/definitions/Normalization_Config.Config'
+        description: normalization_config is Deprecated. Use normalizer_config.
+      normalizer_config:
+        allOf:
+          - $ref: '#/definitions/Normalization_Config.NormalizerConfig'
+        description: >-
+          normalizer_config is the normalization configuration defined by the
+          user.
       updated_date_time:
         description: >-
           UpdatedDateTime is the last time that this Config was updated and
@@ -10251,7 +10289,13 @@ definitions:
       normalization_config:
         allOf:
           - $ref: '#/definitions/Normalization_Config.Config'
-        description: Config is the normalization configuration defined by the user.
+        description: normalization_config is deprecated. Use normalizer_config instead.
+      normalizer_config:
+        allOf:
+          - $ref: '#/definitions/Normalization_Config.NormalizerConfig'
+        description: >-
+          normalizer_config is the normalization configuration defined by the
+          user.
     title: CreateConfigRequest creates a new config
     type: object
   Normalization_Config.CreateConfigResponse:
@@ -15085,7 +15129,14 @@ paths:
           name: pagination.per_page
           required: false
           type: integer
-        - description: The filter to restrict the list of returned users.
+        - description: >-
+            Filter is a string containing logic that can specify a restricted
+            set of users
+
+
+            Required. User IDs must be provided when listing display names.
+            Multiple `user_id eq` statements with OR conditions is the only
+            supported filter format.
           in: query
           name: filter
           required: false
@@ -18932,6 +18983,7 @@ paths:
             publish_date_time (in RFC3339 format)
             created_date_time (in RFC3339 format)
             expiration_date_time (in RFC3339 format)
+            cloud_vault_id
           in: query
           name: order_by
           required: false
@@ -18969,6 +19021,8 @@ paths:
             expiration_date_time (in RFC3339 format)
 
             publish_date_time (in RFC3339 format)
+
+            cloud_vault_id
           in: query
           name: filter
           required: false
