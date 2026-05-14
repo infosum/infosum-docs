@@ -1616,8 +1616,12 @@ paths:
             schema:
               type: object
               example:
+                cloud_vault_id: <string>
                 public_name: <string>
                 description: <string>
+                expiration: 
+                  do_not_expire: <boolean>
+                  expiration_date_time: <date-time>
                 region: <string>
                 dataset_type: <string>
       parameters:
