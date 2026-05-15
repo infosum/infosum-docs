@@ -1,7 +1,753 @@
-openapi: 3.0.0
+consumes:
+  - application/json
+servers:
+  - url: https://api.infosum.com
+definitions:
+  Activation_Segment_Exports.ActivationSegmentDestinationOverview:
+    description: >-
+      ActivationSegmentDestinationOverview provides an overview of a Destination
+      instance for pushing activation segments.
+    properties:
+      created_time:
+        description: CreatedTime is the date and time the destination was created.
+        format: date-time
+        type: string
+      description:
+        description: Description is an optional description given to this destination.
+        type: string
+      destination_type_id:
+        description: DestinationTypeId is the InfoSum type ID of this destination.
+        type: string
+      id:
+        description: ID is the globally unique ID of the destination.
+        type: string
+      name:
+        description: Name is the display name given to this destination.
+        type: string
+      owner_id:
+        description: OwnerId is the company ID of the owner of the destination.
+        type: string
+    type: object
+  Activation_Segment_Exports.ActivationSegmentExportDetails:
+    description: >-
+      ActivationSegmentExportDetails is the details of a specific activation
+      segment export.
+    properties:
+      activation_segment_id:
+        description: The ID of the activation segment that has been exported.
+        type: string
+      collaboration_id:
+        description: The ID of the collaboration.
+        type: string
+      completed_at_date_time:
+        description: >-
+          The date and time when this activation segment export was completed,
+          either successfully or not.
+        format: date-time
+        type: string
+      destination_id:
+        description: The Destination ID used for the activation segment export.
+        type: string
+      destination_type_id:
+        description: The ID of the Destination type used for the activation segment export.
+        type: string
+      export_error:
+        allOf:
+          - $ref: '#/definitions/Error'
+        description: The activation segment export error in case of failures.
+      export_id:
+        description: The ID of the activation segment export.
+        type: string
+      push_config:
+        description: >-
+          The redacted push time config. It is the full redacted config if the
+          user owns the destination.
+        type: object
+      rejected_rows:
+        description: >-
+          The number of rows of data excluded based on data quality or rejected
+          by the destination.
+        format: int64
+        type: string
+      row_count:
+        description: >-
+          The number of rows attempted to be exported in this activation segment
+          export.
+        format: int64
+        type: string
+      started_at_date_time:
+        description: The date and time when this activation segment export was started.
+        format: date-time
+        type: string
+      status:
+        allOf:
+          - $ref: '#/definitions/Activation_Segment_Exports.ExportStatus'
+        description: The status of the activation segment export
+    type: object
+  Activation_Segment_Exports.ActivationSegmentExportOverview:
+    description: >-
+      ActivationSegmentExportOverview is the overview of a specific activation
+      segment export.
+    properties:
+      activation_segment_id:
+        description: The ID of the activation that has been exported.
+        type: string
+      collaboration_id:
+        description: The ID of the collaboration.
+        type: string
+      completed_at_date_time:
+        description: >-
+          The date and time when this activation segment export was completed,
+          either successfully or not.
+        format: date-time
+        type: string
+      destination_id:
+        description: The Destination ID used for the activation segment export.
+        type: string
+      destination_type_id:
+        description: The ID of the Destination type used for the activation segment export.
+        type: string
+      export_error:
+        allOf:
+          - $ref: '#/definitions/Error'
+        description: The activation segment export error in case of failures.
+      export_id:
+        description: The ID of the activation segment export.
+        type: string
+      rejected_rows:
+        description: >-
+          The number of rows of data excluded based on data quality or rejected
+          by the destination.
+        format: int64
+        type: string
+      row_count:
+        description: >-
+          The number of rows attempted to be exported in this activation segment
+          export.
+        format: int64
+        type: string
+      started_at_date_time:
+        description: The date and time when this activation segment export was started.
+        format: date-time
+        type: string
+      status:
+        allOf:
+          - $ref: '#/definitions/Activation_Segment_Exports.ExportStatus'
+        description: The status of the activation segment export
+    type: object
+  Activation_Segment_Exports.ExportActivationSegmentResultsBody:
+    properties:
+      destination_id:
+        description: Destination instance ID.
+        type: string
+      push_config:
+        description: >-
+          Configuration following the push time schema for the destination
+          instance. Default values from the underlying instance can be found in
+          the push schema `default` annotations. Defaults will not be used
+          unless they are re-submitted as part of this config. Submit the
+          `X-INFOSUM-REDACTED` keyword for `x-infosum-secret` properties to
+          retain their default value from the underlying destination instance.
+        type: object
+    type: object
+  Activation_Segment_Exports.ExportActivationSegmentResultsResponse:
+    properties:
+      export_id:
+        description: ID for the requested export.
+        type: string
+    type: object
+  Activation_Segment_Exports.ExportStatus:
+    default: EXPORT_STATUS_INVALID
+    description: ExportStatus is an enum of all the potential export statuses.
+    enum:
+      - EXPORT_STATUS_INVALID
+      - EXPORT_STATUS_RUNNING
+      - EXPORT_STATUS_FAILED
+      - EXPORT_STATUS_SUCCESSFUL
+    type: string
+  Activation_Segment_Exports.GetActivationSegmentDestinationPushSchemaResponse:
+    description: >-
+      GetActivationSegmentDestinationPushSchemaResponse is the output of the
+      GetActivationSegmentDestinationPushSchema method.
+    properties:
+      push_schema:
+        description: >-
+          The push time schema for the requested destination instance. The
+          `push_config` on export requests to this destination must satisfy this
+          schema.
+        type: object
+    type: object
+  Activation_Segment_Exports.GetActivationSegmentExportResponse:
+    properties:
+      export_details:
+        allOf:
+          - $ref: >-
+              #/definitions/Activation_Segment_Exports.ActivationSegmentExportDetails
+        description: Details of the requested activation segment export.
+    type: object
+  Activation_Segment_Exports.ListActivationSegmentDestinationsResponse:
+    description: >-
+      ListActivationSegmentDestinationsResponse is the output of the
+      ListActivationSegmentDestinations method.
+    properties:
+      destinations:
+        description: Activation Segment Destination overviews.
+        items:
+          $ref: >-
+            #/definitions/Activation_Segment_Exports.ActivationSegmentDestinationOverview
+          type: object
+        type: array
+      pagination:
+        $ref: '#/definitions/PaginationResponse'
+    type: object
+  Activation_Segment_Exports.ListActivationSegmentExportsResponse:
+    properties:
+      activation_exports:
+        description: A list of activation segment export overviews.
+        items:
+          $ref: >-
+            #/definitions/Activation_Segment_Exports.ActivationSegmentExportOverview
+          type: object
+        type: array
+      pagination:
+        $ref: '#/definitions/PaginationResponse'
+    type: object
+  Activation_Segment_Exports.NullValue:
+    default: NULL_VALUE
+    description: |-
+      `NullValue` is a singleton enumeration to represent the null value for the
+      `Value` type union.
+
+      The JSON representation for `NullValue` is JSON `null`.
+
+       - NULL_VALUE: Null value.
+    enum:
+      - NULL_VALUE
+    type: string
+  Activation_Segments.ActivationSegment:
+    description: ActivationSegment is complete information for an activation segment.
+    properties:
+      collaboration_id:
+        description: The ID of the collaboration this activation segment is linked to.
+        type: string
+      column_separator:
+        description: >-
+          The separator to be used to delimit activation segment data columns
+          when writing to file based destinations.
+        type: string
+      created_by:
+        description: The ID of the user who created the activation segment.
+        type: string
+      created_date_time:
+        description: The date and time the activation segment was created.
+        format: date-time
+        type: string
+      error:
+        allOf:
+          - $ref: '#/definitions/Error'
+        description: >-
+          Error details if the activation segment size could not be calculated
+          and the status is ERRORED.
+      exported_columns:
+        description: A list of the export columns exported by the activation segment.
+        items:
+          type: string
+        type: array
+      header_overrides:
+        additionalProperties:
+          type: string
+        description: >-
+          An optional map of column headers to override when exporting the
+          activation segment to file based destinations.
+        type: object
+      id:
+        description: The globally unique ID of the activation segment.
+        type: string
+      identity_flattening:
+        allOf:
+          - $ref: '#/definitions/Activation_Segments.IdentityFlattening'
+        description: >-
+          The settings for flattening multi-value output columns into multiple
+          rows when exporting the activation segment.
+      inaccuracy_proportion:
+        description: >-
+          The proportion of rows to be added to the results that did not match
+          the original query.
+        format: float
+        type: number
+      last_calculated_date_time:
+        description: >-
+          The timestamp when the size of the activation segment was last
+          calculated.
+        format: date-time
+        type: string
+      multi_value_delimiter:
+        description: >-
+          The delimiter to use for multi-valid columns when exporting the
+          activation segment to file based destinations.
+        type: string
+      name:
+        description: The name of the activation segment.
+        type: string
+      path_overrides:
+        description: >-
+          A list of instructions on how to connect any two datasets in the
+          query, overriding the automatic choices made by the core engine.
+        items:
+          $ref: '#/definitions/Activation_Segments.PathOverride'
+          type: object
+        type: array
+      query:
+        description: >-
+          The InfoSum Query Language (IQL) query that defines the activation
+          segment.
+        type: string
+      redaction_threshold:
+        description: >-
+          The minimum number of records required to produce an output which can
+          be exported.
+        format: int64
+        type: string
+      rounding_multiple:
+        description: >-
+          The rounding value that the result row count is adjusted downward to
+          the nearest multiple of.
+        format: int64
+        type: string
+      row_count:
+        description: The size of the activation segment.
+        format: int64
+        type: string
+      segment_history:
+        description: >-
+          The history of segment sizes over time, sorted by date, newest first,
+          including the current size.
+        items:
+          $ref: '#/definitions/Activation_Segments.SegmentHistory'
+          type: object
+        type: array
+      status:
+        allOf:
+          - $ref: '#/definitions/Activation_Segments.ActivationSegmentStatus'
+        description: The current status of the activation segment.
+      string_literal_columns:
+        description: >-
+          A list of the optional string literal columns to append to an
+          activation segment export.
+        items:
+          $ref: '#/definitions/Activation_Segments.StringLiteralColumn'
+          type: object
+        type: array
+      synthetic_exported_columns:
+        description: >-
+          A list of the synthetic export columns exported by the activation
+          segment via private path.
+        items:
+          type: string
+        type: array
+      target_dataset_id:
+        description: The ID of the dataset targeted by the Activation Segment Query.
+        type: string
+      updated_date_time:
+        description: The date and time the activation segment was last updated.
+        format: date-time
+        type: string
+    type: object
+  Activation_Segments.ActivationSegmentOverview:
+    description: ActivationSegmentOverview provides an overview of an activation segment.
+    properties:
+      collaboration_id:
+        description: The ID of the collaboration this activation segment is linked to.
+        type: string
+      created_by:
+        description: The ID of the user who created the activation segment.
+        type: string
+      created_date_time:
+        description: The date and time the activation segment was created.
+        format: date-time
+        type: string
+      id:
+        description: The globally unique ID of the activation segment.
+        type: string
+      last_calculated_date_time:
+        description: >-
+          The timestamp when the size of the activation segment was last
+          calculated.
+        format: date-time
+        type: string
+      name:
+        description: The name of the activation segment.
+        type: string
+      row_count:
+        description: The size of the activation segment.
+        format: int64
+        type: string
+      status:
+        allOf:
+          - $ref: '#/definitions/Activation_Segments.ActivationSegmentStatus'
+        description: The current status of the activation segment.
+      target_dataset_id:
+        description: The ID of the dataset targeted by the Activation Segment Query.
+        type: string
+      updated_date_time:
+        description: The date and time the activation segment was last updated.
+        format: date-time
+        type: string
+    type: object
+  Activation_Segments.ActivationSegmentStatus:
+    default: ACTIVATION_SEGMENT_STATUS_INVALID
+    description: >-
+      ActivationSegmentStatus represents the current status of an activation
+      segment.
+
+       - ACTIVATION_SEGMENT_STATUS_INVALID: ACTIVATION_SEGMENT_STATUS_INVALID is the default value and should not be used.
+       - ACTIVATION_SEGMENT_STATUS_READY: ACTIVATION_SEGMENT_STATUS_READY indicates the activation segment audience has been calculated and is ready to use.
+       - ACTIVATION_SEGMENT_STATUS_CALCULATING: ACTIVATION_SEGMENT_STATUS_CALCULATING indicates the activation segment audience is currently being calculated.
+       - ACTIVATION_SEGMENT_STATUS_ERRORED: ACTIVATION_SEGMENT_STATUS_ERRORED indicates the activation segment audience calculation failed.
+    enum:
+      - ACTIVATION_SEGMENT_STATUS_INVALID
+      - ACTIVATION_SEGMENT_STATUS_READY
+      - ACTIVATION_SEGMENT_STATUS_CALCULATING
+      - ACTIVATION_SEGMENT_STATUS_ERRORED
+    type: string
+  Activation_Segments.ActivationSegmentUpdate:
+    description: >-
+      ActivationSegmentUpdate contains the mutable fields of an activation
+      segment that can be updated.
+    properties:
+      column_separator:
+        description: >-
+          The separator to be used to delimit activation segment data columns
+          when writing to file based destinations.
+        type: string
+      header_overrides:
+        additionalProperties:
+          type: string
+        description: >-
+          An optional map of column headers to override when exporting the
+          activation segment to file based destinations.
+        type: object
+      identity_flattening:
+        allOf:
+          - $ref: '#/definitions/Activation_Segments.IdentityFlattening'
+        description: >-
+          The settings for flattening multi-value output columns into multiple
+          rows when exporting the activation segment.
+      inaccuracy_proportion:
+        description: >-
+          The proportion of rows to be added to the results that did not match
+          the original query. Valid values are 0 - 1.0.
+        format: float
+        type: number
+      multi_value_delimiter:
+        description: >-
+          The delimiter to react to for multi-valid columns when flattening
+          multivalue columns.
+        type: string
+      string_literal_columns:
+        description: >-
+          A list of the optional string literal columns to append to an
+          activation segment export.
+        items:
+          $ref: '#/definitions/Activation_Segments.StringLiteralColumn'
+          type: object
+        type: array
+    type: object
+  Activation_Segments.CalculateActivationSegmentResponse:
+    properties:
+      query_id:
+        description: ID for the calculate query.
+        type: string
+    type: object
+  Activation_Segments.CreateActivationSegmentBody:
+    properties:
+      column_separator:
+        description: >-
+          The separator to be used to delimit activation segment data columns
+          when writing to file based destinations.
+        type: string
+      header_overrides:
+        additionalProperties:
+          type: string
+        description: >-
+          An optional map of column headers to override when exporting the
+          activation segment to file based destinations.
+        type: object
+      identity_flattening:
+        allOf:
+          - $ref: '#/definitions/Activation_Segments.IdentityFlattening'
+        description: >-
+          The settings for flattening multi-value output columns into multiple
+          rows when exporting the activation segment.
+      inaccuracy_proportion:
+        description: >-
+          The proportion of rows to be added to the results that did not match
+          the original query. Valid values are 0 - 1.0.
+        format: float
+        type: number
+      multi_value_delimiter:
+        description: >-
+          The delimiter to use for multi-valid columns when exporting the
+          activation segment to file based destinations.
+        type: string
+      name:
+        description: The name of the activation segment.
+        type: string
+      path_overrides:
+        description: >-
+          A list of instructions on how to connect any two datasets in the
+          query, overriding the automatic choices made by the core engine.
+        items:
+          $ref: '#/definitions/Activation_Segments.PathOverride'
+          type: object
+        type: array
+      query:
+        description: >-
+          The InfoSum Query Language (IQL) query string that defines the
+          activation segment.
+        type: string
+      string_literal_columns:
+        description: >-
+          A list of the optional string literal columns to append to an
+          activation segment export.
+        items:
+          $ref: '#/definitions/Activation_Segments.StringLiteralColumn'
+          type: object
+        type: array
+    type: object
+  Activation_Segments.CreateActivationSegmentResponse:
+    properties:
+      activation_segment:
+        allOf:
+          - $ref: '#/definitions/Activation_Segments.ActivationSegment'
+        description: The created activation segment.
+    type: object
+  Activation_Segments.DatasetWithKeys:
+    description: >-
+      DatasetWithKeys is a dataset ID with the associated list keys used when
+      joining the dataset.
+    properties:
+      dataset_id:
+        description: The dataset ID.
+        type: string
+      keys:
+        description: >-
+          Priority list of keys used when joining this dataset to another
+          dataset.
+        items:
+          type: string
+        type: array
+    type: object
+  Activation_Segments.DeleteActivationSegmentResponse:
+    type: object
+  Activation_Segments.GetActivationSegmentResponse:
+    properties:
+      activation_segment:
+        allOf:
+          - $ref: '#/definitions/Activation_Segments.ActivationSegment'
+        description: The object containing the details of the requested activation segment.
+    type: object
+  Activation_Segments.IdentityFlattening:
+    description: >-
+      IdentityFlattening contains settings for flattening multi-value identity
+      columns in activation segment output.
+    properties:
+      identity_to_flatten:
+        description: The name of the multi-value identity column to flatten.
+        type: string
+    type: object
+  Activation_Segments.ListActivationSegmentsResponse:
+    properties:
+      activation_segments:
+        description: >-
+          Summaries of all activation segments of the given collaboration. The
+          returned data is affected by any filters in the original request.
+        items:
+          $ref: '#/definitions/Activation_Segments.ActivationSegmentOverview'
+          type: object
+        type: array
+      pagination:
+        $ref: '#/definitions/PaginationResponse'
+    type: object
+  Activation_Segments.PathOverride:
+    description: >-
+      PathOverride contains instructions on how to join two datasets, overriding
+      the automatic choices
+
+      made by the core engine when calculating the segment size.
+    properties:
+      destination_dataset:
+        description: The dataset ID that the query path ends at.
+        type: string
+      source_dataset:
+        allOf:
+          - $ref: '#/definitions/Activation_Segments.DatasetWithKeys'
+        description: >-
+          The dataset that the query path starts from, specifying which keys to
+          use.
+    type: object
+  Activation_Segments.SegmentHistory:
+    description: SegmentHistory contains the history of segment sizes over time.
+    properties:
+      calculated_date_time:
+        description: The timestamp when the size of the activation segment was calculated.
+        format: date-time
+        type: string
+      row_count:
+        description: The size of the activation segment at the time of calculation.
+        format: int64
+        type: string
+    type: object
+  Activation_Segments.StringLiteralColumn:
+    description: >-
+      StringLiteralColumn contains information about a string literal column
+      appended to an activation segment export.
+    properties:
+      column_literal:
+        description: >-
+          The string literal value to be written for every row of the exported
+          activation segment data.
+        type: string
+      column_name:
+        description: The name of the column to output.
+        type: string
+    type: object
+  Collaboration_Destinations.DestinationOverview:
+    description: DestinationOverview provides an overview of a destination.
+    properties:
+      created_date_time:
+        description: The created date time of the destination.
+        format: date-time
+        readOnly: true
+        type: string
+      creator_id:
+        description: The ID of the user who created the destination.
+        readOnly: true
+        type: string
+      description:
+        description: A description of the destination.
+        type: string
+      destination_type_id:
+        description: The type ID of the destination.
+        type: string
+      id:
+        description: The ID of the destination.
+        readOnly: true
+        type: string
+      name:
+        description: The name of the destination.
+        type: string
+      owner_id:
+        description: The Company ID of the owner of the destination.
+        readOnly: true
+        type: string
+      updated_date_time:
+        description: The date time the destination was last updated.
+        format: date-time
+        readOnly: true
+        type: string
+    type: object
+  Collaboration_Destinations.ListDestinationsResponse:
+    properties:
+      destinations:
+        description: >-
+          Summaries of all destinations of the given collaboration. The returned
+          data is affected by any filters in the original request.
+        items:
+          $ref: '#/definitions/Collaboration_Destinations.DestinationOverview'
+          type: object
+        type: array
+      pagination:
+        $ref: '#/definitions/PaginationResponse'
+    type: object
+  Error:
+    description: Error is used to define an error from an InfoSum API.
+    properties:
+      details:
+        allOf:
+          - $ref: '#/definitions/ErrorMessage'
+        description: >-
+          Details is an optional low level error which caused the request to
+          fail.
+
+          This may provide the detailed information on the action or resource
+          which caused the error.
+      error:
+        allOf:
+          - $ref: '#/definitions/ErrorMessage'
+        description: >-
+          Error is the high level error which occurred when the service tried to
+          action the request.
+      help_url:
+        description: >-
+          HelpUrl is an optional link to online documentation which either
+          describes the error or provides useful
+
+          information to help explain a feature and resolve the issue.
+        type: string
+      request_id:
+        description: RequestId is the id of the request which can help in diagnostics.
+        type: string
+      time:
+        description: Time is the timestamp at which the error occurred.
+        format: date-time
+        type: string
+    type: object
+  ErrorMessage:
+    description: >-
+      ErrorMessage contains a grouping of error code and its corresponding
+      localised message.
+    properties:
+      code:
+        description: Code is the InfoSum error code for this error.
+        type: string
+      message:
+        description: >-
+          Message is the localised error message containing details of what went
+          wrong and how to fix it.
+        type: string
+    type: object
+  'Null':
+    description: Null is an enum used to map values to JSON null.
+    type: object
+  NullValue:
+    default: NULL_VALUE
+    description: |-
+      `NullValue` is a singleton enumeration to represent the null value for the
+      `Value` type union.
+
+      The JSON representation for `NullValue` is JSON `null`.
+
+       - NULL_VALUE: Null value.
+    enum:
+      - NULL_VALUE
+    type: string
+  PaginationResponse:
+    description: Details to allow follow-up requests to page through records.
+    properties:
+      next_page:
+        description: The next page to request to fetch the next batch of records.
+        format: int32
+        type: integer
+      results:
+        description: The count of records returned in this response.
+        format: int32
+        type: integer
+      total_results:
+        description: The total number of records available for the given request.
+        format: int32
+        type: integer
+    type: object
+externalDocs:
+  description: Accessing the API
+  url: >-
+    https://support.infosum.com/hc/en-us/articles/360018850497-Accessing-the-API#h_01JBBT9BG3D0V2AFWGDBJT9YYF
+security:
+  - apikeyAuth: []
 info:
-  title: Activation Queries & Destinations
-  version: AD 1.1
+  contact:
+    email: support@infosum.com
+    name: InfoSum Support
   description: >-
     This page contains the essential endpoints of the InfoSum API that help
     users securely manage data throughout the activation process, allowing them
@@ -23,17 +769,30 @@ info:
     Task List 
 
 
-    1. Create an activation query
+    0. Create an activation query. 
+      - **a.** Skip to step 1 if you already have an activation segment 
+      - **b.** Jump to step 3 if creating a new activation query 
 
 
-    2. Optional: Check results ran successfully after running the query
+    1. Get an existing activation segment
 
 
-    3. Optional: Confirm the destination exists before pushing or grab the
-    Destination configuration
+    2. Refresh an existing activation segment
 
 
-    4. Push query results to Destination
+    3. Check activation segment status
+
+
+    4. List Destinations within the collaboration
+
+
+    5. Get Destination configuration, including required runtime variables
+
+
+    6. Push query results to Destination
+
+
+    7. Check Destination push status
 
 
     <h3>Parameter Reference Table</h3>
@@ -46,6 +805,13 @@ info:
             <th style="padding: 8px; text-align: center; border: 3px solid #ddd;">When to collect</th>
           </tr>
           <tr>
+            <td style="padding: 8px; border: 1px solid #ddd;">All</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">Collaboration ID</td>
+            <td style="padding: 8px; border: 1px solid #ddd;"><em>CLB.xx</em></td>
+            <td style="padding: 8px; border: 1px solid #ddd;">Within the collaboration</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">Have ready before hand</td>
+          </tr>
+          <tr>
             <td style="padding: 8px; border: 1px solid #ddd;">1</td>
             <td style="padding: 8px; border: 1px solid #ddd;">Query</td>
             <td style="padding: 8px; border: 1px solid #ddd;">"SELECT self.ID FROM self INTERSECT them"</td>
@@ -54,41 +820,33 @@ info:
           </tr>
           <tr>
             <td style="padding: 8px; border: 1px solid #ddd;">1</td>
-            <td style="padding: 8px; border: 1px solid #ddd;">Campaign Name</td>
-            <td style="padding: 8px; border: 1px solid #ddd;"><em>text</em></td>
-            <td style="padding: 8px; border: 1px solid #ddd;"><strong>This is user generated.</strong> This will be the name InfoSum uses to reference the activation result.</td>
-            <td style="padding: 8px; border: 1px solid #ddd;">Have ready before hand</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">Activation Segment ID</td>
+            <td style="padding: 8px; border: 1px solid #ddd;"><em>ATS.xx</em></td>
+            <td style="padding: 8px; border: 1px solid #ddd;">Results of step 0 or 2</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">Can be collected from previous steps or have ahead of time</td>
           </tr>
           <tr>
-            <td style="padding: 8px; border: 1px solid #ddd;">2</td>
-            <td style="padding: 8px; border: 1px solid #ddd;">Query ID</td>
-            <td style="padding: 8px; border: 1px solid #ddd;">xx</td>
-            <td style="padding: 8px; border: 1px solid #ddd;">Response from step 1</td>
-            <td style="padding: 8px; border: 1px solid #ddd;">Can be grabbed from output of step 1</td>
-          </tr>
-          <tr>
-            <td style="padding: 8px; border: 1px solid #ddd;">3, 4</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">5, 6</td>
             <td style="padding: 8px; border: 1px solid #ddd;">Destination ID</td>
-            <td style="padding: 8px; border: 1px solid #ddd;">DST.xx</td>
-            <td style="padding: 8px; border: 1px solid #ddd;">in URL of <strong>Destinations</strong> page</td>
-            <td style="padding: 8px; border: 1px solid #ddd;">Have ready before hand</td>
+            <td style="padding: 8px; border: 1px solid #ddd;"><em>DST.xx</em></td>
+            <td style="padding: 8px; border: 1px solid #ddd;">Results of step 4</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">Can be collected in step 4</td>
           </tr>
           <tr>
-            <td style="padding: 8px; border: 1px solid #ddd;">4</td>
-            <td style="padding: 8px; border: 1px solid #ddd;">Destination Push Config</td>
-            <td style="padding: 8px; border: 1px solid #ddd;">JSON config</td>
-            <td style="padding: 8px; border: 1px solid #ddd;">Response from step 3</td>
-            <td style="padding: 8px; border: 1px solid #ddd;">Can be grabbed from output of step 3</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">6</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">Destination Config</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">json object</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">Results of step 5</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">Can be collected in step 5</td>
           </tr>
           <tr>
-            <td style="padding: 8px; border: 1px solid #ddd;">4</td>
-            <td style="padding: 8px; border: 1px solid #ddd;">Destination Filename</td>
-            <td style="padding: 8px; border: 1px solid #ddd;"><em>text</em>.csv (or another file type)</td>
-            <td style="padding: 8px; border: 1px solid #ddd;"><strong>This is user generated.</strong> This will be the name InfoSum gives to the file in the destination.</td>
-            <td style="padding: 8px; border: 1px solid #ddd;">Have ready before hand</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">7</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">Export ID</td>
+            <td style="padding: 8px; border: 1px solid #ddd;"><em>xx</em></td>
+            <td style="padding: 8px; border: 1px solid #ddd;">Results of step 6</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">Can be collected in step 6</td>
           </tr>
         </table>
-
 
      **Best Practices**
       - Ensure your Bunker has **Export Columns** enabled or use a partner’s Bunker.
@@ -96,666 +854,483 @@ info:
       - Limit to a maximum of 15 key types in your dataset.
       - Use the UI first to confirm setup before automating via API.
       - Saved destinations can be reused indefinitely across your company.
-servers:
-  - url: http://{{baseurl}}
-  - url: https://api.infosum.com
-components:
-  securitySchemes:
-    apikeyAuth:
-      type: http
-      scheme: apikey
-security:
-  - apikeyAuth: []
-tags:
-  - name: Activations
-  - name: Destinations
+  termsOfService: https://www.infosum.com/legals/website-terms
+  title: Activation Segments
+  version: AS 2.0
 paths:
-  /api/v1/activations:
+  /api/v2/collaborations/{collaboration_id}/activation-segments:
     post:
+      description: Creates a new activation segment in the given collaboration.
+      operationId: CreateActivationSegment
+      parameters:
+        - description: The ID of the collaboration to create the activation segment in.
+          in: path
+          name: collaboration_id
+          required: true
+          type: string
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/Activation_Segments.CreateActivationSegmentBody'
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/Activation_Segments.CreateActivationSegmentResponse'
+        '400':
+          description: Returned when the request was not valid.
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Returned when the user could not be authorized.
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: >-
+            Returned when the user does not have the right to create activation
+            segments in this collaboration.
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/Error'
+      summary: 0. Create Activation Segment
       tags:
-        - Activations
-      summary: 1. Create a Query
+        - Activation Segments
+    get:
       description: >-
-        Queue a Query for execution. Returns immediately with an ID of the Query
-        created.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              description: >-
-                Used to queue an Activation Query with the CreateActivationQuery
-                endpoint.
-              properties:
-                query:
-                  type: string
-                  title: Query
-                  description: >
-                    The Query that should be executed. This takes the format of
-                    an InfoSum Activation Query. See the documentation of the
-                    InfoSum Activation Query Language for more information.
-                path_overrides:
-                  type: array
-                  title: Path Overrides
-                  description: >
-                    A list of instructions on how to connect two datasets,
-                    overriding the automatic choices made by the core engine.
-                  items:
-                    type: object
-                    properties:
-                      from_dataset_id:
-                        type: string
-                      to_dataset_id:
-                        type: string
-                      path_instructions:
-                        type: string
-                campaign_name:
-                  type: string
-                  title: CampaignName
-                  description: A name that a user can associate with an activation query.
-                column_separator:
-                  type: string
-                  title: Column Separator
-                  description: The separator to be used to delimit activation data columns.
-                header_overrides:
-                  type: object
-                  title: HeaderOverrides
-                  description: An optional map of query output column to header override.
-                  additionalProperties:
-                    type: string
-                string_literal_columns:
-                  type: array
-                  title: StringLiteralColumns
-                  description: The optional list of string literal columns.
-                  items:
-                    type: object
-                    properties:
-                      name:
-                        type: string
-                      value:
-                        type: string
-                multi_value_delimiter:
-                  type: string
-                  title: MultiValueDelimiter
-                  description: The delimiter for multi-value columns.
-                identities_to_flatten:
-                  type: array
-                  title: IdentitiesToFlatten
-                  description: A list of multi-value identity columns to be flattened.
-                  items:
-                    type: string
-                collaboration_id:
-                  type: string
+        Returns a list of activation segments in the given collaboration. The
+        output is affected by provided filters.
+      operationId: ListActivationSegments
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/json
-        - name: Accept
-          in: header
-          schema:
-            type: string
-          example: application/json
-      responses:
-        '200':
-          description: OK
-          headers:
-            Content-Type:
-              schema:
-                type: string
-                example: application/json
-          content:
-            application/json:
-              schema:
-                type: object
-              example:
-                activation_id: <string>
-                query_completed: true
-                query_error:
-                  code: 0
-                  message: <string>
-                  details: []
-                query_response:
-                  identities: []
-                  total_rows: 0
-                  quality_measures: {}
-        '400':
-          description: Bad Request
-          headers:
-            Content-Type:
-              schema:
-                type: string
-                example: application/json
-          content:
-            application/json:
-              schema:
-                type: object
-              example:
-                message: <string>
-                metadata:
-                  quis57: <string>
-        '401':
-          description: Unauthorized
-          headers:
-            Content-Type:
-              schema:
-                type: string
-                example: application/json
-          content:
-            application/json:
-              schema:
-                type: object
-              example:
-                message: <string>
-                metadata:
-                  quis57: <string>
-        '500':
-          description: Internal Server Error
-          headers:
-            Content-Type:
-              schema:
-                type: string
-                example: application/json
-          content:
-            application/json:
-              schema:
-                type: object
-              example:
-                code: <integer>
-                message: <string>
-                details:
-                  - '@type': <string>
-                    incididunt_6: {}
-                  - '@type': <string>
-  /api/v1/activations/{query_id}:
-    get:
-      tags:
-        - Activations
-      summary: 2. Get a Result
-      description: Get the Result of a Query, when it is available.
-      parameters:
-        - name: Accept
-          in: header
-          schema:
-            type: string
-          example: application/json
-        - name: query_id
+        - description: The ID of the collaboration to get activation segment details from.
           in: path
+          name: collaboration_id
           required: true
-          schema:
-            type: string
+          type: string
+        - description: The requested page of records. Default is 1.
+          format: int32
+          in: query
+          name: pagination.page
+          required: false
+          type: integer
+        - description: >-
+            The number of records to return per page. Maximum is 500. Default is
+            100.
+          format: int32
+          in: query
+          name: pagination.per_page
+          required: false
+          type: integer
+        - description: |-
+            OrderBy is a comma seperated value to define sorting.
+            e.g 'created_date_time,name DESC'
+            The values are seperated by space, '{column} {ASC/DESC}'
+            Valid columns: `created_date_time`, `updated_date_time`, `name`
+          in: query
+          name: order_by
+          required: false
+          type: string
+        - description: Supported filters are `activation_segment_id`, `creator_id`, `name`
+          in: query
+          name: filter
+          required: false
+          type: string
       responses:
         '200':
-          description: OK
-          headers:
-            Content-Type:
-              schema:
-                type: string
-                example: application/json
-          content:
-            application/json:
-              schema:
-                type: object
-              example:
-                dimensions:
-                  - value: <string>
-                    category: <string>
-                    count: <long>
-                    continuous: <boolean>
-                    private_id: <string>
-                    dimensions:
-                      - value: >-
-                          <Circular reference to
-                          #/components/schemas/tyraelDimension detected>
-                      - value: >-
-                          <Circular reference to
-                          #/components/schemas/tyraelDimension detected>
-                  - value: <string>
-                    category: <string>
-                    count: <long>
-                    continuous: <boolean>
-                    private_id: <string>
-                    dimensions:
-                      - value: >-
-                          <Circular reference to
-                          #/components/schemas/tyraelDimension detected>
-                      - value: >-
-                          <Circular reference to
-                          #/components/schemas/tyraelDimension detected>
-                audience: <long>
-                quality_measures:
-                  redaction_threshold_outlier: <float>
-                  rounding_threshold_outlier: <float>
-                  model_accuracy: <float>
-                  result_precision_include_empty_bins: <float>
-                  result_precision_exclude_empty_bins: <float>
-                join_metadata:
-                  - from_dataset:
-                      id: <string>
-                      name: <string>
-                    to_dataset:
-                      id: <string>
-                      name: <string>
-                    keys:
-                      - key_id: <int64>
-                        name: <string>
-                      - key_id: <int64>
-                        name: <string>
-                  - from_dataset:
-                      id: <string>
-                      name: <string>
-                    to_dataset:
-                      id: <string>
-                      name: <string>
-                    keys:
-                      - key_id: <int64>
-                        name: <string>
-                      - key_id: <int64>
-                        name: <string>
-                count_metadata:
-                  - dataset:
-                      id: <string>
-                      name: <string>
-                    keys:
-                      - key_id: <int64>
-                        name: <string>
-                      - key_id: <int64>
-                        name: <string>
-                  - dataset:
-                      id: <string>
-                      name: <string>
-                    keys:
-                      - key_id: <int64>
-                        name: <string>
-                      - key_id: <int64>
-                        name: <string>
-        '401':
-          description: Unauthorized
-          headers:
-            Content-Type:
-              schema:
-                type: string
-                example: application/json
-          content:
-            application/json:
-              schema:
-                type: object
-              example:
-                message: <string>
-                metadata:
-                  quis57: <string>
-        '404':
-          description: Not Found
-          headers:
-            Content-Type:
-              schema:
-                type: string
-                example: application/json
-          content:
-            application/json:
-              schema:
-                type: object
-              example:
-                message: <string>
-                metadata:
-                  quis57: <string>
-        '500':
-          description: Internal Server Error
-          headers:
-            Content-Type:
-              schema:
-                type: string
-                example: application/json
-          content:
-            application/json:
-              schema:
-                type: object
-              example:
-                code: <integer>
-                message: <string>
-                details:
-                  - '@type': <string>
-                    incididunt_6: {}
-                  - '@type': <string>
-  /api/v2/destinations/instances/{destination_id}:
-    get:
-      tags:
-        - Destinations
-      summary: 3. Get Destination Instance
-      description: Returns details about an owned Destination Instance.
-      parameters:
-        - name: Accept
-          in: header
+          description: A successful response.
           schema:
-            type: string
-          example: application/json
-        - name: destination_id
-          in: path
-          schema:
-            type: string
-          required: true
-      responses:
-        '200':
-          description: OK
-          headers:
-            Content-Type:
-              schema:
-                type: string
-                example: application/json
-          content:
-            application/json:
-              schema:
-                type: object
-              example:
-                destination:
-                  config: {}
-                  created_time: <dateTime>
-                  creator_id: <string>
-                  description: <string>
-                  destination_type_id: <string>
-                  editable_paths:
-                    - <string>
-                    - <string>
-                  id: <string>
-                  incoming_share_id: <string>
-                  name: <string>
-                  outgoing_share_ids:
-                    - <string>
-                    - <string>
-                  owner_id: <string>
-                  permission_ids:
-                    - <string>
-                    - <string>
-                  permissioned_to_permitted_company: <boolean>
-                  updated_time: <dateTime>
-        '400':
-          description: Bad Request
-          headers:
-            Content-Type:
-              schema:
-                type: string
-                example: application/json
-          content:
-            application/json:
-              schema:
-                type: object
-              example:
-                details:
-                  code: <string>
-                  message: <string>
-                error:
-                  code: <string>
-                  message: <string>
-                help_url: <string>
-                request_id: <string>
-                time: <dateTime>
+            $ref: '#/definitions/Activation_Segments.ListActivationSegmentsResponse'
         '401':
-          description: Unauthorized
-          headers:
-            Content-Type:
-              schema:
-                type: string
-                example: application/json
-          content:
-            application/json:
-              schema:
-                type: object
-              example:
-                details:
-                  code: <string>
-                  message: <string>
-                error:
-                  code: <string>
-                  message: <string>
-                help_url: <string>
-                request_id: <string>
-                time: <dateTime>
+          description: Returned when the user could not be authorized.
+          schema:
+            $ref: '#/definitions/Error'
         '403':
-          description: Forbidden
-          headers:
-            Content-Type:
-              schema:
-                type: string
-                example: application/json
-          content:
-            application/json:
-              schema:
-                type: object
-              example:
-                details:
-                  code: <string>
-                  message: <string>
-                error:
-                  code: <string>
-                  message: <string>
-                help_url: <string>
-                request_id: <string>
-                time: <dateTime>
-        '404':
-          description: Not Found
-          headers:
-            Content-Type:
-              schema:
-                type: string
-                example: application/json
-          content:
-            application/json:
-              schema:
-                type: object
-              example:
-                details:
-                  code: <string>
-                  message: <string>
-                error:
-                  code: <string>
-                  message: <string>
-                help_url: <string>
-                request_id: <string>
-                time: <dateTime>
+          description: >-
+            Returned when the user does not have the right to list collaboration
+            activation segments.
+          schema:
+            $ref: '#/definitions/Error'
         '500':
           description: Internal Server Error
-          headers:
-            Content-Type:
-              schema:
-                type: string
-                example: application/json
-          content:
-            application/json:
-              schema:
-                type: object
-              examples:
-                example-0:
-                  summary: Internal Server Error
-                  value:
-                    details:
-                      code: <string>
-                      message: <string>
-                    error:
-                      code: <string>
-                      message: <string>
-                    help_url: <string>
-                    request_id: <string>
-                    time: <dateTime>
-                example-1:
-                  summary: An unexpected error response.
-                  value:
-                    details:
-                      code: <string>
-                      message: <string>
-                    error:
-                      code: <string>
-                      message: <string>
-                    help_url: <string>
-                    request_id: <string>
-                    time: <dateTime>
-  /api/v2/activations/queries/{query_id}/destinations/{destination_id}/push:
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/Error'
+      summary: 1. Get Activation Segments
+      tags:
+        - Activation Segments
+  /api/v2/collaborations/{collaboration_id}/activation-segments/{activation_segment_id}/calculate:
     post:
-      tags:
-        - Destinations
-      summary: 4. Push Activation Result to Destination
-      description: Pushes results of a query to a specific destination instance.
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: query
-              example:
-                push_config":
-                  filename: filename
+      description: >-
+        Recalculates the audience size based on the activation segment query and
+        collaboration.
+      operationId: CalculateActivationSegment
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/json
-        - name: Accept
-          in: header
-          schema:
-            type: string
-          example: application/json
-        - name: query_id
+        - description: The ID of the collaboration the activation segment belongs to.
           in: path
-          schema:
-            type: string
+          name: collaboration_id
           required: true
-        - name: destination_id
+          type: string
+        - description: The ID of the activation segment to calculate.
           in: path
-          schema:
-            type: string
+          name: activation_segment_id
           required: true
+          type: string
       responses:
         '200':
-          description: OK
-          headers:
-            Content-Type:
-              schema:
-                type: string
-                example: application/json
-          content:
-            application/json:
-              schema:
-                type: object
-              example:
-                push_id: <string>
+          description: A successful response.
+          schema:
+            $ref: >-
+              #/definitions/Activation_Segments.CalculateActivationSegmentResponse
         '400':
-          description: Bad Request
-          headers:
-            Content-Type:
-              schema:
-                type: string
-                example: application/json
-          content:
-            application/json:
-              schema:
-                type: object
-              example:
-                details:
-                  code: <string>
-                  message: <string>
-                error:
-                  code: <string>
-                  message: <string>
-                help_url: <string>
-                request_id: <string>
-                time: <dateTime>
+          description: Returned when the request was not valid.
+          schema:
+            $ref: '#/definitions/Error'
         '401':
-          description: Unauthorized
-          headers:
-            Content-Type:
-              schema:
-                type: string
-                example: application/json
-          content:
-            application/json:
-              schema:
-                type: object
-              example:
-                details:
-                  code: <string>
-                  message: <string>
-                error:
-                  code: <string>
-                  message: <string>
-                help_url: <string>
-                request_id: <string>
-                time: <dateTime>
+          description: Returned when the user could not be authorized.
+          schema:
+            $ref: '#/definitions/Error'
         '403':
-          description: Forbidden
-          headers:
-            Content-Type:
-              schema:
-                type: string
-                example: application/json
-          content:
-            application/json:
-              schema:
-                type: object
-              example:
-                details:
-                  code: <string>
-                  message: <string>
-                error:
-                  code: <string>
-                  message: <string>
-                help_url: <string>
-                request_id: <string>
-                time: <dateTime>
+          description: >-
+            Returned when the user does not have the right to calculate
+            activation segments in this collaboration.
+          schema:
+            $ref: '#/definitions/Error'
         '404':
-          description: Not Found
-          headers:
-            Content-Type:
-              schema:
-                type: string
-                example: application/json
-          content:
-            application/json:
-              schema:
-                type: object
-              example:
-                details:
-                  code: <string>
-                  message: <string>
-                error:
-                  code: <string>
-                  message: <string>
-                help_url: <string>
-                request_id: <string>
-                time: <dateTime>
+          description: >-
+            Returned when the collaboration or activation segment could not be
+            found.
+          schema:
+            $ref: '#/definitions/Error'
         '500':
           description: Internal Server Error
-          headers:
-            Content-Type:
-              schema:
-                type: string
-                example: application/json
-          content:
-            application/json:
-              schema:
-                type: object
-              examples:
-                example-0:
-                  summary: Internal Server Error
-                  value:
-                    details:
-                      code: <string>
-                      message: <string>
-                    error:
-                      code: <string>
-                      message: <string>
-                    help_url: <string>
-                    request_id: <string>
-                    time: <dateTime>
-                example-1:
-                  summary: An unexpected error response.
-                  value:
-                    details:
-                      code: <string>
-                      message: <string>
-                    error:
-                      code: <string>
-                      message: <string>
-                    help_url: <string>
-                    request_id: <string>
-                    time: <dateTime>
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/Error'
+      summary: 2. Refresh Activation Segment
+      tags:
+        - Activation Segments
+  /api/v2/collaborations/{collaboration_id}/activation-segments/{activation_segment_id}:
+    get:
+      description: >-
+        Returns the details for the requested activation segment from a given
+        collaboration.
+      operationId: GetActivationSegment
+      parameters:
+        - description: The ID of the collaboration the activation segment belongs to.
+          in: path
+          name: collaboration_id
+          required: true
+          type: string
+        - description: The ID of the activation segment you want information about.
+          in: path
+          name: activation_segment_id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/Activation_Segments.GetActivationSegmentResponse'
+        '400':
+          description: Returned when the request was not valid.
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Returned when the user could not be authorized.
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: >-
+            Returned when the user does not have the right to view details of an
+            activation segment in this collaboration.
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: >-
+            Returned when the collaboration or activation segment could not be
+            found.
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/Error'
+      summary: 3. Get Activation Segment Status
+      tags:
+        - Activation Segments
+  /api/v2/collaborations/{collaboration_id}/destinations:
+    get:
+      description: >-
+        Returns a list of destinations in the given collaboration. The output is
+        affected by provided filters.
+      operationId: ListDestinations
+      parameters:
+        - description: The ID of the collaboration to get destination details from.
+          in: path
+          name: collaboration_id
+          required: true
+          type: string
+        - description: The requested page of records. Default is 1.
+          format: int32
+          in: query
+          name: pagination.page
+          required: false
+          type: integer
+        - description: >-
+            The number of records to return per page. Maximum is 500. Default is
+            100.
+          format: int32
+          in: query
+          name: pagination.per_page
+          required: false
+          type: integer
+        - description: >-
+            OrderBy is a comma seperated value to define sorting.
+
+            e.g 'created_time,name DESC'
+
+            The values are seperated by space, '{column} {ASC/DESC}'
+
+            Valid columns: `created_date_time`, `updated_date_time`, `owner`,
+            `name`
+          in: query
+          name: order_by
+          required: false
+          type: string
+        - description: >-
+            Supported filters are `destination_id`, `owner_id`,
+            `destination_type_id`
+          in: query
+          name: filter
+          required: false
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/Collaboration_Destinations.ListDestinationsResponse'
+        '401':
+          description: Returned when the user could not be authorized.
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: >-
+            Returned when the user does not have the right to list collaboration
+            destinations.
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/Error'
+      summary: 4. List Destinations
+      tags:
+        - Activation Segments
+  /api/v2/collaborations/{collaboration_id}/activation-segments/{activation_segment_id}/destinations/{destination_id}/push-schema:
+    get:
+      description: >-
+        Returns the push time schema for a specific destination instance subject
+        to constraints defined in the destination instance.
+      operationId: GetActivationSegmentDestinationPushSchema
+      parameters:
+        - description: The ID of the collaboration.
+          in: path
+          name: collaboration_id
+          required: true
+          type: string
+        - description: The ID of the activation segment ID to export.
+          in: path
+          name: activation_segment_id
+          required: true
+          type: string
+        - description: The ID of the destination instance to export to.
+          in: path
+          name: destination_id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: >-
+              #/definitions/Activation_Segment_Exports.GetActivationSegmentDestinationPushSchemaResponse
+        '400':
+          description: Returned when the request was not valid.
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Returned when the user could not be authorized.
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: Returned when the user does not have the right to view Destinations.
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: >-
+            Returned when the Destination instance or Activation Segment could
+            not be found.
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/Error'
+      summary: 5. Get Activation Segment Destination Push Schema
+      tags:
+        - Activation Segments
+  /api/v2/collaborations/{collaboration_id}/activation-segments/{activation_segment_id}/export:
+    post:
+      description: >-
+        Exports results of an activation segment to a specific destination
+        instance.
+      operationId: ExportActivationSegmentResults
+      parameters:
+        - description: The ID of the collaboration.
+          in: path
+          name: collaboration_id
+          required: true
+          type: string
+        - description: The ID of the activation segment to export.
+          in: path
+          name: activation_segment_id
+          required: true
+          type: string
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: >-
+              #/definitions/Activation_Segment_Exports.ExportActivationSegmentResultsBody
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: >-
+              #/definitions/Activation_Segment_Exports.ExportActivationSegmentResultsResponse
+        '400':
+          description: Returned when the request is invalid.
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Returned when the user could not be authorized.
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: >-
+            Returned when the user does not have the right to export to the
+            destination instance.
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: >-
+            Returned when the collaboration, activation segment or destination
+            instance does not exist.
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/Error'
+      summary: 6. Export Activation Segment
+      tags:
+        - Activation Segments
+  /api/v2/collaborations/{collaboration_id}/activation-segments/{activation_segment_id}/exports/{export_id}:
+    get:
+      description: Returns the details for a specific activation segment export.
+      operationId: GetActivationSegmentExport
+      parameters:
+        - description: The ID of the collaboration.
+          in: path
+          name: collaboration_id
+          required: true
+          type: string
+        - description: The ID of the activation segment that has been exported.
+          in: path
+          name: activation_segment_id
+          required: true
+          type: string
+        - description: The ID of the activation export.
+          in: path
+          name: export_id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: >-
+              #/definitions/Activation_Segment_Exports.GetActivationSegmentExportResponse
+        '400':
+          description: Returned when the request was not valid.
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Returned when the user could not be authorized.
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: >-
+            Returned when the user does not have the right to view activation
+            segment exports.
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: >-
+            Returned when the collaboration, activation segment or export cannot
+            be found.
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/Error'
+      summary: 7. Get Activation Segment Export Results
+      tags:
+        - Activation Segments
+produces:
+  - application/json
+schemes:
+  - https
+securityDefinitions:
+  API Keys:
+    description: Your API key.
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: '2.0'
+tags:
+  - name: Activation Segments

@@ -115,13 +115,17 @@ info:
       - Enables filtering by date or datetime columns using standard comparison operators.
       - Learn more in the [Datetime Filter Guide](https://support.infosum.com/hc/en-us/articles/27203389516818-Using-date-time-filters-in-IQL).
 servers:
-  - url: http://{{baseurl}}
   - url: https://api.infosum.com
 components:
   securitySchemes:
     apikeyAuth:
-      type: http
-      scheme: apikey
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: >-
+        See [Accessing the
+        API](https://support.infosum.com/hc/en-us/articles/360018850497-Accessing-the-API#h_01JBBT9BG3D0V2AFWGDBJT9YYF)
+        for details.
   schemas:
     Error:
       type: object
@@ -181,6 +185,10 @@ components:
         - query_id
         - status
         - results
+externalDocs:
+  description: Accessing the API
+  url: >-
+    https://support.infosum.com/hc/en-us/articles/360018850497-Accessing-the-API#h_01JBBT9BG3D0V2AFWGDBJT9YYF
 security:
   - apikeyAuth: []
 tags:

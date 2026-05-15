@@ -57,10 +57,7 @@ info:
     8. Confirm normalization was created successfully
 
 
-    9a. List Dataset Prepare Configurations
-
-
-    9b. Create a Dataset
+    9. List Dataset Prepare Configurations
 
 
     10. Prepare the data
@@ -203,21 +200,24 @@ info:
     collaborations.
 
     - Automate imports only after completing a successful manual onboarding.
-servers:
-  - url: http://{{baseurl}}
+externalDocs:
+  description: Accessing the API
+  url: >-
+    https://support.infosum.com/hc/en-us/articles/360018850497-Accessing-the-API#h_01JBBT9BG3D0V2AFWGDBJT9YYF
+security:
+  - apikeyAuth: []
 components:
   securitySchemes:
-    API_Key:
-      description: Your API key
-      in: header
+    apikeyAuth:
       type: apiKey
-      name: Authorization
+      in: header
+      name: X-API-Key
+      description: >-
+        See [Accessing the
+        API](https://support.infosum.com/hc/en-us/articles/360018850497-Accessing-the-API#h_01JBBT9BG3D0V2AFWGDBJT9YYF)
+        for details.
 tags:
   - name: Onboarding
-security:
-  - API_Key:
-      - >-
-        https://support.infosum.com/hc/en-us/articles/360018850497-Accessing-the-API#h_01JBBT9BG3D0V2AFWGDBJT9YYF
 paths:
   /api/v2/cloud_vaults/{Cloud Vault ID}:
     get:
@@ -1631,11 +1631,161 @@ paths:
                     help_url: <string>
                     request_id: <string>
                     time: <dateTime>
+  /api/v2/datasets:
+    post:
+      tags:
+        - Onboarding
+      summary: 8.5 Create a dataset, if needed.
+      description: Creates a dataset.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                cloud_vault_id: <string>
+                public_name: <string>
+                description: <string>
+                expiration:
+                  do_not_expire: <boolean>
+                  expiration_date_time: <date-time>
+                region: <string>
+                dataset_type: <string>
+      parameters:
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: A successful response.
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                dataset_id: <string>
+                public_name: <string>
+                private_id: <string>
+                description: <string>
+                region: <string>
+                dataset_type: <string>
+                created_date_time: <dateTime>
+        '400':
+          description: Returned when the CreateDatasetRequest message was not valid.
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '401':
+          description: Returned when the user could not be authorized.
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '403':
+          description: Returned when the user does not have the required permission.
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                details:
+                  code: <string>
+                  message: <string>
+                error:
+                  code: <string>
+                  message: <string>
+                help_url: <string>
+                request_id: <string>
+                time: <dateTime>
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: Internal Server Error
+                  value:
+                    details:
+                      code: <string>
+                      message: <string>
+                    error:
+                      code: <string>
+                      message: <string>
+                    help_url: <string>
+                    request_id: <string>
+                    time: <dateTime>
+                example-1:
+                  summary: An unexpected error response.
+                  value:
+                    details:
+                      code: <string>
+                      message: <string>
+                    error:
+                      code: <string>
+                      message: <string>
+                    help_url: <string>
+                    request_id: <string>
+                    time: <dateTime>
   /api/v2/dataset-prepare-configs:
     get:
       tags:
         - Onboarding
-      summary: 9a. List company Dataset Prepare Configurations.
+      summary: 9. List company Dataset Prepare Configurations.
       description: List company dataset prepare configurations
       parameters:
         - name: Accept
@@ -1749,152 +1899,6 @@ paths:
                 time: <dateTime>
         '403':
           description: Forbidden
-          headers:
-            Content-Type:
-              schema:
-                type: string
-                example: application/json
-          content:
-            application/json:
-              schema:
-                type: object
-              example:
-                details:
-                  code: <string>
-                  message: <string>
-                error:
-                  code: <string>
-                  message: <string>
-                help_url: <string>
-                request_id: <string>
-                time: <dateTime>
-        '500':
-          description: Internal Server Error
-          headers:
-            Content-Type:
-              schema:
-                type: string
-                example: application/json
-          content:
-            application/json:
-              schema:
-                type: object
-              examples:
-                example-0:
-                  summary: Internal Server Error
-                  value:
-                    details:
-                      code: <string>
-                      message: <string>
-                    error:
-                      code: <string>
-                      message: <string>
-                    help_url: <string>
-                    request_id: <string>
-                    time: <dateTime>
-                example-1:
-                  summary: An unexpected error response.
-                  value:
-                    details:
-                      code: <string>
-                      message: <string>
-                    error:
-                      code: <string>
-                      message: <string>
-                    help_url: <string>
-                    request_id: <string>
-                    time: <dateTime>
-  /api/v2/datasets:
-    post:
-      tags:
-        - Onboarding
-      summary: 9b. Create a dataset.
-      description: Creates a dataset.
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              example:
-                public_name: <string>
-                description: <string>
-                region: <string>
-                dataset_type: <string>
-      parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/json
-        - name: Accept
-          in: header
-          schema:
-            type: string
-          example: application/json
-      responses:
-        '200':
-          description: A successful response.
-          headers:
-            Content-Type:
-              schema:
-                type: string
-                example: application/json
-          content:
-            application/json:
-              schema:
-                type: object
-              example:
-                dataset_id: <string>
-                public_name: <string>
-                private_id: <string>
-                description: <string>
-                region: <string>
-                dataset_type: <string>
-                created_date_time: <dateTime>
-        '400':
-          description: Returned when the CreateDatasetRequest message was not valid.
-          headers:
-            Content-Type:
-              schema:
-                type: string
-                example: application/json
-          content:
-            application/json:
-              schema:
-                type: object
-              example:
-                details:
-                  code: <string>
-                  message: <string>
-                error:
-                  code: <string>
-                  message: <string>
-                help_url: <string>
-                request_id: <string>
-                time: <dateTime>
-        '401':
-          description: Returned when the user could not be authorized.
-          headers:
-            Content-Type:
-              schema:
-                type: string
-                example: application/json
-          content:
-            application/json:
-              schema:
-                type: object
-              example:
-                details:
-                  code: <string>
-                  message: <string>
-                error:
-                  code: <string>
-                  message: <string>
-                help_url: <string>
-                request_id: <string>
-                time: <dateTime>
-        '403':
-          description: Returned when the user does not have the required permission.
           headers:
             Content-Type:
               schema:
