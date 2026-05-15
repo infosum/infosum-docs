@@ -103,13 +103,14 @@ info:
 
   version: CM 1.0
 servers:
-  - url: http://{{baseurl}}
   - url: https://api.infosum.com
 components:
   securitySchemes:
     apikeyAuth:
-      type: http
-      scheme: apikey
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: "See [Accessing the API](https://support.infosum.com/hc/en-us/articles/360018850497-Accessing-the-API#h_01JBBT9BG3D0V2AFWGDBJT9YYF) for details."
   schemas:
     Rights:
       type: object
@@ -389,8 +390,13 @@ components:
         type:
           type: string
           enum: [TYPE_INVALID, TYPE_COLLABORATION_CREATED, TYPE_DESTINATION_ADDED, TYPE_DESTINATION_REMOVED, TYPE_COLLABORATION_CLOSED, TYPE_COLLABORATION_LEFT, TYPE_ACTIVATION_QUERY_RESULTS_EXPORTED, TYPE_ACTIVATION_QUERY_SUCCESSFUL, TYPE_INSIGHT_QUERY_SUCCESSFUL, TYPE_DATASET_PUBLISHED, TYPE_AUDIENCE_CREATED, TYPE_AUDIENCE_DELETED, TYPE_SEGMENT_CREATED, TYPE_SEGMENT_DELETED, TYPE_PRIVATE_PATH_ID_ROTATED, TYPE_DATASET_ADDED, TYPE_DATASET_REMOVED]
+externalDocs:
+  description: Accessing the API
+  url: https://support.infosum.com/hc/en-us/articles/360018850497-Accessing-the-API#h_01JBBT9BG3D0V2AFWGDBJT9YYF
+
 security:
   - apikeyAuth: []
+
 tags:
   - name: Owner
     description: Creates and closes collaborations, adds members and assigns roles. Any user with the correct user roles can assume this role.
