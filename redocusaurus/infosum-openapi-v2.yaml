@@ -1520,11 +1520,19 @@ definitions:
   AddDatasetBody:
     properties:
       activation_allowed:
+        type: boolean
+      activation_audience_allowed:
         description: >-
-          If true, allows the dataset to be used in activation queries within
-          the collaboration. If exportable_to_members is empty then this setting
-          allows the dataset to be used in the audience to activate data from a
-          different dataset.
+          If true, allows the dataset to be used in queries to activate export
+          columns from other datasets. The dataset's keys and attributes can be
+          used for set operations and filters. Exporting of the query results
+          will be subject to the other dataset's export restrictions.
+        type: boolean
+      activation_export_ids_allowed:
+        description: >-
+          If true, allows operators to activate export columns from this
+          dataset. Destinations for exports can be constrained by their owner
+          and destination type restrictions.
         type: boolean
       allowed_attributes:
         description: A list of the attributes in the dataset that can be queried against.
@@ -3691,11 +3699,19 @@ definitions:
   Collaboration_Management.AddDatasetBody:
     properties:
       activation_allowed:
+        type: boolean
+      activation_audience_allowed:
         description: >-
-          If true, allows the dataset to be used in activation queries within
-          the collaboration. If exportable_to_members is empty then this setting
-          allows the dataset to be used in the audience to activate data from a
-          different dataset.
+          If true, allows the dataset to be used in queries to activate export
+          columns from other datasets. The dataset's keys and attributes can be
+          used for set operations and filters. Exporting of the query results
+          will be subject to the other dataset's export restrictions.
+        type: boolean
+      activation_export_ids_allowed:
+        description: >-
+          If true, allows operators to activate export columns from this
+          dataset. Destinations for exports can be constrained by their owner
+          and destination type restrictions.
         type: boolean
       allowed_attributes:
         description: A list of the attributes in the dataset that can be queried against.
