@@ -3893,7 +3893,9 @@
 				"STRING_SET",
 				"FLOAT_ARRAY",
 				"TIMESTAMP",
-				"TIMESTAMP_ARRAY"
+				"TIMESTAMP_ARRAY",
+				"GEO",
+				"GEO_ARRAY"
 			],
 			"type": "string"
 		},
@@ -15376,7 +15378,9 @@
 				"STRING_SET",
 				"FLOAT_ARRAY",
 				"TIMESTAMP",
-				"TIMESTAMP_ARRAY"
+				"TIMESTAMP_ARRAY",
+				"GEO",
+				"GEO_ARRAY"
 			],
 			"type": "string"
 		},
@@ -16671,7 +16675,9 @@
 				"STRING_SET",
 				"FLOAT_ARRAY",
 				"TIMESTAMP",
-				"TIMESTAMP_ARRAY"
+				"TIMESTAMP_ARRAY",
+				"GEO",
+				"GEO_ARRAY"
 			],
 			"type": "string"
 		},
