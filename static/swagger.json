@@ -1798,6 +1798,10 @@
 					},
 					"type": "array"
 				},
+				"hide_dataset_stats": {
+					"description": "If true, allow the dataset to hide key stats.",
+					"type": "boolean"
+				},
 				"intersection_only": {
 					"description": "Whether the dataset should only allow intersection queries.",
 					"type": "boolean"
@@ -4208,6 +4212,10 @@
 						"type": "string"
 					},
 					"type": "array"
+				},
+				"hide_dataset_stats": {
+					"description": "If true, allow the dataset to hide key stats.",
+					"type": "boolean"
 				},
 				"intersection_only": {
 					"description": "Whether the dataset should only allow intersection queries.",
