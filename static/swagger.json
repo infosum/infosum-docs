@@ -5660,14 +5660,6 @@
 					},
 					"type": "array"
 				},
-				"geo_key_resolutions": {
-					"description": "GeoKeyResolutions is an optional list of resolutions to use when creating a geo key\nfrom the input column.",
-					"items": {
-						"format": "int64",
-						"type": "integer"
-					},
-					"type": "array"
-				},
 				"input_column": {
 					"description": "InputColumn is the name of the column in the input recordset to be used\nto create the custom key.",
 					"type": "string"
@@ -5702,7 +5694,8 @@
 				"FLOAT",
 				"STRING",
 				"TIMESTAMP",
-				"BOOL"
+				"BOOL",
+				"GEO"
 			],
 			"type": "string"
 		},
@@ -11737,14 +11730,6 @@
 					},
 					"type": "array"
 				},
-				"geo_key_resolutions": {
-					"description": "GeoKeyResolutions is an optional list of resolutions to use when creating a geo key\nfrom the input column.",
-					"items": {
-						"format": "int64",
-						"type": "integer"
-					},
-					"type": "array"
-				},
 				"input_column": {
 					"description": "InputColumn is the name of the column in the input recordset to be used\nto create the custom key.",
 					"type": "string"
@@ -11766,7 +11751,8 @@
 				"FLOAT",
 				"STRING",
 				"TIMESTAMP",
-				"BOOL"
+				"BOOL",
+				"GEO"
 			],
 			"type": "string"
 		},
