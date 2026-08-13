@@ -7808,6 +7808,14 @@
 				"prefix": {
 					"description": "The prefix within the specified bucket.",
 					"type": "string"
+				},
+				"secret_auth": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Import_Connectors.GCSSecretAuthDetail"
+						}
+					],
+					"description": "Authenticate to the provided GCS bucket using GCS Secret Auth."
 				}
 			},
 			"type": "object"
@@ -7820,6 +7828,10 @@
 					"type": "string"
 				}
 			},
+			"type": "object"
+		},
+		"GCSSecretAuthDetail": {
+			"description": "GCSSecretAuthDetail holds any auth details.",
 			"type": "object"
 		},
 		"GPGDetails": {
@@ -9007,6 +9019,14 @@
 				"prefix": {
 					"description": "The prefix within the specified bucket.",
 					"type": "string"
+				},
+				"secret_auth": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Import_Connectors.GCSSecretAuthDetail"
+						}
+					],
+					"description": "Authenticate to the provided GCS bucket using GCS Secret Auth."
 				}
 			},
 			"type": "object"
@@ -9019,6 +9039,10 @@
 					"type": "string"
 				}
 			},
+			"type": "object"
+		},
+		"Import_Connectors.GCSSecretAuthDetail": {
+			"description": "GCSSecretAuthDetail holds any auth details.",
 			"type": "object"
 		},
 		"Import_Connectors.GPGDetails": {
