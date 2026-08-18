@@ -4610,6 +4610,10 @@
 					},
 					"type": "array"
 				},
+				"hide_dataset_stats": {
+					"description": "Whether the statistics of this collaboration should be hidden",
+					"type": "boolean"
+				},
 				"intersection_only": {
 					"description": "If true, restricts the dataset to being used in queries where it is intersected with at least one other dataset.",
 					"type": "boolean"
@@ -5836,6 +5840,10 @@
 						"type": "string"
 					},
 					"type": "array"
+				},
+				"hide_dataset_stats": {
+					"description": "Whether the statistics of this collaboration should be hidden",
+					"type": "boolean"
 				},
 				"intersection_only": {
 					"description": "If true, restricts the dataset to being used in queries where it is intersected with at least one other dataset.",
