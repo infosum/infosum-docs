@@ -1798,6 +1798,10 @@
 					},
 					"type": "array"
 				},
+				"hide_dataset_stats": {
+					"description": "If true, allow the dataset to hide key stats.",
+					"type": "boolean"
+				},
 				"intersection_only": {
 					"description": "Whether the dataset should only allow intersection queries.",
 					"type": "boolean"
@@ -3893,7 +3897,9 @@
 				"STRING_SET",
 				"FLOAT_ARRAY",
 				"TIMESTAMP",
-				"TIMESTAMP_ARRAY"
+				"TIMESTAMP_ARRAY",
+				"GEO",
+				"GEO_ARRAY"
 			],
 			"type": "string"
 		},
@@ -4206,6 +4212,10 @@
 						"type": "string"
 					},
 					"type": "array"
+				},
+				"hide_dataset_stats": {
+					"description": "If true, allow the dataset to hide key stats.",
+					"type": "boolean"
 				},
 				"intersection_only": {
 					"description": "Whether the dataset should only allow intersection queries.",
@@ -4599,6 +4609,10 @@
 						"type": "string"
 					},
 					"type": "array"
+				},
+				"hide_dataset_stats": {
+					"description": "Whether the statistics of this collaboration should be hidden",
+					"type": "boolean"
 				},
 				"intersection_only": {
 					"description": "If true, restricts the dataset to being used in queries where it is intersected with at least one other dataset.",
@@ -5684,7 +5698,8 @@
 				"FLOAT",
 				"STRING",
 				"TIMESTAMP",
-				"BOOL"
+				"BOOL",
+				"GEO"
 			],
 			"type": "string"
 		},
@@ -5825,6 +5840,10 @@
 						"type": "string"
 					},
 					"type": "array"
+				},
+				"hide_dataset_stats": {
+					"description": "Whether the statistics of this collaboration should be hidden",
+					"type": "boolean"
 				},
 				"intersection_only": {
 					"description": "If true, restricts the dataset to being used in queries where it is intersected with at least one other dataset.",
@@ -7797,6 +7816,14 @@
 				"prefix": {
 					"description": "The prefix within the specified bucket.",
 					"type": "string"
+				},
+				"secret_auth": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Import_Connectors.GCSSecretAuthDetail"
+						}
+					],
+					"description": "Authenticate to the provided GCS bucket using GCS Secret Auth."
 				}
 			},
 			"type": "object"
@@ -7809,6 +7836,10 @@
 					"type": "string"
 				}
 			},
+			"type": "object"
+		},
+		"GCSSecretAuthDetail": {
+			"description": "GCSSecretAuthDetail holds any auth details.",
 			"type": "object"
 		},
 		"GPGDetails": {
@@ -8996,6 +9027,14 @@
 				"prefix": {
 					"description": "The prefix within the specified bucket.",
 					"type": "string"
+				},
+				"secret_auth": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Import_Connectors.GCSSecretAuthDetail"
+						}
+					],
+					"description": "Authenticate to the provided GCS bucket using GCS Secret Auth."
 				}
 			},
 			"type": "object"
@@ -9008,6 +9047,10 @@
 					"type": "string"
 				}
 			},
+			"type": "object"
+		},
+		"Import_Connectors.GCSSecretAuthDetail": {
+			"description": "GCSSecretAuthDetail holds any auth details.",
 			"type": "object"
 		},
 		"Import_Connectors.GPGDetails": {
@@ -11740,7 +11783,8 @@
 				"FLOAT",
 				"STRING",
 				"TIMESTAMP",
-				"BOOL"
+				"BOOL",
+				"GEO"
 			],
 			"type": "string"
 		},
@@ -15376,7 +15420,9 @@
 				"STRING_SET",
 				"FLOAT_ARRAY",
 				"TIMESTAMP",
-				"TIMESTAMP_ARRAY"
+				"TIMESTAMP_ARRAY",
+				"GEO",
+				"GEO_ARRAY"
 			],
 			"type": "string"
 		},
@@ -16671,7 +16717,9 @@
 				"STRING_SET",
 				"FLOAT_ARRAY",
 				"TIMESTAMP",
-				"TIMESTAMP_ARRAY"
+				"TIMESTAMP_ARRAY",
+				"GEO",
+				"GEO_ARRAY"
 			],
 			"type": "string"
 		},
