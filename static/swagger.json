@@ -3478,7 +3478,7 @@
 			"description": "DatasetSummary is the summary view of a dataset.",
 			"properties": {
 				"attributes": {
-					"description": "The list of attributes for this dataset. Will only be populated for dataset type 'INSIGHT'",
+					"description": "The list of attributes for this dataset. Will only be populated for dataset type 'UNIFIED' or 'INSIGHT",
 					"items": {
 						"$ref": "#/definitions/Collaboration_Datasets.AttributeSummary",
 						"type": "object"
@@ -3502,7 +3502,7 @@
 					"type": "array"
 				},
 				"output_columns": {
-					"description": "The list of output columns for this dataset. Will only be populated for dataset type 'IDENTITY'",
+					"description": "The list of output columns for this dataset. Will only be populated for dataset type 'UNIFIED' or 'IDENTITY'",
 					"items": {
 						"type": "string"
 					},
@@ -5919,7 +5919,7 @@
 			"description": "DatasetSummary is the summary view of a dataset.",
 			"properties": {
 				"attributes": {
-					"description": "The list of attributes for this dataset. Will only be populated for dataset type 'INSIGHT'",
+					"description": "The list of attributes for this dataset. Will only be populated for dataset type 'UNIFIED' or 'INSIGHT",
 					"items": {
 						"$ref": "#/definitions/Collaboration_Datasets.AttributeSummary",
 						"type": "object"
@@ -5943,7 +5943,7 @@
 					"type": "array"
 				},
 				"output_columns": {
-					"description": "The list of output columns for this dataset. Will only be populated for dataset type 'IDENTITY'",
+					"description": "The list of output columns for this dataset. Will only be populated for dataset type 'UNIFIED' or 'IDENTITY'",
 					"items": {
 						"type": "string"
 					},
