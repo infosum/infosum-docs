@@ -435,6 +435,13 @@
 					"description": "The ID of the dataset targeted by the Activation Segment Query.",
 					"type": "string"
 				},
+				"unflattened_multi_value_columns": {
+					"description": "A list of the unflattened multi-value export columns exported by the activation segment.",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				},
 				"updated_date_time": {
 					"description": "The date and time the activation segment was last updated.",
 					"format": "date-time",
@@ -1348,6 +1355,13 @@
 				"target_dataset_id": {
 					"description": "The ID of the dataset targeted by the Activation Segment Query.",
 					"type": "string"
+				},
+				"unflattened_multi_value_columns": {
+					"description": "A list of the unflattened multi-value export columns exported by the activation segment.",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
 				},
 				"updated_date_time": {
 					"description": "The date and time the activation segment was last updated.",
