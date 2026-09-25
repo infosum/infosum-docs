@@ -435,6 +435,13 @@
 					"description": "The ID of the dataset targeted by the Activation Segment Query.",
 					"type": "string"
 				},
+				"unflattened_multi_value_columns": {
+					"description": "A list of the unflattened multi-value export columns exported by the activation segment.",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				},
 				"updated_date_time": {
 					"description": "The date and time the activation segment was last updated.",
 					"format": "date-time",
@@ -1349,6 +1356,13 @@
 					"description": "The ID of the dataset targeted by the Activation Segment Query.",
 					"type": "string"
 				},
+				"unflattened_multi_value_columns": {
+					"description": "A list of the unflattened multi-value export columns exported by the activation segment.",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				},
 				"updated_date_time": {
 					"description": "The date and time the activation segment was last updated.",
 					"format": "date-time",
@@ -1797,6 +1811,10 @@
 						"type": "string"
 					},
 					"type": "array"
+				},
+				"hide_dataset_stats": {
+					"description": "If true, allow the dataset to hide key stats.",
+					"type": "boolean"
 				},
 				"intersection_only": {
 					"description": "Whether the dataset should only allow intersection queries.",
@@ -3474,7 +3492,7 @@
 			"description": "DatasetSummary is the summary view of a dataset.",
 			"properties": {
 				"attributes": {
-					"description": "The list of attributes for this dataset. Will only be populated for dataset type 'INSIGHT'",
+					"description": "The list of attributes for this dataset. Will only be populated for dataset type 'UNIFIED' or 'INSIGHT",
 					"items": {
 						"$ref": "#/definitions/Collaboration_Datasets.AttributeSummary",
 						"type": "object"
@@ -3498,7 +3516,7 @@
 					"type": "array"
 				},
 				"output_columns": {
-					"description": "The list of output columns for this dataset. Will only be populated for dataset type 'IDENTITY'",
+					"description": "The list of output columns for this dataset. Will only be populated for dataset type 'UNIFIED' or 'IDENTITY'",
 					"items": {
 						"type": "string"
 					},
@@ -3893,7 +3911,9 @@
 				"STRING_SET",
 				"FLOAT_ARRAY",
 				"TIMESTAMP",
-				"TIMESTAMP_ARRAY"
+				"TIMESTAMP_ARRAY",
+				"GEO",
+				"GEO_ARRAY"
 			],
 			"type": "string"
 		},
@@ -4206,6 +4226,10 @@
 						"type": "string"
 					},
 					"type": "array"
+				},
+				"hide_dataset_stats": {
+					"description": "If true, allow the dataset to hide key stats.",
+					"type": "boolean"
 				},
 				"intersection_only": {
 					"description": "Whether the dataset should only allow intersection queries.",
@@ -4599,6 +4623,10 @@
 						"type": "string"
 					},
 					"type": "array"
+				},
+				"hide_dataset_stats": {
+					"description": "Whether the statistics of this collaboration should be hidden",
+					"type": "boolean"
 				},
 				"intersection_only": {
 					"description": "If true, restricts the dataset to being used in queries where it is intersected with at least one other dataset.",
@@ -5684,7 +5712,8 @@
 				"FLOAT",
 				"STRING",
 				"TIMESTAMP",
-				"BOOL"
+				"BOOL",
+				"GEO"
 			],
 			"type": "string"
 		},
@@ -5826,6 +5855,10 @@
 					},
 					"type": "array"
 				},
+				"hide_dataset_stats": {
+					"description": "Whether the statistics of this collaboration should be hidden",
+					"type": "boolean"
+				},
 				"intersection_only": {
 					"description": "If true, restricts the dataset to being used in queries where it is intersected with at least one other dataset.",
 					"type": "boolean"
@@ -5900,7 +5933,7 @@
 			"description": "DatasetSummary is the summary view of a dataset.",
 			"properties": {
 				"attributes": {
-					"description": "The list of attributes for this dataset. Will only be populated for dataset type 'INSIGHT'",
+					"description": "The list of attributes for this dataset. Will only be populated for dataset type 'UNIFIED' or 'INSIGHT",
 					"items": {
 						"$ref": "#/definitions/Collaboration_Datasets.AttributeSummary",
 						"type": "object"
@@ -5924,7 +5957,7 @@
 					"type": "array"
 				},
 				"output_columns": {
-					"description": "The list of output columns for this dataset. Will only be populated for dataset type 'IDENTITY'",
+					"description": "The list of output columns for this dataset. Will only be populated for dataset type 'UNIFIED' or 'IDENTITY'",
 					"items": {
 						"type": "string"
 					},
@@ -7797,6 +7830,14 @@
 				"prefix": {
 					"description": "The prefix within the specified bucket.",
 					"type": "string"
+				},
+				"secret_auth": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Import_Connectors.GCSSecretAuthDetail"
+						}
+					],
+					"description": "Authenticate to the provided GCS bucket using GCS Secret Auth."
 				}
 			},
 			"type": "object"
@@ -7809,6 +7850,10 @@
 					"type": "string"
 				}
 			},
+			"type": "object"
+		},
+		"GCSSecretAuthDetail": {
+			"description": "GCSSecretAuthDetail holds any auth details.",
 			"type": "object"
 		},
 		"GPGDetails": {
@@ -8996,6 +9041,14 @@
 				"prefix": {
 					"description": "The prefix within the specified bucket.",
 					"type": "string"
+				},
+				"secret_auth": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Import_Connectors.GCSSecretAuthDetail"
+						}
+					],
+					"description": "Authenticate to the provided GCS bucket using GCS Secret Auth."
 				}
 			},
 			"type": "object"
@@ -9008,6 +9061,10 @@
 					"type": "string"
 				}
 			},
+			"type": "object"
+		},
+		"Import_Connectors.GCSSecretAuthDetail": {
+			"description": "GCSSecretAuthDetail holds any auth details.",
 			"type": "object"
 		},
 		"Import_Connectors.GPGDetails": {
@@ -11740,7 +11797,8 @@
 				"FLOAT",
 				"STRING",
 				"TIMESTAMP",
-				"BOOL"
+				"BOOL",
+				"GEO"
 			],
 			"type": "string"
 		},
@@ -15376,7 +15434,9 @@
 				"STRING_SET",
 				"FLOAT_ARRAY",
 				"TIMESTAMP",
-				"TIMESTAMP_ARRAY"
+				"TIMESTAMP_ARRAY",
+				"GEO",
+				"GEO_ARRAY"
 			],
 			"type": "string"
 		},
@@ -16671,7 +16731,9 @@
 				"STRING_SET",
 				"FLOAT_ARRAY",
 				"TIMESTAMP",
-				"TIMESTAMP_ARRAY"
+				"TIMESTAMP_ARRAY",
+				"GEO",
+				"GEO_ARRAY"
 			],
 			"type": "string"
 		},
