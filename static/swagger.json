@@ -3529,6 +3529,13 @@
 					},
 					"type": "array"
 				},
+				"multi_value_output_columns": {
+					"description": "The list of multi-value output columns for this dataset. Will only be populated for dataset type 'UNIFIED' or 'IDENTITY'",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				},
 				"output_columns": {
 					"description": "The list of output columns for this dataset. Will only be populated for dataset type 'UNIFIED' or 'IDENTITY'",
 					"items": {
@@ -5967,6 +5974,13 @@
 					"items": {
 						"$ref": "#/definitions/Collaboration_Datasets.KeySummary",
 						"type": "object"
+					},
+					"type": "array"
+				},
+				"multi_value_output_columns": {
+					"description": "The list of multi-value output columns for this dataset. Will only be populated for dataset type 'UNIFIED' or 'IDENTITY'",
+					"items": {
+						"type": "string"
 					},
 					"type": "array"
 				},
